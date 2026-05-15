@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jillax 的文件分享">
+    <title>分享 · Jillax</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #161412;
+            color: #d4cdc0;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 25% 40%, rgba(196, 163, 90, 0.03) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 60%, rgba(180, 120, 80, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Nav ===== */
+        nav {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(22, 20, 18, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-family: 'Noto Serif SC', 'EB Garamond', serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #e0d6c8;
+            letter-spacing: 0.5px;
+        }
+        .nav-back {
+            font-size: 0.85rem;
+            color: rgba(212, 205, 192, 0.45);
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+        .nav-back:hover { color: #c4a35a; }
+
+        /* ===== Header ===== */
+        .page-header {
+            padding: 48px 0 32px;
+        }
+        .page-header h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e8e0d2;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .page-header p {
+            font-size: 0.88rem;
+            color: rgba(212, 205, 192, 0.35);
+        }
+
+        /* ===== Breadcrumb ===== */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb a {
+            color: rgba(212, 205, 192, 0.4);
+            transition: color 0.3s ease;
+        }
+        .breadcrumb a:hover { color: #c4a35a; }
+        .breadcrumb .sep {
+            color: rgba(212, 205, 192, 0.15);
+            font-size: 0.75rem;
+        }
+        .breadcrumb .current {
+            color: rgba(212, 205, 192, 0.7);
+        }
+
+        /* ===== File Grid ===== */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .file-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .file-item:hover {
+            border-color: rgba(196, 163, 90, 0.2);
+            background: rgba(196, 163, 90, 0.03);
+            transform: translateY(-2px);
+        }
+        .file-item.folder:hover {
+            border-color: rgba(196, 163, 90, 0.3);
+        }
+        .file-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        .file-thumb {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .file-name {
+            font-size: 0.82rem;
+            color: rgba(212, 205, 192, 0.65);
+            word-break: break-all;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .file-item.folder .file-name {
+            color: rgba(212, 205, 192, 0.8);
+        }
+        .file-size {
+            font-size: 0.72rem;
+            color: rgba(212, 205, 192, 0.25);
+            margin-top: 4px;
+        }
+
+        /* ===== Empty / Loading / Error ===== */
+        .state-msg {
+            text-align: center;
+            padding: 80px 20px;
+            color: rgba(212, 205, 192, 0.3);
+            font-size: 0.9rem;
+        }
+        .state-msg .icon { font-size: 2.5rem; margin-bottom: 16px; }
+        .state-msg .detail {
+            font-size: 0.8rem;
+            color: rgba(212, 205, 192, 0.2);
+            margin-top: 8px;
+        }
+        .error-msg {
+            color: rgba(200, 100, 100, 0.6);
+        }
+
+        /* ===== Lightbox ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            position: relative;
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 24px;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .lightbox-close:hover { color: #fff; }
+        .lightbox-dl {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 24px;
+            background: #c4a35a;
+            color: #161412;
+            border: none;
+            border-radius: 1px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        .lightbox-dl:hover { background: #d4b36a; }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: rgba(212, 205, 192, 0.15);
+            font-size: 0.78rem;
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            margin-top: 48px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            .file-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+            .file-item { padding: 12px; }
+            .page-header { padding: 32px 0 20px; }
+            .container { padding: 0 16px; }
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .file-item { animation: fadeIn 0.4s ease forwards; }
+        .file-item:nth-child(1) { animation-delay: 0.02s; }
+        .file-item:nth-child(2) { animation-delay: 0.04s; }
+        .file-item:nth-child(3) { animation-delay: 0.06s; }
+        .file-item:nth-child(4) { animation-delay: 0.08s; }
+        .file-item:nth-child(5) { animation-delay: 0.10s; }
+        .file-item:nth-child(6) { animation-delay: 0.12s; }
+        .file-item:nth-child(7) { animation-delay: 0.14s; }
+        .file-item:nth-child(8) { animation-delay: 0.16s; }
+        .file-item:nth-child(9) { animation-delay: 0.18s; }
+        .file-item:nth-child(10) { animation-delay: 0.20s; }
+        .file-item:nth-child(11) { animation-delay: 0.22s; }
+        .file-item:nth-child(12) { animation-delay: 0.24s; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Nav ===== -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-logo">Jillax</a>
+            <a href="index.html" class="nav-back">← 返回主页</a>
+        </div>
+    </nav>
+
+    <!-- ===== Header ===== -->
+    <div class="container">
+        <div class="page-header">
+            <h1>📁 文件分享</h1>
+            <p>浏览和下载分享的文件</p>
+        </div>
+
+        <!-- ===== Breadcrumb ===== -->
+        <div class="breadcrumb" id="breadcrumb">
+            <a href="#" data-path="">根目录</a>
+        </div>
+
+        <!-- ===== File Grid ===== -->
+        <div class="file-grid" id="fileGrid"></div>
+
+        <!-- ===== Loading / Error ===== -->
+        <div class="state-msg" id="stateMsg" style="display:none">
+            <div class="icon" id="stateIcon">📂</div>
+            <div id="stateText">加载中...</div>
+            <div class="detail" id="stateDetail"></div>
+        </div>
+    </div>
+
+    <!-- ===== Lightbox ===== -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="">
+        </div>
+        <a class="lightbox-dl" id="lightboxDl" download>下载原图</a>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Jillax</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        //  ⚙️ 配置区 — 你只需要改这里
+        // ============================================================
+
+        /** GitHub 用户名 */
+        const GITHUB_OWNER = 'Jillax';
+
+        /** 存放图片的仓库名（你需要先创建这个仓库） */
+        const GITHUB_REPO = 'image-storage';
+
+        /**
+         * GitHub Personal Access Token（可选，但强烈建议）
+         * 不填也能用，但每小时只能请求 60 次
+         *
+         * 如何生成：
+         *   1. 打开 https://github.com/settings/tokens
+         *   2. 点 "Generate new token (classic)"
+         *   3. 勾选 public_repo（只读公开仓库）
+         *   4. 生成后把 token 粘贴到下面引号里
+         */
+        const GITHUB_TOKEN = '';
+
+        /** 分支名 */
+        const BRANCH = 'main';
+
+        /** 起始目录（留空为根目录） */
+        const ROOT_PATH = '';
+
+        /** 图片文件扩展名 */
+        const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg'];
+
+        // ============================================================
+        //  以下代码不用动
+        // ============================================================
+
+        let currentPath = ROOT_PATH;
+        const fileGrid = document.getElementById('fileGrid');
+        const stateMsg = document.getElementById('stateMsg');
+        const stateIcon = document.getElementById('stateIcon');
+        const stateText = document.getElementById('stateText');
+        const stateDetail = document.getElementById('stateDetail');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxDl = document.getElementById('lightboxDl');
+
+        function isImage(name) {
+            return IMAGE_EXTS.some(ext => name.toLowerCase().endsWith(ext));
+        }
+
+        function formatSize(bytes) {
+            if (!bytes) return '';
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        function getRawUrl(path) {
+            return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${BRANCH}/${path}`;
+        }
+
+        function getCdnUrl(path) {
+            return `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${BRANCH}/${path}`;
+        }
+
+        async function listDir(path) {
+            const encodedPath = path ? encodeURIComponent(path) : '';
+            const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents${encodedPath ? '/' + encodedPath : ''}?ref=${BRANCH}`;
+            const headers = { Accept: 'application/vnd.github.v3+json' };
+            if (GITHUB_TOKEN) {
+                headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+            }
+            const res = await fetch(url, { headers });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                const msg = err.message || res.statusText;
+                const remaining = res.headers.get('X-RateLimit-Remaining');
+                if (remaining === '0') {
+                    const reset = res.headers.get('X-RateLimit-Reset');
+                    const resetDate = new Date(parseInt(reset) * 1000);
+                    throw new Error(`API 频率限制已达上限，将在 ${resetDate.toLocaleTimeString()} 后重置。建议配置 Token 以提升限制。`);
+                }
+                if (res.status === 404) {
+                    throw new Error(`路径不存在：${path}`);
+                }
+                throw new Error(`请求失败：${msg}`);
+            }
+            return res.json();
+        }
+
+        function renderBreadcrumb(path) {
+            const parts = path ? path.split('/') : [];
+            let html = `<a href="#" data-path="">根目录</a>`;
+            let accumulated = '';
+            parts.forEach((part, i) => {
+                accumulated += (accumulated ? '/' : '') + part;
+                const isLast = i === parts.length - 1;
+                html += `<span class="sep">›</span>`;
+                if (isLast) {
+                    html += `<span class="current">${part}</span>`;
+                } else {
+                    html += `<a href="#" data-path="${accumulated}">${part}</a>`;
+                }
+            });
+            breadcrumb.innerHTML = html;
+            breadcrumb.querySelectorAll('a[data-path]').forEach(a => {
+                a.addEventListener('click', e => {
+                    e.preventDefault();
+                    navigateTo(a.dataset.path);
+                });
+            });
+        }
+
+        function showState(icon, text, detail, isError) {
+            stateMsg.style.display = 'block';
+            fileGrid.style.display = 'none';
+            stateIcon.textContent = icon;
+            stateText.textContent = text;
+            stateText.className = isError ? 'error-msg' : '';
+            stateDetail.textContent = detail || '';
+        }
+
+        function showGrid() {
+            stateMsg.style.display = 'none';
+            fileGrid.style.display = 'grid';
+        }
+
+        async function navigateTo(path) {
+            currentPath = path;
+            renderBreadcrumb(path);
+            showState('⏳', '加载中...', '');
+
+            try {
+                const items = await listDir(path);
+                showGrid();
+                fileGrid.innerHTML = '';
+
+                // Sort: folders first, then files
+                const folders = items.filter(i => i.type === 'dir');
+                const files = items.filter(i => i.type === 'file');
+
+                // Sort by name
+                folders.sort((a, b) => a.name.localeCompare(b.name));
+                files.sort((a, b) => a.name.localeCompare(b.name));
+
+                const allItems = [...folders, ...files];
+
+                if (allItems.length === 0) {
+                    showState('📂', '这个文件夹是空的', '');
+                    return;
+                }
+
+                allItems.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'file-item' + (item.type === 'dir' ? ' folder' : '');
+
+                    if (item.type === 'dir') {
+                        div.innerHTML = `
+                            <div class="file-icon">📁</div>
+                            <div class="file-name">${item.name}</div>
+                        `;
+                        div.addEventListener('click', () => navigateTo(item.path));
+                    } else if (isImage(item.name)) {
+                        const thumbUrl = getCdnUrl(item.path);
+                        div.innerHTML = `
+                            <img class="file-thumb" src="${thumbUrl}" alt="${item.name}" loading="lazy"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                            <div class="file-icon" style="display:none">🖼️</div>
+                            <div class="file-name">${item.name}</div>
+                            <div class="file-size">${formatSize(item.size)}</div>
+                        `;
+                        div.addEventListener('click', () => openLightbox(item.path, item.name));
+                    } else {
+                        const rawUrl = getRawUrl(item.path);
+                        div.innerHTML = `
+                            <div class="file-icon">📄</div>
+                            <div class="file-name">${item.name}</div>
+                            <div class="file-size">${formatSize(item.size)}</div>
+                        `;
+                        div.addEventListener('click', () => window.open(rawUrl, '_blank'));
+                    }
+
+                    fileGrid.appendChild(div);
+                });
+            } catch (err) {
+                showState('⚠️', '加载失败', err.message, true);
+            }
+        }
+
+        function openLightbox(path, name) {
+            const url = getRawUrl(path);
+            lightboxImg.src = url;
+            lightboxDl.href = url;
+            lightboxDl.download = name;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Lightbox events
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Start
+        navigateTo(ROOT_PATH);
+    </script>
+</body>
+</html>
