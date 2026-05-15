@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
     <style>
         /* ========== Reset & Base ========== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -268,6 +271,132 @@
             line-height: 1.7;
         }
 
+        /* ========== Portfolio ========== */
+        .portfolio-summary {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 36px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.015);
+        }
+        .portfolio-total-label {
+            display: block;
+            font-size: 0.82rem;
+            color: rgba(212, 205, 192, 0.35);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .portfolio-total {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #c4a35a;
+            letter-spacing: 1px;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+        .portfolio-chart {
+            max-width: 260px;
+            margin: 0 auto;
+        }
+        .portfolio-table {
+            width: 100%;
+        }
+        .portfolio-row {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.88rem;
+            color: rgba(212, 205, 192, 0.6);
+            align-items: center;
+        }
+        .portfolio-header {
+            font-size: 0.75rem;
+            color: rgba(212, 205, 192, 0.25);
+            letter-spacing: 0.8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+        .portfolio-row span:nth-child(2),
+        .portfolio-row span:nth-child(3) {
+            text-align: right;
+        }
+        .portfolio-total-row {
+            border-bottom: none;
+            color: rgba(212, 205, 192, 0.8);
+            font-weight: 500;
+            padding-top: 14px;
+        }
+        .dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .portfolio-detail {
+            margin-top: 48px;
+        }
+        .portfolio-detail-title {
+            font-size: 0.82rem;
+            color: rgba(212, 205, 192, 0.35);
+            letter-spacing: 0.8px;
+            margin-bottom: 20px;
+            font-family: 'Noto Serif SC', serif;
+        }
+        .portfolio-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .detail-category {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 20px;
+        }
+        .detail-cat-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: rgba(212, 205, 192, 0.45);
+            padding: 5px 0;
+        }
+        .detail-item span:last-child {
+            color: rgba(212, 205, 192, 0.6);
+        }
+        .portfolio-philosophy {
+            margin-top: 48px;
+            text-align: center;
+            padding: 28px 24px;
+            border: 1px solid rgba(196, 163, 90, 0.1);
+            background: rgba(196, 163, 90, 0.02);
+        }
+        .portfolio-philosophy .section-divider {
+            margin: 0 auto 16px;
+        }
+        .portfolio-philosophy p {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            color: rgba(196, 163, 90, 0.6);
+            line-height: 1.9;
+            letter-spacing: 0.5px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
         /* ========== Contact ========== */
         .contact-grid {
             display: grid;
@@ -344,10 +473,13 @@
             .container { padding: 0 20px; }
             .contact-grid { grid-template-columns: 1fr; }
             .project-item { padding: 20px 0; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 24px; }
+            .portfolio-chart { max-width: 220px; }
+            .portfolio-detail-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .nav-links a:nth-child(4),
-            .nav-links a:nth-child(5) { display: none; }
+            .nav-links a:nth-child(3),
+            .nav-links a:nth-child(4) { display: none; }
             .hero-actions { flex-direction: column; }
             .hero-actions .btn { justify-content: center; }
         }
@@ -362,6 +494,7 @@
             <div class="nav-links">
                 <a href="#about">关于</a>
                 <a href="#projects">笔墨</a>
+                <a href="#portfolio">投资</a>
                 <a href="#contact">联系</a>
             </div>
         </div>
@@ -378,8 +511,10 @@
                     探索测试Agent，花一花免费Token的小站。
                 </p>
                 <div class="hero-actions">
+                    <a href="#about" class="btn btn-primary">关于我</a>
                     <a href="#projects" class="btn btn-primary">浏览笔墨</a>
-                    <a href="#contact" class="btn btn-outline">联系方式</a>
+                    <a href="#portfolio" class="btn btn-primary">投资组合</a>
+                    <a href="#contact" class="btn btn-primary">联系方式</a>
                 </div>
             </div>
         </div>
@@ -394,13 +529,13 @@
             </div>
             <div class="about-text reveal">
                 <p>
-                    我是 <strong>Jillax</strong>。
+                    我是 <strong>Jillax</strong>，一名历史学师范专业的本科生。
                     相信每一段过去都在无声地塑造着我们所处的世界。
                 </p>
                 <p>
                     喜欢历史人文社科、教育领域，科幻和科技相关内容。
                     对教育实践和数字工具保持开放与好奇，探索尝试人文与AI工具的融合。
-                    AI降临派，希望相信我们身处智能革命。
+                    记录着学习路上的思考与探索。
                 </p>
                 <div class="about-epigraph">
                     对混沌和未来保持谦虚，<br>
@@ -440,12 +575,108 @@
                     </div>
                 </div>
                 <div class="project-item">
-                    <span class="project-index">04</span>
+                    <span class="project-index">05</span>
                     <div class="project-body">
-                        <div class="project-name">更多项目 · 筹备中</div>
-                        <div class="project-desc">这里会陆续填充更多有趣的内容，敬请期待。</div>
+                        <div class="project-name">TODO · 未来计划</div>
+                        <div class="project-desc">1. 用Agent实现出高考模拟题<br>2. 用Agent实现教材-课标-备课自动化</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Portfolio ========== -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-divider"></div>
+                <h2 class="section-title">投资组合</h2>
+            </div>
+            <div class="portfolio-summary reveal">
+                <span class="portfolio-total-label">总资产净值</span>
+                <span class="portfolio-total">¥73,940</span>
+            </div>
+            <div class="portfolio-grid reveal">
+                <div class="portfolio-chart">
+                    <canvas id="portfolioChart"></canvas>
+                </div>
+                <div class="portfolio-table">
+                    <div class="portfolio-row portfolio-header">
+                        <span>资产类别</span>
+                        <span>金额</span>
+                        <span>占比</span>
+                    </div>
+                    <div class="portfolio-row">
+                        <span><span class="dot" style="background:#c4a35a"></span>现金类</span>
+                        <span>¥31,374</span>
+                        <span>42.43%</span>
+                    </div>
+                    <div class="portfolio-row">
+                        <span><span class="dot" style="background:#8b7355"></span>债券类</span>
+                        <span>¥11,049</span>
+                        <span>14.94%</span>
+                    </div>
+                    <div class="portfolio-row">
+                        <span><span class="dot" style="background:#6b8f71"></span>权益类</span>
+                        <span>¥31,517</span>
+                        <span>42.63%</span>
+                    </div>
+                    <div class="portfolio-row portfolio-total-row">
+                        <span>合计</span>
+                        <span>¥73,940</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-detail reveal">
+                <div class="portfolio-detail-title">持仓明细</div>
+                <div class="portfolio-detail-grid">
+                    <div class="detail-category">
+                        <div class="detail-cat-name" style="color:#c4a35a">现金类</div>
+                        <div class="detail-item">
+                            <span>追梦组合货币基金</span>
+                            <span>¥7,374</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>银行存款</span>
+                            <span>¥24,000</span>
+                        </div>
+                    </div>
+                    <div class="detail-category">
+                        <div class="detail-cat-name" style="color:#8b7355">债券类</div>
+                        <div class="detail-item">
+                            <span>短债</span>
+                            <span>¥11,049</span>
+                        </div>
+                    </div>
+                    <div class="detail-category">
+                        <div class="detail-cat-name" style="color:#6b8f71">权益类</div>
+                        <div class="detail-item">
+                            <span>标普500</span>
+                            <span>¥13,164</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>纳斯达克</span>
+                            <span>¥8,135</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>沪深300</span>
+                            <span>¥7,962</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>恒生指数</span>
+                            <span>¥825</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>恒生科技</span>
+                            <span>¥1,431</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-philosophy reveal">
+                <div class="section-divider"></div>
+                <p>相信人类科技进步，持续买入优质资产，保持在场。</p>
             </div>
         </div>
     </section>
@@ -514,6 +745,49 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+    <!-- Chart.js - Portfolio Doughnut -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('portfolioChart');
+            if (!canvas) return;
+            new Chart(canvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['现金类', '债券类', '权益类'],
+                    datasets: [{
+                        data: [31374, 11049, 31517],
+                        backgroundColor: ['#c4a35a', '#8b7355', '#6b8f71'],
+                        borderColor: '#161412',
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '62%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(22, 20, 18, 0.92)',
+                            titleFont: { family: 'Noto Serif SC', size: 13 },
+                            bodyFont: { family: 'Inter', size: 12 },
+                            padding: 14,
+                            cornerRadius: 2,
+                            callbacks: {
+                                label: function(ctx) {
+                                    const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                    const pct = ((ctx.parsed / total) * 100).toFixed(1);
+                                    return '¥' + ctx.parsed.toLocaleString() + '  (' + pct + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
     </script>
 
 </body>
