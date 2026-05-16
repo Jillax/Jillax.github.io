@@ -18,6 +18,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from html import unescape
+from http.cookies import SimpleCookie
 from pathlib import Path
 
 import requests
@@ -25,7 +26,7 @@ from bs4 import BeautifulSoup
 
 # ===== 配置 =====
 USER_ID = os.environ.get("DOUBAN_USER_ID", "233706855")
-COOKIE = os.environ.get("DOUBAN_COOKIE", "")
+COOKIE_STR = os.environ.get("DOUBAN_COOKIE", "")
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 DATA_FILE = DATA_DIR / "bookshelf.json"
 
@@ -41,8 +42,11 @@ HEADERS = {
 
 SESSION = requests.Session()
 SESSION.headers.update(HEADERS)
-if COOKIE:
-    SESSION.headers.update({"Cookie": COOKIE})
+if COOKIE_STR:
+    # 用 cookie jar 方式设置，避免豆瓣反爬拦截
+    c = SimpleCookie(COOKIE_STR)
+    for key, morsel in c.items():
+        SESSION.cookies.set(key, morsel.value, domain=".douban.com")
 
 # 评分映射
 RATING_MAP = {
@@ -98,14 +102,20 @@ def fetch_page(url, max_retries=3):
 
 
 def parse_collection_page(html, category):
-    """解析豆瓣收藏页（grid 模式）的 HTML，返回条目列表"""
+    """解析豆瓣收藏页的 HTML，返回条目列表"""
     soup = BeautifulSoup(html, "html.parser")
     items = []
 
-    for item in soup.select(".item"):
+    # 书籍用 .subject-item（新版），电影/音乐用 .item（旧版）
+    if category == "book":
+        item_els = soup.select(".subject-item")
+    else:
+        item_els = soup.select(".item")
+
+    for item in item_els:
         try:
             # 封面图片
-            img_el = item.select_one(".pic img.cover")
+            img_el = item.select_one(".pic img")
             if not img_el:
                 continue
             cover = img_el.get("src", "").strip()
@@ -123,41 +133,41 @@ def parse_collection_page(html, category):
                 item_id = id_match.group(1)
 
             # 标题
-            title_el = item.select_one(".title a")
-            title = title_el.get_text(strip=True) if title_el else ""
+            if category == "book":
+                title_el = item.select_one(".info h2 a")
+                title = title_el.get("title", "") or title_el.get_text(strip=True) if title_el else ""
+            else:
+                title_el = item.select_one(".title a em")
+                title = title_el.get_text(strip=True) if title_el else ""
 
             # 作者/艺术家信息
-            author_el = item.select_one(".author")
-            author = unescape(author_el.get_text(strip=True)) if author_el else ""
+            if category == "book":
+                pub_el = item.select_one(".pub")
+                author = unescape(pub_el.get_text(strip=True)) if pub_el else ""
+            else:
+                intro_el = item.select_one(".intro")
+                author = unescape(intro_el.get_text(strip=True)) if intro_el else ""
 
             # 评分
-            rating_el = item.select_one(".rating")
             rating = 0
-            if rating_el:
-                for cls, val in RATING_MAP.items():
-                    if rating_el.select_one(f".{cls}"):
-                        rating = val
-                        break
+            for cls, val in RATING_MAP.items():
+                if item.select_one(f".{cls}"):
+                    rating = val
+                    break
 
-            # 日期
+            # 日期（清理多余文本，如 "2026-01-01\n      读过"）
+            date_el = item.select_one(".date")
             date = ""
-            if rating_el:
-                date_el = rating_el.select_one(".date")
-                if date_el:
-                    date = date_el.get_text(strip=True)
+            if date_el:
+                raw = date_el.get_text(strip=True)
+                date = raw.split("\n")[0].strip() if raw else ""
 
-            # 标签
+            # 标签（收藏页不显示标签，留空）
             tags = []
-            tags_el = item.select_one(".tags")
-            if tags_el:
-                tags_text = tags_el.get_text(strip=True).replace("标签:", "").strip()
-                tags = [t.strip() for t in tags_text.split() if t.strip()]
 
             # 评论
-            comment = ""
             comment_el = item.select_one(".comment")
-            if comment_el:
-                comment = comment_el.get_text(strip=True)
+            comment = comment_el.get_text(strip=True) if comment_el else ""
 
             items.append({
                 "id": item_id,
@@ -207,8 +217,8 @@ def fetch_category_collections(category, statuses):
             log(f"    本页 {len(items)} 条，累计 {len(all_items)} 条")
 
             page += 15
-            # 限制最大页数
-            if page >= 300:
+            # 安全上限（200页 = 3000条，正常不会达到）
+            if page >= 3000:
                 break
 
     return all_items
@@ -268,12 +278,12 @@ def fetch_recent_from_homepage():
 def main():
     log(f"=== 豆瓣书影音数据抓取 ===")
     log(f"用户 ID: {USER_ID}")
-    log(f"Cookie: {'已提供' if COOKIE else '未提供（仅抓取主页最近条目）'}")
+    log(f"Cookie: {'已提供' if COOKIE_STR else '未提供（仅抓取主页最近条目）'}")
     log(f"输出: {DATA_FILE}")
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    if COOKIE:
+    if COOKIE_STR:
         # 有 Cookie：抓取完整收藏
         all_data = {
             "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
