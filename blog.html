@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jillax 的随笔与笔记">
+    <title>随笔 · Jillax</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <!-- marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #181410;
+            --bg-nav: rgba(24, 20, 16, 0.82);
+            --text: #e4dbcc;
+            --text-soft: rgba(228, 219, 204, 0.55);
+            --text-muted: rgba(228, 219, 204, 0.28);
+            --text-faint: rgba(228, 219, 204, 0.12);
+            --gold: #c4a35a;
+            --gold-soft: rgba(196, 163, 90, 0.35);
+            --gold-dim: rgba(196, 163, 90, 0.12);
+            --border: rgba(228, 219, 204, 0.06);
+            --border-light: rgba(228, 219, 204, 0.03);
+            --container: 680px;
+            --font-display: 'Fraunces', 'Noto Serif SC', serif;
+            --font-body: 'Spectral', 'Noto Serif SC', serif;
+            --font-chinese: 'Noto Serif SC', serif;
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f0e8;
+            --bg-nav: rgba(245, 240, 232, 0.85);
+            --text: #2c2824;
+            --text-soft: rgba(44, 40, 36, 0.6);
+            --text-muted: rgba(44, 40, 36, 0.35);
+            --text-faint: rgba(44, 40, 36, 0.12);
+            --gold: #c4a35a;
+            --gold-soft: rgba(196, 163, 90, 0.5);
+            --gold-dim: rgba(196, 163, 90, 0.15);
+            --border: rgba(44, 40, 36, 0.08);
+            --border-light: rgba(44, 40, 36, 0.04);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Nav ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100; padding: 20px 0;
+            background: var(--bg-nav);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        nav .container {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-logo {
+            font-family: var(--font-display); font-weight: 600;
+            font-size: 1.1rem; color: var(--text);
+            letter-spacing: 0.5px;
+            font-variation-settings: 'SOFT' 80, 'WONK' 0;
+        }
+        .nav-links {
+            display: flex; gap: 20px;
+            font-size: 0.78rem; color: var(--text-muted);
+            font-family: var(--font-body);
+        }
+        .nav-links a {
+            transition: color 0.4s ease; letter-spacing: 0.5px; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width 0.4s ease;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .theme-toggle {
+            background: none; border: none;
+            color: var(--text-muted); cursor: pointer;
+            font-size: 0.85rem; padding: 0;
+            transition: color 0.4s ease;
+            font-family: var(--font-body); line-height: 1;
+        }
+        .theme-toggle:hover { color: var(--gold); }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            padding: 100px 0 40px;
+        }
+        .page-header .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            color: var(--text-faint);
+            margin-bottom: 16px;
+            transition: color 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .page-header .back-home:hover { color: var(--gold); }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 600; color: var(--text);
+            letter-spacing: -0.3px;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .page-header p {
+            font-size: 0.82rem; color: var(--text-muted);
+            margin-top: 8px; font-weight: 300;
+        }
+
+        /* ===== Post List ===== */
+        .post-list { display: flex; flex-direction: column; }
+        .post-item {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .post-item:last-child { border-bottom: none; }
+        .post-item:hover { padding-left: 12px; }
+        .post-title {
+            font-family: var(--font-chinese);
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .post-meta {
+            display: flex; gap: 12px; align-items: center;
+            font-size: 0.75rem; color: var(--text-faint);
+            margin-bottom: 10px;
+        }
+        .post-tag {
+            font-size: 0.6rem;
+            padding: 1px 8px;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+        .post-summary {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* ===== Article View ===== */
+        .article-view { display: none; }
+        .article-view.active { display: block; }
+        .list-view.hidden { display: none; }
+
+        .article-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            font-family: var(--font-body);
+            border: none;
+            background: none;
+            padding: 0;
+        }
+        .article-back:hover { color: var(--gold); }
+
+        .article-header {
+            margin-bottom: 40px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .article-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .article-header .article-meta {
+            font-size: 0.78rem;
+            color: var(--text-faint);
+            margin-top: 12px;
+        }
+
+        /* ===== Markdown Content ===== */
+        .article-content {
+            font-size: 0.92rem;
+            color: var(--text-soft);
+            font-weight: 300;
+            line-height: 2;
+        }
+        .article-content h1,
+        .article-content h2,
+        .article-content h3 {
+            font-family: var(--font-chinese);
+            color: var(--text);
+            font-weight: 500;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+        .article-content h1 { font-size: 1.4rem; }
+        .article-content h2 { font-size: 1.2rem; }
+        .article-content h3 { font-size: 1.05rem; }
+        .article-content p { margin-bottom: 16px; }
+        .article-content strong { color: var(--text); font-weight: 500; }
+        .article-content em { font-style: italic; }
+        .article-content a {
+            color: var(--gold-soft);
+            border-bottom: 1px solid var(--gold-dim);
+            transition: color 0.3s ease;
+        }
+        .article-content a:hover { color: var(--gold); }
+        .article-content blockquote {
+            border-left: 2px solid var(--gold-dim);
+            padding: 12px 20px;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-style: italic;
+            background: var(--border-light);
+        }
+        .article-content blockquote p:last-child { margin-bottom: 0; }
+        .article-content ul,
+        .article-content ol {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        .article-content li { margin-bottom: 6px; }
+        .article-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 36px 0;
+        }
+        .article-content code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82em;
+            background: var(--border-light);
+            padding: 2px 6px;
+            color: var(--gold-soft);
+        }
+        .article-content pre {
+            background: var(--border-light);
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-soft);
+            font-size: 0.82rem;
+        }
+        .article-content img {
+            margin: 24px auto;
+        }
+
+        /* ===== Empty ===== */
+        .empty-state {
+            text-align: center; padding: 60px 20px;
+            color: var(--text-faint); font-size: 0.85rem;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 48px 0; margin-top: 80px;
+            border-top: 1px solid var(--border-light);
+            text-align: center; color: var(--text-faint);
+            font-size: 0.75rem;
+            font-family: var(--font-display); font-style: italic;
+            font-variation-settings: 'SOFT' 100, 'WONK' 1;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            nav { padding: 16px 0; }
+            .nav-links { gap: 14px; font-size: 0.75rem; }
+            .nav-links a:nth-child(5),
+            .nav-links a:nth-child(6),
+            .nav-links a:nth-child(7),
+            .nav-links a:nth-child(8) { display: none; }
+            .container { padding: 0 24px; }
+            .page-header { padding: 80px 0 28px; }
+            .post-item { padding: 20px 0; }
+            .post-item:hover { padding-left: 8px; }
+            .article-content { font-size: 0.88rem; }
+        }
+        @media (max-width: 480px) {
+            .nav-links a:nth-child(4),
+            .nav-links a:nth-child(5),
+            .nav-links a:nth-child(6),
+            .nav-links a:nth-child(7),
+            .nav-links a:nth-child(8) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Nav ===== -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-logo">Jillax</a>
+            <div class="nav-links">
+                <a href="index.html#about">关于</a>
+                <a href="index.html#projects">笔墨</a>
+                <a href="portfolio.html">投资</a>
+                <a href="contact.html">联系</a>
+                <a href="share.html">分享</a>
+                <a href="translations.html">译制</a>
+                <a href="bookshelf.html">书影音</a>
+                <a href="blog.html" class="current">随笔</a>
+                <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Header ===== -->
+    <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-home">← 返回主页</a>
+            <h1>📝 随笔</h1>
+            <p>笔记 · 思考 · 记录</p>
+        </div>
+
+        <!-- ===== Post List ===== -->
+        <div class="post-list" id="postList"></div>
+        <div class="empty-state" id="emptyState" style="display:none">还没有文章</div>
+
+        <!-- ===== Article View ===== -->
+        <div class="article-view" id="articleView">
+            <button class="article-back" id="articleBack">← 返回列表</button>
+            <div class="article-header">
+                <h1 id="articleTitle"></h1>
+                <div class="article-meta" id="articleMeta"></div>
+            </div>
+            <div class="article-content" id="articleContent"></div>
+        </div>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Jillax</p>
+        </div>
+    </footer>
+
+    <!-- ===== Theme Toggle ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                html.setAttribute('data-theme', 'light');
+                toggle.textContent = '☾';
+            } else if (saved === 'dark') {
+                html.removeAttribute('data-theme');
+                toggle.textContent = '☀';
+            }
+            toggle.addEventListener('click', function() {
+                const isLight = html.hasAttribute('data-theme');
+                if (isLight) {
+                    html.removeAttribute('data-theme');
+                    toggle.textContent = '☀';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    toggle.textContent = '☾';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+
+    <!-- ===== Blog ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const postList = document.getElementById('postList');
+            const emptyState = document.getElementById('emptyState');
+            const articleView = document.getElementById('articleView');
+            const articleTitle = document.getElementById('articleTitle');
+            const articleMeta = document.getElementById('articleMeta');
+            const articleContent = document.getElementById('articleContent');
+            const articleBack = document.getElementById('articleBack');
+            let posts = [];
+
+            // Show list, hide article
+            function showList() {
+                postList.style.display = '';
+                articleView.classList.remove('active');
+                history.pushState(null, '', 'blog.html');
+            }
+
+            // Show article
+            function showArticle(postId) {
+                const post = posts.find(p => p.id === postId);
+                if (!post) { showList(); return; }
+
+                postList.style.display = 'none';
+                articleView.classList.add('active');
+                articleTitle.textContent = post.title;
+                articleMeta.textContent = post.date + (post.tags ? '  ·  ' + post.tags.join(' · ') : '');
+                articleContent.innerHTML = '<p style="color:var(--text-faint)">加载中...</p>';
+
+                history.pushState(null, '', 'blog.html#' + postId);
+
+                // Fetch and render markdown
+                fetch('data/posts/' + post.file)
+                    .then(r => {
+                        if (!r.ok) throw new Error('Not found');
+                        return r.text();
+                    })
+                    .then(md => {
+                        articleContent.innerHTML = marked.parse(md);
+                    })
+                    .catch(() => {
+                        articleContent.innerHTML = '<p style="color:var(--text-muted)">文章加载失败</p>';
+                    });
+            }
+
+            // Render post list
+            function renderList() {
+                if (posts.length === 0) {
+                    postList.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                emptyState.style.display = 'none';
+                postList.innerHTML = posts.map(p => `
+                    <div class="post-item" data-id="${p.id}">
+                        <div class="post-title">${p.title}</div>
+                        <div class="post-meta">
+                            <span>${p.date}</span>
+                            ${p.tags ? p.tags.map(t => `<span class="post-tag">${t}</span>`).join('') : ''}
+                        </div>
+                        <div class="post-summary">${p.summary}</div>
+                    </div>
+                `).join('');
+
+                postList.querySelectorAll('.post-item').forEach(el => {
+                    el.addEventListener('click', () => showArticle(el.dataset.id));
+                });
+            }
+
+            // Load posts
+            fetch('data/posts.json')
+                .then(r => r.json())
+                .then(data => {
+                    posts = data;
+                    renderList();
+
+                    // Check URL hash for direct article link
+                    const hash = window.location.hash.slice(1);
+                    if (hash) {
+                        const found = posts.find(p => p.id === hash);
+                        if (found) showArticle(hash);
+                    }
+                })
+                .catch(() => {
+                    postList.innerHTML = '<div class="empty-state">加载失败</div>';
+                });
+
+            // Back button
+            articleBack.addEventListener('click', showList);
+
+            // Handle browser back/forward
+            window.addEventListener('popstate', function() {
+                const hash = window.location.hash.slice(1);
+                if (hash) {
+                    const found = posts.find(p => p.id === hash);
+                    if (found) showArticle(hash);
+                } else {
+                    showList();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jillax 的投资组合">
+    <title>投资 · Jillax</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #181410;
+            --bg-nav: rgba(24, 20, 16, 0.82);
+            --text: #e4dbcc;
+            --text-soft: rgba(228, 219, 204, 0.55);
+            --text-muted: rgba(228, 219, 204, 0.28);
+            --text-faint: rgba(228, 219, 204, 0.12);
+            --gold: #c4a35a;
+            --gold-soft: rgba(196, 163, 90, 0.35);
+            --gold-dim: rgba(196, 163, 90, 0.12);
+            --border: rgba(228, 219, 204, 0.06);
+            --border-light: rgba(228, 219, 204, 0.03);
+            --container: 680px;
+            --font-display: 'Fraunces', 'Noto Serif SC', serif;
+            --font-body: 'Spectral', 'Noto Serif SC', serif;
+            --font-chinese: 'Noto Serif SC', serif;
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f0e8;
+            --bg-nav: rgba(245, 240, 232, 0.85);
+            --text: #2c2824;
+            --text-soft: rgba(44, 40, 36, 0.6);
+            --text-muted: rgba(44, 40, 36, 0.35);
+            --text-faint: rgba(44, 40, 36, 0.12);
+            --gold: #c4a35a;
+            --gold-soft: rgba(196, 163, 90, 0.5);
+            --gold-dim: rgba(196, 163, 90, 0.15);
+            --border: rgba(44, 40, 36, 0.08);
+            --border-light: rgba(44, 40, 36, 0.04);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Nav ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100; padding: 20px 0;
+            background: var(--bg-nav);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        nav .container {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-logo {
+            font-family: var(--font-display); font-weight: 600;
+            font-size: 1.1rem; color: var(--text);
+            letter-spacing: 0.5px;
+            font-variation-settings: 'SOFT' 80, 'WONK' 0;
+        }
+        .nav-links {
+            display: flex; gap: 20px;
+            font-size: 0.78rem; color: var(--text-muted);
+            font-family: var(--font-body);
+        }
+        .nav-links a {
+            transition: color 0.4s ease; letter-spacing: 0.5px; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width 0.4s ease;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links .current { color: var(--text-soft); }
+        .nav-links .current::after { width: 100%; }
+        .theme-toggle {
+            background: none; border: none;
+            color: var(--text-muted); cursor: pointer;
+            font-size: 0.85rem; padding: 0;
+            transition: color 0.4s ease;
+            font-family: var(--font-body); line-height: 1;
+        }
+        .theme-toggle:hover { color: var(--gold); }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            padding: 100px 0 40px;
+        }
+        .page-header .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            color: var(--text-faint);
+            margin-bottom: 16px;
+            transition: color 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .page-header .back-home:hover { color: var(--gold); }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 600; color: var(--text);
+            letter-spacing: -0.3px;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .page-header p {
+            font-size: 0.82rem; color: var(--text-muted);
+            margin-top: 8px; font-weight: 300;
+        }
+
+        /* ===== Portfolio ===== */
+        .portfolio-summary {
+            text-align: center;
+            margin-bottom: 48px;
+            padding: 44px 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .portfolio-total-label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-faint);
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            font-family: var(--font-body);
+        }
+        .portfolio-total {
+            font-family: var(--font-display);
+            font-size: 3.4rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1px;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .portfolio-chart {
+            max-width: 220px;
+            margin: 0 auto;
+        }
+        .portfolio-table { width: 100%; }
+        .portfolio-row {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            align-items: center;
+            font-weight: 300;
+        }
+        .portfolio-header {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            font-weight: 400;
+        }
+        .portfolio-row span:nth-child(2),
+        .portfolio-row span:nth-child(3) { text-align: right; }
+        .portfolio-total-row {
+            border-bottom: none;
+            color: var(--text);
+            font-weight: 500;
+            padding-top: 14px;
+        }
+        .dot {
+            display: inline-block;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .portfolio-detail { margin-top: 56px; }
+        .portfolio-detail-title {
+            font-size: 0.72rem;
+            color: var(--text-faint);
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            font-family: var(--font-chinese);
+        }
+        .portfolio-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+        }
+        .detail-category { padding: 0; }
+        .detail-cat-name {
+            font-family: var(--font-chinese);
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-light);
+            font-weight: 300;
+        }
+        .detail-item:last-child { border-bottom: none; }
+        .detail-item span:last-child { color: var(--text-soft); }
+        .portfolio-philosophy {
+            margin-top: 56px;
+            text-align: center;
+            padding: 40px 0 0;
+            border-top: 1px solid var(--border);
+        }
+        .portfolio-philosophy p {
+            font-family: var(--font-chinese);
+            font-size: 0.82rem;
+            color: var(--gold-soft);
+            line-height: 1.9;
+            letter-spacing: 1px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 48px 0; margin-top: 80px;
+            border-top: 1px solid var(--border-light);
+            text-align: center; color: var(--text-faint);
+            font-size: 0.75rem;
+            font-family: var(--font-display); font-style: italic;
+            font-variation-settings: 'SOFT' 100, 'WONK' 1;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            nav { padding: 16px 0; }
+            .nav-links { gap: 14px; font-size: 0.75rem; }
+            .nav-links a:nth-child(5),
+            .nav-links a:nth-child(6),
+            .nav-links a:nth-child(7),
+            .nav-links a:nth-child(8) { display: none; }
+            .container { padding: 0 24px; }
+            .page-header { padding: 80px 0 28px; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 28px; }
+            .portfolio-chart { max-width: 200px; }
+            .portfolio-detail-grid { grid-template-columns: 1fr; gap: 24px; }
+            .portfolio-total { font-size: 2.6rem; }
+        }
+        @media (max-width: 480px) {
+            .nav-links a:nth-child(4),
+            .nav-links a:nth-child(5),
+            .nav-links a:nth-child(6),
+            .nav-links a:nth-child(7),
+            .nav-links a:nth-child(8) { display: none; }
+            .portfolio-row { grid-template-columns: 1.4fr 1fr 1fr; font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Nav ===== -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-logo">Jillax</a>
+            <div class="nav-links">
+                <a href="index.html#about">关于</a>
+                <a href="index.html#projects">笔墨</a>
+                <a href="portfolio.html" class="current">投资</a>
+                <a href="contact.html">联系</a>
+                <a href="share.html">分享</a>
+                <a href="translations.html">译制</a>
+                <a href="bookshelf.html">书影音</a>
+                <a href="blog.html">随笔</a>
+                <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Header ===== -->
+    <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-home">← 返回主页</a>
+            <h1>📊 投资组合</h1>
+            <p>资产配置与持仓明细</p>
+        </div>
+
+        <!-- ===== Summary ===== -->
+        <div class="portfolio-summary">
+            <span class="portfolio-total-label">总资产净值</span>
+            <span class="portfolio-total">¥73,940</span>
+        </div>
+
+        <!-- ===== Chart + Table ===== -->
+        <div class="portfolio-grid">
+            <div class="portfolio-chart">
+                <canvas id="portfolioChart"></canvas>
+            </div>
+            <div class="portfolio-table">
+                <div class="portfolio-row portfolio-header">
+                    <span>资产类别</span>
+                    <span>金额</span>
+                    <span>占比</span>
+                </div>
+                <div class="portfolio-row">
+                    <span><span class="dot" style="background:#c4a35a"></span>现金类</span>
+                    <span>¥31,374</span>
+                    <span>42.43%</span>
+                </div>
+                <div class="portfolio-row">
+                    <span><span class="dot" style="background:#8b7355"></span>债券类</span>
+                    <span>¥11,049</span>
+                    <span>14.94%</span>
+                </div>
+                <div class="portfolio-row">
+                    <span><span class="dot" style="background:#6b8f71"></span>权益类</span>
+                    <span>¥31,517</span>
+                    <span>42.63%</span>
+                </div>
+                <div class="portfolio-row portfolio-total-row">
+                    <span>合计</span>
+                    <span>¥73,940</span>
+                    <span>100%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Detail ===== -->
+        <div class="portfolio-detail">
+            <div class="portfolio-detail-title">持仓明细</div>
+            <div class="portfolio-detail-grid">
+                <div class="detail-category">
+                    <div class="detail-cat-name" style="color:#c4a35a">现金类</div>
+                    <div class="detail-item">
+                        <span>货币基金</span>
+                        <span>¥7,374</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>银行存款</span>
+                        <span>¥24,000</span>
+                    </div>
+                </div>
+                <div class="detail-category">
+                    <div class="detail-cat-name" style="color:#8b7355">债券类</div>
+                    <div class="detail-item">
+                        <span>短债</span>
+                        <span>¥11,049</span>
+                    </div>
+                </div>
+                <div class="detail-category">
+                    <div class="detail-cat-name" style="color:#6b8f71">权益类</div>
+                    <div class="detail-item">
+                        <span>标普500</span>
+                        <span>¥13,164</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>纳斯达克</span>
+                        <span>¥8,135</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>沪深300</span>
+                        <span>¥7,962</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>恒生指数</span>
+                        <span>¥825</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>恒生科技</span>
+                        <span>¥1,431</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-philosophy">
+            <p>相信人类科技进步，持续买入优质资产，保持在场。</p>
+        </div>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Jillax</p>
+        </div>
+    </footer>
+
+    <!-- ===== Theme Toggle ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                html.setAttribute('data-theme', 'light');
+                toggle.textContent = '☾';
+            } else if (saved === 'dark') {
+                html.removeAttribute('data-theme');
+                toggle.textContent = '☀';
+            }
+            toggle.addEventListener('click', function() {
+                const isLight = html.hasAttribute('data-theme');
+                if (isLight) {
+                    html.removeAttribute('data-theme');
+                    toggle.textContent = '☀';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    toggle.textContent = '☾';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+
+    <!-- ===== Chart ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('portfolioChart');
+            if (!canvas) return;
+            new Chart(canvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['现金类', '债券类', '权益类'],
+                    datasets: [{
+                        data: [31374, 11049, 31517],
+                        backgroundColor: ['#c4a35a', '#8b7355', '#6b8f71'],
+                        borderWidth: 0,
+                        spacing: 3,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '62%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(24, 20, 16, 0.92)',
+                            titleFont: { family: 'Noto Serif SC', size: 13 },
+                            bodyFont: { family: 'Spectral', size: 12 },
+                            padding: 14,
+                            cornerRadius: 0,
+                            callbacks: {
+                                label: function(ctx) {
+                                    const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                    const pct = ((ctx.parsed / total) * 100).toFixed(1);
+                                    return '¥' + ctx.parsed.toLocaleString() + '  (' + pct + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

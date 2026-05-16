@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jillax 的译制作品">
+    <title>译制 · Jillax</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #181410;
+            --bg-nav: rgba(24, 20, 16, 0.82);
+            --text: #e4dbcc;
+            --text-soft: rgba(228, 219, 204, 0.55);
+            --text-muted: rgba(228, 219, 204, 0.28);
+            --text-faint: rgba(228, 219, 204, 0.12);
+            --gold: #c4a35a;
+            --gold-soft: rgba(196, 163, 90, 0.35);
+            --gold-dim: rgba(196, 163, 90, 0.12);
+            --border: rgba(228, 219, 204, 0.06);
+            --border-light: rgba(228, 219, 204, 0.03);
+            --container: 680px;
+            --font-display: 'Fraunces', 'Noto Serif SC', serif;
+            --font-body: 'Spectral', 'Noto Serif SC', serif;
+            --font-chinese: 'Noto Serif SC', serif;
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f0e8;
+            --bg-nav: rgba(245, 240, 232, 0.85);
+            --text: #2c2824;
+            --text-soft: rgba(44, 40, 36, 0.6);
+            --text-muted: rgba(44, 40, 36, 0.35);
+            --text-faint: rgba(44, 40, 36, 0.12);
+            --gold: #c4a35a;
+            --gold-soft: rgba(196, 163, 90, 0.5);
+            --gold-dim: rgba(196, 163, 90, 0.15);
+            --border: rgba(44, 40, 36, 0.08);
+            --border-light: rgba(44, 40, 36, 0.04);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Nav ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100; padding: 20px 0;
+            background: var(--bg-nav);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+        }
+        nav .container {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-logo {
+            font-family: var(--font-display); font-weight: 600;
+            font-size: 1.1rem; color: var(--text);
+            letter-spacing: 0.5px;
+            font-variation-settings: 'SOFT' 80, 'WONK' 0;
+        }
+        .nav-links {
+            display: flex; gap: 20px;
+            font-size: 0.78rem; color: var(--text-muted);
+            font-family: var(--font-body);
+        }
+        .nav-links a {
+            transition: color 0.4s ease; letter-spacing: 0.5px; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width 0.4s ease;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links .current { color: var(--text-soft); }
+        .nav-links .current::after { width: 100%; }
+        .theme-toggle {
+            background: none; border: none;
+            color: var(--text-muted); cursor: pointer;
+            font-size: 0.85rem; padding: 0;
+            transition: color 0.4s ease;
+            font-family: var(--font-body); line-height: 1;
+        }
+        .theme-toggle:hover { color: var(--gold); }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            padding: 100px 0 40px;
+        }
+        .page-header .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            color: var(--text-faint);
+            margin-bottom: 16px;
+            transition: color 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .page-header .back-home:hover { color: var(--gold); }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 600; color: var(--text);
+            letter-spacing: -0.3px;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .page-header p {
+            font-size: 0.82rem; color: var(--text-muted);
+            margin-top: 8px; font-weight: 300;
+        }
+
+        /* ===== Filter ===== */
+        .filter-tabs {
+            display: flex; gap: 4px; margin-bottom: 36px; flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 6px 16px; font-size: 0.78rem;
+            color: var(--text-muted); border: 1px solid var(--border);
+            background: none; cursor: pointer;
+            transition: all 0.3s ease; font-family: var(--font-body);
+        }
+        .filter-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
+        .filter-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
+
+        /* ===== Translation Cards ===== */
+        .trans-list { display: flex; flex-direction: column; gap: 16px; }
+        .trans-card {
+            display: flex; gap: 20px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .trans-card:hover { border-color: var(--gold-dim); }
+        .trans-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            width: 48px;
+            text-align: center;
+            padding-top: 2px;
+        }
+        .trans-body { flex: 1; min-width: 0; }
+        .trans-title {
+            font-family: var(--font-chinese);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+        .trans-original {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+        .trans-meta {
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+        }
+        .trans-status {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border: 1px solid var(--border);
+            color: var(--text-soft);
+            letter-spacing: 0.5px;
+        }
+        .trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--olive, #7a8b6e); }
+        .trans-status.ongoing { border-color: var(--gold-dim); color: var(--gold-soft); }
+        .trans-source {
+            font-size: 0.7rem;
+            color: var(--text-faint);
+        }
+        .trans-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .trans-links {
+            margin-top: 10px;
+            display: flex; gap: 12px;
+        }
+        .trans-link {
+            font-size: 0.72rem;
+            color: var(--gold-soft);
+            transition: color 0.3s ease;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .trans-link:hover { color: var(--gold); }
+
+        /* ===== Empty ===== */
+        .empty-state {
+            text-align: center; padding: 60px 20px;
+            color: var(--text-faint); font-size: 0.85rem;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 48px 0; margin-top: 80px;
+            border-top: 1px solid var(--border-light);
+            text-align: center; color: var(--text-faint);
+            font-size: 0.75rem;
+            font-family: var(--font-display); font-style: italic;
+            font-variation-settings: 'SOFT' 100, 'WONK' 1;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            nav { padding: 16px 0; }
+            .nav-links { gap: 14px; font-size: 0.75rem; }
+            .nav-links a:nth-child(5),
+            .nav-links a:nth-child(6),
+            .nav-links a:nth-child(7),
+            .nav-links a:nth-child(8) { display: none; }
+            .container { padding: 0 24px; }
+            .page-header { padding: 80px 0 28px; }
+            .trans-card { padding: 18px; flex-direction: column; gap: 12px; }
+            .trans-icon { text-align: left; }
+        }
+        @media (max-width: 480px) {
+            .nav-links a:nth-child(4),
+            .nav-links a:nth-child(5),
+            .nav-links a:nth-child(6),
+            .nav-links a:nth-child(7),
+            .nav-links a:nth-child(8) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Nav ===== -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-logo">Jillax</a>
+            <div class="nav-links">
+                <a href="index.html#about">关于</a>
+                <a href="index.html#projects">笔墨</a>
+                <a href="portfolio.html">投资</a>
+                <a href="contact.html">联系</a>
+                <a href="share.html">分享</a>
+                <a href="translations.html" class="current">译制</a>
+                <a href="bookshelf.html">书影音</a>
+                <a href="blog.html">随笔</a>
+                <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== Header ===== -->
+    <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-home">← 返回主页</a>
+            <h1>🎬 译制作品</h1>
+            <p>搬运与翻译感兴趣的外语视频</p>
+        </div>
+
+        <!-- ===== Filter ===== -->
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="all">全部</button>
+            <button class="filter-tab" data-filter="已完成">已完成</button>
+            <button class="filter-tab" data-filter="译制中">译制中</button>
+        </div>
+
+        <!-- ===== List ===== -->
+        <div class="trans-list" id="transList"></div>
+        <div class="empty-state" id="emptyState" style="display:none">没有符合条件的作品</div>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Jillax</p>
+        </div>
+    </footer>
+
+    <!-- ===== Theme Toggle ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                html.setAttribute('data-theme', 'light');
+                toggle.textContent = '☾';
+            } else if (saved === 'dark') {
+                html.removeAttribute('data-theme');
+                toggle.textContent = '☀';
+            }
+            toggle.addEventListener('click', function() {
+                const isLight = html.hasAttribute('data-theme');
+                if (isLight) {
+                    html.removeAttribute('data-theme');
+                    toggle.textContent = '☀';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    html.setAttribute('data-theme', 'light');
+                    toggle.textContent = '☾';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+
+    <!-- ===== Translations ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const list = document.getElementById('transList');
+            const empty = document.getElementById('emptyState');
+            const tabs = document.querySelectorAll('.filter-tab');
+            let allItems = [];
+            let currentFilter = 'all';
+
+            const statusLabels = { '已完成': 'done', '译制中': 'ongoing' };
+
+            function renderItems(filter) {
+                const filtered = filter === 'all'
+                    ? allItems
+                    : allItems.filter(item => item.status === filter);
+
+                if (filtered.length === 0) {
+                    list.innerHTML = '';
+                    empty.style.display = 'block';
+                    return;
+                }
+                empty.style.display = 'none';
+
+                list.innerHTML = filtered.map(item => {
+                    const sClass = statusLabels[item.status] || '';
+                    const hasBili = item.bvid && item.bvid.trim();
+                    const hasSource = item.sourceUrl && item.sourceUrl.trim();
+                    return `
+                        <div class="trans-card">
+                            <div class="trans-icon">🎬</div>
+                            <div class="trans-body">
+                                <div class="trans-title">${item.title}</div>
+                                <div class="trans-original">${item.originalTitle}</div>
+                                <div class="trans-meta">
+                                    <span class="trans-status ${sClass}">${item.status}</span>
+                                    <span class="trans-source">${item.source}</span>
+                                </div>
+                                ${item.description ? `<div class="trans-desc">${item.description}</div>` : ''}
+                                <div class="trans-links">
+                                    ${hasBili ? `<a href="https://www.bilibili.com/video/${item.bvid}" target="_blank" class="trans-link">▶ 在B站观看</a>` : ''}
+                                    ${hasSource ? `<a href="${item.sourceUrl}" target="_blank" class="trans-link">↗ 原始视频</a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            fetch('data/translations.json')
+                .then(r => r.json())
+                .then(data => {
+                    allItems = data;
+                    renderItems(currentFilter);
+                })
+                .catch(() => {
+                    list.innerHTML = '<div class="empty-state">加载失败</div>';
+                });
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderItems(currentFilter);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
