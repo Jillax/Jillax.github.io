@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的个人主页 — 历史与人文的数字栖息地">
+    <meta name="description" content="Jillax 的个人主页">
     <title>Jillax · 个人主页</title>
 
     <!-- Google Fonts -->
@@ -20,9 +20,9 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #161412;
-            color: #d4cdc0;
-            line-height: 1.8;
+            background: #1a1714;
+            color: #e8e0d2;
+            line-height: 1.9;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -31,23 +31,11 @@
         ul { list-style: none; }
         img { max-width: 100%; display: block; }
 
-        /* ========== Subtle Warm Ambient ========== */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 25% 40%, rgba(196, 163, 90, 0.03) 0%, transparent 55%),
-                radial-gradient(ellipse at 75% 60%, rgba(180, 120, 80, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
         /* ========== Container ========== */
         .container {
-            max-width: 720px;
+            max-width: 640px;
             margin: 0 auto;
-            padding: 0 28px;
+            padding: 0 32px;
             position: relative;
             z-index: 1;
         }
@@ -59,11 +47,10 @@
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 18px 0;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(22, 20, 18, 0.7);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 24px 0;
+            background: rgba(26, 23, 20, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
         nav .container {
             display: flex;
@@ -73,52 +60,62 @@
         .nav-logo {
             font-family: 'Noto Serif SC', 'EB Garamond', serif;
             font-weight: 600;
-            font-size: 1.1rem;
-            color: #e0d6c8;
-            letter-spacing: 0.5px;
+            font-size: 1rem;
+            color: #e8e0d2;
+            letter-spacing: 1px;
         }
         .nav-links {
             display: flex;
             gap: 28px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 400;
-            color: rgba(212, 205, 192, 0.5);
+            color: rgba(232, 224, 210, 0.3);
         }
         .nav-links a {
-            transition: color 0.3s ease;
-            letter-spacing: 0.5px;
+            transition: color 0.4s ease;
+            letter-spacing: 0.8px;
         }
-        .nav-links a:hover { color: #c4a35a; }
+        .nav-links a:hover { color: rgba(232, 224, 210, 0.7); }
 
         /* ========== Hero ========== */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 120px 0 80px;
+            padding: 140px 0 100px;
         }
         .hero-content {
-            max-width: 600px;
+            max-width: 580px;
         }
         .hero-greeting {
             font-family: 'Noto Serif SC', serif;
-            font-size: 0.95rem;
-            color: #c4a35a;
-            margin-bottom: 24px;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            color: rgba(196, 163, 90, 0.5);
+            margin-bottom: 32px;
+            letter-spacing: 4px;
             opacity: 0;
-            animation: fadeUp 0.8s ease 0.2s forwards;
+            animation: fadeUp 0.9s ease 0.2s forwards;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .hero-greeting::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: rgba(196, 163, 90, 0.3);
         }
         .hero h1 {
             font-family: 'Noto Serif SC', 'EB Garamond', serif;
-            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-size: clamp(3.5rem, 7vw, 5.5rem);
             font-weight: 600;
-            line-height: 1.25;
-            margin-bottom: 12px;
-            letter-spacing: 1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
             color: #e8e0d2;
             opacity: 0;
-            animation: fadeUp 0.8s ease 0.35s forwards;
+            animation: fadeUp 0.9s ease 0.35s forwards;
         }
         .hero h1 .highlight {
             color: #c4a35a;
@@ -126,109 +123,92 @@
         }
         .hero-subtitle {
             font-family: 'Noto Serif SC', serif;
-            font-size: clamp(1rem, 2vw, 1.15rem);
-            color: rgba(212, 205, 192, 0.4);
+            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+            color: rgba(232, 224, 210, 0.3);
             font-weight: 400;
             font-style: italic;
-            margin-bottom: 28px;
-            letter-spacing: 0.8px;
+            margin-bottom: 36px;
+            letter-spacing: 1.5px;
             opacity: 0;
-            animation: fadeUp 0.8s ease 0.45s forwards;
+            animation: fadeUp 0.9s ease 0.45s forwards;
         }
         .hero-desc {
             font-size: 0.95rem;
-            color: rgba(212, 205, 192, 0.48);
-            max-width: 480px;
-            margin-bottom: 40px;
-            line-height: 2;
+            color: rgba(232, 224, 210, 0.38);
+            max-width: 420px;
+            margin-bottom: 48px;
+            line-height: 2.1;
             letter-spacing: 0.3px;
             opacity: 0;
-            animation: fadeUp 0.8s ease 0.55s forwards;
+            animation: fadeUp 0.9s ease 0.55s forwards;
         }
         .hero-actions {
             display: flex;
-            gap: 16px;
+            gap: 0;
             flex-wrap: wrap;
             opacity: 0;
-            animation: fadeUp 0.8s ease 0.65s forwards;
+            animation: fadeUp 0.9s ease 0.65s forwards;
         }
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 1px;
+            padding: 8px 0;
+            margin-right: 28px;
             font-weight: 400;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
             cursor: pointer;
             border: none;
-            letter-spacing: 0.5px;
+            background: none;
+            color: rgba(232, 224, 210, 0.5);
+            letter-spacing: 0.8px;
+            border-bottom: 1px solid transparent;
         }
-        .btn-primary {
-            background: #c4a35a;
-            color: #161412;
-        }
-        .btn-primary:hover {
-            background: #d4b36a;
-            transform: translateY(-1px);
-        }
-        .btn-outline {
-            background: transparent;
-            color: rgba(212, 205, 192, 0.65);
-            border: 1px solid rgba(212, 205, 192, 0.12);
-        }
-        .btn-outline:hover {
-            border-color: #c4a35a;
+        .btn:hover {
             color: #c4a35a;
-            transform: translateY(-1px);
+            border-bottom-color: #c4a35a;
         }
 
         /* ========== Section Common ========== */
         .section {
-            padding: 100px 0;
+            padding: 140px 0;
         }
         .section-header {
             margin-bottom: 48px;
         }
-        .section-divider {
-            width: 36px;
-            height: 1.5px;
-            background: #c4a35a;
-            margin-bottom: 20px;
-        }
         .section-title {
             font-family: 'Noto Serif SC', serif;
-            font-size: clamp(1.4rem, 2.5vw, 1.7rem);
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            color: #e8e0d2;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(232, 224, 210, 0.18);
         }
 
         /* ========== About ========== */
         .about-text {
-            max-width: 600px;
+            max-width: 540px;
         }
         .about-text p {
-            color: rgba(212, 205, 192, 0.58);
+            color: rgba(232, 224, 210, 0.48);
             font-size: 0.95rem;
-            line-height: 2.1;
+            line-height: 2.2;
             letter-spacing: 0.3px;
         }
-        .about-text p + p { margin-top: 20px; }
+        .about-text p + p { margin-top: 24px; }
         .about-text strong {
-            color: rgba(212, 205, 192, 0.85);
+            color: rgba(232, 224, 210, 0.75);
             font-weight: 500;
         }
         .about-epigraph {
             font-family: 'Noto Serif SC', serif;
-            font-size: 1rem;
-            color: rgba(196, 163, 90, 0.5);
+            font-size: 0.92rem;
+            color: rgba(196, 163, 90, 0.4);
             font-style: italic;
-            margin-top: 36px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            letter-spacing: 0.8px;
+            margin-top: 44px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            letter-spacing: 1px;
             line-height: 1.9;
         }
 
@@ -240,67 +220,62 @@
         .project-item {
             display: flex;
             gap: 20px;
-            padding: 24px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s ease;
+            padding: 20px 0;
+            transition: opacity 0.4s ease;
             align-items: flex-start;
         }
-        .project-item:last-child { border-bottom: none; }
-        .project-item:hover {
-            padding-left: 8px;
-        }
+        .project-item:last-child { padding-bottom: 0; }
+        .project-item:hover { opacity: 0.5; }
         .project-index {
             font-family: 'EB Garamond', serif;
-            font-size: 0.8rem;
-            color: rgba(212, 205, 192, 0.2);
-            min-width: 32px;
+            font-size: 0.75rem;
+            color: rgba(232, 224, 210, 0.12);
+            min-width: 28px;
             flex-shrink: 0;
-            padding-top: 2px;
+            padding-top: 3px;
         }
         .project-body { flex: 1; }
         .project-name {
             font-size: 1rem;
             font-weight: 500;
-            color: rgba(212, 205, 192, 0.82);
-            margin-bottom: 4px;
+            color: rgba(232, 224, 210, 0.72);
+            margin-bottom: 6px;
             letter-spacing: 0.3px;
         }
         .project-desc {
             font-size: 0.88rem;
-            color: rgba(212, 205, 192, 0.4);
+            color: rgba(232, 224, 210, 0.32);
             line-height: 1.7;
         }
 
         /* ========== Portfolio ========== */
         .portfolio-summary {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 36px 32px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(255, 255, 255, 0.015);
+            margin-bottom: 48px;
+            padding: 48px 0;
         }
         .portfolio-total-label {
             display: block;
-            font-size: 0.82rem;
-            color: rgba(212, 205, 192, 0.35);
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            font-size: 0.78rem;
+            color: rgba(232, 224, 210, 0.25);
+            letter-spacing: 2.5px;
+            margin-bottom: 12px;
         }
         .portfolio-total {
             font-family: 'EB Garamond', serif;
-            font-size: 2.8rem;
+            font-size: 3.6rem;
             font-weight: 600;
             color: #c4a35a;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         .portfolio-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 32px;
+            gap: 40px;
             align-items: center;
         }
         .portfolio-chart {
-            max-width: 260px;
+            max-width: 220px;
             margin: 0 auto;
         }
         .portfolio-table {
@@ -310,16 +285,16 @@
             display: grid;
             grid-template-columns: 1.8fr 1fr 1fr;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             font-size: 0.88rem;
-            color: rgba(212, 205, 192, 0.6);
+            color: rgba(232, 224, 210, 0.5);
             align-items: center;
         }
         .portfolio-header {
-            font-size: 0.75rem;
-            color: rgba(212, 205, 192, 0.25);
-            letter-spacing: 0.8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.7rem;
+            color: rgba(232, 224, 210, 0.18);
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding-bottom: 10px;
         }
         .portfolio-row span:nth-child(2),
@@ -328,72 +303,68 @@
         }
         .portfolio-total-row {
             border-bottom: none;
-            color: rgba(212, 205, 192, 0.8);
+            color: rgba(232, 224, 210, 0.7);
             font-weight: 500;
             padding-top: 14px;
         }
         .dot {
             display: inline-block;
-            width: 7px;
-            height: 7px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             margin-right: 10px;
             vertical-align: middle;
         }
         .portfolio-detail {
-            margin-top: 48px;
+            margin-top: 56px;
         }
         .portfolio-detail-title {
-            font-size: 0.82rem;
-            color: rgba(212, 205, 192, 0.35);
-            letter-spacing: 0.8px;
-            margin-bottom: 20px;
+            font-size: 0.78rem;
+            color: rgba(232, 224, 210, 0.25);
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
             font-family: 'Noto Serif SC', serif;
         }
         .portfolio-detail-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
+            gap: 0;
         }
         .detail-category {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 20px;
+            padding: 0;
         }
         .detail-cat-name {
             font-family: 'Noto Serif SC', serif;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             letter-spacing: 0.5px;
         }
         .detail-item {
             display: flex;
             justify-content: space-between;
             font-size: 0.82rem;
-            color: rgba(212, 205, 192, 0.45);
-            padding: 5px 0;
+            color: rgba(232, 224, 210, 0.35);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
+        .detail-item:last-child { border-bottom: none; }
         .detail-item span:last-child {
-            color: rgba(212, 205, 192, 0.6);
+            color: rgba(232, 224, 210, 0.5);
         }
         .portfolio-philosophy {
-            margin-top: 48px;
+            margin-top: 56px;
             text-align: center;
-            padding: 28px 24px;
-            border: 1px solid rgba(196, 163, 90, 0.1);
-            background: rgba(196, 163, 90, 0.02);
-        }
-        .portfolio-philosophy .section-divider {
-            margin: 0 auto 16px;
+            padding: 40px 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
         }
         .portfolio-philosophy p {
             font-family: 'Noto Serif SC', serif;
-            font-size: 0.95rem;
-            color: rgba(196, 163, 90, 0.6);
+            font-size: 0.85rem;
+            color: rgba(196, 163, 90, 0.35);
             line-height: 1.9;
-            letter-spacing: 0.5px;
-            max-width: 480px;
+            letter-spacing: 1px;
+            max-width: 400px;
             margin: 0 auto;
         }
 
@@ -401,37 +372,31 @@
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            max-width: 500px;
+            gap: 0;
+            max-width: 480px;
         }
         .contact-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 16px 18px;
-            border-radius: 1px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: rgba(212, 205, 192, 0.6);
+            padding: 12px 0;
+            color: rgba(232, 224, 210, 0.4);
             font-size: 0.88rem;
             font-weight: 400;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
-        .contact-item:hover {
-            border-color: rgba(196, 163, 90, 0.25);
-            color: #c4a35a;
-            background: rgba(196, 163, 90, 0.04);
-        }
+        .contact-item:hover { color: #c4a35a; }
         .contact-item svg {
-            width: 18px;
-            height: 18px;
-            opacity: 0.5;
+            width: 16px;
+            height: 16px;
+            opacity: 0.4;
             flex-shrink: 0;
+            transition: opacity 0.3s ease;
         }
-        .contact-item:hover svg { opacity: 1; }
+        .contact-item:hover svg { opacity: 0.8; }
         .contact-item .contact-sub {
-            font-size: 0.75rem;
-            color: rgba(212, 205, 192, 0.25);
+            font-size: 0.72rem;
+            color: rgba(232, 224, 210, 0.2);
             margin-left: auto;
             font-family: 'EB Garamond', serif;
             font-style: italic;
@@ -439,25 +404,32 @@
 
         /* ========== Footer ========== */
         footer {
-            padding: 48px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 52px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
             text-align: center;
-            color: rgba(212, 205, 192, 0.18);
+            color: rgba(232, 224, 210, 0.15);
             font-size: 0.78rem;
             font-family: 'EB Garamond', serif;
             font-style: italic;
             letter-spacing: 0.3px;
         }
+        .footer-update {
+            margin-top: 6px;
+            font-size: 0.7rem;
+            color: rgba(232, 224, 210, 0.1);
+            font-style: normal;
+            font-family: 'Inter', sans-serif;
+        }
 
         /* ========== Animations ========== */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
+            from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
-            transition: all 0.7s ease;
+            transform: translateY(20px);
+            transition: all 0.9s ease;
         }
         .reveal.visible {
             opacity: 1;
@@ -466,22 +438,30 @@
 
         /* ========== Responsive ========== */
         @media (max-width: 768px) {
-            nav { padding: 14px 0; }
-            .nav-links { gap: 20px; font-size: 0.78rem; }
-            .hero { padding: 100px 0 60px; }
-            .section { padding: 60px 0; }
-            .container { padding: 0 20px; }
+            nav { padding: 18px 0; }
+            .nav-links { gap: 18px; font-size: 0.78rem; }
+            .nav-links a:nth-child(5) { display: none; }
+            .hero { padding: 100px 0 80px; min-height: auto; }
+            .hero h1 { font-size: clamp(2.8rem, 10vw, 3.5rem); }
+            .hero-desc { max-width: 100%; }
+            .section { padding: 90px 0; }
+            .container { padding: 0 24px; }
+            .about-text { max-width: 100%; }
             .contact-grid { grid-template-columns: 1fr; }
-            .project-item { padding: 20px 0; }
-            .portfolio-grid { grid-template-columns: 1fr; gap: 24px; }
-            .portfolio-chart { max-width: 220px; }
-            .portfolio-detail-grid { grid-template-columns: 1fr; }
+            .project-item { padding: 18px 0; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 28px; }
+            .portfolio-chart { max-width: 200px; }
+            .portfolio-detail-grid { grid-template-columns: 1fr; gap: 24px; }
+            .portfolio-total { font-size: 2.8rem; }
         }
         @media (max-width: 480px) {
             .nav-links a:nth-child(4),
             .nav-links a:nth-child(5) { display: none; }
-            .hero-actions { flex-direction: column; }
-            .hero-actions .btn { justify-content: center; }
+            .hero-actions { flex-direction: column; align-items: flex-start; }
+            .hero-actions .btn { margin-right: 0; }
+            .section { padding: 64px 0; }
+            .section-header { margin-bottom: 36px; }
+            .portfolio-row { grid-template-columns: 1.4fr 1fr 1fr; font-size: 0.82rem; }
         }
     </style>
 </head>
@@ -512,10 +492,11 @@
                     探索测试Agent，花一花免费Token的小站。
                 </p>
                 <div class="hero-actions">
-                    <a href="#about" class="btn btn-primary">关于我</a>
-                    <a href="#projects" class="btn btn-primary">浏览笔墨</a>
-                    <a href="#portfolio" class="btn btn-primary">投资组合</a>
-                    <a href="#contact" class="btn btn-primary">联系方式</a>
+                    <a href="#about" class="btn">关于我</a>
+                    <a href="#projects" class="btn">浏览笔墨</a>
+                    <a href="#portfolio" class="btn">投资组合</a>
+                    <a href="share.html" class="btn">文件分享</a>
+                    <a href="#contact" class="btn">联系方式</a>
                 </div>
             </div>
         </div>
@@ -525,7 +506,6 @@
     <section class="section" id="about">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-divider"></div>
                 <h2 class="section-title">关于我</h2>
             </div>
             <div class="about-text reveal">
@@ -550,7 +530,6 @@
     <section class="section" id="projects">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-divider"></div>
                 <h2 class="section-title">笔墨</h2>
             </div>
             <div class="projects-list reveal">
@@ -582,13 +561,6 @@
                         <div class="project-desc">1. 用Agent实现出高考模拟题<br>2. 用Agent实现教材-课标-备课自动化</div>
                     </div>
                 </div>
-                <div class="project-item">
-                    <span class="project-index">06</span>
-                    <div class="project-body">
-                        <div class="project-name"><a href="share.html" style="color:rgba(212,205,192,0.82)">文件分享</a></div>
-                        <div class="project-desc"><a href="share.html" style="color:inherit">浏览和下载分享的文件 →</a></div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -597,7 +569,6 @@
     <section class="section" id="portfolio">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-divider"></div>
                 <h2 class="section-title">投资组合</h2>
             </div>
             <div class="portfolio-summary reveal">
@@ -642,7 +613,7 @@
                     <div class="detail-category">
                         <div class="detail-cat-name" style="color:#c4a35a">现金类</div>
                         <div class="detail-item">
-                            <span>追梦组合货币基金</span>
+                            <span>货币基金</span>
                             <span>¥7,374</span>
                         </div>
                         <div class="detail-item">
@@ -683,7 +654,6 @@
                 </div>
             </div>
             <div class="portfolio-philosophy reveal">
-                <div class="section-divider"></div>
                 <p>相信人类科技进步，持续买入优质资产，保持在场。</p>
             </div>
         </div>
@@ -693,7 +663,6 @@
     <section class="section" id="contact">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-divider"></div>
                 <h2 class="section-title">联系</h2>
             </div>
             <div class="contact-grid reveal">
@@ -703,7 +672,6 @@
                     <span class="contact-sub">code</span>
                 </a>
                 <a href="https://space.bilibili.com/518618885" target="_blank" class="contact-item">
-                    <!-- Bilibili-style TV icon -->
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="7" width="20" height="13" rx="2"/>
                         <line x1="8" y1="2" x2="12" y2="7"/>
@@ -716,7 +684,6 @@
                     <span class="contact-sub">video</span>
                 </a>
                 <a href="https://wpa.qq.com/msgrd?v=3&uin=2538276116&site=qq&menu=yes" target="_blank" class="contact-item">
-                    <!-- QQ chat bubble icon -->
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
@@ -739,6 +706,7 @@
     <footer>
         <div class="container">
             <p>&copy; 2026 Jillax · AI降临派，希望相信这次是人类智能革命</p>
+            <p class="footer-update">最后更新：<span id="lastUpdate">加载中...</span></p>
         </div>
     </footer>
 
@@ -755,6 +723,28 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 
+    <!-- Last Updated -->
+    <script>
+        fetch('https://api.github.com/repos/Jillax/Jillax.github.io/commits?per_page=1')
+            .then(r => r.json())
+            .then(data => {
+                if (data && data[0] && data[0].commit) {
+                    const date = new Date(data[0].commit.committer.date);
+                    const y = date.getFullYear();
+                    const m = String(date.getMonth() + 1).padStart(2, '0');
+                    const d = String(date.getDate()).padStart(2, '0');
+                    const h = String(date.getHours()).padStart(2, '0');
+                    const min = String(date.getMinutes()).padStart(2, '0');
+                    document.getElementById('lastUpdate').textContent = `${y}-${m}-${d} ${h}:${min}`;
+                } else {
+                    document.getElementById('lastUpdate').textContent = '—';
+                }
+            })
+            .catch(() => {
+                document.getElementById('lastUpdate').textContent = '—';
+            });
+    </script>
+
     <!-- Chart.js - Portfolio Doughnut -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -767,7 +757,7 @@
                     datasets: [{
                         data: [31374, 11049, 31517],
                         backgroundColor: ['#c4a35a', '#8b7355', '#6b8f71'],
-                        borderColor: '#161412',
+                        borderColor: '#1a1714',
                         borderWidth: 2,
                         hoverOffset: 8
                     }]
@@ -779,11 +769,11 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'rgba(22, 20, 18, 0.92)',
+                            backgroundColor: 'rgba(26, 23, 20, 0.92)',
                             titleFont: { family: 'Noto Serif SC', size: 13 },
                             bodyFont: { family: 'Inter', size: 12 },
                             padding: 14,
-                            cornerRadius: 2,
+                            cornerRadius: 0,
                             callbacks: {
                                 label: function(ctx) {
                                     const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
