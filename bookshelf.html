@@ -345,7 +345,7 @@
         <div class="page-header">
             <a href="index.html" class="back-home">← 返回主页</a>
             <h1>📖 书影音清单</h1>
-            <p>在读 · 已读 · 想读 · 在看 · 看过 · 想看 · 在听 · 听过 · 想听</p>
+            <p>书籍 · 电影 · 音乐</p>
         </div>
 
         <!-- ===== Category Tabs ===== -->
@@ -355,12 +355,8 @@
             <button class="cat-tab" data-cat="music">音乐 <span class="count" id="countMusic">0</span></button>
         </div>
 
-        <!-- ===== Stats ===== -->
-        <div class="stats-bar" id="statsBar"></div>
+        <!-- ===== Stats & Update ===== -->
         <div class="update-time" id="updateTime"></div>
-
-        <!-- ===== Status Filter ===== -->
-        <div class="status-tabs" id="statusTabs"></div>
 
         <!-- ===== Items ===== -->
         <div class="items-grid" id="itemsGrid"></div>
@@ -408,21 +404,16 @@
             const grid = document.getElementById('itemsGrid');
             const empty = document.getElementById('emptyState');
             const catTabs = document.querySelectorAll('.cat-tab');
-            const statusTabs = document.getElementById('statusTabs');
-            const statsBar = document.getElementById('statsBar');
             const updateTime = document.getElementById('updateTime');
 
             let allData = { books: [], movies: [], music: [] };
             let currentCat = 'books';
-            let currentStatus = 'all';
 
             const statusLabels = {
-                books: { collect: '已读', wish: '想读', do: '在读' },
+                books: { collect: '读过', wish: '想读', do: '在读' },
                 movies: { collect: '看过', wish: '想看', do: '在看' },
                 music: { collect: '听过', wish: '想听', do: '在听' },
             };
-
-            const statusOrder = ['collect', 'wish', 'do'];
 
             function renderStars(rating) {
                 if (!rating || rating === 0) return '';
@@ -434,72 +425,19 @@
                 return labels[status] || status;
             }
 
-            function countByStatus(items) {
-                const counts = { collect: 0, wish: 0, do: 0 };
-                items.forEach(item => {
-                    if (counts.hasOwnProperty(item.status)) {
-                        counts[item.status]++;
-                    }
-                });
-                return counts;
-            }
-
-            function renderStats(cat) {
+            function renderItems(cat) {
                 const items = allData[cat] || [];
-                const counts = countByStatus(items);
-                const labels = statusLabels[cat] || statusLabels.books;
-                const total = items.length;
 
-                let html = '';
-                statusOrder.forEach(s => {
-                    if (counts[s] > 0) {
-                        html += `<span class="stat-item"><strong>${counts[s]}</strong> ${labels[s]}</span>`;
-                    }
-                });
-                html += `<span class="stat-item">共 <strong>${total}</strong> 项</span>`;
-                statsBar.innerHTML = html;
-            }
-
-            function renderStatusTabs(cat) {
-                const items = allData[cat] || [];
-                const counts = countByStatus(items);
-                const labels = statusLabels[cat] || statusLabels.books;
-
-                let html = `<button class="status-tab ${currentStatus === 'all' ? 'active' : ''}" data-status="all">全部 (${items.length})</button>`;
-                statusOrder.forEach(s => {
-                    if (counts[s] > 0) {
-                        html += `<button class="status-tab ${currentStatus === s ? 'active' : ''}" data-status="${s}">${labels[s]} (${counts[s]})</button>`;
-                    }
-                });
-                statusTabs.innerHTML = html;
-
-                statusTabs.querySelectorAll('.status-tab').forEach(tab => {
-                    tab.addEventListener('click', function() {
-                        statusTabs.querySelectorAll('.status-tab').forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
-                        currentStatus = this.dataset.status;
-                        renderItems(currentCat, currentStatus);
-                    });
-                });
-            }
-
-            function renderItems(cat, status) {
-                const items = allData[cat] || [];
-                const filtered = status === 'all'
-                    ? items
-                    : items.filter(item => item.status === status);
-
-                if (filtered.length === 0) {
+                if (items.length === 0) {
                     grid.innerHTML = '';
                     empty.style.display = 'block';
                     return;
                 }
                 empty.style.display = 'none';
 
-                grid.innerHTML = filtered.map(item => {
+                grid.innerHTML = items.map(item => {
                     const hasCover = item.cover && item.cover.trim();
                     const initial = item.title ? item.title.charAt(0) : '?';
-                    const statusClass = item.status;
                     const statusText = getStatusText(cat, item.status);
                     const stars = renderStars(item.rating);
 
@@ -515,7 +453,7 @@
                                 <div class="item-title" title="${item.title}">${item.title}</div>
                                 <div class="item-author" title="${item.author}">${item.author || ''}</div>
                                 <div class="item-meta">
-                                    <span class="item-status ${statusClass}">${statusText}</span>
+                                    <span class="item-status ${item.status}">${statusText}</span>
                                     ${stars ? `<span class="item-rating">${stars}</span>` : ''}
                                 </div>
                                 ${item.comment ? `<div class="item-comment">${item.comment}</div>` : ''}
@@ -527,10 +465,7 @@
 
             function switchCategory(cat) {
                 currentCat = cat;
-                currentStatus = 'all';
-                renderStats(cat);
-                renderStatusTabs(cat);
-                renderItems(cat, 'all');
+                renderItems(cat);
             }
 
             fetch('data/bookshelf.json')
