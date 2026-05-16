@@ -69,24 +69,6 @@ STATUS_MAP = {
     "do": "do",
 }
 
-STATUS_LABELS = {
-    "collect": "已读",
-    "wish": "想读",
-    "do": "在读",
-}
-
-STATUS_LABELS_MOVIE = {
-    "collect": "看过",
-    "wish": "想看",
-    "do": "在看",
-}
-
-STATUS_LABELS_MUSIC = {
-    "collect": "听过",
-    "wish": "想听",
-    "do": "在听",
-}
-
 
 def log(msg):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}", flush=True)
@@ -301,13 +283,13 @@ def main():
         }
 
         log("\n--- 书籍 ---")
-        all_data["books"] = fetch_category_collections("book", ["collect", "wish", "do"])
+        all_data["books"] = fetch_category_collections("book", ["collect"])
 
         log("\n--- 电影 ---")
-        all_data["movies"] = fetch_category_collections("movie", ["collect", "wish", "do"])
+        all_data["movies"] = fetch_category_collections("movie", ["collect"])
 
         log("\n--- 音乐 ---")
-        all_data["music"] = fetch_category_collections("music", ["collect", "wish", "do"])
+        all_data["music"] = fetch_category_collections("music", ["collect"])
 
         log(f"\n总计: 书籍 {len(all_data['books'])} 条, "
              f"电影 {len(all_data['movies'])} 条, "
