@@ -22,7 +22,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = path.resolve(__dirname, '..', 'data', 'zhihu.json');
 const USER_URL_TOKEN = 'yi-ban-tong-guo-63';
-const MAX_PINS = 200;
+const MAX_PINS = 500;
 const MAX_ARTICLES = 50;
 const SCROLL_TIMES = 20;
 
