@@ -1,0 +1,45 @@
+{
+  "updated": "2026-05-17",
+  "currency": "CNY",
+  "totalValue": 73940,
+  "totalCost": 71200,
+  "history": [
+    { "date": "2025-12-01", "value": 62400 },
+    { "date": "2026-01-01", "value": 63800 },
+    { "date": "2026-02-01", "value": 65200 },
+    { "date": "2026-03-01", "value": 67500 },
+    { "date": "2026-04-01", "value": 69800 },
+    { "date": "2026-05-01", "value": 71500 },
+    { "date": "2026-05-10", "value": 72800 },
+    { "date": "2026-05-15", "value": 73500 },
+    { "date": "2026-05-17", "value": 73940 }
+  ],
+  "categories": [
+    {
+      "name": "现金类",
+      "color": "#c4a35a",
+      "items": [
+        { "name": "货币基金", "value": 7374, "cost": 7200 },
+        { "name": "银行存款", "value": 24000, "cost": 24000 }
+      ]
+    },
+    {
+      "name": "债券类",
+      "color": "#8b7355",
+      "items": [
+        { "name": "短债", "value": 11049, "cost": 10800 }
+      ]
+    },
+    {
+      "name": "权益类",
+      "color": "#6b8f71",
+      "items": [
+        { "name": "标普500", "value": 13164, "cost": 12000 },
+        { "name": "纳斯达克", "value": 8135, "cost": 7500 },
+        { "name": "沪深300", "value": 7962, "cost": 8200 },
+        { "name": "恒生指数", "value": 825, "cost": 800 },
+        { "name": "恒生科技", "value": 1431, "cost": 1300 }
+      ]
+    }
+  ]
+}
