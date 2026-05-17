@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的译制作品">
-    <title>译制 · Jillax</title>
+    <meta name="description" content="Jillax 的笔墨与项目">
+    <title>笔墨 · Jillax</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,8 +37,8 @@
             --text-muted: rgba(44, 40, 36, 0.35);
             --text-faint: rgba(44, 40, 36, 0.12);
             --gold: #c4a35a;
-            --gold-soft: rgba(196, 163, 90, 0.5);
-            --gold-dim: rgba(196, 163, 90, 0.15);
+            --gold-soft: rgba(163, 147, 106, 0.5);
+            --gold-dim: rgba(163, 147, 106, 0.15);
             --border: rgba(44, 40, 36, 0.08);
             --border-light: rgba(44, 40, 36, 0.04);
         }
@@ -55,7 +55,6 @@
             font-weight: 400;
         }
         a { color: inherit; text-decoration: none; }
-        img { max-width: 100%; display: block; }
 
         .container {
             max-width: var(--container);
@@ -110,7 +109,7 @@
 
         /* ===== Page Header ===== */
         .page-header {
-            padding: 100px 0 40px;
+            padding: 100px 0 48px;
         }
         .page-header .back-home {
             display: inline-flex;
@@ -135,103 +134,62 @@
             margin-top: 8px; font-weight: 300;
         }
 
-        /* ===== Filter ===== */
-        .filter-tabs {
-            display: flex; gap: 4px; margin-bottom: 36px; flex-wrap: wrap;
-        }
-        .filter-tab {
-            padding: 6px 16px; font-size: 0.78rem;
-            color: var(--text-muted); border: 1px solid var(--border);
-            background: none; cursor: pointer;
-            transition: all 0.3s ease; font-family: var(--font-body);
-        }
-        .filter-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
-        .filter-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
-
-        /* ===== Translation Cards ===== */
-        .trans-list { display: flex; flex-direction: column; gap: 16px; }
-        .trans-card {
-            display: flex; gap: 20px;
-            padding: 24px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        .trans-card:hover { border-color: var(--gold-dim); }
-        .trans-cover {
-            width: 120px;
-            height: 75px;
-            flex-shrink: 0;
-            background: var(--border-light);
-            border: 1px solid var(--border);
-            overflow: hidden;
+        /* ===== Projects List ===== */
+        .projects-list {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
         }
-        .trans-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .project-item {
+            display: flex;
+            gap: 20px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.4s ease;
+            align-items: flex-start;
+            cursor: default;
         }
-        .trans-cover .placeholder {
-            font-size: 1.5rem;
-            color: var(--text-faint);
+        .project-item:last-child { border-bottom: none; }
+        .project-item:hover {
+            padding-left: 12px;
+            border-bottom-color: var(--gold-dim);
         }
-        .trans-body { flex: 1; min-width: 0; }
-        .trans-title {
-            font-family: var(--font-chinese);
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 2px;
+        .project-item:hover + .project-item {
+            border-top-color: transparent;
         }
-        .trans-original {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            font-style: italic;
-            margin-bottom: 8px;
-            font-weight: 300;
-        }
-        .trans-meta {
-            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-        }
-        .trans-status {
-            font-size: 0.65rem;
-            padding: 2px 8px;
-            border: 1px solid var(--border);
-            color: var(--text-soft);
-            letter-spacing: 0.5px;
-        }
-        .trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--olive, #7a8b6e); }
-        .trans-status.ongoing { border-color: var(--gold-dim); color: var(--gold-soft); }
-        .trans-source {
+        .project-index {
+            font-family: var(--font-display);
             font-size: 0.7rem;
             color: var(--text-faint);
+            min-width: 28px;
+            flex-shrink: 0;
+            padding-top: 4px;
+            font-variation-settings: 'SOFT' 100, 'WONK' 1;
         }
-        .trans-desc {
-            font-size: 0.8rem;
+        .project-body { flex: 1; }
+        .project-name {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 6px;
+            letter-spacing: 0.2px;
+        }
+        .project-desc {
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-top: 10px;
-            font-weight: 300;
             line-height: 1.7;
+            font-weight: 300;
         }
-        .trans-links {
-            margin-top: 10px;
-            display: flex; gap: 12px;
+        .project-links {
+            margin-top: 8px;
+            display: flex;
+            gap: 12px;
         }
-        .trans-link {
+        .project-links a {
             font-size: 0.72rem;
             color: var(--gold-soft);
             transition: color 0.3s ease;
-            display: inline-flex; align-items: center; gap: 4px;
         }
-        .trans-link:hover { color: var(--gold); }
-
-        /* ===== Empty ===== */
-        .empty-state {
-            text-align: center; padding: 60px 20px;
-            color: var(--text-faint); font-size: 0.85rem;
-        }
+        .project-links a:hover { color: var(--gold); }
 
         /* ===== Footer ===== */
         footer {
@@ -243,18 +201,28 @@
             font-variation-settings: 'SOFT' 100, 'WONK' 1;
         }
 
+        /* ===== Reveal ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
             nav { padding: 16px 0; }
-            .nav-links { gap: 14px; font-size: 0.75rem; }
             .nav-links a:nth-child(5),
             .nav-links a:nth-child(6),
             .nav-links a:nth-child(7),
             .nav-links a:nth-child(8) { display: none; }
             .container { padding: 0 24px; }
-            .page-header { padding: 80px 0 28px; }
-            .trans-card { padding: 18px; flex-direction: column; gap: 12px; }
-            .trans-cover { width: 100%; height: 160px; }
+            .page-header { padding: 80px 0 32px; }
+            .project-item { padding: 20px 0; }
+            .project-item:hover { padding-left: 8px; }
         }
         @media (max-width: 480px) {
             .nav-links a:nth-child(4),
@@ -273,11 +241,11 @@
             <a href="index.html" class="nav-logo">Jillax</a>
             <div class="nav-links">
                 <a href="about.html">关于</a>
-                <a href="projects.html">笔墨</a>
+                <a href="projects.html" class="current">笔墨</a>
                 <a href="portfolio.html">投资</a>
                 <a href="contact.html">联系</a>
                 <a href="share.html">分享</a>
-                <a href="translations.html" class="current">译制</a>
+                <a href="translations.html">译制</a>
                 <a href="bookshelf.html">书影音</a>
                 <a href="blog.html">随笔</a>
                 <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
@@ -289,20 +257,57 @@
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home">← 返回主页</a>
-            <h1>🎬 译制作品</h1>
-            <p>搬运与翻译感兴趣的外语视频</p>
+            <h1>笔墨</h1>
+            <p>记录学习路上的思考与探索。</p>
         </div>
 
-        <!-- ===== Filter ===== -->
-        <div class="filter-tabs" id="filterTabs">
-            <button class="filter-tab active" data-filter="all">全部</button>
-            <button class="filter-tab" data-filter="已完成">已完成</button>
-            <button class="filter-tab" data-filter="译制中">译制中</button>
+        <!-- ===== Projects ===== -->
+        <div class="projects-list reveal">
+            <div class="project-item">
+                <span class="project-index">01</span>
+                <div class="project-body">
+                    <div class="project-name">个人主页</div>
+                    <div class="project-desc">100%由AI Agent构筑的数字空间，互联网秘密基地，安放输入与输出。</div>
+                    <div class="project-links">
+                        <a href="index.html">→ 访问主页</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-item">
+                <span class="project-index">02</span>
+                <div class="project-body">
+                    <div class="project-name">AI Agent 探索</div>
+                    <div class="project-desc">尝试各种 AI 工具与智能体，探索自动化在人文领域中的应用可能。</div>
+                </div>
+            </div>
+            <div class="project-item">
+                <span class="project-index">03</span>
+                <div class="project-body">
+                    <div class="project-name">译制搬运</div>
+                    <div class="project-desc">译制搬运感兴趣的外语视频，目前以女性主义和社科类为主。</div>
+                    <div class="project-links">
+                        <a href="translations.html">→ 译制作品</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-item">
+                <span class="project-index">04</span>
+                <div class="project-body">
+                    <div class="project-name">投资记录</div>
+                    <div class="project-desc">公开的投资组合记录，涵盖现金、债券和权益类资产。</div>
+                    <div class="project-links">
+                        <a href="portfolio.html">→ 投资组合</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-item">
+                <span class="project-index">05</span>
+                <div class="project-body">
+                    <div class="project-name">TODO · 未来计划</div>
+                    <div class="project-desc">1. 用Agent实现出高考模拟题<br>2. 用Agent实现教材-课标-备课自动化</div>
+                </div>
+            </div>
         </div>
-
-        <!-- ===== List ===== -->
-        <div class="trans-list" id="transList"></div>
-        <div class="empty-state" id="emptyState" style="display:none">没有符合条件的作品</div>
     </div>
 
     <!-- ===== Footer ===== -->
@@ -311,6 +316,18 @@
             <p>&copy; 2026 Jillax</p>
         </div>
     </footer>
+
+    <!-- ===== Scroll Reveal ===== -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 
     <!-- ===== Theme Toggle ===== -->
     <script>
@@ -336,86 +353,6 @@
                     toggle.textContent = '☾';
                     localStorage.setItem('theme', 'light');
                 }
-            });
-        });
-    </script>
-
-    <!-- ===== Translations ===== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const list = document.getElementById('transList');
-            const empty = document.getElementById('emptyState');
-            const tabs = document.querySelectorAll('.filter-tab');
-            let allItems = [];
-            let currentFilter = 'all';
-
-            const statusLabels = { '已完成': 'done', '译制中': 'ongoing' };
-
-            function renderItems(filter) {
-                const filtered = filter === 'all'
-                    ? allItems
-                    : allItems.filter(item => item.status === filter);
-
-                if (filtered.length === 0) {
-                    list.innerHTML = '';
-                    empty.style.display = 'block';
-                    return;
-                }
-                empty.style.display = 'none';
-
-                list.innerHTML = filtered.map(item => {
-                    const sClass = statusLabels[item.status] || '';
-                    const hasBili = item.bvid && item.bvid.trim();
-                    const hasCover = item.cover && item.cover.trim();
-                    const initial = item.title ? item.title.charAt(0) : '?';
-
-                    function formatPlay(n) {
-                        if (!n && n !== 0) return '';
-                        if (n >= 10000) return (n / 10000).toFixed(1) + '万播放';
-                        return n + '播放';
-                    }
-                    return `
-                        <div class="trans-card">
-                            <div class="trans-cover">
-                                ${hasCover
-                                    ? `<img src="${item.cover}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
-                                    : `<span class="placeholder">${initial}</span>`
-                                }
-                            </div>
-                            <div class="trans-body">
-                                <div class="trans-title">${item.title}</div>
-                                <div class="trans-original">${item.play !== undefined ? formatPlay(item.play) : ''}</div>
-                                <div class="trans-meta">
-                                    <span class="trans-status ${sClass}">${item.status}</span>
-                                    <span class="trans-source">${item.source}</span>
-                                </div>
-                                ${item.description ? `<div class="trans-desc">${item.description}</div>` : ''}
-                                <div class="trans-links">
-                                    ${hasBili ? `<a href="https://www.bilibili.com/video/${item.bvid}" target="_blank" class="trans-link">▶ 在B站观看</a>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            fetch('data/translations.json')
-                .then(r => r.json())
-                .then(data => {
-                    allItems = data.items || data;
-                    renderItems(currentFilter);
-                })
-                .catch(() => {
-                    list.innerHTML = '<div class="empty-state">加载失败</div>';
-                });
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.filter;
-                    renderItems(currentFilter);
-                });
             });
         });
     </script>
