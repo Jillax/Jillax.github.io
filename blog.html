@@ -163,6 +163,165 @@
             margin: 24px auto;
         }
 
+        /* ===== Tabs ===== */
+        .blog-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .blog-tab {
+            padding: 10px 24px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            border-bottom: 1px solid transparent;
+            margin-bottom: -1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .blog-tab:hover { color: var(--text-soft); }
+        .blog-tab.active {
+            color: var(--text);
+            border-bottom-color: var(--gold);
+        }
+        .blog-tab .count {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            margin-left: 4px;
+            font-family: var(--font-display);
+        }
+
+        /* ===== Pins Feed ===== */
+        .feed { display: flex; flex-direction: column; gap: 0; }
+        .pin-card {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .pin-card:last-child { border-bottom: none; }
+        .pin-card:hover { padding-left: 8px; }
+
+        .pin-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .pin-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            font-family: var(--font-display);
+            flex-shrink: 0;
+        }
+        .pin-author {
+            font-size: 0.78rem;
+            color: var(--text-soft);
+            font-weight: 500;
+        }
+        .pin-time {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            margin-left: auto;
+            font-family: var(--font-display);
+        }
+        .pin-content {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            line-height: 1.9;
+            font-weight: 300;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .pin-content a {
+            color: var(--gold-soft);
+            border-bottom: 1px solid var(--gold-dim);
+        }
+        .pin-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .pin-images img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .pin-images img:hover { opacity: 0.8; }
+        .pin-footer {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .pin-stat {
+            font-size: 0.68rem;
+            color: var(--text-faint);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-body);
+        }
+        .pin-stat .num {
+            font-family: var(--font-display);
+            color: var(--text-muted);
+        }
+        .pin-source {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.7rem;
+            color: var(--text-faint);
+        }
+        .pin-source a {
+            color: var(--gold-soft);
+            border-bottom: 1px solid var(--gold-dim);
+        }
+
+        /* ===== Lightbox ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 1px solid var(--border);
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 24px;
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: var(--font-body);
+            transition: color 0.3s ease;
+        }
+        .lightbox-close:hover { color: #fff; }
+
         /* ===== Empty ===== */
         .empty-state {
             text-align: center; padding: 60px 20px;
@@ -207,18 +366,44 @@
             <p data-i18n="page.blog.desc">笔记 · 思考 · 记录</p>
         </div>
 
-        <!-- ===== Post List ===== -->
-        <div class="post-list" id="postList"></div>
-        <div class="empty-state" id="emptyState" style="display:none">还没有文章</div>
+        <!-- ===== Tabs ===== -->
+        <div class="blog-tabs">
+            <button class="blog-tab active" data-tab="posts"><span data-i18n="blog.posts">文章</span> <span class="count" id="postCount"></span></button>
+            <button class="blog-tab" data-tab="pins"><span data-i18n="blog.zhihu">知乎想法</span> <span class="count" id="pinCount"></span></button>
+        </div>
 
-        <!-- ===== Article View ===== -->
-        <div class="article-view" id="articleView">
-            <button class="article-back" id="articleBack">← 返回列表</button>
-            <div class="article-header">
-                <h1 id="articleTitle"></h1>
-                <div class="article-meta" id="articleMeta"></div>
+        <!-- ===== Posts Section ===== -->
+        <div id="postsSection">
+            <div class="post-list" id="postList"></div>
+            <div class="empty-state" id="emptyState" style="display:none">还没有文章</div>
+
+            <!-- ===== Article View ===== -->
+            <div class="article-view" id="articleView">
+                <button class="article-back" id="articleBack">← 返回列表</button>
+                <div class="article-header">
+                    <h1 id="articleTitle"></h1>
+                    <div class="article-meta" id="articleMeta"></div>
+                </div>
+                <div class="article-content" id="articleContent"></div>
             </div>
-            <div class="article-content" id="articleContent"></div>
+        </div>
+
+        <!-- ===== Pins Section ===== -->
+        <div id="pinsSection" style="display:none">
+            <div class="feed" id="feed"></div>
+            <div class="empty-state" id="pinsEmpty" style="display:none">
+                <p data-i18n="blog.empty.pins">知乎想法会在推送后自动同步</p>
+            </div>
+            <div class="pin-source">
+                <span data-i18n="blog.source">同步自知乎</span> ·
+                <a href="https://www.zhihu.com/people/yi-ban-tong-guo-63/pins" target="_blank">知乎主页</a>
+            </div>
+        </div>
+
+        <!-- ===== Lightbox ===== -->
+        <div class="lightbox" id="lightbox">
+            <button class="lightbox-close" id="lightboxClose">✕</button>
+            <img id="lightboxImg" src="" alt="">
         </div>
     </div>
 
@@ -232,6 +417,7 @@
     <!-- ===== Blog ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ===== Elements =====
             const postList = document.getElementById('postList');
             const emptyState = document.getElementById('emptyState');
             const articleView = document.getElementById('articleView');
@@ -239,20 +425,68 @@
             const articleMeta = document.getElementById('articleMeta');
             const articleContent = document.getElementById('articleContent');
             const articleBack = document.getElementById('articleBack');
+            const postsSection = document.getElementById('postsSection');
+            const pinsSection = document.getElementById('pinsSection');
+            const feed = document.getElementById('feed');
+            const pinsEmpty = document.getElementById('pinsEmpty');
+            const tabs = document.querySelectorAll('.blog-tab');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const postCount = document.getElementById('postCount');
+            const pinCount = document.getElementById('pinCount');
             let posts = [];
+            let currentTab = 'posts';
 
-            // Show list, hide article
+            // ===== Utility =====
+            function fmtNum(n) {
+                if (!n && n !== 0) return '—';
+                if (n >= 10000) return (n / 10000).toFixed(1) + '万';
+                return String(n);
+            }
+            function fmtTime(dateStr) {
+                if (!dateStr) return '';
+                const d = new Date(dateStr);
+                const now = new Date();
+                const diff = now - d;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                if (days < 1) return '今天';
+                if (days === 1) return '昨天';
+                if (days < 7) return days + '天前';
+                if (days < 30) return Math.floor(days / 7) + '周前';
+                return d.toLocaleDateString('zh-CN', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+            }
+
+            // ===== Tab Switching =====
+            function switchTab(tab) {
+                currentTab = tab;
+                tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+                postsSection.style.display = tab === 'posts' ? '' : 'none';
+                pinsSection.style.display = tab === 'pins' ? '' : 'none';
+                history.pushState(null, '', 'blog.html' + (tab === 'pins' ? '#pins' : ''));
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // ===== Posts =====
             function showList() {
                 postList.style.display = '';
                 articleView.classList.remove('active');
-                history.pushState(null, '', 'blog.html');
+                if (currentTab === 'posts') {
+                    history.pushState(null, '', 'blog.html');
+                }
             }
 
-            // Show article
             function showArticle(postId) {
                 const post = posts.find(p => p.id === postId);
                 if (!post) { showList(); return; }
 
+                switchTab('posts');
                 postList.style.display = 'none';
                 articleView.classList.add('active');
                 articleTitle.textContent = post.title;
@@ -261,7 +495,6 @@
 
                 history.pushState(null, '', 'blog.html#' + postId);
 
-                // Fetch and render markdown
                 fetch('data/posts/' + post.file)
                     .then(r => {
                         if (!r.ok) throw new Error('Not found');
@@ -275,8 +508,8 @@
                     });
             }
 
-            // Render post list
             function renderList() {
+                postCount.textContent = posts.length || '';
                 if (posts.length === 0) {
                     postList.innerHTML = '';
                     emptyState.style.display = 'block';
@@ -299,34 +532,112 @@
                 });
             }
 
-            // Load posts
+            // ===== Pins =====
+            function renderPins(data) {
+                const pins = data.pins || [];
+                pinCount.textContent = pins.length || '';
+
+                if (pins.length === 0) {
+                    feed.innerHTML = '';
+                    pinsEmpty.style.display = 'block';
+                    return;
+                }
+                pinsEmpty.style.display = 'none';
+
+                const name = data.profile?.name || 'Jillax';
+                feed.innerHTML = pins.map(pin => {
+                    const timeStr = fmtTime(pin.created);
+                    const content = (pin.content || '').replace(/\n/g, '<br>');
+                    const hasImages = pin.images && pin.images.length > 0;
+
+                    return `
+                        <div class="pin-card">
+                            <div class="pin-header">
+                                <div class="pin-avatar">J</div>
+                                <span class="pin-author">${name}</span>
+                                <span class="pin-time">${timeStr}</span>
+                            </div>
+                            <div class="pin-content">${content}</div>
+                            ${hasImages ? `
+                                <div class="pin-images">
+                                    ${pin.images.map(img => `
+                                        <img src="${img}" alt="" loading="lazy" referrerpolicy="no-referrer"
+                                             onclick="document.getElementById('lightboxImg').src=this.src;document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden'">
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                            <div class="pin-footer">
+                                <span class="pin-stat">👍 <span class="num">${fmtNum(pin.likes)}</span></span>
+                                <span class="pin-stat">💬 <span class="num">${fmtNum(pin.comments)}</span></span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // ===== Load Data =====
             fetch('data/posts.json')
                 .then(r => r.json())
                 .then(data => {
                     posts = data;
                     renderList();
 
-                    // Check URL hash for direct article link
                     const hash = window.location.hash.slice(1);
-                    if (hash) {
+                    if (hash && hash !== 'pins') {
                         const found = posts.find(p => p.id === hash);
                         if (found) showArticle(hash);
+                    } else if (hash === 'pins') {
+                        switchTab('pins');
                     }
                 })
                 .catch(() => {
                     postList.innerHTML = '<div class="empty-state">加载失败</div>';
                 });
 
-            // Back button
+            fetch('data/zhihu.json')
+                .then(r => {
+                    if (!r.ok) throw new Error('Not found');
+                    return r.json();
+                })
+                .then(data => {
+                    renderPins(data);
+                })
+                .catch(() => {
+                    feed.innerHTML = '';
+                    pinsEmpty.style.display = 'block';
+                });
+
+            // ===== Back Button =====
             articleBack.addEventListener('click', showList);
 
-            // Handle browser back/forward
+            // ===== Lightbox =====
+            document.getElementById('lightboxClose').addEventListener('click', function() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // ===== Browser Navigation =====
             window.addEventListener('popstate', function() {
                 const hash = window.location.hash.slice(1);
-                if (hash) {
+                if (hash === 'pins') {
+                    switchTab('pins');
+                } else if (hash) {
                     const found = posts.find(p => p.id === hash);
                     if (found) showArticle(hash);
                 } else {
+                    switchTab('posts');
                     showList();
                 }
             });
