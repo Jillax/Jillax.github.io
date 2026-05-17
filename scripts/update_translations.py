@@ -157,7 +157,7 @@ def process_bili_videos(videos):
             "bvid": bvid,
             "status": "已完成",
             "description": desc_clean,
-            "cover": v.get("pic", ""),
+            "cover": v.get("pic", "").replace("http://", "https://"),
             "date": datetime.fromtimestamp(v.get("created", 0)).strftime("%Y-%m-%d") if v.get("created") else "",
         })
     return done
