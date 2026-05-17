@@ -1,6 +1,9 @@
 {
   "updated": "2026-05-17",
   "currency": "CNY",
+  "history": [
+    { "date": "2026-05-17", "value": 70709.11 }
+  ],
   "categories": [
     {
       "name": "现金类",

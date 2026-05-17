@@ -45,6 +45,29 @@
         .stat-value.red { color: var(--red); }
         .stat-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
 
+        /* ===== Line Chart ===== */
+        .line-chart-box {
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 0;
+        }
+        .line-chart-box .chart-canvas-wrap {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+            height: 240px;
+        }
+        .line-chart-box canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .line-chart-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-faint);
+            font-size: 0.82rem;
+        }
+
         /* Section */
         .section { margin-bottom: 48px; }
         .section-title {
@@ -236,6 +259,16 @@
         </div>
 
         <div class="section">
+            <div class="section-title">总资产走势 <span style="font-weight:300;color:var(--text-faint)">· 每次更新组合时新增时间点</span></div>
+            <div class="line-chart-box" id="lineChartBox">
+                <div class="chart-canvas-wrap">
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div class="line-chart-empty" id="lineChartEmpty" style="display:none">暂无历史数据，下次更新组合时自动记录</div>
+            </div>
+        </div>
+
+        <div class="section">
             <div class="section-title">资产配置</div>
             <div class="allocation-grid">
                 <div class="chart-box">
@@ -318,6 +351,7 @@
                 .then(r => r.json())
                 .then(data => {
                     renderStats(data);
+                    renderLineChart(data);
                     renderChart(data);
                     renderPctBars(data);
                     renderTable(data);
@@ -362,6 +396,116 @@
                 gainEl.className = 'stat-value ' + (isPos ? 'green' : 'red');
                 gainEl.textContent = fmtGain(gain);
                 document.getElementById('gainPct').textContent = (isPos ? '+' : '') + pct + '%';
+            }
+
+            function renderLineChart(data) {
+                const canvas = document.getElementById('lineChart');
+                const empty = document.getElementById('lineChartEmpty');
+
+                if (!data.history || data.history.length === 0) {
+                    canvas.style.display = 'none';
+                    empty.style.display = 'block';
+                    empty.textContent = '暂无历史数据，下次更新组合时自动记录';
+                    return;
+                }
+
+                canvas.style.display = '';
+                empty.style.display = 'none';
+
+                const ctx = canvas.getContext('2d');
+                const parent = canvas.parentElement;
+                canvas.width = parent.offsetWidth;
+                canvas.height = parent.offsetHeight;
+
+                const labels = data.history.map(h => {
+                    const d = new Date(h.date);
+                    return d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+                });
+                const values = data.history.map(h => h.value);
+
+                // Gradient fill
+                const gradient = ctx.createLinearGradient(0, 0, 0, 240);
+                gradient.addColorStop(0, 'rgba(196, 163, 90, 0.25)');
+                gradient.addColorStop(1, 'rgba(196, 163, 90, 0.01)');
+
+                // Get computed text color for labels
+                const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+                const textColor = isDark ? 'rgba(228, 219, 204, 0.5)' : 'rgba(80, 70, 60, 0.5)';
+                const gridColor = isDark ? 'rgba(228, 219, 204, 0.08)' : 'rgba(80, 70, 60, 0.1)';
+
+                // Single point: show as dot with label; 2+: show as line
+                const isSingle = data.history.length === 1;
+
+                new Chart(ctx, {
+                    type: isSingle ? 'scatter' : 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: isSingle
+                                ? values.map((v, i) => ({ x: i, y: v }))
+                                : values,
+                            borderColor: '#c4a35a',
+                            backgroundColor: gradient,
+                            borderWidth: isSingle ? 0 : 1.5,
+                            pointBackgroundColor: '#c4a35a',
+                            pointBorderColor: isDark ? '#181410' : '#f5f0e8',
+                            pointBorderWidth: 1.5,
+                            pointRadius: isSingle ? 8 : 3,
+                            pointHoverRadius: isSingle ? 10 : 5,
+                            fill: !isSingle,
+                            tension: 0.3,
+                            showLine: !isSingle
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(24, 20, 16, 0.92)',
+                                titleFont: { family: 'Noto Serif SC, serif', size: 12 },
+                                bodyFont: { family: 'Spectral, serif', size: 13, weight: '600' },
+                                padding: 12,
+                                cornerRadius: 0,
+                                displayColors: false,
+                                callbacks: {
+                                    title: function(items) {
+                                        return data.history[items[0].dataIndex].date;
+                                    },
+                                    label: function(ctx) {
+                                        return fmt(ctx.parsed.y !== undefined ? ctx.parsed.y : ctx.parsed.y);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    color: textColor,
+                                    font: { family: 'Spectral, serif', size: 10 },
+                                    maxTicksLimit: 8
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: gridColor,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: textColor,
+                                    font: { family: 'Spectral, serif', size: 10 },
+                                    callback: function(v) { return '¥' + Math.round(v).toLocaleString(); }
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        }
+                    }
+                });
             }
 
             function renderChart(data) {
