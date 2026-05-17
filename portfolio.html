@@ -148,6 +148,71 @@
         .chart-box { border: 1px solid var(--border); padding: 24px; }
         .chart-canvas-wrap { position: relative; max-width: 280px; margin: 0 auto; }
 
+        /* Chart + Bars layout */
+        .allocation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Percentage bars (skills-like style) */
+        .pct-bars {
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+        .pct-row {
+            margin-bottom: 20px;
+        }
+        .pct-row:last-child { margin-bottom: 0; }
+        .pct-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .pct-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pct-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .pct-name {
+            font-family: var(--font-chinese);
+            font-size: 0.82rem;
+            color: var(--text-soft);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .pct-value {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 600;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .pct-track {
+            height: 6px;
+            background: var(--border);
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+        .pct-row:hover .pct-track {
+            background: var(--border-light);
+        }
+        .pct-fill {
+            height: 100%;
+            width: 0;
+            border-radius: 0;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         /* Table */
         .portfolio-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         .portfolio-table th {
@@ -230,6 +295,7 @@
             .portfolio-table { font-size: 0.78rem; }
             .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
             .sub-row td:first-child { padding-left: 28px; }
+            .allocation-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .nav-links a:nth-child(4),
@@ -290,9 +356,49 @@
 
         <div class="section">
             <div class="section-title">资产配置</div>
-            <div class="chart-box">
-                <div class="chart-canvas-wrap">
-                    <canvas id="allocationChart"></canvas>
+            <div class="allocation-grid">
+                <div class="chart-box">
+                    <div class="chart-canvas-wrap">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                </div>
+                <div class="pct-bars" id="pctBars">
+                    <div class="pct-row">
+                        <div class="pct-header">
+                            <div class="pct-label">
+                                <span class="pct-dot" style="background:var(--gold)"></span>
+                                <span class="pct-name">现金类</span>
+                            </div>
+                            <span class="pct-value">--</span>
+                        </div>
+                        <div class="pct-track">
+                            <div class="pct-fill" style="background:var(--gold)"></div>
+                        </div>
+                    </div>
+                    <div class="pct-row">
+                        <div class="pct-header">
+                            <div class="pct-label">
+                                <span class="pct-dot" style="background:#8b7355"></span>
+                                <span class="pct-name">债券类</span>
+                            </div>
+                            <span class="pct-value">--</span>
+                        </div>
+                        <div class="pct-track">
+                            <div class="pct-fill" style="background:#8b7355"></div>
+                        </div>
+                    </div>
+                    <div class="pct-row">
+                        <div class="pct-header">
+                            <div class="pct-label">
+                                <span class="pct-dot" style="background:#6b8f71"></span>
+                                <span class="pct-name">权益类</span>
+                            </div>
+                            <span class="pct-value">--</span>
+                        </div>
+                        <div class="pct-track">
+                            <div class="pct-fill" style="background:#6b8f71"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -359,6 +465,7 @@
                 .then(data => {
                     renderStats(data);
                     renderChart(data);
+                    renderPctBars(data);
                     renderTable(data);
                     document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
                 })
@@ -459,6 +566,36 @@
                             }
                         }
                     }
+                });
+            }
+
+            function renderPctBars(data) {
+                // Calculate per-category totals
+                let totalValue = 0;
+                const cats = data.categories.map(cat => {
+                    let cv = 0;
+                    cat.items.forEach(item => {
+                        const c = calcItem(item);
+                        cv += c.value;
+                    });
+                    totalValue += cv;
+                    return { name: cat.name, value: cv, color: cat.color };
+                });
+
+                const rows = document.querySelectorAll('#pctBars .pct-row');
+                rows.forEach((row, i) => {
+                    const cat = cats[i] || { name: '', value: 0, color: 'var(--gold)' };
+                    const pct = totalValue > 0 ? (cat.value / totalValue * 100) : 0;
+                    const pctStr = pct.toFixed(1);
+                    row.querySelector('.pct-name').textContent = cat.name;
+                    row.querySelector('.pct-value').textContent = pctStr + '%';
+                    const fill = row.querySelector('.pct-fill');
+                    // Animate after a tiny delay for the transition to work
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            fill.style.width = pctStr + '%';
+                        });
+                    });
                 });
             }
 
