@@ -1,360 +1,149 @@
-﻿{
-    "updated":  "2026-05-17T01:46:41Z",
-    "items":  [
-                  {
-                      "title":  "【双语|TED】教育的目的 The Purposes of Education",
-                      "originalTitle":  "教育的目的 The Purposes of Education",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1PUe9ezEkN",
-                      "bvid":  "BV1PUe9ezEkN",
-                      "status":  "已完成",
-                      "description":  "测试，欢迎指正",
-                      "cover":  "https://i1.hdslb.com/bfs/archive/43274249e164d409629d9072ad1635c0b7fb5699.jpg",
-                      "date":  "2024-07-25",
-                      "play":  11310,
-                      "tags":  [
-                                   "教育",
-                                   "哲学"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 化妆既是压迫也是赋权？美与自我表达的哲学\u0026美国化妆史 丨oliSUNvia",
-                      "originalTitle":  "化妆既是压迫也是赋权？美与自我表达的哲学\u0026美国化妆史",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1UjsAzvEvU",
-                      "bvid":  "BV1UjsAzvEvU",
-                      "status":  "已完成",
-                      "description":  "人工烤肉，粗翻欢迎指正。\n 原标题：makeup is oppressive...but also empowering? | philosophy of beauty \u0026 self-expression\n 原地址：https://www.youtube.com/watch?v=M3KzdrnUAB",
-                      "cover":  "https://i0.hdslb.com/bfs/archive/37ffc09e5083b50be1cfb5ac6d3f6e186ffbdde6.jpg",
-                      "date":  "2025-10-19",
-                      "play":  830,
-                      "tags":  [
-                                   "女性主义",
-                                   "社会评论",
-                                   "美妆"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 菲律宾的流动性别史 | France Villarta",
-                      "originalTitle":  "菲律宾的流动性别史",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV15R9sBcEzL",
-                      "bvid":  "BV15R9sBcEzL",
-                      "status":  "已完成",
-                      "description":  "AI自动烤肉，4毛钱好兄弟。\n原标题：The gender-fluid history of the Philippines | France Villarta\n原地址：https://www.youtube.com/watch?v=I6xuJu7gLe0\n原作者：France Villarta\n打",
-                      "cover":  "https://i2.hdslb.com/bfs/archive/894f73564e02e8cd48d928bf74dd2eb18b77eea1.jpg",
-                      "date":  "2026-04-29",
-                      "play":  88,
-                      "tags":  [
-                                   "性别",
-                                   "历史"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 1920s的化妆品黑暗历史丨现代美妆业的兴起",
-                      "originalTitle":  "1920s的化妆品黑暗历史",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1tC9YBrEmv",
-                      "bvid":  "BV1tC9YBrEmv",
-                      "status":  "已完成",
-                      "description":  "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n原标题：The Dark History of 1920s Makeup | Rise of the Modern Cosmetics Industry\n原地址：https://www.youtube.com/watch?v=Ebwiv7dWsjs\n原视频作",
-                      "cover":  "https://i2.hdslb.com/bfs/archive/fbb64b99fdf090fab1a4322fbae8494cd9302873.jpg",
-                      "date":  "2026-04-30",
-                      "play":  70,
-                      "tags":  [
-                                   "女性主义",
-                                   "历史",
-                                   "美妆"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 什么是结构性压迫？| TheSaneSociety",
-                      "originalTitle":  "什么是结构性压迫？",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV19198BrEjh",
-                      "bvid":  "BV19198BrEjh",
-                      "status":  "已完成",
-                      "description":  "AI烤肉，欢迎指正，欢迎交流。\n原标题：What Is Structural/Systemic Oppression? I TheSaneSociety\n原地址：https://www.youtube.com/watch?v=ZPJc86JaxD8\n原作者：TheSaneSociety\n打轴：Vid",
-                      "cover":  "https://i2.hdslb.com/bfs/archive/435c66ed81fac02746126eae7f50ecea1a6c7c72.jpg",
-                      "date":  "2026-04-30",
-                      "play":  101,
-                      "tags":  [
-                                   "社会评论",
-                                   "哲学"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 身材积极vs.身体中立，你们知道吗丨oliSUNvia",
-                      "originalTitle":  "身材积极vs.身体中立，你们知道吗",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV119RuBzEQp",
-                      "bvid":  "BV119RuBzEQp",
-                      "status":  "已完成",
-                      "description":  "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：body neutrality is on the rise... but not without its shortcomings\n 原地址：https://www.youtube.com/watch?v=Knv0_sYJFlI\n 原作上传时间：",
-                      "cover":  "https://i0.hdslb.com/bfs/archive/01d71fbd96cd104aa62a79bae9c8d82a461a5a02.jpg",
-                      "date":  "2026-05-01",
-                      "play":  59,
-                      "tags":  [
-                                   "女性主义",
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 监禁女性主义：主流女权为何支持监狱制度？| oliSUNvia",
-                      "originalTitle":  "监禁女性主义：主流女权为何支持监狱制度？",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1vQ9oBpE1G",
-                      "bvid":  "BV1vQ9oBpE1G",
-                      "status":  "已完成",
-                      "description":  "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：why does mainstream feminism support the prison system?\n 原地址：https://www.youtube.com/watch?v=tGRlByKa_s8\n 原作上传时间：2023年5月19日\n",
-                      "cover":  "https://i0.hdslb.com/bfs/archive/37a134faf5bc05a5028e99264588c12dd726954e.jpg",
-                      "date":  "2026-05-03",
-                      "play":  245,
-                      "tags":  [
-                                   "女性主义",
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 表演式行动主义：社会正义的潮流周期 丨oliSUNvia",
-                      "originalTitle":  "表演式行动主义：社会正义的潮流周期",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1aMRsBxEHA",
-                      "bvid":  "BV1aMRsBxEHA",
-                      "status":  "已完成",
-                      "description":  "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：performative activism: the social justice trend cycle\n 原地址： https://www.youtube.com/watch?v=hh8JPK3n7rU\n 原视频作者：oliSUNvia",
-                      "cover":  "https://i0.hdslb.com/bfs/archive/dbb44b9c7c5dca4f7644f0efac0d0c669f0c9108.jpg",
-                      "date":  "2026-05-06",
-                      "play":  759,
-                      "tags":  [
-                                   "女性主义",
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 微歧视（micro-aggressions）是何意味？ 丨oliSUNvia",
-                      "originalTitle":  "微歧视（micro-aggressions）是何意味？",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1s1d3B2E1k",
-                      "bvid":  "BV1s1d3B2E1k",
-                      "status":  "已完成",
-                      "description":  "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：microaggressions are getting confusing\n 原地址：https://www.youtube.com/watch?v=xJCheMujCeA\n 原视频作者：oliSUNvia\n 原作上传时间：2021年4月24日\n",
-                      "cover":  "https://i2.hdslb.com/bfs/archive/76b30435fc3527600d52a0be61867311b357dec1.jpg",
-                      "date":  "2026-05-08",
-                      "play":  373,
-                      "tags":  [
-                                   "女性主义",
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 雀斑滤镜：越真实，越不安丨oliSUNvia",
-                      "originalTitle":  "雀斑滤镜：越真实，越不安",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1Ck5R6AE65",
-                      "bvid":  "BV1Ck5R6AE65",
-                      "status":  "已完成",
-                      "description":  "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：the faux freckle filter: everyone\u0027s latest aspiration... \u0026 insecurity\n 原地址：https://www.youtube.com/watch?v=mFVlrUMs94k\n ",
-                      "cover":  "https://i0.hdslb.com/bfs/archive/ce54ce6b16e62c16d89230a9bb74b60fd3204a91.jpg",
-                      "date":  "2026-05-14",
-                      "play":  30,
-                      "tags":  [
-                                   "女性主义",
-                                   "社会评论",
-                                   "美妆"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "[双语] 法律与道德：我们应该尊重恶法吗？| oliSUNvia",
-                      "originalTitle":  "法律与道德：我们应该尊重恶法吗？",
-                      "source":  "Bilibili",
-                      "sourceUrl":  "https://www.bilibili.com/video/BV1NJ5Y6zEYe",
-                      "bvid":  "BV1NJ5Y6zEYe",
-                      "status":  "已完成",
-                      "description":  "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：law \u0026 morality: should we respect evil laws?\n 原地址：https://www.youtube.com/watch?v=31ZtfocabMU\n 原视频作者：oliSUNvia\n 原作上传时间：2",
-                      "cover":  "https://i1.hdslb.com/bfs/archive/3eea354cd9817f4dabde93395df62fe35e7779fd.jpg",
-                      "date":  "2026-05-15",
-                      "play":  70,
-                      "tags":  [
-                                   "哲学"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "Noam Chomsky - The Purpose of Education）",
-                      "originalTitle":  "Noam Chomsky - The Purpose of Education）",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 137 MB",
-                      "cover":  "",
-                      "date":  "2025-09-05",
-                      "play":  0,
-                      "tags":  [
-                                   "教育"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "Gap Year_ A Path to Purposeful Education  Jay Gosselin",
-                      "originalTitle":  "Gap Year_ A Path to Purposeful Education  Jay Gosselin",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 257 MB",
-                      "cover":  "",
-                      "date":  "2025-09-29",
-                      "play":  0,
-                      "tags":  [
-                                   "教育"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "Gender Identity and Pronouns",
-                      "originalTitle":  "Gender Identity and Pronouns",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 12 MB",
-                      "cover":  "",
-                      "date":  "2025-09-29",
-                      "play":  0,
-                      "tags":  [
-                                   "性别"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "how the Asian Model Minority perpetuates Anti-Blackness",
-                      "originalTitle":  "how the Asian Model Minority perpetuates Anti-Blackness",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 450 MB",
-                      "cover":  "",
-                      "date":  "2026-05-10",
-                      "play":  0,
-                      "tags":  [
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "everything wrong w⧸ ＂romanticize your life＂： eurocentrism, hedonism, unrealistic, etc.",
-                      "originalTitle":  "everything wrong w⧸ ＂romanticize your life＂： eurocentrism, hedonism, unrealistic, etc.",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 302 MB",
-                      "cover":  "",
-                      "date":  "2026-05-14",
-                      "play":  0,
-                      "tags":  [
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "how would YOU solve a moral dilemma？",
-                      "originalTitle":  "how would YOU solve a moral dilemma？",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 537 MB",
-                      "cover":  "",
-                      "date":  "2026-05-14",
-                      "play":  0,
-                      "tags":  [
-                                   "哲学"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "self-centredness is NOT ＂self-care＂： losing the human face online",
-                      "originalTitle":  "self-centredness is NOT ＂self-care＂： losing the human face online",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 469 MB",
-                      "cover":  "",
-                      "date":  "2026-05-14",
-                      "play":  0,
-                      "tags":  [
-                                   "社会评论"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  },
-                  {
-                      "title":  "stop denying women their autonomy.",
-                      "originalTitle":  "stop denying women their autonomy.",
-                      "source":  "本地",
-                      "sourceUrl":  "",
-                      "bvid":  "",
-                      "status":  "译制中",
-                      "description":  "待上传 | 420 MB",
-                      "cover":  "",
-                      "date":  "2026-05-14",
-                      "play":  0,
-                      "tags":  [
-                                   "女性主义"
-                               ],
-                      "likes":  0,
-                      "favs":  0,
-                      "danmaku":  0
-                  }
-              ]
+{
+  "updated": "2026-05-17T14:45:59Z",
+  "items": [
+    {
+      "title": "【双语|TED】教育的目的 The Purposes of Education",
+      "originalTitle": "教育的目的 The Purposes of Education",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1PUe9ezEkN",
+      "bvid": "BV1PUe9ezEkN",
+      "status": "已完成",
+      "description": "测试，欢迎指正",
+      "cover": "https://i1.hdslb.com/bfs/archive/43274249e164d409629d9072ad1635c0b7fb5699.jpg",
+      "play": 11324,
+      "date": "2024-07-25"
+    },
+    {
+      "title": "[双语] 化妆既是压迫也是赋权？美与自我表达的哲学&美国化妆史 丨oliSUNvia",
+      "originalTitle": "化妆既是压迫也是赋权？美与自我表达的哲学&美国化妆史",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1UjsAzvEvU",
+      "bvid": "BV1UjsAzvEvU",
+      "status": "已完成",
+      "description": "人工烤肉，粗翻欢迎指正。\n 原标题：makeup is oppressive...but also empowering? | philosophy of beauty & self-expression\n 原地址：https://www.youtube.com/watch?v=M3KzdrnUAB",
+      "cover": "https://i0.hdslb.com/bfs/archive/37ffc09e5083b50be1cfb5ac6d3f6e186ffbdde6.jpg",
+      "play": 836,
+      "date": "2025-10-19"
+    },
+    {
+      "title": "[双语] 菲律宾的流动性别史 | France Villarta",
+      "originalTitle": "菲律宾的流动性别史",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV15R9sBcEzL",
+      "bvid": "BV15R9sBcEzL",
+      "status": "已完成",
+      "description": "AI自动烤肉，4毛钱好兄弟。\n原标题：The gender-fluid history of the Philippines | France Villarta\n原地址：https://www.youtube.com/watch?v=I6xuJu7gLe0\n原作者：France Villarta\n打",
+      "cover": "https://i2.hdslb.com/bfs/archive/894f73564e02e8cd48d928bf74dd2eb18b77eea1.jpg",
+      "play": 93,
+      "date": "2026-04-29"
+    },
+    {
+      "title": "[双语] 1920s的化妆品黑暗历史丨现代美妆业的兴起",
+      "originalTitle": "1920s的化妆品黑暗历史",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1tC9YBrEmv",
+      "bvid": "BV1tC9YBrEmv",
+      "status": "已完成",
+      "description": "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n原标题：The Dark History of 1920s Makeup | Rise of the Modern Cosmetics Industry\n原地址：https://www.youtube.com/watch?v=Ebwiv7dWsjs\n原视频作",
+      "cover": "https://i2.hdslb.com/bfs/archive/fbb64b99fdf090fab1a4322fbae8494cd9302873.jpg",
+      "play": 74,
+      "date": "2026-04-30"
+    },
+    {
+      "title": "[双语] 什么是结构性压迫？| TheSaneSociety",
+      "originalTitle": "什么是结构性压迫？",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV19198BrEjh",
+      "bvid": "BV19198BrEjh",
+      "status": "已完成",
+      "description": "AI烤肉，欢迎指正，欢迎交流。\n原标题：What Is Structural/Systemic Oppression? I TheSaneSociety\n原地址：https://www.youtube.com/watch?v=ZPJc86JaxD8\n原作者：TheSaneSociety\n打轴：Vid",
+      "cover": "https://i2.hdslb.com/bfs/archive/435c66ed81fac02746126eae7f50ecea1a6c7c72.jpg",
+      "play": 103,
+      "date": "2026-04-30"
+    },
+    {
+      "title": "[双语] 身材积极vs.身体中立，你们知道吗丨oliSUNvia",
+      "originalTitle": "身材积极vs.身体中立，你们知道吗",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV119RuBzEQp",
+      "bvid": "BV119RuBzEQp",
+      "status": "已完成",
+      "description": "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：body neutrality is on the rise... but not without its shortcomings\n 原地址：https://www.youtube.com/watch?v=Knv0_sYJFlI\n 原作上传时间：",
+      "cover": "https://i0.hdslb.com/bfs/archive/01d71fbd96cd104aa62a79bae9c8d82a461a5a02.jpg",
+      "play": 63,
+      "date": "2026-05-01"
+    },
+    {
+      "title": "[双语] 监禁女性主义：主流女权为何支持监狱制度？| oliSUNvia",
+      "originalTitle": "监禁女性主义：主流女权为何支持监狱制度？",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1vQ9oBpE1G",
+      "bvid": "BV1vQ9oBpE1G",
+      "status": "已完成",
+      "description": "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：why does mainstream feminism support the prison system?\n 原地址：https://www.youtube.com/watch?v=tGRlByKa_s8\n 原作上传时间：2023年5月19日\n",
+      "cover": "https://i0.hdslb.com/bfs/archive/37a134faf5bc05a5028e99264588c12dd726954e.jpg",
+      "play": 263,
+      "date": "2026-05-03"
+    },
+    {
+      "title": "[双语] 表演式行动主义：社会正义的潮流周期 丨oliSUNvia",
+      "originalTitle": "表演式行动主义：社会正义的潮流周期",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1aMRsBxEHA",
+      "bvid": "BV1aMRsBxEHA",
+      "status": "已完成",
+      "description": "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：performative activism: the social justice trend cycle\n 原地址： https://www.youtube.com/watch?v=hh8JPK3n7rU\n 原视频作者：oliSUNvia",
+      "cover": "https://i0.hdslb.com/bfs/archive/dbb44b9c7c5dca4f7644f0efac0d0c669f0c9108.jpg",
+      "play": 816,
+      "date": "2026-05-06"
+    },
+    {
+      "title": "[双语] 微歧视（micro-aggressions）是何意味？ 丨oliSUNvia",
+      "originalTitle": "微歧视（micro-aggressions）是何意味？",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1s1d3B2E1k",
+      "bvid": "BV1s1d3B2E1k",
+      "status": "已完成",
+      "description": "AI烤肉，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：microaggressions are getting confusing\n 原地址：https://www.youtube.com/watch?v=xJCheMujCeA\n 原视频作者：oliSUNvia\n 原作上传时间：2021年4月24日\n",
+      "cover": "https://i2.hdslb.com/bfs/archive/76b30435fc3527600d52a0be61867311b357dec1.jpg",
+      "play": 416,
+      "date": "2026-05-08"
+    },
+    {
+      "title": "[双语] 雀斑滤镜：越真实，越不安丨oliSUNvia",
+      "originalTitle": "雀斑滤镜：越真实，越不安",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1Ck5R6AE65",
+      "bvid": "BV1Ck5R6AE65",
+      "status": "已完成",
+      "description": "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：the faux freckle filter: everyone's latest aspiration... & insecurity\n 原地址：https://www.youtube.com/watch?v=mFVlrUMs94k\n ",
+      "cover": "https://i0.hdslb.com/bfs/archive/ce54ce6b16e62c16d89230a9bb74b60fd3204a91.jpg",
+      "play": 34,
+      "date": "2026-05-14"
+    },
+    {
+      "title": "[双语] 法律与道德：我们应该尊重恶法吗？| oliSUNvia",
+      "originalTitle": "法律与道德：我们应该尊重恶法吗？",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1NJ5Y6zEYe",
+      "bvid": "BV1NJ5Y6zEYe",
+      "status": "已完成",
+      "description": "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：law & morality: should we respect evil laws?\n 原地址：https://www.youtube.com/watch?v=31ZtfocabMU\n 原视频作者：oliSUNvia\n 原作上传时间：2",
+      "cover": "https://i1.hdslb.com/bfs/archive/3eea354cd9817f4dabde93395df62fe35e7779fd.jpg",
+      "play": 84,
+      "date": "2026-05-15"
+    },
+    {
+      "title": "[双语] AI时代的教育：批判性思维的未来 | IBM Technology",
+      "originalTitle": "AI时代的教育：批判性思维的未来",
+      "source": "Bilibili",
+      "sourceUrl": "https://www.bilibili.com/video/BV1ayLj63EsT",
+      "bvid": "BV1ayLj63EsT",
+      "status": "已完成",
+      "description": "AI烤肉仅供参考，欢迎指正，欢迎补充，欢迎讨论。\n 原标题：AI & Education: Generative AI & the Future of Critical Thinking\n 原地址：https://www.youtube.com/watch?v=k7PvscqGD24\n 原视频作者：",
+      "cover": "https://i0.hdslb.com/bfs/archive/02a6b1358fccf59bf6ebc8439f1a1b29ea821aa3.jpg",
+      "play": 30,
+      "date": "2026-05-17"
+    }
+  ]
 }
