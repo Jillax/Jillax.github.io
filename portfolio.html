@@ -6,115 +6,23 @@
     <meta name="description" content="Jillax 的投资组合">
     <title>投资 · Jillax</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
     <style>
         :root {
-            --bg: #181410;
-            --bg-nav: rgba(24, 20, 16, 0.82);
-            --text: #e4dbcc;
-            --text-soft: rgba(228, 219, 204, 0.55);
-            --text-muted: rgba(228, 219, 204, 0.28);
-            --text-faint: rgba(228, 219, 204, 0.12);
-            --gold: #c4a35a;
-            --gold-soft: rgba(196, 163, 90, 0.35);
-            --gold-dim: rgba(196, 163, 90, 0.12);
+            --container: 800px;
             --green: #6b8f71;
             --green-soft: rgba(107, 143, 113, 0.35);
             --red: #b5706b;
             --red-soft: rgba(181, 112, 107, 0.35);
-            --border: rgba(228, 219, 204, 0.06);
-            --border-light: rgba(228, 219, 204, 0.03);
-            --container: 800px;
-            --font-display: 'Fraunces', 'Noto Serif SC', serif;
-            --font-body: 'Spectral', 'Noto Serif SC', serif;
-            --font-chinese: 'Noto Serif SC', serif;
         }
-
         [data-theme="light"] {
-            --bg: #f5f0e8;
-            --bg-nav: rgba(245, 240, 232, 0.85);
-            --text: #2c2824;
-            --text-soft: rgba(44, 40, 36, 0.6);
-            --text-muted: rgba(44, 40, 36, 0.35);
-            --text-faint: rgba(44, 40, 36, 0.12);
-            --gold-soft: rgba(196, 163, 90, 0.5);
-            --gold-dim: rgba(196, 163, 90, 0.15);
+            --gold: #c4a35a;
             --green-soft: rgba(107, 143, 113, 0.3);
             --red-soft: rgba(181, 112, 107, 0.3);
-            --border: rgba(44, 40, 36, 0.08);
-            --border-light: rgba(44, 40, 36, 0.04);
         }
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: var(--font-body);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            font-weight: 400;
-        }
-        a { color: inherit; text-decoration: none; }
-        img { max-width: 100%; display: block; }
-
-        .container { max-width: var(--container); margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
-
-        /* Nav */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            z-index: 100; padding: 20px 0;
-            background: var(--bg-nav);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-light);
-        }
-        nav .container { display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo {
-            font-family: var(--font-display); font-weight: 600;
-            font-size: 1.1rem; color: var(--text);
-            letter-spacing: 0.5px;
-            font-variation-settings: 'SOFT' 80, 'WONK' 0;
-        }
-        .nav-links { display: flex; gap: 20px; font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-body); }
-        .nav-links a { transition: color 0.4s ease; letter-spacing: 0.5px; position: relative; }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0;
-            width: 0; height: 1px; background: var(--gold);
-            transition: width 0.4s ease;
-        }
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links .current { color: var(--text-soft); }
-        .nav-links .current::after { width: 100%; }
-        .theme-toggle {
-            background: none; border: none; color: var(--text-muted); cursor: pointer;
-            font-size: 0.85rem; padding: 0; transition: color 0.4s ease;
-            font-family: var(--font-body); line-height: 1;
-        }
-        .theme-toggle:hover { color: var(--gold); }
-
-        /* Page Header */
-        .page-header { padding: 100px 0 32px; }
-        .page-header .back-home {
-            display: inline-flex; align-items: center; gap: 4px;
-            font-size: 0.78rem; color: var(--text-faint);
-            margin-bottom: 16px; transition: color 0.3s ease; font-family: var(--font-body);
-        }
-        .page-header .back-home:hover { color: var(--gold); }
-        .page-header h1 {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 3vw, 2.4rem);
-            font-weight: 600; color: var(--text);
-            letter-spacing: -0.3px;
-            font-variation-settings: 'SOFT' 60, 'WONK' 0;
-        }
-        .page-header p { font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
 
         /* Stats Bar */
         .stats-bar {
@@ -148,7 +56,6 @@
         .chart-box { border: 1px solid var(--border); padding: 24px; }
         .chart-canvas-wrap { position: relative; max-width: 280px; margin: 0 auto; }
 
-        /* Chart + Bars layout */
         .allocation-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -156,7 +63,7 @@
             align-items: start;
         }
 
-        /* Percentage bars (skills-like style) */
+        /* Percentage bars */
         .pct-bars {
             border: 1px solid var(--border);
             padding: 24px;
@@ -234,14 +141,13 @@
         }
         .cat-row td:first-child { font-family: var(--font-chinese); letter-spacing: 0.5px; }
 
-        /* Expandable item rows */
+        /* Expandable rows */
         .item-row { cursor: pointer; user-select: none; }
         .item-row:hover td { color: var(--text); }
         .item-row .arrow { display: inline-block; width: 16px; transition: transform 0.2s; font-size: 0.7rem; color: var(--text-faint); }
         .item-row.expanded .arrow { transform: rotate(90deg); }
         .item-row td { padding-top: 12px; padding-bottom: 12px; }
 
-        /* Sub-item rows (hidden by default) */
         .sub-row { display: none; }
         .sub-row.open { display: table-row; }
         .sub-row td { padding-top: 8px; padding-bottom: 8px; }
@@ -271,26 +177,12 @@
             letter-spacing: 1px; max-width: 400px; margin: 0 auto;
         }
 
-        /* Footer */
-        footer {
-            padding: 48px 0; margin-top: 80px;
-            border-top: 1px solid var(--border-light);
-            text-align: center; color: var(--text-faint);
-            font-size: 0.75rem;
-            font-family: var(--font-display); font-style: italic;
-            font-variation-settings: 'SOFT' 100, 'WONK' 1;
+        .update-note {
+            text-align: right; font-size: 0.65rem; color: var(--text-faint);
+            margin-top: 12px; font-style: italic;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            nav { padding: 16px 0; }
-            .nav-links { gap: 14px; font-size: 0.75rem; }
-            .nav-links a:nth-child(5),
-            .nav-links a:nth-child(6),
-            .nav-links a:nth-child(7),
-            .nav-links a:nth-child(8) { display: none; }
-            .container { padding: 0 24px; }
-            .page-header { padding: 80px 0 20px; }
             .stat-value { font-size: 1.3rem; }
             .portfolio-table { font-size: 0.78rem; }
             .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
@@ -298,17 +190,7 @@
             .allocation-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .nav-links a:nth-child(4),
-            .nav-links a:nth-child(5),
-            .nav-links a:nth-child(6),
-            .nav-links a:nth-child(7),
-            .nav-links a:nth-child(8) { display: none; }
             .stats-bar { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .update-note {
-            text-align: right; font-size: 0.65rem; color: var(--text-faint);
-            margin-top: 12px; font-style: italic;
         }
     </style>
 </head>
@@ -432,33 +314,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const toggle = document.getElementById('themeToggle');
-            const html = document.documentElement;
-            const saved = localStorage.getItem('theme');
-            if (saved === 'light') {
-                html.setAttribute('data-theme', 'light');
-                toggle.textContent = '☾';
-            } else if (saved === 'dark') {
-                html.removeAttribute('data-theme');
-                toggle.textContent = '☀';
-            }
-            toggle.addEventListener('click', function() {
-                const isLight = html.hasAttribute('data-theme');
-                if (isLight) {
-                    html.removeAttribute('data-theme');
-                    toggle.textContent = '☀';
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    html.setAttribute('data-theme', 'light');
-                    toggle.textContent = '☾';
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
             fetch('data/portfolio.json')
                 .then(r => r.json())
                 .then(data => {
@@ -569,7 +424,6 @@
             }
 
             function renderPctBars(data) {
-                // Calculate per-category totals
                 let totalValue = 0;
                 const cats = data.categories.map(cat => {
                     let cv = 0;
@@ -589,7 +443,6 @@
                     row.querySelector('.pct-name').textContent = cat.name;
                     row.querySelector('.pct-value').textContent = pctStr + '%';
                     const fill = row.querySelector('.pct-fill');
-                    // Animate after a tiny delay for the transition to work
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
                             fill.style.width = pctStr + '%';
@@ -683,7 +536,6 @@
 
                 tbody.innerHTML = html;
 
-                // Expand/collapse click handler
                 document.querySelectorAll('.item-row').forEach(row => {
                     row.addEventListener('click', function() {
                         const idx = this.dataset.idx;
@@ -695,6 +547,8 @@
             }
         });
     </script>
+
+    <script src="js/main.js"></script>
 
 </body>
 </html>
