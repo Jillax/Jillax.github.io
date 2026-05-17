@@ -10,10 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Serif+SC:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <!-- Chart.js datalabels plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 
     <style>
         :root {
@@ -32,7 +29,7 @@
             --red-soft: rgba(181, 112, 107, 0.35);
             --border: rgba(228, 219, 204, 0.06);
             --border-light: rgba(228, 219, 204, 0.03);
-            --container: 760px;
+            --container: 800px;
             --font-display: 'Fraunces', 'Noto Serif SC', serif;
             --font-body: 'Spectral', 'Noto Serif SC', serif;
             --font-chinese: 'Noto Serif SC', serif;
@@ -67,15 +64,9 @@
         a { color: inherit; text-decoration: none; }
         img { max-width: 100%; display: block; }
 
-        .container {
-            max-width: var(--container);
-            margin: 0 auto;
-            padding: 0 32px;
-            position: relative;
-            z-index: 1;
-        }
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
 
-        /* ===== Nav ===== */
+        /* Nav */
         nav {
             position: fixed; top: 0; left: 0; right: 0;
             z-index: 100; padding: 20px 0;
@@ -83,23 +74,15 @@
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-light);
         }
-        nav .container {
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
         .nav-logo {
             font-family: var(--font-display); font-weight: 600;
             font-size: 1.1rem; color: var(--text);
             letter-spacing: 0.5px;
             font-variation-settings: 'SOFT' 80, 'WONK' 0;
         }
-        .nav-links {
-            display: flex; gap: 20px;
-            font-size: 0.78rem; color: var(--text-muted);
-            font-family: var(--font-body);
-        }
-        .nav-links a {
-            transition: color 0.4s ease; letter-spacing: 0.5px; position: relative;
-        }
+        .nav-links { display: flex; gap: 20px; font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-body); }
+        .nav-links a { transition: color 0.4s ease; letter-spacing: 0.5px; position: relative; }
         .nav-links a::after {
             content: ''; position: absolute; bottom: -4px; left: 0;
             width: 0; height: 1px; background: var(--gold);
@@ -110,27 +93,18 @@
         .nav-links .current { color: var(--text-soft); }
         .nav-links .current::after { width: 100%; }
         .theme-toggle {
-            background: none; border: none;
-            color: var(--text-muted); cursor: pointer;
-            font-size: 0.85rem; padding: 0;
-            transition: color 0.4s ease;
+            background: none; border: none; color: var(--text-muted); cursor: pointer;
+            font-size: 0.85rem; padding: 0; transition: color 0.4s ease;
             font-family: var(--font-body); line-height: 1;
         }
         .theme-toggle:hover { color: var(--gold); }
 
-        /* ===== Page Header ===== */
-        .page-header {
-            padding: 100px 0 32px;
-        }
+        /* Page Header */
+        .page-header { padding: 100px 0 32px; }
         .page-header .back-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.78rem;
-            color: var(--text-faint);
-            margin-bottom: 16px;
-            transition: color 0.3s ease;
-            font-family: var(--font-body);
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 0.78rem; color: var(--text-faint);
+            margin-bottom: 16px; transition: color 0.3s ease; font-family: var(--font-body);
         }
         .page-header .back-home:hover { color: var(--gold); }
         .page-header h1 {
@@ -140,141 +114,99 @@
             letter-spacing: -0.3px;
             font-variation-settings: 'SOFT' 60, 'WONK' 0;
         }
-        .page-header p {
-            font-size: 0.82rem; color: var(--text-muted);
-            margin-top: 8px; font-weight: 300;
-        }
+        .page-header p { font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; font-weight: 300; }
 
-        /* ===== Stats Bar ===== */
+        /* Stats Bar */
         .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
             margin-bottom: 44px;
             border-top: 1px solid var(--border-light);
             border-bottom: 1px solid var(--border-light);
         }
-        .stat-item {
-            text-align: center;
-            padding: 28px 16px;
-            border-right: 1px solid var(--border-light);
-        }
+        .stat-item { text-align: center; padding: 28px 16px; border-right: 1px solid var(--border-light); }
         .stat-item:last-child { border-right: none; }
         .stat-label {
-            display: block;
-            font-size: 0.65rem;
-            color: var(--text-faint);
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            font-family: var(--font-body);
-            text-transform: uppercase;
+            display: block; font-size: 0.65rem; color: var(--text-faint);
+            letter-spacing: 2px; margin-bottom: 8px; font-family: var(--font-body); text-transform: uppercase;
         }
         .stat-value {
-            font-family: var(--font-display);
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: var(--text);
-            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+            font-family: var(--font-display); font-size: 1.6rem; font-weight: 600;
+            color: var(--text); font-variation-settings: 'SOFT' 60, 'WONK' 0;
         }
         .stat-value.green { color: var(--green); }
         .stat-value.red { color: var(--red); }
-        .stat-sub {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-top: 4px;
+        .stat-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* Section */
+        .section { margin-bottom: 48px; }
+        .section-title {
+            font-size: 0.7rem; color: var(--text-faint); letter-spacing: 2px;
+            margin-bottom: 20px; font-family: var(--font-chinese);
         }
 
-        /* ===== Chart Sections ===== */
-        .chart-section {
-            margin-bottom: 48px;
-        }
-        .chart-section-title {
-            font-size: 0.7rem;
-            color: var(--text-faint);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            font-family: var(--font-chinese);
-        }
-        .chart-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            margin-bottom: 48px;
-        }
-        .chart-box {
-            border: 1px solid var(--border);
-            padding: 24px;
-        }
-        .chart-canvas-wrap {
-            position: relative;
-            max-width: 260px;
-            margin: 0 auto;
-        }
-        .chart-canvas-wrap-wide { position: relative; }
-        .chart-canvas-wrap-wide canvas { max-height: 260px; }
+        /* Chart */
+        .chart-box { border: 1px solid var(--border); padding: 24px; }
+        .chart-canvas-wrap { position: relative; max-width: 280px; margin: 0 auto; }
 
-        /* ===== Detail Table ===== */
-        .holding-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .holding-table th {
-            font-size: 0.65rem;
-            color: var(--text-faint);
-            letter-spacing: 2px;
-            font-weight: 400;
-            text-align: right;
-            padding: 10px 12px;
+        /* Table */
+        .portfolio-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .portfolio-table th {
+            font-size: 0.65rem; color: var(--text-faint); letter-spacing: 2px;
+            font-weight: 400; text-align: right; padding: 10px 12px;
             border-bottom: 1px solid var(--border);
         }
-        .holding-table th:first-child { text-align: left; }
-        .holding-table td {
-            text-align: right;
-            padding: 10px 12px;
+        .portfolio-table th:first-child { text-align: left; }
+        .portfolio-table td {
+            text-align: right; padding: 10px 12px;
             border-bottom: 1px solid var(--border-light);
-            color: var(--text-soft);
-            font-weight: 300;
+            color: var(--text-soft); font-weight: 300;
         }
-        .holding-table td:first-child { text-align: left; }
+        .portfolio-table td:first-child { text-align: left; }
         .cat-row td {
             border-bottom: 1px solid var(--border);
-            padding-top: 16px;
-            padding-bottom: 4px;
-            font-weight: 500;
-            color: var(--text);
+            padding-top: 18px; padding-bottom: 6px;
+            font-weight: 500; color: var(--text);
         }
-        .cat-row td:first-child { font-family: var(--font-chinese); }
+        .cat-row td:first-child { font-family: var(--font-chinese); letter-spacing: 0.5px; }
+
+        /* Expandable item rows */
+        .item-row { cursor: pointer; user-select: none; }
+        .item-row:hover td { color: var(--text); }
+        .item-row .arrow { display: inline-block; width: 16px; transition: transform 0.2s; font-size: 0.7rem; color: var(--text-faint); }
+        .item-row.expanded .arrow { transform: rotate(90deg); }
+        .item-row td { padding-top: 12px; padding-bottom: 12px; }
+
+        /* Sub-item rows (hidden by default) */
+        .sub-row { display: none; }
+        .sub-row.open { display: table-row; }
+        .sub-row td { padding-top: 8px; padding-bottom: 8px; }
+        .sub-row td:first-child { padding-left: 40px; font-size: 0.82rem; }
+
+        .dca-badge {
+            display: inline-block; font-size: 0.6rem;
+            padding: 1px 6px; margin-left: 6px;
+            border: 1px solid var(--gold-dim); color: var(--gold-soft);
+            letter-spacing: 0.3px;
+        }
+
+        .gain-pos { color: var(--green) !important; }
+        .gain-neg { color: var(--red) !important; }
+
         .total-row td {
-            border-bottom: none;
-            padding-top: 14px;
-            font-weight: 500;
-            color: var(--text);
-        }
-        .gain-positive { color: var(--green); }
-        .gain-negative { color: var(--red); }
-        .dot {
-            display: inline-block;
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            margin-right: 10px;
-            vertical-align: middle;
+            border-bottom: none; padding-top: 14px;
+            font-weight: 500; color: var(--text);
         }
 
-        /* ===== Philosophy ===== */
-        .portfolio-philosophy {
-            margin-top: 56px;
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-        }
-        .portfolio-philosophy p {
-            font-family: var(--font-chinese);
-            font-size: 0.82rem;
-            color: var(--gold-soft);
-            line-height: 1.9;
-            letter-spacing: 1px;
-            max-width: 400px;
-            margin: 0 auto;
+        .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
+
+        /* Philosophy */
+        .philosophy { margin-top: 56px; text-align: center; padding: 40px 0; border-top: 1px solid var(--border); }
+        .philosophy p {
+            font-family: var(--font-chinese); color: var(--gold-soft); line-height: 1.9;
+            letter-spacing: 1px; max-width: 400px; margin: 0 auto;
         }
 
-        /* ===== Footer ===== */
+        /* Footer */
         footer {
             padding: 48px 0; margin-top: 80px;
             border-top: 1px solid var(--border-light);
@@ -284,7 +216,7 @@
             font-variation-settings: 'SOFT' 100, 'WONK' 1;
         }
 
-        /* ===== Responsive ===== */
+        /* Responsive */
         @media (max-width: 768px) {
             nav { padding: 16px 0; }
             .nav-links { gap: 14px; font-size: 0.75rem; }
@@ -295,11 +227,9 @@
             .container { padding: 0 24px; }
             .page-header { padding: 80px 0 20px; }
             .stat-value { font-size: 1.3rem; }
-            .chart-grid { grid-template-columns: 1fr; }
-            .chart-canvas-wrap { max-width: 220px; }
-            .holding-table { font-size: 0.78rem; }
-            .holding-table th,
-            .holding-table td { padding: 8px 6px; }
+            .portfolio-table { font-size: 0.78rem; }
+            .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
+            .sub-row td:first-child { padding-left: 28px; }
         }
         @media (max-width: 480px) {
             .nav-links a:nth-child(4),
@@ -307,13 +237,17 @@
             .nav-links a:nth-child(6),
             .nav-links a:nth-child(7),
             .nav-links a:nth-child(8) { display: none; }
-            .stats-bar { grid-template-columns: 1fr; gap: 0; }
+            .stats-bar { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .update-note {
+            text-align: right; font-size: 0.65rem; color: var(--text-faint);
+            margin-top: 12px; font-style: italic;
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== Nav ===== -->
     <nav>
         <div class="container">
             <a href="index.html" class="nav-logo">Jillax</a>
@@ -331,15 +265,13 @@
         </div>
     </nav>
 
-    <!-- ===== Header ===== -->
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home">← 返回主页</a>
             <h1>📊 投资组合</h1>
-            <p>资产配置 · 持仓明细 · 收益分析</p>
+            <p>逐项点击展开查看各公司明细</p>
         </div>
 
-        <!-- ===== Stats Bar ===== -->
         <div class="stats-bar" id="statsBar">
             <div class="stat-item">
                 <span class="stat-label">总资产净值</span>
@@ -347,7 +279,7 @@
             </div>
             <div class="stat-item">
                 <span class="stat-label">累计投入</span>
-                <span class="stat-value" id="totalDeposit">--</span>
+                <span class="stat-value" id="totalCost">--</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">累计收益</span>
@@ -356,38 +288,18 @@
             </div>
         </div>
 
-        <!-- ===== Charts Row ===== -->
-        <div class="chart-grid">
-            <!-- Doughnut: Asset Allocation -->
+        <div class="section">
+            <div class="section-title">资产配置</div>
             <div class="chart-box">
-                <div class="chart-section-title">资产配置</div>
                 <div class="chart-canvas-wrap">
                     <canvas id="allocationChart"></canvas>
                 </div>
             </div>
-            <!-- Bar: Gain/Loss per Asset -->
-            <div class="chart-box">
-                <div class="chart-section-title">持仓盈亏</div>
-                <div class="chart-canvas-wrap-wide">
-                    <canvas id="gainChart"></canvas>
-                </div>
-            </div>
         </div>
 
-        <!-- Line: Historical NAV -->
-        <div class="chart-section">
-            <div class="chart-section-title">净值走势</div>
-            <div class="chart-box">
-                <div class="chart-canvas-wrap-wide">
-                    <canvas id="historyChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== Holdings Table ===== -->
-        <div class="chart-section">
-            <div class="chart-section-title">持仓明细</div>
-            <table class="holding-table" id="holdingTable">
+        <div class="section">
+            <div class="section-title">持仓明细 <span style="font-weight:300;color:var(--text-faint)">· 点击品类展开明细</span></div>
+            <table class="portfolio-table">
                 <thead>
                     <tr>
                         <th>名称</th>
@@ -397,25 +309,22 @@
                         <th>收益率</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                </tbody>
+                <tbody id="tableBody"></tbody>
             </table>
+            <div class="update-note" id="updateNote"></div>
         </div>
 
-        <!-- Philosophy -->
-        <div class="portfolio-philosophy">
+        <div class="philosophy">
             <p>相信人类科技进步，持续买入优质资产，保持在场。</p>
         </div>
     </div>
 
-    <!-- ===== Footer ===== -->
     <footer>
         <div class="container">
             <p>&copy; 2026 Jillax</p>
         </div>
     </footer>
 
-    <!-- ===== Theme Toggle ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggle = document.getElementById('themeToggle');
@@ -443,64 +352,93 @@
         });
     </script>
 
-    <!-- ===== Portfolio Charts ===== -->
     <script>
-        Chart.register(ChartDataLabels);
-
         document.addEventListener('DOMContentLoaded', function() {
             fetch('data/portfolio.json')
                 .then(r => r.json())
                 .then(data => {
                     renderStats(data);
-                    renderAllocation(data);
-                    renderGainChart(data);
-                    renderHistory(data);
+                    renderChart(data);
                     renderTable(data);
+                    document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
                 })
                 .catch(() => {
                     document.getElementById('totalValue').textContent = '加载失败';
                 });
 
+            function calcItem(item) {
+                if (item.subItems) {
+                    let totalValue = 0, totalCost = 0;
+                    item.subItems.forEach(s => {
+                        totalValue += s.value;
+                        totalCost += s.cost;
+                    });
+                    return { value: totalValue, cost: totalCost };
+                }
+                return { value: item.value || 0, cost: item.cost || 0 };
+            }
+
+            function fmt(n) { return '¥' + Math.round(n).toLocaleString(); }
+            function fmtGain(n) { return (n >= 0 ? '+' : '') + '¥' + Math.round(Math.abs(n)).toLocaleString(); }
+
             function renderStats(data) {
-                const gain = data.totalValue - data.netDeposit;
-                const pct = ((gain / data.netDeposit) * 100).toFixed(1);
+                let totalValue = 0, totalCost = 0;
+                data.categories.forEach(cat => {
+                    cat.items.forEach(item => {
+                        const c = calcItem(item);
+                        totalValue += c.value;
+                        totalCost += c.cost;
+                    });
+                });
+                const gain = totalValue - totalCost;
+                const pct = totalCost > 0 ? ((gain / totalCost) * 100).toFixed(2) : '0.00';
                 const isPos = gain >= 0;
 
-                document.getElementById('totalValue').textContent = '¥' + data.totalValue.toLocaleString();
-                document.getElementById('totalDeposit').textContent = '¥' + data.netDeposit.toLocaleString();
+                document.getElementById('totalValue').textContent = fmt(totalValue);
+                document.getElementById('totalCost').textContent = fmt(totalCost);
 
                 const gainEl = document.getElementById('totalGain');
                 gainEl.className = 'stat-value ' + (isPos ? 'green' : 'red');
-                gainEl.textContent = (isPos ? '+' : '') + '¥' + gain.toLocaleString();
-
+                gainEl.textContent = fmtGain(gain);
                 document.getElementById('gainPct').textContent = (isPos ? '+' : '') + pct + '%';
             }
 
-            function renderAllocation(data) {
+            function renderChart(data) {
+                const labels = [];
+                const values = [];
+                const colors = [];
+                data.categories.forEach(cat => {
+                    cat.items.forEach(item => {
+                        const c = calcItem(item);
+                        labels.push(item.name);
+                        values.push(c.value);
+                        colors.push(cat.color);
+                    });
+                });
+
                 const ctx = document.getElementById('allocationChart').getContext('2d');
-                const values = data.categories.map(c => c.items.reduce((s, i) => s + i.value, 0));
                 new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: data.categories.map(c => c.name),
+                        labels: labels,
                         datasets: [{
                             data: values,
-                            backgroundColor: ['#c4a35a', '#8b7355', '#6b8f71'],
+                            backgroundColor: colors,
                             borderWidth: 0,
-                            spacing: 3,
+                            spacing: 2,
                             hoverOffset: 8
                         }]
                     },
                     options: {
                         responsive: true,
-                        cutout: '62%',
+                        cutout: '60%',
                         plugins: {
                             legend: {
                                 position: 'bottom',
                                 labels: {
                                     color: '#e4dbcc',
-                                    font: { family: 'Noto Serif SC', size: 12 },
-                                    padding: 16,
+                                    font: { family: 'Noto Serif SC', size: 11 },
+                                    padding: 14,
                                     usePointStyle: true,
                                     pointStyle: 'circle'
                                 }
@@ -515,141 +453,8 @@
                                     label: function(ctx) {
                                         const total = values.reduce((a, b) => a + b, 0);
                                         const pct = ((ctx.parsed / total) * 100).toFixed(1);
-                                        return '¥' + ctx.parsed.toLocaleString() + '  (' + pct + '%)';
+                                        return fmt(ctx.parsed) + '  (' + pct + '%)';
                                     }
-                                }
-                            },
-                            datalabels: { display: false }
-                        }
-                    }
-                });
-            }
-
-            function renderGainChart(data) {
-                const items = [];
-                data.categories.forEach(c => {
-                    c.items.forEach(i => {
-                        items.push({ name: i.name, gain: i.value - i.cost });
-                    });
-                });
-
-                const ctx = document.getElementById('gainChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: items.map(i => i.name),
-                        datasets: [{
-                            data: items.map(i => i.gain),
-                            backgroundColor: items.map(i => i.gain >= 0 ? 'rgba(107, 143, 113, 0.7)' : 'rgba(181, 112, 107, 0.7)'),
-                            borderColor: items.map(i => i.gain >= 0 ? '#6b8f71' : '#b5706b'),
-                            borderWidth: 1,
-                            borderRadius: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        indexAxis: 'y',
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: 'rgba(24, 20, 16, 0.92)',
-                                titleFont: { family: 'Noto Serif SC', size: 13 },
-                                bodyFont: { family: 'Spectral', size: 12 },
-                                padding: 14,
-                                cornerRadius: 0,
-                                callbacks: {
-                                    label: function(ctx) {
-                                        return (ctx.parsed.x >= 0 ? '+' : '') + '¥' + ctx.parsed.x.toLocaleString();
-                                    }
-                                }
-                            },
-                            datalabels: {
-                                anchor: 'end',
-                                align: 'end',
-                                color: '#e4dbcc',
-                                font: { family: 'Spectral', size: 11 },
-                                formatter: (v) => (v >= 0 ? '+' : '') + '¥' + v.toLocaleString()
-                            }
-                        },
-                        scales: {
-                            x: {
-                                grid: { color: 'rgba(228, 219, 204, 0.06)', drawBorder: false },
-                                ticks: { color: 'rgba(228, 219, 204, 0.28)', font: { size: 10 } }
-                            },
-                            y: {
-                                grid: { display: false },
-                                ticks: {
-                                    color: 'rgba(228, 219, 204, 0.55)',
-                                    font: { family: 'Noto Serif SC', size: 11 }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            function renderHistory(data) {
-                const ctx = document.getElementById('historyChart').getContext('2d');
-                const dates = data.history.map(h => h.date);
-                const values = data.history.map(h => h.value);
-
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: dates,
-                        datasets: [{
-                            data: values,
-                            borderColor: '#c4a35a',
-                            backgroundColor: function(ctx) {
-                                const chart = ctx.chart;
-                                const {ctx: c, chartArea: area} = chart;
-                                if (!area) return 'transparent';
-                                const g = c.createLinearGradient(0, area.top, 0, area.bottom);
-                                g.addColorStop(0, 'rgba(196, 163, 90, 0.25)');
-                                g.addColorStop(1, 'rgba(196, 163, 90, 0.01)');
-                                return g;
-                            },
-                            fill: true,
-                            tension: 0.35,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#c4a35a',
-                            pointHoverRadius: 6,
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: 'rgba(24, 20, 16, 0.92)',
-                                titleFont: { family: 'Noto Serif SC', size: 13 },
-                                bodyFont: { family: 'Spectral', size: 12 },
-                                padding: 14,
-                                cornerRadius: 0,
-                                callbacks: {
-                                    label: function(ctx) {
-                                        return '¥' + ctx.parsed.y.toLocaleString();
-                                    }
-                                }
-                            },
-                            datalabels: { display: false }
-                        },
-                        scales: {
-                            x: {
-                                grid: { display: false },
-                                ticks: {
-                                    color: 'rgba(228, 219, 204, 0.28)',
-                                    font: { size: 10 },
-                                    maxTicksLimit: 8
-                                }
-                            },
-                            y: {
-                                grid: { color: 'rgba(228, 219, 204, 0.06)', drawBorder: false },
-                                ticks: {
-                                    color: 'rgba(228, 219, 204, 0.28)',
-                                    font: { size: 10 },
-                                    callback: (v) => '¥' + v.toLocaleString()
                                 }
                             }
                         }
@@ -660,46 +465,97 @@
             function renderTable(data) {
                 const tbody = document.getElementById('tableBody');
                 let html = '';
+                let idx = 0;
+
                 data.categories.forEach(cat => {
                     let catValue = 0, catCost = 0;
                     cat.items.forEach(item => {
-                        catValue += item.value;
-                        catCost += item.cost;
+                        const c = calcItem(item);
+                        catValue += c.value;
+                        catCost += c.cost;
                     });
                     const catGain = catValue - catCost;
-                    const catCls = catGain >= 0 ? 'gain-positive' : 'gain-negative';
-                    const catRet = catCost > 0 ? ((catGain / catCost) * 100).toFixed(1) + '%' : '-';
+                    const catCls = catGain >= 0 ? 'gain-pos' : 'gain-neg';
+                    const catRet = catCost > 0 ? ((catGain / catCost) * 100).toFixed(2) + '%' : '-';
+
                     html += '<tr class="cat-row">'
-                        + '<td><span class="dot" style="background:' + cat.color + '"></span>' + cat.name + '</td>'
-                        + '<td>¥' + catCost.toLocaleString() + '</td>'
-                        + '<td>¥' + catValue.toLocaleString() + '</td>'
-                        + '<td class="' + catCls + '">' + (catGain >= 0 ? '+' : '') + '¥' + catGain.toLocaleString() + '</td>'
+                        + '<td style="color:' + cat.color + '">' + cat.name + '</td>'
+                        + '<td>' + fmt(catCost) + '</td>'
+                        + '<td>' + fmt(catValue) + '</td>'
+                        + '<td class="' + catCls + '">' + fmtGain(catGain) + '</td>'
                         + '<td class="' + catCls + '">' + catRet + '</td>'
                         + '</tr>';
+
                     cat.items.forEach(item => {
-                        const gain = item.value - item.cost;
-                        const cls = gain >= 0 ? 'gain-positive' : 'gain-negative';
-                        const ret = item.cost > 0 ? ((gain / item.cost) * 100).toFixed(1) + '%' : '-';
-                        html += '<tr>'
-                            + '<td style="padding-left:24px">' + item.name + '</td>'
-                            + '<td>¥' + item.cost.toLocaleString() + '</td>'
-                            + '<td>¥' + item.value.toLocaleString() + '</td>'
-                            + '<td class="' + cls + '">' + (gain >= 0 ? '+' : '') + '¥' + gain.toLocaleString() + '</td>'
+                        const c = calcItem(item);
+                        const gain = c.value - c.cost;
+                        const cls = gain >= 0 ? 'gain-pos' : 'gain-neg';
+                        const ret = c.cost > 0 ? ((gain / c.cost) * 100).toFixed(2) + '%' : '-';
+                        const hasSub = item.subItems && item.subItems.length > 0;
+                        const rowId = 'item-' + idx;
+
+                        html += '<tr class="item-row" id="' + rowId + '" data-idx="' + idx + '">'
+                            + '<td><span class="arrow">' + (hasSub ? '▶' : '') + '</span>'
+                            + item.name
+                            + '</td>'
+                            + '<td>' + fmt(c.cost) + '</td>'
+                            + '<td>' + fmt(c.value) + '</td>'
+                            + '<td class="' + cls + '">' + fmtGain(gain) + '</td>'
                             + '<td class="' + cls + '">' + ret + '</td>'
                             + '</tr>';
+
+                        if (hasSub) {
+                            item.subItems.forEach(sub => {
+                                const sg = sub.value - sub.cost;
+                                const sCls = sg >= 0 ? 'gain-pos' : 'gain-neg';
+                                const sRet = sub.cost > 0 ? ((sg / sub.cost) * 100).toFixed(2) + '%' : '-';
+                                html += '<tr class="sub-row" data-parent="' + idx + '">'
+                                    + '<td style="padding-left:40px">'
+                                    + sub.name
+                                    + (sub.dca ? ' <span class="dca-badge">定投中</span>' : '')
+                                    + '</td>'
+                                    + '<td>' + fmt(sub.cost) + '</td>'
+                                    + '<td>' + fmt(sub.value) + '</td>'
+                                    + '<td class="' + sCls + '">' + fmtGain(sg) + '</td>'
+                                    + '<td class="' + sCls + '">' + sRet + '</td>'
+                                    + '</tr>';
+                            });
+                        }
+                        idx++;
                     });
                 });
-                const totalGain = data.totalValue - data.netDeposit;
-                const totalCls = totalGain >= 0 ? 'gain-positive' : 'gain-negative';
-                const totalRet = data.netDeposit > 0 ? ((totalGain / data.netDeposit) * 100).toFixed(1) + '%' : '-';
+
+                // Total row
+                let tv = 0, tc = 0;
+                data.categories.forEach(cat => {
+                    cat.items.forEach(item => {
+                        const c = calcItem(item);
+                        tv += c.value;
+                        tc += c.cost;
+                    });
+                });
+                const tg = tv - tc;
+                const tCls = tg >= 0 ? 'gain-pos' : 'gain-neg';
+                const tRet = tc > 0 ? ((tg / tc) * 100).toFixed(2) + '%' : '-';
                 html += '<tr class="total-row">'
                     + '<td>合计</td>'
-                    + '<td>¥' + data.netDeposit.toLocaleString() + '</td>'
-                    + '<td>¥' + data.totalValue.toLocaleString() + '</td>'
-                    + '<td class="' + totalCls + '">' + (totalGain >= 0 ? '+' : '') + '¥' + totalGain.toLocaleString() + '</td>'
-                    + '<td class="' + totalCls + '">' + totalRet + '</td>'
+                    + '<td>' + fmt(tc) + '</td>'
+                    + '<td>' + fmt(tv) + '</td>'
+                    + '<td class="' + tCls + '">' + fmtGain(tg) + '</td>'
+                    + '<td class="' + tCls + '">' + tRet + '</td>'
                     + '</tr>';
+
                 tbody.innerHTML = html;
+
+                // Expand/collapse click handler
+                document.querySelectorAll('.item-row').forEach(row => {
+                    row.addEventListener('click', function() {
+                        const idx = this.dataset.idx;
+                        const subs = document.querySelectorAll('.sub-row[data-parent="' + idx + '"]');
+                        const isOpen = this.classList.toggle('expanded');
+                        subs.forEach(s => s.classList.toggle('open', isOpen));
+                    });
+                });
             }
         });
     </script>

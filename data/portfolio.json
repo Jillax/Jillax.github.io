@@ -1,44 +1,77 @@
 {
   "updated": "2026-05-17",
   "currency": "CNY",
-  "totalValue": 73940,
-  "netDeposit": 70000,
-  "history": [
-    { "date": "2025-12-01", "value": 62400 },
-    { "date": "2026-01-01", "value": 63800 },
-    { "date": "2026-02-01", "value": 65200 },
-    { "date": "2026-03-01", "value": 67500 },
-    { "date": "2026-04-01", "value": 69800 },
-    { "date": "2026-05-01", "value": 71500 },
-    { "date": "2026-05-10", "value": 72800 },
-    { "date": "2026-05-15", "value": 73500 },
-    { "date": "2026-05-17", "value": 73940 }
-  ],
   "categories": [
     {
       "name": "现金类",
       "color": "#c4a35a",
       "items": [
-        { "name": "货币基金", "value": 7374, "cost": 7200 },
-        { "name": "银行存款", "value": 24000, "cost": 24000 }
+        {
+          "name": "货币基金",
+          "subItems": [
+            { "name": "A货币基金", "value": 3427.98, "cost": 3422.12 },
+            { "name": "B货币基金", "value": 1200.37, "cost": 1193.29 }
+          ]
+        },
+        {
+          "name": "定期存款",
+          "subItems": [
+            { "name": "三年期（建行+招商）", "value": 20000, "cost": 20000 }
+          ]
+        }
       ]
     },
     {
       "name": "债券类",
       "color": "#8b7355",
       "items": [
-        { "name": "短债", "value": 11049, "cost": 10800 }
+        {
+          "name": "短债",
+          "subItems": [
+            { "name": "短债债券", "value": 9993.07, "cost": 9948.24 }
+          ]
+        }
       ]
     },
     {
       "name": "权益类",
       "color": "#6b8f71",
       "items": [
-        { "name": "标普500", "value": 13164, "cost": 12000 },
-        { "name": "纳斯达克", "value": 8135, "cost": 7500 },
-        { "name": "沪深300", "value": 7962, "cost": 8200 },
-        { "name": "恒生指数", "value": 825, "cost": 800 },
-        { "name": "恒生科技", "value": 1431, "cost": 1300 }
+        {
+          "name": "沪深300",
+          "subItems": [
+            { "name": "易方达沪深300", "value": 8050.88, "cost": 7369.09 }
+          ]
+        },
+        {
+          "name": "标普500",
+          "subItems": [
+            { "name": "摩根标普500", "value": 14525.20, "cost": 13367.00, "dca": true }
+          ]
+        },
+        {
+          "name": "纳斯达克100",
+          "subItems": [
+            { "name": "天弘纳斯达克100", "value": 2615.37, "cost": 2331.09, "dca": true },
+            { "name": "易方达纳斯达克100", "value": 785.37, "cost": 690.00 },
+            { "name": "万家纳斯达克100", "value": 426.62, "cost": 380.00 },
+            { "name": "摩根纳斯达克100", "value": 3073.34, "cost": 2800.00, "dca": true },
+            { "name": "嘉实纳指100", "value": 2352.55, "cost": 2010.25 },
+            { "name": "南方纳斯达克100", "value": 1136.61, "cost": 950.00 }
+          ]
+        },
+        {
+          "name": "恒生科技",
+          "subItems": [
+            { "name": "易方达恒生科技", "value": 1447.46, "cost": 1564.10 }
+          ]
+        },
+        {
+          "name": "恒生ETF",
+          "subItems": [
+            { "name": "华夏恒生ETF", "value": 829.29, "cost": 785.11 }
+          ]
+        }
       ]
     }
   ]
