@@ -123,65 +123,6 @@
         .sort-btn:hover { border-color: var(--gold-dim); color: var(--text-soft); }
         .sort-btn.active { border-color: var(--gold-dim); color: var(--text-soft); }
 
-        /* ===== Timeline ===== */
-        .timeline-section {
-            border: 1px solid var(--border);
-            padding: 18px 20px 14px;
-            margin-bottom: 20px;
-        }
-        .timeline-title {
-            font-family: var(--font-display);
-            font-size: 0.72rem;
-            color: var(--text-faint);
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
-            font-variation-settings: 'SOFT' 100, 'WONK' 1;
-        }
-        .timeline-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            height: 70px;
-            padding: 0 2px;
-        }
-        .timeline-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            justify-content: flex-end;
-        }
-        .timeline-bar {
-            width: 100%;
-            max-width: 24px;
-            min-height: 2px;
-            background: var(--gold-dim);
-            transition: height 0.8s ease;
-            height: 0;
-            cursor: pointer;
-            position: relative;
-        }
-        .timeline-bar:hover { background: var(--gold-soft); }
-        .timeline-bar:hover::after {
-            content: attr(data-count);
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.6rem;
-            color: var(--gold);
-            white-space: nowrap;
-            font-family: var(--font-display);
-        }
-        .tick-label {
-            font-size: 0.5rem;
-            color: var(--text-faint);
-            margin-top: 3px;
-            font-family: var(--font-display);
-        }
-        .tick-label.odd { opacity: 0.35; }
-
         /* ===== Cards ===== */
         .trans-list { display: flex; flex-direction: column; gap: 14px; }
         .trans-card {
@@ -386,12 +327,6 @@
             <button class="sort-btn" data-sort="plays">按播放量</button>
         </div>
 
-        <!-- ===== Timeline ===== -->
-        <div class="timeline-section" id="timelineSection">
-            <div class="timeline-title">📈 发布时间线</div>
-            <div class="timeline-bars" id="timelineBars"></div>
-        </div>
-
         <!-- ===== Result count ===== -->
         <div class="result-count" id="resultCount"></div>
 
@@ -414,7 +349,6 @@
             const empty = document.getElementById('emptyState');
             const searchInput = document.getElementById('searchInput');
             const resultCount = document.getElementById('resultCount');
-            const timelineBars = document.getElementById('timelineBars');
 
             let allItems = [];
             let currentStatus = 'all';
@@ -426,7 +360,6 @@
             let biliStatsCache = {};
 
             const statusCls = { '已完成': 'done', '译制中': 'ongoing' };
-            const monthNames = ['1','2','3','4','5','6','7','8','9','10','11','12'];
 
             // ==================== Formatting ====================
             function fmtNum(n) {
@@ -500,7 +433,7 @@
             function renderStats(items) {
                 const total = items.length;
                 const published = items.filter(i => i.status === '已完成').length;
-                const totalPlays = items.reduce((s, i) => s + (i.play || 0), 0);
+                const totalPlays = items.filter(i => i.status === '已完成').reduce((s, i) => s + (i.play || 0), 0);
                 const avgPlay = published > 0 ? Math.round(totalPlays / published) : 0;
 
                 document.getElementById('statTotal').textContent = total;
@@ -526,6 +459,26 @@
                 // Clear existing tags (keep "全部")
                 tagBar.querySelectorAll('.filter-tab.tag:not([data-tag="all"])').forEach(el => el.remove());
 
+                // Ensure "全部" button has a click handler
+                const allTagBtn = tagBar.querySelector('.filter-tab.tag[data-tag="all"]');
+                if (allTagBtn) {
+                    // Remove existing listeners by replacing with clone
+                    const newBtn = allTagBtn.cloneNode(true);
+                    allTagBtn.parentNode.replaceChild(newBtn, allTagBtn);
+                    // Also ensure "全部" shows correct active state
+                    if (currentTag === 'all') {
+                        newBtn.classList.add('active');
+                    } else {
+                        newBtn.classList.remove('active');
+                    }
+                    newBtn.addEventListener('click', function() {
+                        document.querySelectorAll('#tagBar .filter-tab.tag').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        currentTag = 'all';
+                        applyFilters();
+                    });
+                }
+
                 const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
                 sortedTags.forEach(tag => {
                     const btn = document.createElement('button');
@@ -539,39 +492,6 @@
                         applyFilters();
                     });
                     tagBar.appendChild(btn);
-                });
-            }
-
-            // ==================== Timeline ====================
-            function renderTimeline(items) {
-                const monthly = {};
-                for (let m = 1; m <= 12; m++) monthly[m] = 0;
-
-                items.forEach(item => {
-                    if (item.date) {
-                        const m = parseInt(item.date.substring(5, 7));
-                        if (m >= 1 && m <= 12) monthly[m]++;
-                    }
-                });
-
-                const maxVal = Math.max(...Object.values(monthly), 1);
-
-                timelineBars.innerHTML = monthNames.map((m, idx) => {
-                    const count = monthly[idx + 1];
-                    const pct = (count / maxVal) * 100;
-                    const isOdd = (idx + 1) % 2 === 1;
-                    return `
-                        <div class="timeline-col">
-                            <div class="timeline-bar" style="height:0" data-height="${pct}" data-count="${count}部"></div>
-                            <span class="tick-label ${isOdd ? 'odd' : ''}">${m}月</span>
-                        </div>
-                    `;
-                }).join('');
-
-                requestAnimationFrame(() => {
-                    timelineBars.querySelectorAll('.timeline-bar').forEach(el => {
-                        el.style.height = el.dataset.height + '%';
-                    });
                 });
             }
 
@@ -674,7 +594,6 @@
                 const filtered = getFilteredItems();
                 // Use the bili stat cache we already built
                 renderItems(filtered, biliStatsCache);
-                renderTimeline(filtered);
             }
 
             // ==================== Init ====================
@@ -685,7 +604,6 @@
 
                     renderStats(allItems);
                     renderTags(allItems);
-                    renderTimeline(allItems);
 
                     // Enrich with Bilibili live stats
                     const enriched = await enrichItems(allItems);
