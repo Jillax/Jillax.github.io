@@ -56,7 +56,9 @@
   "blog.zhihu": { "zh": "知乎想法", "en": "Zhihu Pins" },
   "blog.posts": { "zh": "文章", "en": "Posts" },
   "blog.source": { "zh": "同步自知乎", "en": "Synced from Zhihu" },
+  "blog.articles": { "zh": "知乎文章", "en": "Zhihu Articles" },
   "blog.empty.pins": { "zh": "知乎想法会在推送后自动同步", "en": "Zhihu pins sync automatically after posting" },
+  "blog.empty.articles": { "zh": "知乎文章会在推送后自动同步", "en": "Zhihu articles sync automatically after posting" },
   "empty": { "zh": "还没有内容", "en": "Nothing here yet" },
   "load.failed": { "zh": "加载失败", "en": "Load Failed" }
 }

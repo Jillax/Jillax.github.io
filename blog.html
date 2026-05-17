@@ -290,6 +290,46 @@
             border-bottom: 1px solid var(--gold-dim);
         }
 
+        /* ===== Articles List ===== */
+        .article-list { display: flex; flex-direction: column; }
+        .article-card {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .article-card:last-child { border-bottom: none; }
+        .article-card:hover { padding-left: 8px; }
+        .article-card-title {
+            font-family: var(--font-chinese);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .article-card-title a {
+            color: var(--text);
+            transition: color 0.3s ease;
+        }
+        .article-card-title a:hover { color: var(--gold-soft); }
+        .article-card-meta {
+            display: flex; gap: 12px; align-items: center;
+            font-size: 0.72rem; color: var(--text-faint);
+            margin-bottom: 8px;
+        }
+        .article-card-summary {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .article-card-stats {
+            display: flex;
+            gap: 14px;
+            margin-top: 8px;
+            font-size: 0.68rem;
+            color: var(--text-faint);
+        }
+
         /* ===== Lightbox ===== */
         .lightbox {
             display: none;
@@ -370,6 +410,7 @@
         <div class="blog-tabs">
             <button class="blog-tab active" data-tab="posts"><span data-i18n="blog.posts">文章</span> <span class="count" id="postCount"></span></button>
             <button class="blog-tab" data-tab="pins"><span data-i18n="blog.zhihu">知乎想法</span> <span class="count" id="pinCount"></span></button>
+            <button class="blog-tab" data-tab="articles"><span data-i18n="blog.articles">知乎文章</span> <span class="count" id="articleCount"></span></button>
         </div>
 
         <!-- ===== Posts Section ===== -->
@@ -397,6 +438,18 @@
             <div class="pin-source">
                 <span data-i18n="blog.source">同步自知乎</span> ·
                 <a href="https://www.zhihu.com/people/yi-ban-tong-guo-63/pins" target="_blank">知乎主页</a>
+            </div>
+        </div>
+
+        <!-- ===== Articles Section ===== -->
+        <div id="articlesSection" style="display:none">
+            <div class="article-list" id="articleList"></div>
+            <div class="empty-state" id="articlesEmpty" style="display:none">
+                <p data-i18n="blog.empty.articles">知乎文章会在推送后自动同步</p>
+            </div>
+            <div class="pin-source">
+                <span data-i18n="blog.source">同步自知乎</span> ·
+                <a href="https://www.zhihu.com/people/yi-ban-tong-guo-63/posts" target="_blank">知乎文章</a>
             </div>
         </div>
 
@@ -429,11 +482,15 @@
             const pinsSection = document.getElementById('pinsSection');
             const feed = document.getElementById('feed');
             const pinsEmpty = document.getElementById('pinsEmpty');
+            const articlesSection = document.getElementById('articlesSection');
+            const articleList = document.getElementById('articleList');
+            const articlesEmpty = document.getElementById('articlesEmpty');
             const tabs = document.querySelectorAll('.blog-tab');
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightboxImg');
             const postCount = document.getElementById('postCount');
             const pinCount = document.getElementById('pinCount');
+            const articleCount = document.getElementById('articleCount');
             let posts = [];
             let currentTab = 'posts';
 
@@ -464,7 +521,8 @@
                 tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
                 postsSection.style.display = tab === 'posts' ? '' : 'none';
                 pinsSection.style.display = tab === 'pins' ? '' : 'none';
-                history.pushState(null, '', 'blog.html' + (tab === 'pins' ? '#pins' : ''));
+                articlesSection.style.display = tab === 'articles' ? '' : 'none';
+                history.pushState(null, '', 'blog.html' + (tab !== 'posts' ? '#' + tab : ''));
             }
 
             tabs.forEach(tab => {
@@ -575,6 +633,38 @@
                 }).join('');
             }
 
+            // ===== Articles =====
+            function renderArticles(data) {
+                const articles = data.articles || [];
+                articleCount.textContent = articles.length || '';
+
+                if (articles.length === 0) {
+                    articleList.innerHTML = '';
+                    articlesEmpty.style.display = 'block';
+                    return;
+                }
+                articlesEmpty.style.display = 'none';
+
+                articleList.innerHTML = articles.map(a => {
+                    const timeStr = fmtTime(a.created);
+                    return `
+                        <div class="article-card">
+                            <div class="article-card-title">
+                                <a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
+                            </div>
+                            <div class="article-card-meta">
+                                <span>${timeStr}</span>
+                            </div>
+                            ${a.summary ? `<div class="article-card-summary">${a.summary}</div>` : ''}
+                            <div class="article-card-stats">
+                                <span>👍 ${fmtNum(a.likes)}</span>
+                                <span>💬 ${fmtNum(a.comments)}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
             // ===== Load Data =====
             fetch('data/posts.json')
                 .then(r => r.json())
@@ -583,11 +673,11 @@
                     renderList();
 
                     const hash = window.location.hash.slice(1);
-                    if (hash && hash !== 'pins') {
+                    if (hash === 'pins' || hash === 'articles') {
+                        switchTab(hash);
+                    } else if (hash) {
                         const found = posts.find(p => p.id === hash);
                         if (found) showArticle(hash);
-                    } else if (hash === 'pins') {
-                        switchTab('pins');
                     }
                 })
                 .catch(() => {
@@ -601,10 +691,13 @@
                 })
                 .then(data => {
                     renderPins(data);
+                    renderArticles(data);
                 })
                 .catch(() => {
                     feed.innerHTML = '';
                     pinsEmpty.style.display = 'block';
+                    articleList.innerHTML = '';
+                    articlesEmpty.style.display = 'block';
                 });
 
             // ===== Back Button =====
@@ -631,8 +724,8 @@
             // ===== Browser Navigation =====
             window.addEventListener('popstate', function() {
                 const hash = window.location.hash.slice(1);
-                if (hash === 'pins') {
-                    switchTab('pins');
+                if (hash === 'pins' || hash === 'articles') {
+                    switchTab(hash);
                 } else if (hash) {
                     const found = posts.find(p => p.id === hash);
                     if (found) showArticle(hash);
