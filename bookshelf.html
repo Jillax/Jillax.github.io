@@ -445,7 +445,7 @@
                         <div class="item-card">
                             <div class="item-cover">
                                 ${hasCover
-                                    ? `<img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
+                                    ? `<img src="${item.cover}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
                                     : `<span class="placeholder">${initial}</span>`
                                 }
                             </div>
