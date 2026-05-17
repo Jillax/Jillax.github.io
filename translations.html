@@ -366,7 +366,6 @@
                 list.innerHTML = filtered.map(item => {
                     const sClass = statusLabels[item.status] || '';
                     const hasBili = item.bvid && item.bvid.trim();
-                    const hasSource = item.sourceUrl && item.sourceUrl.trim();
                     const hasCover = item.cover && item.cover.trim();
                     const initial = item.title ? item.title.charAt(0) : '?';
                     return `
@@ -387,7 +386,6 @@
                                 ${item.description ? `<div class="trans-desc">${item.description}</div>` : ''}
                                 <div class="trans-links">
                                     ${hasBili ? `<a href="https://www.bilibili.com/video/${item.bvid}" target="_blank" class="trans-link">▶ 在B站观看</a>` : ''}
-                                    ${hasSource ? `<a href="${item.sourceUrl}" target="_blank" class="trans-link">↗ 原始视频</a>` : ''}
                                 </div>
                             </div>
                         </div>
