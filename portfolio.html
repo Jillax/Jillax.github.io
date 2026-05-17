@@ -346,14 +346,13 @@
                 <span class="stat-value" id="totalValue">--</span>
             </div>
             <div class="stat-item">
+                <span class="stat-label">累计投入</span>
+                <span class="stat-value" id="totalDeposit">--</span>
+            </div>
+            <div class="stat-item">
                 <span class="stat-label">累计收益</span>
                 <span class="stat-value" id="totalGain">--</span>
                 <span class="stat-sub" id="gainPct"></span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">收益率</span>
-                <span class="stat-value" id="returnPct">--</span>
-                <span class="stat-sub">自 2025.12</span>
             </div>
         </div>
 
@@ -463,23 +462,18 @@
                 });
 
             function renderStats(data) {
-                const gain = data.totalValue - data.totalCost;
-                const pct = ((gain / data.totalCost) * 100).toFixed(1);
+                const gain = data.totalValue - data.netDeposit;
+                const pct = ((gain / data.netDeposit) * 100).toFixed(1);
                 const isPos = gain >= 0;
 
                 document.getElementById('totalValue').textContent = '¥' + data.totalValue.toLocaleString();
+                document.getElementById('totalDeposit').textContent = '¥' + data.netDeposit.toLocaleString();
 
                 const gainEl = document.getElementById('totalGain');
                 gainEl.className = 'stat-value ' + (isPos ? 'green' : 'red');
                 gainEl.textContent = (isPos ? '+' : '') + '¥' + gain.toLocaleString();
 
                 document.getElementById('gainPct').textContent = (isPos ? '+' : '') + pct + '%';
-
-                const retEl = document.getElementById('returnPct');
-                retEl.className = 'stat-value ' + (isPos ? 'green' : 'red');
-                const start = data.history[0].value;
-                const totalRet = ((data.totalValue - start) / start * 100).toFixed(1);
-                retEl.textContent = (totalRet >= 0 ? '+' : '') + totalRet + '%';
             }
 
             function renderAllocation(data) {
@@ -695,12 +689,12 @@
                             + '</tr>';
                     });
                 });
-                const totalGain = data.totalValue - data.totalCost;
+                const totalGain = data.totalValue - data.netDeposit;
                 const totalCls = totalGain >= 0 ? 'gain-positive' : 'gain-negative';
-                const totalRet = data.totalCost > 0 ? ((totalGain / data.totalCost) * 100).toFixed(1) + '%' : '-';
+                const totalRet = data.netDeposit > 0 ? ((totalGain / data.netDeposit) * 100).toFixed(1) + '%' : '-';
                 html += '<tr class="total-row">'
                     + '<td>合计</td>'
-                    + '<td>¥' + data.totalCost.toLocaleString() + '</td>'
+                    + '<td>¥' + data.netDeposit.toLocaleString() + '</td>'
                     + '<td>¥' + data.totalValue.toLocaleString() + '</td>'
                     + '<td class="' + totalCls + '">' + (totalGain >= 0 ? '+' : '') + '¥' + totalGain.toLocaleString() + '</td>'
                     + '<td class="' + totalCls + '">' + totalRet + '</td>'

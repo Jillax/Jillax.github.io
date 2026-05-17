@@ -2,7 +2,7 @@
   "updated": "2026-05-17",
   "currency": "CNY",
   "totalValue": 73940,
-  "totalCost": 71200,
+  "netDeposit": 70000,
   "history": [
     { "date": "2025-12-01", "value": 62400 },
     { "date": "2026-01-01", "value": 63800 },
