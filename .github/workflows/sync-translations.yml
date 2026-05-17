@@ -24,7 +24,7 @@ jobs:
 
       - name: 安装依赖
         run: |
-          pip install requests beautifulsoup4 bilibili-api-python
+          pip install requests beautifulsoup4 bilibili-api-python httpx curl_cffi
 
       - name: 运行同步脚本
         env:
