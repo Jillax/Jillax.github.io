@@ -19,6 +19,7 @@ import json
 import os
 import re
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -82,6 +83,15 @@ def fetch_bili_videos(mid, credential=None):
     all_videos = []
     try:
         u = user.User(mid, credential=credential) if credential else user.User(mid)
+
+        # 验证凭证是否有效
+        if credential:
+            try:
+                info = sync(u.get_user_info())
+                log(f"  用户信息: {info.get('name', '未知')}")
+            except Exception as e:
+                log(f"  凭证验证失败: {e}")
+
         pn = 1
         while True:
             try:
@@ -98,6 +108,7 @@ def fetch_bili_videos(mid, credential=None):
                         break
                 else:
                     log(f"  请求失败: {e}")
+                    log(f"  详细错误:\n{traceback.format_exc()}")
                     break
             vlist = result.get("list", {}).get("vlist", [])
             if not vlist:
@@ -111,6 +122,7 @@ def fetch_bili_videos(mid, credential=None):
             time.sleep(1.5)  # 避免触发风控
     except Exception as e:
         log(f"  请求失败: {e}")
+        log(f"  详细错误:\n{traceback.format_exc()}")
     return all_videos
 
 
