@@ -28,7 +28,7 @@
             font-family: var(--font-display);
         }
 
-        /* ===== Stats ===== */
+        /* ===== Stats Bar ===== */
         .stats-bar {
             display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap;
         }
@@ -48,18 +48,179 @@
             font-style: italic;
         }
 
-        /* ===== Status Filter ===== */
-        .status-tabs {
-            display: flex; gap: 2px; margin-bottom: 24px; flex-wrap: wrap;
+        /* ===== Dashboard Section ===== */
+        .dash-section {
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin-bottom: 16px;
         }
-        .status-tab {
+        .dash-title {
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            color: var(--text-faint);
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            font-variation-settings: 'SOFT' 100, 'WONK' 1;
+        }
+
+        /* ===== Stat Cards ===== */
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            margin-bottom: 0;
+        }
+        .stat-card {
+            border: 1px solid var(--border-light);
+            padding: 14px;
+            text-align: center;
+        }
+        .stat-card .num {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--gold-soft);
+            font-weight: 500;
+            line-height: 1.1;
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .stat-card .label {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== Rating Distribution ===== */
+        .rating-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rating-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            width: 28px;
+            flex-shrink: 0;
+            text-align: right;
+            font-family: var(--font-display);
+        }
+        .rating-track {
+            flex: 1;
+            height: 18px;
+            background: var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+        .rating-fill {
+            height: 100%;
+            background: var(--gold-dim);
+            transition: width 0.8s ease;
+            width: 0;
+        }
+        .rating-count {
+            font-size: 0.7rem;
+            color: var(--text-faint);
+            width: 32px;
+            flex-shrink: 0;
+            font-family: var(--font-display);
+        }
+
+        /* ===== Timeline ===== */
+        .timeline-wrap {
+            position: relative;
+            padding-top: 4px;
+        }
+        .timeline-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 100px;
+            padding: 0 2px;
+        }
+        .timeline-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .timeline-bar {
+            width: 100%;
+            max-width: 28px;
+            min-height: 2px;
+            background: var(--gold-dim);
+            transition: height 0.8s ease;
+            height: 0;
+            cursor: pointer;
+            position: relative;
+        }
+        .timeline-bar:hover {
+            background: var(--gold-soft);
+        }
+        .timeline-bar:hover::after {
+            content: attr(data-count) '部';
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: var(--gold);
+            white-space: nowrap;
+            font-family: var(--font-display);
+        }
+        /* Timeline label per-month adjustment */
+        .timeline-col .month-label {
+            font-size: 0.55rem;
+            color: var(--text-faint);
+            margin-top: 4px;
+            font-family: var(--font-display);
+            letter-spacing: 0.3px;
+        }
+        .timeline-col .month-label.odd {
+            opacity: 0.4;
+        }
+
+        /* ===== Year Selector (mini tabs) ===== */
+        .year-tabs {
+            display: flex; gap: 2px; margin-bottom: 12px; flex-wrap: wrap;
+        }
+        .year-tab {
+            padding: 3px 12px; font-size: 0.68rem;
+            color: var(--text-faint); border: 1px solid var(--border);
+            background: none; cursor: pointer;
+            transition: all 0.3s ease; font-family: var(--font-body);
+        }
+        .year-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+        .year-tab.active { border-color: var(--gold-dim); color: var(--text-soft); }
+
+        /* ===== Status Filter ===== */
+        .filter-bar {
+            display: flex; gap: 2px; margin-bottom: 16px; flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-label {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            margin-right: 8px;
+            font-family: var(--font-display);
+            letter-spacing: 0.5px;
+        }
+        .filter-tab {
             padding: 4px 14px; font-size: 0.72rem;
             color: var(--text-faint); border: 1px solid var(--border);
             background: none; cursor: pointer;
             transition: all 0.3s ease; font-family: var(--font-body);
         }
-        .status-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
-        .status-tab.active { border-color: var(--gold-dim); color: var(--text-soft); }
+        .filter-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+        .filter-tab.active { border-color: var(--gold-dim); color: var(--text-soft); }
 
         /* ===== Items Grid ===== */
         .items-grid {
@@ -77,6 +238,7 @@
         .item-card:hover {
             border-color: var(--gold-dim);
         }
+        .item-card.hidden { display: none; }
         .item-cover {
             width: 60px;
             height: 85px;
@@ -139,6 +301,11 @@
             color: var(--gold-soft);
             letter-spacing: 1px;
         }
+        .item-date {
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            margin-left: auto;
+        }
         .item-comment {
             font-size: 0.72rem;
             color: var(--text-muted);
@@ -151,6 +318,14 @@
             overflow: hidden;
         }
 
+        /* ===== Filter count badge ===== */
+        .filter-count {
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            margin-left: 12px;
+            font-family: var(--font-display);
+        }
+
         /* ===== Empty ===== */
         .empty-state {
             text-align: center; padding: 60px 20px;
@@ -161,10 +336,15 @@
         @media (max-width: 768px) {
             .items-grid { grid-template-columns: 1fr; }
             .item-card { padding: 14px; }
+            .stat-cards { grid-template-columns: repeat(2, 1fr); }
+            .timeline-bars { height: 70px; }
         }
         @media (max-width: 480px) {
             .cat-tab { padding: 6px 14px; font-size: 0.78rem; }
-            .status-tab { padding: 3px 10px; font-size: 0.68rem; }
+            .filter-tab { padding: 3px 10px; font-size: 0.68rem; }
+            .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .stat-card { padding: 10px; }
+            .stat-card .num { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -202,8 +382,39 @@
             <button class="cat-tab" data-cat="music">音乐 <span class="count" id="countMusic">0</span></button>
         </div>
 
-        <!-- ===== Stats & Update ===== -->
+        <!-- ===== Stats Cards ===== -->
+        <div class="dash-section" id="statsSection">
+            <div class="dash-title">📊 统计</div>
+            <div class="stat-cards" id="statCards"></div>
+        </div>
+
+        <!-- ===== Rating Distribution ===== -->
+        <div class="dash-section" id="ratingSection">
+            <div class="dash-title">⭐ 评分分布</div>
+            <div class="rating-bars" id="ratingBars"></div>
+        </div>
+
+        <!-- ===== Timeline ===== -->
+        <div class="dash-section" id="timelineSection">
+            <div class="dash-title">📈 时间线</div>
+            <div class="year-tabs" id="yearTabs"></div>
+            <div class="timeline-wrap">
+                <div class="timeline-bars" id="timelineBars"></div>
+            </div>
+        </div>
+
+        <!-- ===== Update Time ===== -->
         <div class="update-time" id="updateTime"></div>
+
+        <!-- ===== Filter Bar ===== -->
+        <div class="filter-bar" id="filterBar">
+            <span class="filter-label">评分筛选</span>
+            <button class="filter-tab active" data-rating="0">全部</button>
+            <button class="filter-tab" data-rating="3">3 星+</button>
+            <button class="filter-tab" data-rating="4">4 星+</button>
+            <button class="filter-tab" data-rating="5">5 星</button>
+            <span class="filter-count" id="filterCount"></span>
+        </div>
 
         <!-- ===== Items ===== -->
         <div class="items-grid" id="itemsGrid"></div>
@@ -224,15 +435,25 @@
             const empty = document.getElementById('emptyState');
             const catTabs = document.querySelectorAll('.cat-tab');
             const updateTime = document.getElementById('updateTime');
+            const statCards = document.getElementById('statCards');
+            const ratingBars = document.getElementById('ratingBars');
+            const timelineBars = document.getElementById('timelineBars');
+            const yearTabs = document.getElementById('yearTabs');
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const filterCount = document.getElementById('filterCount');
 
             let allData = { books: [], movies: [], music: [] };
             let currentCat = 'books';
+            let ratingFilter = 0;
+            let yearFilter = 'all';
 
             const statusLabels = {
                 books: { collect: '读过', wish: '想读', do: '在读' },
                 movies: { collect: '看过', wish: '想看', do: '在看' },
                 music: { collect: '听过', wish: '想听', do: '在听' },
             };
+
+            const monthNames = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
             function renderStars(rating) {
                 if (!rating || rating === 0) return '';
@@ -244,8 +465,176 @@
                 return labels[status] || status;
             }
 
-            function renderItems(cat) {
+            function getCatLabel() {
+                const map = { books: '本', movies: '部', music: '张' };
+                return map[currentCat] || '项';
+            }
+
+            // ==================== STATS ====================
+            function renderStats(cat) {
                 const items = allData[cat] || [];
+                const total = items.length;
+                const rated = items.filter(i => i.rating > 0);
+                const avg = rated.length > 0
+                    ? (rated.reduce((s, i) => s + i.rating, 0) / rated.length).toFixed(1)
+                    : '—';
+
+                // This year counts (collect only)
+                const thisYear = new Date().getFullYear();
+                const thisYearCollect = items.filter(i => i.date && i.date.startsWith(String(thisYear)) && i.status === 'collect');
+                const thisYearCount = thisYearCollect.length;
+
+                // Prev year
+                const lastYear = thisYear - 1;
+                const lastYearCollect = items.filter(i => i.date && i.date.startsWith(String(lastYear)) && i.status === 'collect');
+                const lastYearCount = lastYearCollect.length;
+
+                const label = getCatLabel();
+                const unitMap = { books: '本', movies: '部', music: '张' };
+                const unit = unitMap[currentCat] || '项';
+
+                statCards.innerHTML = `
+                    <div class="stat-card">
+                        <div class="num">${total}</div>
+                        <div class="label">累计 ${unit}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num">${avg}</div>
+                        <div class="label">平均评分</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num">${thisYearCount}</div>
+                        <div class="label">${thisYear} 年</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num">${lastYearCount}</div>
+                        <div class="label">${lastYear} 年</div>
+                    </div>
+                `;
+            }
+
+            // ==================== RATING DISTRIBUTION ====================
+            function renderRatingDist(cat) {
+                const items = allData[cat] || [];
+                const counts = {};
+                let maxCount = 0;
+                for (let r = 1; r <= 5; r++) {
+                    const c = items.filter(i => i.rating === r).length;
+                    counts[r] = c;
+                    if (c > maxCount) maxCount = c;
+                }
+
+                ratingBars.innerHTML = [5, 4, 3, 2, 1].map(r => {
+                    const pct = maxCount > 0 ? (counts[r] / maxCount * 100) : 0;
+                    return `
+                        <div class="rating-row">
+                            <span class="rating-label">${r}★</span>
+                            <div class="rating-track">
+                                <div class="rating-fill" style="width:0" data-width="${pct}"></div>
+                            </div>
+                            <span class="rating-count">${counts[r]}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                // Animate bars after render
+                requestAnimationFrame(() => {
+                    ratingBars.querySelectorAll('.rating-fill').forEach(el => {
+                        el.style.width = el.dataset.width + '%';
+                    });
+                });
+            }
+
+            // ==================== TIMELINE ====================
+            function getYears(cat) {
+                const items = allData[cat] || [];
+                const years = new Set();
+                items.forEach(i => {
+                    if (i.date && i.status === 'collect') {
+                        years.add(i.date.substring(0, 4));
+                    }
+                });
+                return Array.from(years).sort();
+            }
+
+            function renderTimeline(cat, year) {
+                const items = allData[cat] || [];
+                const monthly = {};
+                for (let m = 1; m <= 12; m++) monthly[m] = 0;
+
+                items.forEach(i => {
+                    if (i.date && i.status === 'collect') {
+                        const y = i.date.substring(0, 4);
+                        if (year === 'all' || y === year) {
+                            const m = parseInt(i.date.substring(5, 7));
+                            if (m >= 1 && m <= 12) monthly[m]++;
+                        }
+                    }
+                });
+
+                const maxVal = Math.max(...Object.values(monthly), 1);
+
+                const label = getCatLabel();
+
+                timelineBars.innerHTML = monthNames.map((m, idx) => {
+                    const count = monthly[idx + 1];
+                    const pct = (count / maxVal) * 100;
+                    const isOdd = (idx + 1) % 2 === 1;
+                    return `
+                        <div class="timeline-col">
+                            <div class="timeline-bar" style="height:0" data-height="${pct}" data-count="${count}"></div>
+                            <span class="month-label ${isOdd ? 'odd' : ''}">${m}月</span>
+                        </div>
+                    `;
+                }).join('');
+
+                // Animate bars
+                requestAnimationFrame(() => {
+                    timelineBars.querySelectorAll('.timeline-bar').forEach(el => {
+                        el.style.height = el.dataset.height + '%';
+                    });
+                });
+            }
+
+            function renderYearTabs(cat) {
+                const years = getYears(cat);
+                if (years.length <= 1) {
+                    yearTabs.style.display = 'none';
+                    return;
+                }
+                yearTabs.style.display = '';
+                const currentYear = String(new Date().getFullYear());
+                if (!years.includes('all')) years.unshift('all');
+
+                yearTabs.innerHTML = years.map(y => {
+                    const label = y === 'all' ? '全部' : y;
+                    const active = (y === yearFilter) ? ' active' : '';
+                    return `<button class="year-tab${active}" data-year="${y}">${label}</button>`;
+                }).join('');
+
+                yearTabs.querySelectorAll('.year-tab').forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        yearTabs.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        yearFilter = this.dataset.year;
+                        renderTimeline(cat, yearFilter);
+                    });
+                });
+            }
+
+            // ==================== FILTER ====================
+            function getFilteredItems(cat) {
+                let items = allData[cat] || [];
+                if (ratingFilter > 0) {
+                    items = items.filter(i => i.rating >= ratingFilter);
+                }
+                return items;
+            }
+
+            function renderItems(cat) {
+                const items = getFilteredItems(cat);
+
+                filterCount.textContent = items.length > 0 ? `显示 ${items.length} 项` : '';
 
                 if (items.length === 0) {
                     grid.innerHTML = '';
@@ -259,6 +648,7 @@
                     const initial = item.title ? item.title.charAt(0) : '?';
                     const statusText = getStatusText(cat, item.status);
                     const stars = renderStars(item.rating);
+                    const dateStr = item.date ? item.date.substring(0, 7) : '';
 
                     return `
                         <div class="item-card">
@@ -269,11 +659,12 @@
                                 }
                             </div>
                             <div class="item-info">
-                                <div class="item-title" title="${item.title}">${item.title}</div>
-                                <div class="item-author" title="${item.author}">${item.author || ''}</div>
+                                <div class="item-title" title="${item.title.replace(/"/g, '&quot;')}">${item.title}</div>
+                                <div class="item-author" title="${item.author ? item.author.replace(/"/g, '&quot;') : ''}">${item.author || ''}</div>
                                 <div class="item-meta">
                                     <span class="item-status ${item.status}">${statusText}</span>
                                     ${stars ? `<span class="item-rating">${stars}</span>` : ''}
+                                    ${dateStr ? `<span class="item-date">${dateStr}</span>` : ''}
                                 </div>
                                 ${item.comment ? `<div class="item-comment">${item.comment}</div>` : ''}
                             </div>
@@ -282,11 +673,24 @@
                 }).join('');
             }
 
+            // ==================== SWITCH CATEGORY ====================
             function switchCategory(cat) {
                 currentCat = cat;
+                ratingFilter = 0;
+                yearFilter = 'all';
+
+                // Reset filter tabs
+                filterTabs.forEach(t => t.classList.remove('active'));
+                document.querySelector('.filter-tab[data-rating="0"]').classList.add('active');
+
+                renderStats(cat);
+                renderRatingDist(cat);
+                renderYearTabs(cat);
+                renderTimeline(cat, yearFilter);
                 renderItems(cat);
             }
 
+            // ==================== INIT ====================
             fetch('data/bookshelf.json')
                 .then(r => {
                     if (!r.ok) throw new Error('Not found');
@@ -308,13 +712,26 @@
                 })
                 .catch(() => {
                     grid.innerHTML = '<div class="empty-state">加载失败</div>';
+                    statCards.innerHTML = '';
+                    ratingBars.innerHTML = '';
+                    timelineBars.innerHTML = '';
                 });
 
+            // ==================== EVENTS ====================
             catTabs.forEach(tab => {
                 tab.addEventListener('click', function() {
                     catTabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     switchCategory(this.dataset.cat);
+                });
+            });
+
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    ratingFilter = parseInt(this.dataset.rating);
+                    renderItems(currentCat);
                 });
             });
         });
