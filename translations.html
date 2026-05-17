@@ -9,28 +9,189 @@
     <link rel="stylesheet" href="css/main.css">
 
     <style>
+        /* ===== Stats ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-bottom: 28px;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .stat-item {
+            text-align: center;
+            padding: 20px 12px;
+            border-right: 1px solid var(--border-light);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+            font-variation-settings: 'SOFT' 60, 'WONK' 0;
+        }
+        .stat-label {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+        }
+
+        /* ===== Search ===== */
+        .search-wrap {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 0.82rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-soft);
+            font-family: var(--font-body);
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .search-input:focus {
+            border-color: var(--gold-dim);
+        }
+        .search-input::placeholder {
+            color: var(--text-faint);
+            font-style: italic;
+        }
+
         /* ===== Filter ===== */
-        .filter-tabs {
-            display: flex; gap: 4px; margin-bottom: 36px; flex-wrap: wrap;
+        .filter-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-label {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            margin-right: 6px;
+            font-family: var(--font-display);
+            letter-spacing: 0.5px;
         }
         .filter-tab {
-            padding: 6px 16px; font-size: 0.78rem;
+            padding: 5px 14px; font-size: 0.72rem;
             color: var(--text-muted); border: 1px solid var(--border);
             background: none; cursor: pointer;
             transition: all 0.3s ease; font-family: var(--font-body);
         }
         .filter-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
         .filter-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
+        .filter-tab .count {
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            margin-left: 3px;
+        }
 
-        /* ===== Translation Cards ===== */
-        .trans-list { display: flex; flex-direction: column; gap: 16px; }
+        /* Tag tabs get a distinct style */
+        .filter-tab.tag {
+            font-size: 0.68rem;
+            padding: 4px 12px;
+        }
+        .filter-tab.tag.active {
+            background: transparent;
+            border-color: var(--gold-soft);
+            color: var(--gold-soft);
+        }
+
+        /* ===== Sort ===== */
+        .sort-bar {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .sort-btn {
+            padding: 3px 12px; font-size: 0.68rem;
+            color: var(--text-faint); border: 1px solid var(--border);
+            background: none; cursor: pointer;
+            transition: all 0.3s ease; font-family: var(--font-body);
+        }
+        .sort-btn:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+        .sort-btn.active { border-color: var(--gold-dim); color: var(--text-soft); }
+
+        /* ===== Timeline ===== */
+        .timeline-section {
+            border: 1px solid var(--border);
+            padding: 18px 20px 14px;
+            margin-bottom: 20px;
+        }
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            color: var(--text-faint);
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-variation-settings: 'SOFT' 100, 'WONK' 1;
+        }
+        .timeline-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 70px;
+            padding: 0 2px;
+        }
+        .timeline-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .timeline-bar {
+            width: 100%;
+            max-width: 24px;
+            min-height: 2px;
+            background: var(--gold-dim);
+            transition: height 0.8s ease;
+            height: 0;
+            cursor: pointer;
+            position: relative;
+        }
+        .timeline-bar:hover { background: var(--gold-soft); }
+        .timeline-bar:hover::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: var(--gold);
+            white-space: nowrap;
+            font-family: var(--font-display);
+        }
+        .tick-label {
+            font-size: 0.5rem;
+            color: var(--text-faint);
+            margin-top: 3px;
+            font-family: var(--font-display);
+        }
+        .tick-label.odd { opacity: 0.35; }
+
+        /* ===== Cards ===== */
+        .trans-list { display: flex; flex-direction: column; gap: 14px; }
         .trans-card {
             display: flex; gap: 20px;
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
         }
         .trans-card:hover { border-color: var(--gold-dim); }
+        .trans-card.hidden { display: none; }
         .trans-cover {
             width: 120px;
             height: 75px;
@@ -54,23 +215,23 @@
         .trans-body { flex: 1; min-width: 0; }
         .trans-title {
             font-family: var(--font-chinese);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 500;
             color: var(--text);
             margin-bottom: 2px;
         }
         .trans-original {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 300;
         }
         .trans-meta {
-            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+            display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
         }
         .trans-status {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             padding: 2px 8px;
             border: 1px solid var(--border);
             color: var(--text-soft);
@@ -79,27 +240,59 @@
         .trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--olive, #7a8b6e); }
         .trans-status.ongoing { border-color: var(--gold-dim); color: var(--gold-soft); }
         .trans-source {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-faint);
         }
+        .trans-tags {
+            display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px;
+        }
+        .trans-tag {
+            font-size: 0.55rem;
+            padding: 1px 7px;
+            border: 1px solid var(--border);
+            color: var(--text-faint);
+            letter-spacing: 0.3px;
+        }
+        .trans-stats {
+            display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;
+        }
+        .trans-stat {
+            font-size: 0.65rem;
+            color: var(--text-faint);
+            display: inline-flex; align-items: center; gap: 3px;
+        }
+        .trans-stat .num { color: var(--text-muted); font-family: var(--font-display); }
         .trans-desc {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-            margin-top: 10px;
+            margin-top: 8px;
             font-weight: 300;
-            line-height: 1.7;
+            line-height: 1.6;
         }
         .trans-links {
-            margin-top: 10px;
+            margin-top: 8px;
             display: flex; gap: 12px;
         }
         .trans-link {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--gold-soft);
             transition: color 0.3s ease;
             display: inline-flex; align-items: center; gap: 4px;
         }
         .trans-link:hover { color: var(--gold); }
+        .trans-date {
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            margin-left: auto;
+        }
+
+        /* ===== Result count ===== */
+        .result-count {
+            font-size: 0.7rem;
+            color: var(--text-faint);
+            margin-bottom: 12px;
+            font-family: var(--font-display);
+        }
 
         /* ===== Empty ===== */
         .empty-state {
@@ -109,8 +302,14 @@
 
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
-            .trans-card { padding: 18px; flex-direction: column; gap: 12px; }
-            .trans-cover { width: 100%; height: 160px; }
+            .trans-card { padding: 16px; flex-direction: column; gap: 10px; }
+            .trans-cover { width: 100%; height: 140px; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .stat-item { padding: 14px 10px; }
+            .stat-num { font-size: 1.1rem; }
+        }
+        @media (max-width: 480px) {
+            .filter-tab { padding: 4px 10px; font-size: 0.68rem; }
         }
     </style>
 </head>
@@ -141,12 +340,60 @@
             <p>搬运与翻译感兴趣的外语视频</p>
         </div>
 
-        <!-- ===== Filter ===== -->
-        <div class="filter-tabs" id="filterTabs">
-            <button class="filter-tab active" data-filter="all">全部</button>
-            <button class="filter-tab" data-filter="已完成">已完成</button>
-            <button class="filter-tab" data-filter="译制中">译制中</button>
+        <!-- ===== Stats ===== -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-item">
+                <div class="stat-num" id="statTotal">--</div>
+                <span class="stat-label">总作品数</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statPlays">--</div>
+                <span class="stat-label">总播放量</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statAvg">--</div>
+                <span class="stat-label">平均播放</span>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statPublished">--</div>
+                <span class="stat-label">已发布</span>
+            </div>
         </div>
+
+        <!-- ===== Search ===== -->
+        <div class="search-wrap">
+            <input class="search-input" id="searchInput" type="text" placeholder="搜索标题、描述…" autocomplete="off">
+        </div>
+
+        <!-- ===== Filter: Status ===== -->
+        <div class="filter-bar" id="statusBar">
+            <span class="filter-label">状态</span>
+            <button class="filter-tab active" data-filter="all">全部 <span class="count" id="countAll"></span></button>
+            <button class="filter-tab" data-filter="已完成">已完成 <span class="count" id="countDone"></span></button>
+            <button class="filter-tab" data-filter="译制中">译制中 <span class="count" id="countOngoing"></span></button>
+        </div>
+
+        <!-- ===== Filter: Tags ===== -->
+        <div class="filter-bar" id="tagBar" style="margin-bottom:12px">
+            <span class="filter-label">分类</span>
+            <button class="filter-tab tag active" data-tag="all">全部</button>
+        </div>
+
+        <!-- ===== Sort ===== -->
+        <div class="sort-bar">
+            <span class="filter-label">排序</span>
+            <button class="sort-btn active" data-sort="date">按时间</button>
+            <button class="sort-btn" data-sort="plays">按播放量</button>
+        </div>
+
+        <!-- ===== Timeline ===== -->
+        <div class="timeline-section" id="timelineSection">
+            <div class="timeline-title">📈 发布时间线</div>
+            <div class="timeline-bars" id="timelineBars"></div>
+        </div>
+
+        <!-- ===== Result count ===== -->
+        <div class="result-count" id="resultCount"></div>
 
         <!-- ===== List ===== -->
         <div class="trans-list" id="transList"></div>
@@ -165,50 +412,253 @@
         document.addEventListener('DOMContentLoaded', function() {
             const list = document.getElementById('transList');
             const empty = document.getElementById('emptyState');
-            const tabs = document.querySelectorAll('.filter-tab');
+            const searchInput = document.getElementById('searchInput');
+            const resultCount = document.getElementById('resultCount');
+            const timelineBars = document.getElementById('timelineBars');
+
             let allItems = [];
-            let currentFilter = 'all';
+            let currentStatus = 'all';
+            let currentTag = 'all';
+            let currentSort = 'date';
+            let searchQuery = '';
 
-            const statusLabels = { '已完成': 'done', '译制中': 'ongoing' };
+            // Pre-fetched Bilibili stats cache
+            let biliStatsCache = {};
 
-            function renderItems(filter) {
-                const filtered = filter === 'all'
-                    ? allItems
-                    : allItems.filter(item => item.status === filter);
+            const statusCls = { '已完成': 'done', '译制中': 'ongoing' };
+            const monthNames = ['1','2','3','4','5','6','7','8','9','10','11','12'];
 
-                if (filtered.length === 0) {
+            // ==================== Formatting ====================
+            function fmtNum(n) {
+                if (!n && n !== 0) return '—';
+                if (n >= 10000) return (n / 10000).toFixed(1) + '万';
+                return String(n);
+            }
+
+            function fmtPlay(n) {
+                if (!n && n !== 0) return '';
+                if (n >= 10000) return (n / 10000).toFixed(1) + '万';
+                return n + '';
+            }
+
+            // ==================== Bilibili API enrichment ====================
+            async function fetchBiliStats(bvid) {
+                if (biliStatsCache[bvid] !== undefined) return biliStatsCache[bvid];
+                try {
+                    const res = await fetch('https://api.bilibili.com/x/web-interface/view?bvid=' + bvid);
+                    if (!res.ok) throw new Error('API error');
+                    const json = await res.json();
+                    if (json.code !== 0 || !json.data) throw new Error('API response error');
+                    const stat = json.data.stat;
+                    const result = {
+                        play: stat.view || 0,
+                        likes: stat.like || 0,
+                        favs: stat.favorite || 0,
+                        danmaku: stat.danmaku || 0
+                    };
+                    biliStatsCache[bvid] = result;
+                    return result;
+                } catch (e) {
+                    biliStatsCache[bvid] = null;
+                    return null;
+                }
+            }
+
+            async function enrichItems(items) {
+                const enriched = {};
+                const promises = [];
+
+                items.forEach(item => {
+                    if (item.bvid && item.bvid.trim()) {
+                        const p = fetchBiliStats(item.bvid).then(stats => {
+                            if (stats) enriched[item.bvid] = stats;
+                        });
+                        promises.push(p);
+                    }
+                });
+
+                if (promises.length > 0) {
+                    await Promise.all(promises);
+                }
+                return enriched;
+            }
+
+            function getItemStats(item, enriched) {
+                const fromApi = item.bvid && enriched[item.bvid];
+                if (fromApi) {
+                    return enriched[item.bvid];
+                }
+                return {
+                    play: item.play || 0,
+                    likes: item.likes || 0,
+                    favs: item.favs || 0,
+                    danmaku: item.danmaku || 0
+                };
+            }
+
+            // ==================== Stats ====================
+            function renderStats(items) {
+                const total = items.length;
+                const published = items.filter(i => i.status === '已完成').length;
+                const totalPlays = items.reduce((s, i) => s + (i.play || 0), 0);
+                const avgPlay = published > 0 ? Math.round(totalPlays / published) : 0;
+
+                document.getElementById('statTotal').textContent = total;
+                document.getElementById('statPlays').textContent = fmtNum(totalPlays);
+                document.getElementById('statAvg').textContent = fmtNum(avgPlay);
+                document.getElementById('statPublished').textContent = published;
+
+                document.getElementById('countAll').textContent = total;
+                document.getElementById('countDone').textContent = published;
+                document.getElementById('countOngoing').textContent = total - published;
+            }
+
+            // ==================== Tags ====================
+            function renderTags(items) {
+                const tagCounts = {};
+                items.forEach(item => {
+                    (item.tags || []).forEach(t => {
+                        tagCounts[t] = (tagCounts[t] || 0) + 1;
+                    });
+                });
+
+                const tagBar = document.getElementById('tagBar');
+                // Clear existing tags (keep "全部")
+                tagBar.querySelectorAll('.filter-tab.tag:not([data-tag="all"])').forEach(el => el.remove());
+
+                const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
+                sortedTags.forEach(tag => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-tab tag' + (currentTag === tag ? ' active' : '');
+                    btn.dataset.tag = tag;
+                    btn.textContent = '# ' + tag + ' ' + tagCounts[tag];
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('#tagBar .filter-tab.tag').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        currentTag = this.dataset.tag;
+                        applyFilters();
+                    });
+                    tagBar.appendChild(btn);
+                });
+            }
+
+            // ==================== Timeline ====================
+            function renderTimeline(items) {
+                const monthly = {};
+                for (let m = 1; m <= 12; m++) monthly[m] = 0;
+
+                items.forEach(item => {
+                    if (item.date) {
+                        const m = parseInt(item.date.substring(5, 7));
+                        if (m >= 1 && m <= 12) monthly[m]++;
+                    }
+                });
+
+                const maxVal = Math.max(...Object.values(monthly), 1);
+
+                timelineBars.innerHTML = monthNames.map((m, idx) => {
+                    const count = monthly[idx + 1];
+                    const pct = (count / maxVal) * 100;
+                    const isOdd = (idx + 1) % 2 === 1;
+                    return `
+                        <div class="timeline-col">
+                            <div class="timeline-bar" style="height:0" data-height="${pct}" data-count="${count}部"></div>
+                            <span class="tick-label ${isOdd ? 'odd' : ''}">${m}月</span>
+                        </div>
+                    `;
+                }).join('');
+
+                requestAnimationFrame(() => {
+                    timelineBars.querySelectorAll('.timeline-bar').forEach(el => {
+                        el.style.height = el.dataset.height + '%';
+                    });
+                });
+            }
+
+            // ==================== Filtering ====================
+            function getFilteredItems() {
+                let items = [...allItems];
+
+                // Status filter
+                if (currentStatus !== 'all') {
+                    items = items.filter(i => i.status === currentStatus);
+                }
+
+                // Tag filter
+                if (currentTag !== 'all') {
+                    items = items.filter(i => i.tags && i.tags.includes(currentTag));
+                }
+
+                // Search filter
+                if (searchQuery.trim()) {
+                    const q = searchQuery.trim().toLowerCase();
+                    items = items.filter(i =>
+                        (i.title && i.title.toLowerCase().includes(q)) ||
+                        (i.description && i.description.toLowerCase().includes(q)) ||
+                        (i.originalTitle && i.originalTitle.toLowerCase().includes(q))
+                    );
+                }
+
+                // Sort
+                if (currentSort === 'plays') {
+                    items.sort((a, b) => (b.play || 0) - (a.play || 0));
+                } else {
+                    items.sort((a, b) => {
+                        if (a.date && b.date) return b.date.localeCompare(a.date);
+                        if (a.date) return -1;
+                        if (b.date) return 1;
+                        return 0;
+                    });
+                }
+
+                return items;
+            }
+
+            function renderItems(items, enriched) {
+                if (items.length === 0) {
                     list.innerHTML = '';
                     empty.style.display = 'block';
+                    resultCount.textContent = '';
                     return;
                 }
                 empty.style.display = 'none';
+                resultCount.textContent = '共 ' + items.length + ' 个作品';
 
-                list.innerHTML = filtered.map(item => {
-                    const sClass = statusLabels[item.status] || '';
+                list.innerHTML = items.map(item => {
+                    const sClass = statusCls[item.status] || '';
                     const hasBili = item.bvid && item.bvid.trim();
                     const hasCover = item.cover && item.cover.trim();
                     const initial = item.title ? item.title.charAt(0) : '?';
+                    const stats = getItemStats(item, enriched);
+                    const dateStr = item.date ? item.date.substring(0, 7) : '';
 
-                    function formatPlay(n) {
-                        if (!n && n !== 0) return '';
-                        if (n > 10000) return (n / 10000).toFixed(1) + '万播放';
-                        return n + '播放';
-                    }
                     return `
                         <div class="trans-card">
                             <div class="trans-cover">
                                 ${hasCover
-                                    ? `<img src="${item.cover}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
+                                    ? `<img src="${item.cover}" alt="${item.title.replace(/"/g, '&quot;')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
                                     : `<span class="placeholder">${initial}</span>`
                                 }
                             </div>
                             <div class="trans-body">
                                 <div class="trans-title">${item.title}</div>
-                                <div class="trans-original">${item.play !== undefined ? formatPlay(item.play) : ''}</div>
                                 <div class="trans-meta">
                                     <span class="trans-status ${sClass}">${item.status}</span>
-                                    <span class="trans-source">${item.source}</span>
+                                    ${stats.play > 0 ? `<span class="trans-source">${fmtPlay(stats.play)} 播放</span>` : ''}
+                                    ${dateStr ? `<span class="trans-date">${dateStr}</span>` : ''}
                                 </div>
+                                ${item.tags && item.tags.length > 0 ? `
+                                    <div class="trans-tags">
+                                        ${item.tags.map(t => `<span class="trans-tag">#${t}</span>`).join('')}
+                                    </div>
+                                ` : ''}
+                                ${stats.likes > 0 || stats.favs > 0 || stats.danmaku > 0 ? `
+                                    <div class="trans-stats">
+                                        ${stats.likes > 0 ? `<span class="trans-stat">👍 <span class="num">${fmtNum(stats.likes)}</span></span>` : ''}
+                                        ${stats.favs > 0 ? `<span class="trans-stat">⭐ <span class="num">${fmtNum(stats.favs)}</span></span>` : ''}
+                                        ${stats.danmaku > 0 ? `<span class="trans-stat">💬 <span class="num">${fmtNum(stats.danmaku)}</span></span>` : ''}
+                                    </div>
+                                ` : ''}
                                 ${item.description ? `<div class="trans-desc">${item.description}</div>` : ''}
                                 <div class="trans-links">
                                     ${hasBili ? `<a href="https://www.bilibili.com/video/${item.bvid}" target="_blank" class="trans-link">▶ 在B站观看</a>` : ''}
@@ -219,23 +669,64 @@
                 }).join('');
             }
 
+            // ==================== Apply ====================
+            function applyFilters() {
+                const filtered = getFilteredItems();
+                // Use the bili stat cache we already built
+                renderItems(filtered, biliStatsCache);
+                renderTimeline(filtered);
+            }
+
+            // ==================== Init ====================
             fetch('data/translations.json')
                 .then(r => r.json())
-                .then(data => {
+                .then(async function(data) {
                     allItems = data.items || data;
-                    renderItems(currentFilter);
+
+                    renderStats(allItems);
+                    renderTags(allItems);
+                    renderTimeline(allItems);
+
+                    // Enrich with Bilibili live stats
+                    const enriched = await enrichItems(allItems);
+                    biliStatsCache = enriched;
+
+                    renderItems(getFilteredItems(), enriched);
                 })
                 .catch(() => {
                     list.innerHTML = '<div class="empty-state">加载失败</div>';
                 });
 
-            tabs.forEach(tab => {
+            // ==================== Events ====================
+
+            // Status filter
+            document.querySelectorAll('#statusBar .filter-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
-                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('#statusBar .filter-tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    currentFilter = this.dataset.filter;
-                    renderItems(currentFilter);
+                    currentStatus = this.dataset.filter;
+                    applyFilters();
                 });
+            });
+
+            // Sort
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentSort = this.dataset.sort;
+                    applyFilters();
+                });
+            });
+
+            // Search (debounced)
+            let searchTimer;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(() => {
+                    searchQuery = this.value;
+                    applyFilters();
+                }, 250);
             });
         });
     </script>
