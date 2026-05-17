@@ -267,30 +267,6 @@
             color: var(--gold);
         }
 
-        /* ========== Section Common ========== */
-        .section {
-            padding: 120px 0;
-            position: relative;
-        }
-        .section-header {
-            margin-bottom: 48px;
-        }
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--text-faint);
-            font-variation-settings: 'SOFT' 100, 'WONK' 0;
-        }
-        .section-title::before {
-            content: '✦ ';
-            font-size: 0.5rem;
-            color: var(--gold-soft);
-            margin-right: 6px;
-        }
-
         /* ========== Quote ========== */
         .quote-section {
             padding: 80px 0 40px;
@@ -357,102 +333,6 @@
             .quote-text { font-size: 0.95rem; }
         }
 
-        /* ========== About ========== */
-        .about-text {
-            max-width: 560px;
-        }
-        .about-text p {
-            color: var(--text-soft);
-            font-size: 0.92rem;
-            line-height: 2.1;
-            letter-spacing: 0.2px;
-            font-weight: 300;
-        }
-        .about-text p + p { margin-top: 22px; }
-        .about-text strong {
-            color: var(--text);
-            font-weight: 500;
-        }
-        .about-epigraph {
-            font-family: var(--font-chinese);
-            font-size: 0.9rem;
-            color: var(--gold-soft);
-            font-style: italic;
-            margin-top: 44px;
-            padding-top: 28px;
-            border-top: 1px solid var(--border);
-            letter-spacing: 1px;
-            line-height: 2;
-            position: relative;
-        }
-        .about-epigraph::before {
-            content: '"';
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--gold-dim);
-            position: absolute;
-            top: 18px;
-            left: -4px;
-            line-height: 1;
-        }
-        .about-epigraph br { display: none; }
-        .about-epigraph::after {
-            content: '"';
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--gold-dim);
-            position: relative;
-            top: 8px;
-            line-height: 0;
-            margin-left: 2px;
-        }
-
-        /* ========== Projects ========== */
-        .projects-list {
-            display: flex;
-            flex-direction: column;
-        }
-        .project-item {
-            display: flex;
-            gap: 20px;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.4s ease;
-            align-items: flex-start;
-            cursor: default;
-        }
-        .project-item:last-child { border-bottom: none; }
-        .project-item:hover {
-            padding-left: 12px;
-            border-bottom-color: var(--gold-dim);
-        }
-        .project-item:hover + .project-item {
-            border-top-color: transparent;
-        }
-        .project-index {
-            font-family: var(--font-display);
-            font-size: 0.7rem;
-            color: var(--text-faint);
-            min-width: 28px;
-            flex-shrink: 0;
-            padding-top: 4px;
-            font-variation-settings: 'SOFT' 100, 'WONK' 1;
-        }
-        .project-body { flex: 1; }
-        .project-name {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 6px;
-            letter-spacing: 0.2px;
-        }
-        .project-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-weight: 300;
-        }
-
         /* ========== Footer ========== */
         footer {
             padding: 48px 0;
@@ -510,18 +390,6 @@
             .hero h1 { font-size: clamp(2.5rem, 10vw, 3.2rem); }
             .hero-desc { max-width: 100%; }
             .btn { padding: 8px 16px; font-size: 0.78rem; }
-            .section { padding: 80px 0; }
-            .container { padding: 0 24px; }
-            .about-text { max-width: 100%; }
-            .project-item { padding: 20px 0; }
-            .project-item:hover { padding-left: 8px; }
-            .portfolio-grid { grid-template-columns: 1fr; gap: 28px; }
-            .portfolio-chart { max-width: 200px; }
-            .portfolio-detail-grid { grid-template-columns: 1fr; gap: 24px; }
-            .portfolio-total { font-size: 2.6rem; }
-            .about-epigraph br { display: inline; }
-            .about-epigraph::before,
-            .about-epigraph::after { display: none; }
         }
         @media (max-width: 480px) {
             .nav-links a:nth-child(4),
@@ -531,9 +399,6 @@
             .nav-links a:nth-child(8) { display: none; }
             .hero-actions { flex-direction: column; align-items: stretch; }
             .hero-actions .btn { margin-right: 0; justify-content: center; }
-            .section { padding: 60px 0; }
-            .section-header { margin-bottom: 32px; }
-            .portfolio-row { grid-template-columns: 1.4fr 1fr 1fr; font-size: 0.78rem; }
             }
     </style>
 </head>
@@ -589,42 +454,6 @@
                 <p class="quote-text" id="quoteText">加载中...</p>
                 <p class="quote-source" id="quoteSource"></p>
                 <button class="quote-refresh" id="quoteRefresh" title="换一条">↻</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== About ========== -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">关于我</h2>
-            </div>
-            <div class="about-text reveal">
-                <p>
-                    我是 <strong>Jillax</strong>，一名历史学师范专业的本科生。
-                    对人文社科、教育、科幻与AI工具保持好奇。
-                </p>
-                <div style="margin-top: 28px;">
-                    <a href="about.html" class="btn">了解更多 →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== Projects ========== -->
-    <section class="section" id="projects">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">笔墨</h2>
-            </div>
-            <div class="about-text reveal">
-                <p>
-                    个人主页、AI Agent 探索、译制搬运、投资记录……<br>
-                    记录学习路上的思考与探索。
-                </p>
-                <div style="margin-top: 28px;">
-                    <a href="projects.html" class="btn">浏览全部 →</a>
-                </div>
             </div>
         </div>
     </section>
