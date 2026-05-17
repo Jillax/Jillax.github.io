@@ -1,0 +1,48 @@
+name: 同步译制作品数据
+
+on:
+  schedule:
+    # 每天 UTC 时间 11:00 运行（北京时间 19:00）
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    # 支持手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: |
+          pip install requests beautifulsoup4 bilibili-api-python
+
+      - name: 运行同步脚本
+        env:
+          BILI_SESSDATA: ${{ secrets.BILI_SESSDATA }}
+          BILI_BILI_JCT: ${{ secrets.BILI_BILI_JCT }}
+          BILI_BUVID3: ${{ secrets.BILI_BUVID3 }}
+          BILI_MID: ${{ vars.BILI_MID || '518618885' }}
+        run: |
+          python scripts/update_translations.py
+
+      - name: 提交更新
+        run: |
+          git config user.name "translations-sync[bot]"
+          git config user.email "translations-sync[bot]@users.noreply.github.com"
+          git add data/translations.json
+          if git diff --cached --quiet; then
+            echo "无数据变更，跳过提交"
+          else
+            git commit -m "chore: 同步译制作品数据 $(date +'%Y-%m-%d')"
+            git push
+          fi

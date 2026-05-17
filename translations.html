@@ -157,12 +157,25 @@
             transition: all 0.3s ease;
         }
         .trans-card:hover { border-color: var(--gold-dim); }
-        .trans-icon {
-            font-size: 1.6rem;
+        .trans-cover {
+            width: 120px;
+            height: 75px;
             flex-shrink: 0;
-            width: 48px;
-            text-align: center;
-            padding-top: 2px;
+            background: var(--border-light);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .trans-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .trans-cover .placeholder {
+            font-size: 1.5rem;
+            color: var(--text-faint);
         }
         .trans-body { flex: 1; min-width: 0; }
         .trans-title {
@@ -241,7 +254,7 @@
             .container { padding: 0 24px; }
             .page-header { padding: 80px 0 28px; }
             .trans-card { padding: 18px; flex-direction: column; gap: 12px; }
-            .trans-icon { text-align: left; }
+            .trans-cover { width: 100%; height: 160px; }
         }
         @media (max-width: 480px) {
             .nav-links a:nth-child(4),
@@ -354,9 +367,16 @@
                     const sClass = statusLabels[item.status] || '';
                     const hasBili = item.bvid && item.bvid.trim();
                     const hasSource = item.sourceUrl && item.sourceUrl.trim();
+                    const hasCover = item.cover && item.cover.trim();
+                    const initial = item.title ? item.title.charAt(0) : '?';
                     return `
                         <div class="trans-card">
-                            <div class="trans-icon">🎬</div>
+                            <div class="trans-cover">
+                                ${hasCover
+                                    ? `<img src="${item.cover}" alt="${item.title}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
+                                    : `<span class="placeholder">${initial}</span>`
+                                }
+                            </div>
                             <div class="trans-body">
                                 <div class="trans-title">${item.title}</div>
                                 <div class="trans-original">${item.originalTitle}</div>
@@ -378,7 +398,7 @@
             fetch('data/translations.json')
                 .then(r => r.json())
                 .then(data => {
-                    allItems = data;
+                    allItems = data.items || data;
                     renderItems(currentFilter);
                 })
                 .catch(() => {
