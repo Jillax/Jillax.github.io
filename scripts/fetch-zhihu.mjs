@@ -99,12 +99,21 @@ async function main() {
         const likes = parseInt(likeEl?.textContent?.trim()) || 0;
         const comments = parseInt(commentEl?.textContent?.trim()) || 0;
 
-        // 提取图片
+        // 只从内容区域提取图片，排除头像
         const images = [];
-        card.querySelectorAll('img[src*="zhimg.com"], img[src*="picx.zhimg.com"]').forEach(img => {
-          const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-actualsrc');
-          if (src && !src.includes('data:image')) images.push(src);
-        });
+        if (contentEl) {
+          contentEl.querySelectorAll('img').forEach(img => {
+            const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-actualsrc');
+            if (src && !src.includes('data:image')) {
+              // 过滤掉小图标（头像通常 < 50px）
+              const w = img.naturalWidth || img.width;
+              const h = img.naturalHeight || img.height;
+              if ((w >= 50 && h >= 50) || (w === 0 && h === 0)) {
+                images.push(src);
+              }
+            }
+          });
+        }
 
         if (content) {
           items.push({
