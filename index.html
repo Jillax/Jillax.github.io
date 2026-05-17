@@ -226,36 +226,39 @@
         <div class="container">
             <a href="#" class="nav-logo">Jillax</a>
             <div class="nav-links">
-                <a href="about.html">关于</a>
-                <a href="portfolio.html">投资</a>
-                <a href="contact.html">联系</a>
-                <a href="share.html">分享</a>
-                <a href="translations.html">译制</a>
-                <a href="bookshelf.html">书影音</a>
-                <a href="blog.html">随笔</a>
+                <a href="about.html" data-i18n="nav.about">关于</a>
+                <a href="portfolio.html" data-i18n="nav.portfolio">投资</a>
+                <a href="contact.html" data-i18n="nav.contact">联系</a>
+                <a href="share.html" data-i18n="nav.share">分享</a>
+                <a href="translations.html" data-i18n="nav.translations">译制</a>
+                <a href="bookshelf.html" data-i18n="nav.bookshelf">书影音</a>
+                <a href="blog.html" data-i18n="nav.blog">随笔</a>
                 <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+                <button class="lang-toggle" title="语言/Language">EN</button>
             </div>
         </div>
     </nav>
+
+    <div id="page-transition-overlay" style="position:fixed;inset:0;z-index:9998;background:#1a1714;opacity:1;pointer-events:none"></div>
 
     <!-- ========== Hero ========== -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-ornament">科技 · 人文</div>
+                <div class="hero-ornament" data-i18n="hero.ornament">科技 · 人文</div>
                 <h1><span class="highlight">Jillax</span></h1>
-                <div class="hero-subtitle">随便搞点东西</div>
-                <p class="hero-desc">
+                <div class="hero-subtitle" data-i18n="hero.subtitle">随便搞点东西</div>
+                <p class="hero-desc" data-i18n="hero.desc">
                     探索测试Agent，花一花免费Token的小站。
                 </p>
                 <div class="hero-actions">
-                    <a href="about.html" class="btn">关于</a>
-                    <a href="portfolio.html" class="btn">投资组合</a>
-                    <a href="contact.html" class="btn">联系方式</a>
-                    <a href="share.html" class="btn">文件分享</a>
-                    <a href="translations.html" class="btn">译制作品</a>
-                    <a href="bookshelf.html" class="btn">书影音清单</a>
-                    <a href="blog.html" class="btn">随笔</a>
+                    <a href="about.html" class="btn" data-i18n="btn.about">关于</a>
+                    <a href="portfolio.html" class="btn" data-i18n="btn.portfolio">投资组合</a>
+                    <a href="contact.html" class="btn" data-i18n="btn.contact">联系方式</a>
+                    <a href="share.html" class="btn" data-i18n="btn.share">文件分享</a>
+                    <a href="translations.html" class="btn" data-i18n="btn.translations">译制作品</a>
+                    <a href="bookshelf.html" class="btn" data-i18n="btn.bookshelf">书影音清单</a>
+                    <a href="blog.html" class="btn" data-i18n="btn.blog">随笔</a>
                 </div>
             </div>
         </div>

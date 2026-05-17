@@ -40,6 +40,9 @@ body::after {
 
     --shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 
+    /* Page transition overlay bg */
+    --overlay-bg: #1a1714;
+
     --container: 680px;
     --font-display: 'Fraunces', 'Noto Serif SC', serif;
     --font-body: 'Spectral', 'Noto Serif SC', serif;
@@ -66,6 +69,7 @@ body::after {
     --border-light: rgba(44, 40, 36, 0.04);
 
     --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    --overlay-bg: #e6dfd4;
 }
 
 /* ===== Reset & Base ===== */
@@ -286,4 +290,37 @@ footer {
     .nav-links a:nth-child(5),
     .nav-links a:nth-child(6),
     .nav-links a:nth-child(7) { display: none; }
+}
+
+/* ===== Page Transition Overlay ===== */
+#page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: var(--overlay-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+#page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ===== Language Toggle ===== */
+.lang-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    transition: color 0.4s ease, border-color 0.4s ease;
+    font-family: var(--font-display);
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+}
+.lang-toggle:hover {
+    color: var(--text-soft);
+    border-color: var(--gold-dim);
 }

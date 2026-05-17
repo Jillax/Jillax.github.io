@@ -261,24 +261,27 @@
         <div class="container">
             <a href="index.html" class="nav-logo">Jillax</a>
             <div class="nav-links">
-                <a href="about.html">关于</a>
-                <a href="portfolio.html">投资</a>
-                <a href="contact.html">联系</a>
-                <a href="share.html">分享</a>
-                <a href="translations.html" class="current">译制</a>
-                <a href="bookshelf.html">书影音</a>
-                <a href="blog.html">随笔</a>
+                <a href="about.html" data-i18n="nav.about">关于</a>
+                <a href="portfolio.html" data-i18n="nav.portfolio">投资</a>
+                <a href="contact.html" data-i18n="nav.contact">联系</a>
+                <a href="share.html" data-i18n="nav.share">分享</a>
+                <a href="translations.html" class="current" data-i18n="nav.translations">译制</a>
+                <a href="bookshelf.html" data-i18n="nav.bookshelf">书影音</a>
+                <a href="blog.html" data-i18n="nav.blog">随笔</a>
                 <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
+                <button class="lang-toggle" title="语言/Language">EN</button>
             </div>
         </div>
     </nav>
 
+    <div id="page-transition-overlay" style="position:fixed;inset:0;z-index:9998;background:#1a1714;opacity:1;pointer-events:none"></div>
+
     <!-- ===== Header ===== -->
     <div class="container">
         <div class="page-header">
-            <a href="index.html" class="back-home">← 返回主页</a>
-            <h1>🎬 译制作品</h1>
-            <p>搬运与翻译感兴趣的外语视频</p>
+            <a href="index.html" class="back-home" data-i18n="home.back">← 返回主页</a>
+            <h1 data-i18n="page.translations.title">🎬 译制作品</h1>
+            <p data-i18n="page.translations.desc">搬运与翻译感兴趣的外语视频</p>
         </div>
 
         <!-- ===== Stats ===== -->
