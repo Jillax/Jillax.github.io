@@ -158,6 +158,7 @@ def process_bili_videos(videos):
             "status": "已完成",
             "description": desc_clean,
             "cover": v.get("pic", "").replace("http://", "https://"),
+            "play": v.get("play", 0),
             "date": datetime.fromtimestamp(v.get("created", 0)).strftime("%Y-%m-%d") if v.get("created") else "",
         })
     return done
@@ -185,6 +186,7 @@ def scan_doing_directory(doing_dir):
             "status": "译制中",
             "description": f"待上传 | {f.stat().st_size / 1024 / 1024:.0f} MB",
             "cover": "",
+            "play": 0,
             "date": datetime.fromtimestamp(f.stat().st_mtime).strftime("%Y-%m-%d"),
         })
     return items

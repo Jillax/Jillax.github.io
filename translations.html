@@ -368,6 +368,12 @@
                     const hasBili = item.bvid && item.bvid.trim();
                     const hasCover = item.cover && item.cover.trim();
                     const initial = item.title ? item.title.charAt(0) : '?';
+
+                    function formatPlay(n) {
+                        if (!n && n !== 0) return '';
+                        if (n >= 10000) return (n / 10000).toFixed(1) + '万播放';
+                        return n + '播放';
+                    }
                     return `
                         <div class="trans-card">
                             <div class="trans-cover">
@@ -378,7 +384,7 @@
                             </div>
                             <div class="trans-body">
                                 <div class="trans-title">${item.title}</div>
-                                <div class="trans-original">${item.originalTitle}</div>
+                                <div class="trans-original">${item.play !== undefined ? formatPlay(item.play) : ''}</div>
                                 <div class="trans-meta">
                                     <span class="trans-status ${sClass}">${item.status}</span>
                                     <span class="trans-source">${item.source}</span>
