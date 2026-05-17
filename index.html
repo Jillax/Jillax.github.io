@@ -382,21 +382,21 @@
         @media (max-width: 768px) {
             nav { padding: 16px 0; }
             .nav-links { gap: 16px; font-size: 0.75rem; }
+            .nav-links a:nth-child(4),
             .nav-links a:nth-child(5),
             .nav-links a:nth-child(6),
-            .nav-links a:nth-child(7),
-            .nav-links a:nth-child(8) { display: none; }
+            .nav-links a:nth-child(7) { display: none; }
             .hero { padding: 90px 0 60px; min-height: auto; }
             .hero h1 { font-size: clamp(2.5rem, 10vw, 3.2rem); }
             .hero-desc { max-width: 100%; }
             .btn { padding: 8px 16px; font-size: 0.78rem; }
         }
         @media (max-width: 480px) {
+            .nav-links a:nth-child(3),
             .nav-links a:nth-child(4),
             .nav-links a:nth-child(5),
             .nav-links a:nth-child(6),
-            .nav-links a:nth-child(7),
-            .nav-links a:nth-child(8) { display: none; }
+            .nav-links a:nth-child(7) { display: none; }
             .hero-actions { flex-direction: column; align-items: stretch; }
             .hero-actions .btn { margin-right: 0; justify-content: center; }
             }
@@ -410,7 +410,6 @@
             <a href="#" class="nav-logo">Jillax</a>
             <div class="nav-links">
                 <a href="about.html">关于</a>
-                <a href="projects.html">笔墨</a>
                 <a href="portfolio.html">投资</a>
                 <a href="contact.html">联系</a>
                 <a href="share.html">分享</a>
@@ -434,7 +433,7 @@
                 </p>
                 <div class="hero-actions">
                     <a href="about.html" class="btn">关于我</a>
-                    <a href="projects.html" class="btn">浏览笔墨</a>
+                    <a href="about.html" class="btn">关于</a>
                     <a href="portfolio.html" class="btn">投资组合</a>
                     <a href="contact.html" class="btn">联系方式</a>
                     <a href="share.html" class="btn">文件分享</a>
