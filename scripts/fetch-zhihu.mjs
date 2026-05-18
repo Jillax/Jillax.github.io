@@ -24,7 +24,8 @@ const DATA_FILE = path.resolve(__dirname, '..', 'data', 'zhihu.json');
 const USER_URL_TOKEN = 'yi-ban-tong-guo-63';
 const MAX_PINS = 500;
 const MAX_ARTICLES = 50;
-const SCROLL_TIMES = 20;
+const SCROLL_TIMES = 50;
+const STALE_SCROLL_LIMIT = 5;
 
 async function main() {
   const cookieStr = process.env.ZHIHU_COOKIE;
@@ -134,7 +135,7 @@ async function fetchPins(page) {
 
     if (currentCount === prevCount) {
       staleScrolls++;
-      if (staleScrolls >= 3) {
+      if (staleScrolls >= STALE_SCROLL_LIMIT) {
         console.log(`滚动 ${i + 1} 次后无新内容，停止`);
         break;
       }
@@ -162,7 +163,9 @@ async function fetchPins(page) {
           created: p.created || p.updated || '',
           likes: p.like_count || 0,
           comments: p.comment_count || 0,
-          images: (p.content_images || []).map(img => img.url || img),
+          images: (p.content_images || [])
+            .map(img => (typeof img === 'string') ? img : (img.url || img))
+            .filter(url => url && !url.includes('needBackground=1')),
           url: p.url || '',
         })).filter(p => p.content);
       }
@@ -192,7 +195,7 @@ async function fetchPins(page) {
       if (contentEl) {
         contentEl.querySelectorAll('img').forEach(img => {
           const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-actualsrc');
-          if (src && !src.includes('data:image')) {
+          if (src && !src.includes('data:image') && !src.includes('needBackground=1')) {
             const w = img.naturalWidth || img.width;
             const h = img.naturalHeight || img.height;
             if ((w >= 50 && h >= 50) || (w === 0 && h === 0)) {
@@ -219,20 +222,40 @@ async function fetchArticles(page) {
   await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(3000);
 
+  // 尝试点击"文章"标签
+  try {
+    const tabClicked = await page.evaluate(() => {
+      const tabs = document.querySelectorAll('.Tabs-item, .Profile-tabs a, button, [role="tab"]');
+      for (const tab of tabs) {
+        if (tab.textContent.includes('文章')) {
+          tab.click();
+          return true;
+        }
+      }
+      return false;
+    });
+    if (tabClicked) {
+      console.log('已点击"文章"标签');
+      await page.waitForTimeout(2000);
+    }
+  } catch (e) {
+    console.log('点击"文章"标签失败，继续滚动');
+  }
+
   // 滚动加载更多
   let prevCount = 0;
   let staleScrolls = 0;
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 30; i++) {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(1200);
 
     const currentCount = await page.evaluate(() => {
-      return document.querySelectorAll('.PostItem, .ContentItem, [data-za-module="PostItem"]').length;
+      return document.querySelectorAll('.ContentItem, .PostItem, .TopstoryItem, article').length;
     });
 
     if (currentCount === prevCount) {
       staleScrolls++;
-      if (staleScrolls >= 3) break;
+      if (staleScrolls >= STALE_SCROLL_LIMIT) break;
     } else {
       staleScrolls = 0;
     }
@@ -256,17 +279,17 @@ async function fetchArticles(page) {
           url: a.url || '',
           likes: a.like_count || 0,
           comments: a.comment_count || 0,
-        })).filter(a => a.title);
+        })).filter(a => a.title && a.url && !a.url.includes('/question/') && !a.url.includes('/answer/') && a.url.includes('/p/'));
       }
     } catch (e) {
       // fallback to DOM
     }
 
     // DOM 提取
-    const cards = document.querySelectorAll('.PostItem, .ContentItem, [data-za-module="PostItem"], .TopstoryItem');
+    const cards = document.querySelectorAll('.ContentItem, .PostItem, [data-za-module="PostItem"], .TopstoryItem');
     cards.forEach(card => {
-      const titleEl = card.querySelector('.PostItem-title a, h2 a, .ContentItem-title a');
-      const summaryEl = card.querySelector('.PostItem-excerpt, .RichText');
+      const titleEl = card.querySelector('h2 a, .ContentItem-title a, .PostItem-title a');
+      const summaryEl = card.querySelector('.RichText, .PostItem-excerpt');
       const timeEl = card.querySelector('time, .PublishTime, .Time, .Date');
       const likeEl = card.querySelector('.VoteButton--up, .LikeButton');
       const commentEl = card.querySelector('.CommentButton');
@@ -278,12 +301,15 @@ async function fetchArticles(page) {
       const likes = parseInt(likeEl?.textContent?.trim()) || 0;
       const comments = parseInt(commentEl?.textContent?.trim()) || 0;
 
-      if (title) {
+      const fullUrl = href.startsWith('http') ? href : `https://www.zhihu.com${href}`;
+
+      // 只保留文章（/p/路径），排除回答（/question/和/answer/路径）
+      if (title && fullUrl && !fullUrl.includes('/question/') && !fullUrl.includes('/answer/') && fullUrl.includes('/p/')) {
         items.push({
           title,
           summary,
           created: timeStr,
-          url: href.startsWith('http') ? href : `https://www.zhihu.com${href}`,
+          url: fullUrl,
           likes,
           comments,
         });
