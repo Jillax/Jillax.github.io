@@ -76,15 +76,9 @@ async function main() {
       // 文件不存在或格式错误
     }
 
-    // 合并想法（去重）
-    const existingPinIds = new Set(existingData.pins?.map(p => p.content || p.url) || []);
-    const newPins = pins.filter(p => !existingPinIds.has(p.content || p.url));
-    const mergedPins = [...pins, ...(existingData.pins || [])];
-
-    // 合并文章（去重）
-    const existingArticleIds = new Set(existingData.articles?.map(a => a.url) || []);
-    const newArticles = articles.filter(a => !existingArticleIds.has(a.url));
-    const mergedArticles = [...articles, ...(existingData.articles || [])];
+    // 直接用新数据替换旧数据（每次抓取已滚动加载全部内容）
+    const mergedPins = pins;
+    const mergedArticles = articles;
 
     const output = {
       updated: new Date().toISOString(),
@@ -100,8 +94,8 @@ async function main() {
 
     fs.writeFileSync(DATA_FILE, JSON.stringify(output, null, 2), 'utf-8');
     console.log(`已更新 ${DATA_FILE}`);
-    console.log(`想法: ${mergedPins.length} 条（新增 ${newPins.length} 条）`);
-    console.log(`文章: ${mergedArticles.length} 篇（新增 ${newArticles.length} 篇）`);
+    console.log(`想法: ${mergedPins.length} 条`);
+    console.log(`文章: ${mergedArticles.length} 篇`);
 
   } catch (err) {
     console.error('抓取失败:', err.message);
