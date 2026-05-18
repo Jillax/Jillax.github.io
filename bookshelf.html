@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="css/main.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
     <style>
         /* ===== Category Tabs ===== */
         .cat-tabs {
@@ -130,76 +132,6 @@
             flex-shrink: 0;
             font-family: var(--font-display);
         }
-
-        /* ===== Timeline ===== */
-        .timeline-wrap {
-            position: relative;
-            padding-top: 4px;
-        }
-        .timeline-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            height: 100px;
-            padding: 0 2px;
-        }
-        .timeline-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            justify-content: flex-end;
-            position: relative;
-        }
-        .timeline-bar {
-            width: 100%;
-            max-width: 28px;
-            min-height: 2px;
-            background: var(--gold-dim);
-            transition: height 0.8s ease;
-            height: 0;
-            cursor: pointer;
-            position: relative;
-        }
-        .timeline-bar:hover {
-            background: var(--gold-soft);
-        }
-        .timeline-bar:hover::after {
-            content: attr(data-count) '部';
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.6rem;
-            color: var(--gold);
-            white-space: nowrap;
-            font-family: var(--font-display);
-        }
-        /* Timeline label per-month adjustment */
-        .timeline-col .month-label {
-            font-size: 0.55rem;
-            color: var(--text-faint);
-            margin-top: 4px;
-            font-family: var(--font-display);
-            letter-spacing: 0.3px;
-        }
-        .timeline-col .month-label.odd {
-            opacity: 0.4;
-        }
-
-        /* ===== Year Selector (mini tabs) ===== */
-        .year-tabs {
-            display: flex; gap: 2px; margin-bottom: 12px; flex-wrap: wrap;
-        }
-        .year-tab {
-            padding: 3px 12px; font-size: 0.68rem;
-            color: var(--text-faint); border: 1px solid var(--border);
-            background: none; cursor: pointer;
-            transition: all 0.3s ease; font-family: var(--font-body);
-        }
-        .year-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
-        .year-tab.active { border-color: var(--gold-dim); color: var(--text-soft); }
 
         /* ===== Status Filter ===== */
         .filter-bar {
@@ -332,12 +264,26 @@
             color: var(--text-faint); font-size: 0.85rem;
         }
 
+        /* ===== Line Chart ===== */
+        .line-chart-box {
+            border: 1px solid var(--border);
+            padding: 4px;
+        }
+        .chart-canvas-wrap {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .chart-canvas-wrap canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .items-grid { grid-template-columns: 1fr; }
             .item-card { padding: 14px; }
             .stat-cards { grid-template-columns: repeat(2, 1fr); }
-            .timeline-bars { height: 70px; }
         }
         @media (max-width: 480px) {
             .cat-tab { padding: 6px 14px; font-size: 0.78rem; }
@@ -397,12 +343,13 @@
             <div class="rating-bars" id="ratingBars"></div>
         </div>
 
-        <!-- ===== Timeline ===== -->
+        <!-- ===== Cumulative Timeline ===== -->
         <div class="dash-section" id="timelineSection">
-            <div class="dash-title">📈 时间线</div>
-            <div class="year-tabs" id="yearTabs"></div>
-            <div class="timeline-wrap">
-                <div class="timeline-bars" id="timelineBars"></div>
+            <div class="dash-title">📈 累计趋势</div>
+            <div class="line-chart-box">
+                <div class="chart-canvas-wrap" style="height: 220px;">
+                    <canvas id="cumulativeChart"></canvas>
+                </div>
             </div>
         </div>
 
@@ -440,23 +387,19 @@
             const updateTime = document.getElementById('updateTime');
             const statCards = document.getElementById('statCards');
             const ratingBars = document.getElementById('ratingBars');
-            const timelineBars = document.getElementById('timelineBars');
-            const yearTabs = document.getElementById('yearTabs');
             const filterTabs = document.querySelectorAll('.filter-tab');
             const filterCount = document.getElementById('filterCount');
+            let cumulativeChartInstance = null;
 
             let allData = { books: [], movies: [], music: [] };
             let currentCat = 'books';
             let ratingFilter = 0;
-            let yearFilter = 'all';
 
             const statusLabels = {
                 books: { collect: '读过', wish: '想读', do: '在读' },
                 movies: { collect: '看过', wish: '想看', do: '在看' },
                 music: { collect: '听过', wish: '想听', do: '在听' },
             };
-
-            const monthNames = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
             function renderStars(rating) {
                 if (!rating || rating === 0) return '';
@@ -548,80 +491,120 @@
                 });
             }
 
-            // ==================== TIMELINE ====================
-            function getYears(cat) {
-                const items = allData[cat] || [];
-                const years = new Set();
-                items.forEach(i => {
-                    if (i.date && i.status === 'collect') {
-                        years.add(i.date.substring(0, 4));
-                    }
-                });
-                return Array.from(years).sort();
+            // ==================== CUMULATIVE CHART ====================
+            function getChartTheme() {
+                var isLight = document.documentElement.hasAttribute('data-theme');
+                return {
+                    grid: isLight ? 'rgba(44,40,36,0.06)' : 'rgba(255,255,255,0.06)',
+                    text: isLight ? '#8c7e6c' : '#8f8271',
+                    gold: '#c4a35a',
+                    fillTop: 'rgba(196,163,90,0.06)',
+                    fillBottom: 'rgba(196,163,90,0.005)',
+                };
             }
 
-            function renderTimeline(cat, year) {
-                const items = allData[cat] || [];
-                const monthly = {};
-                for (let m = 1; m <= 12; m++) monthly[m] = 0;
+            function renderCumulativeChart(cat) {
+                if (cumulativeChartInstance) {
+                    cumulativeChartInstance.destroy();
+                    cumulativeChartInstance = null;
+                }
 
-                items.forEach(i => {
-                    if (i.date && i.status === 'collect') {
-                        const y = i.date.substring(0, 4);
-                        if (year === 'all' || y === year) {
-                            const m = parseInt(i.date.substring(5, 7));
-                            if (m >= 1 && m <= 12) monthly[m]++;
-                        }
-                    }
+                var items = allData[cat] || [];
+                var collected = items.filter(function(i) {
+                    return i.date && i.status === 'collect';
+                }).sort(function(a, b) {
+                    return a.date.localeCompare(b.date);
                 });
 
-                const maxVal = Math.max(...Object.values(monthly), 1);
-
-                const label = getCatLabel();
-
-                timelineBars.innerHTML = monthNames.map((m, idx) => {
-                    const count = monthly[idx + 1];
-                    const pct = (count / maxVal) * 100;
-                    const isOdd = (idx + 1) % 2 === 1;
-                    return `
-                        <div class="timeline-col">
-                            <div class="timeline-bar" style="height:0" data-height="${pct}" data-count="${count}"></div>
-                            <span class="month-label ${isOdd ? 'odd' : ''}">${m}月</span>
-                        </div>
-                    `;
-                }).join('');
-
-                // Animate bars
-                requestAnimationFrame(() => {
-                    timelineBars.querySelectorAll('.timeline-bar').forEach(el => {
-                        el.style.height = el.dataset.height + '%';
-                    });
-                });
-            }
-
-            function renderYearTabs(cat) {
-                const years = getYears(cat);
-                if (years.length <= 1) {
-                    yearTabs.style.display = 'none';
+                var canvas = document.getElementById('cumulativeChart');
+                if (collected.length < 2) {
+                    canvas.style.display = 'none';
                     return;
                 }
-                yearTabs.style.display = '';
-                const currentYear = String(new Date().getFullYear());
-                if (!years.includes('all')) years.unshift('all');
+                canvas.style.display = '';
 
-                yearTabs.innerHTML = years.map(y => {
-                    const label = y === 'all' ? '全部' : y;
-                    const active = (y === yearFilter) ? ' active' : '';
-                    return `<button class="year-tab${active}" data-year="${y}">${label}</button>`;
-                }).join('');
+                // Group by month and compute cumulative
+                var monthly = {};
+                collected.forEach(function(i) {
+                    var ym = i.date.substring(0, 7);
+                    monthly[ym] = (monthly[ym] || 0) + 1;
+                });
 
-                yearTabs.querySelectorAll('.year-tab').forEach(tab => {
-                    tab.addEventListener('click', function() {
-                        yearTabs.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
-                        yearFilter = this.dataset.year;
-                        renderTimeline(cat, yearFilter);
-                    });
+                var sortedMonths = Object.keys(monthly).sort();
+                var cum = 0;
+                var labels = sortedMonths.map(function(m) {
+                    var d = new Date(m + '-01');
+                    return d.getFullYear() + '\u5e74' + (d.getMonth() + 1) + '\u6708';
+                });
+                var data = sortedMonths.map(function(m) {
+                    cum += monthly[m];
+                    return cum;
+                });
+
+                var colors = getChartTheme();
+                var ctx = canvas.getContext('2d');
+
+                var gradient = ctx.createLinearGradient(0, 0, 0, 220);
+                gradient.addColorStop(0, colors.fillTop);
+                gradient.addColorStop(1, colors.fillBottom);
+
+                cumulativeChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '\u7d2f\u8ba1',
+                            data: data,
+                            borderColor: colors.gold,
+                            backgroundColor: gradient,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            pointHitRadius: 10,
+                            tension: 0.3,
+                            fill: true,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: colors.text === '#8c7e6c' ? '#f0ebe2' : '#27231e',
+                                titleColor: colors.text === '#8c7e6c' ? '#2b221a' : '#ddd3c4',
+                                bodyColor: colors.text === '#8c7e6c' ? '#5c5142' : '#bfb29f',
+                                borderColor: colors.text === '#8c7e6c' ? 'rgba(44,40,36,0.08)' : 'rgba(255,255,255,0.06)',
+                                borderWidth: 1,
+                                cornerRadius: 0,
+                                padding: 10,
+                                callbacks: {
+                                    label: function(ctx) {
+                                        return ctx.parsed.y + ' \u9879';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    color: colors.text,
+                                    font: { size: 10, family: 'Spectral' },
+                                    maxRotation: 45,
+                                    maxTicksLimit: 15,
+                                }
+                            },
+                            y: {
+                                grid: { color: colors.grid },
+                                beginAtZero: true,
+                                ticks: {
+                                    color: colors.text,
+                                    font: { size: 10, family: 'Spectral' },
+                                    stepSize: 1,
+                                }
+                            }
+                        }
+                    }
                 });
             }
 
@@ -680,7 +663,6 @@
             function switchCategory(cat) {
                 currentCat = cat;
                 ratingFilter = 0;
-                yearFilter = 'all';
 
                 // Reset filter tabs
                 filterTabs.forEach(t => t.classList.remove('active'));
@@ -688,8 +670,7 @@
 
                 renderStats(cat);
                 renderRatingDist(cat);
-                renderYearTabs(cat);
-                renderTimeline(cat, yearFilter);
+                renderCumulativeChart(cat);
                 renderItems(cat);
             }
 
@@ -717,7 +698,6 @@
                     grid.innerHTML = '<div class="empty-state">加载失败</div>';
                     statCards.innerHTML = '';
                     ratingBars.innerHTML = '';
-                    timelineBars.innerHTML = '';
                 });
 
             // ==================== EVENTS ====================
