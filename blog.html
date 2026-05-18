@@ -447,6 +447,7 @@
             <button class="blog-tab active" data-tab="posts"><span data-i18n="blog.posts">文章</span> <span class="count" id="postCount"></span></button>
             <button class="blog-tab" data-tab="pins"><span data-i18n="blog.zhihu">知乎想法</span> <span class="count" id="pinCount"></span></button>
             <button class="blog-tab" data-tab="articles"><span data-i18n="blog.articles">知乎文章</span> <span class="count" id="articleCount"></span></button>
+            <button class="blog-tab" data-tab="thesis">AI 文本 <span class="count" id="thesisCount"></span></button>
         </div>
 
         <!-- ===== Posts Section ===== -->
@@ -497,6 +498,21 @@
             </div>
         </div>
 
+        <!-- ===== Thesis Section ===== -->
+        <div id="thesisSection" style="display:none">
+            <div class="post-list" id="thesisList"></div>
+            <div class="empty-state" id="thesisEmpty" style="display:none">还没有 AI 文本</div>
+
+            <div class="article-view" id="thesisArticleView">
+                <button class="article-back" id="thesisArticleBack">← 返回列表</button>
+                <div class="article-header">
+                    <h1 id="thesisArticleTitle"></h1>
+                    <div class="article-meta" id="thesisArticleMeta"></div>
+                </div>
+                <div class="article-content" id="thesisArticleContent"></div>
+            </div>
+        </div>
+
         <!-- ===== Lightbox ===== -->
         <div class="lightbox" id="lightbox">
             <button class="lightbox-close" id="lightboxClose">✕</button>
@@ -535,10 +551,20 @@
             const postCount = document.getElementById('postCount');
             const pinCount = document.getElementById('pinCount');
             const articleCount = document.getElementById('articleCount');
+            const thesisCount = document.getElementById('thesisCount');
             const blogSearch = document.getElementById('blogSearch');
+            const thesisSection = document.getElementById('thesisSection');
+            const thesisList = document.getElementById('thesisList');
+            const thesisEmpty = document.getElementById('thesisEmpty');
+            const thesisArticleView = document.getElementById('thesisArticleView');
+            const thesisArticleTitle = document.getElementById('thesisArticleTitle');
+            const thesisArticleMeta = document.getElementById('thesisArticleMeta');
+            const thesisArticleContent = document.getElementById('thesisArticleContent');
+            const thesisArticleBack = document.getElementById('thesisArticleBack');
             let searchQuery = '';
             let allDataRaw = null;
             let posts = [];
+            let thesisPosts = [];
             let currentTab = 'posts';
 
             // ===== Utility =====
@@ -603,6 +629,7 @@
                 postsSection.style.display = tab === 'posts' ? '' : 'none';
                 pinsSection.style.display = tab === 'pins' ? '' : 'none';
                 articlesSection.style.display = tab === 'articles' ? '' : 'none';
+                thesisSection.style.display = tab === 'thesis' ? '' : 'none';
                 history.pushState(null, '', 'blog.html' + (tab !== 'posts' ? '#' + tab : ''));
             }
 
@@ -781,6 +808,64 @@
                 }).join('');
             }
 
+            // ===== Thesis =====
+            function renderThesisList() {
+                if (thesisPosts.length === 0) {
+                    thesisList.innerHTML = '';
+                    thesisEmpty.style.display = 'block';
+                    thesisCount.textContent = '';
+                    return;
+                }
+                thesisEmpty.style.display = 'none';
+                thesisCount.textContent = thesisPosts.length || '';
+                thesisList.innerHTML = thesisPosts.map(p => `
+                    <div class="post-item" data-id="${p.id}">
+                        <div class="post-title">${p.title}</div>
+                        <div class="post-meta">
+                            <span>${p.date}</span>
+                            ${p.tags ? p.tags.map(t => `<span class="post-tag">${t}</span>`).join('') : ''}
+                        </div>
+                        <div class="post-summary">${p.summary}</div>
+                    </div>
+                `).join('');
+
+                thesisList.querySelectorAll('.post-item').forEach(el => {
+                    el.addEventListener('click', () => showThesisArticle(el.dataset.id));
+                });
+            }
+
+            function showThesisList() {
+                thesisList.style.display = '';
+                thesisArticleView.classList.remove('active');
+                trackReadingProgress(false);
+            }
+
+            function showThesisArticle(postId) {
+                const post = thesisPosts.find(p => p.id === postId);
+                if (!post) { showThesisList(); return; }
+
+                switchTab('thesis');
+                thesisList.style.display = 'none';
+                thesisArticleView.classList.add('active');
+                thesisArticleTitle.textContent = post.title;
+                thesisArticleMeta.textContent = post.date + (post.tags ? '  ·  ' + post.tags.join(' · ') : '');
+                thesisArticleContent.innerHTML = '<p style="color:var(--text-faint)">加载中...</p>';
+
+                trackReadingProgress(true);
+
+                fetch(post.file)
+                    .then(r => {
+                        if (!r.ok) throw new Error('Not found');
+                        return r.text();
+                    })
+                    .then(md => {
+                        thesisArticleContent.innerHTML = marked.parse(md);
+                    })
+                    .catch(() => {
+                        thesisArticleContent.innerHTML = '<p style="color:var(--text-muted)">加载失败</p>';
+                    });
+            }
+
             // ===== Zhihu Article Viewer =====
             window.openZhArticle = function(url) {
                 const arts = window.__zhArticleData || [];
@@ -805,7 +890,7 @@
                     renderList();
 
                     const hash = window.location.hash.slice(1);
-                    if (hash === 'pins' || hash === 'articles') {
+                    if (hash === 'pins' || hash === 'articles' || hash === 'thesis') {
                         switchTab(hash);
                     } else if (hash) {
                         const found = posts.find(p => p.id === hash);
@@ -814,6 +899,29 @@
                 })
                 .catch(() => {
                     postList.innerHTML = '<div class="empty-state">加载失败</div>';
+                });
+
+            fetch('thesis/index.json')
+                .then(r => {
+                    if (!r.ok) throw new Error('Not found');
+                    return r.json();
+                })
+                .then(data => {
+                    thesisPosts = data;
+                    renderThesisList();
+
+                    const hash = window.location.hash.slice(1);
+                    if (hash === 'thesis') {
+                        // already handled by posts load, but fine
+                    } else if (hash) {
+                        const found = thesisPosts.find(p => p.id === hash);
+                        if (found) showThesisArticle(hash);
+                    }
+                })
+                .catch(() => {
+                    thesisList.innerHTML = '';
+                    thesisEmpty.style.display = 'block';
+                    thesisCount.textContent = '';
                 });
 
             fetch('data/zhihu.json')
@@ -835,6 +943,7 @@
 
             // ===== Back Button =====
             articleBack.addEventListener('click', showList);
+            thesisArticleBack.addEventListener('click', showThesisList);
 
             // ===== Lightbox =====
             document.getElementById('lightboxClose').addEventListener('click', function() {
@@ -857,11 +966,15 @@
             // ===== Browser Navigation =====
             window.addEventListener('popstate', function() {
                 const hash = window.location.hash.slice(1);
-                if (hash === 'pins' || hash === 'articles') {
+                if (hash === 'pins' || hash === 'articles' || hash === 'thesis') {
                     switchTab(hash);
                 } else if (hash) {
                     const found = posts.find(p => p.id === hash);
                     if (found) showArticle(hash);
+                    else {
+                        const t = thesisPosts.find(p => p.id === hash);
+                        if (t) showThesisArticle(hash);
+                    }
                 } else {
                     switchTab('posts');
                     showList();
