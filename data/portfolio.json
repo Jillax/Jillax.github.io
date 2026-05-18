@@ -2,20 +2,13 @@
   "updated": "2026-05-17",
   "currency": "CNY",
   "history": [
-    { "date": "2026-05-17", "value": 70709.11 }
+    { "date": "2026-05-17", "value": 66080.76 }
   ],
   "categories": [
     {
       "name": "现金类",
       "color": "#c4a35a",
       "items": [
-        {
-          "name": "货币基金",
-          "subItems": [
-            { "name": "A货币基金", "value": 3427.98, "cost": 3422.12 },
-            { "name": "B货币基金", "value": 1200.37, "cost": 1193.29 }
-          ]
-        },
         {
           "name": "定期存款",
           "subItems": [
