@@ -160,42 +160,40 @@ async function fetchPins(page) {
   // 仅从 DOM 提取想法数据（不依赖 initialData，后者只有首屏数据）
   const pins = await page.evaluate(() => {
     const items = [];
-    const allTexts = new Set();
 
-    // 收集页面上所有像想法内容的文本块
-    const textBlocks = document.querySelectorAll('.RichText, [class*="ContentItem"], [class*="PinItem"]');
+    // 以卡片容器为单位遍历，避免捕获用户名/签名/按钮等 UI 文字
+    const cards = document.querySelectorAll('[class*="PinItem"], [class*="TopstoryItem--pin"], .TopstoryItem');
 
-    textBlocks.forEach(block => {
-      const text = block.textContent.trim();
-      if (!text || text.length < 10) return;
+    cards.forEach(card => {
+      // 只从 .RichText 提取正文，排除卡片 header/footer 的 UI 文字
+      const contentEl = card.querySelector('.RichText');
+      const content = contentEl?.textContent?.trim() || '';
+      if (!content || content.length < 5) return;
 
-      // 按文本内容去重
-      if (allTexts.has(text)) return;
-      allTexts.add(text);
-
-      const timeEl = block.closest('[class*="Item"]')?.querySelector('time, [datetime]') ||
-                     block.querySelector('time');
+      // 从卡片内找发布时间
+      const timeEl = card.querySelector('time, [datetime]');
       const created = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
 
-      // 查找点赞和评论数
-      const parentEl = block.closest('[class*="Item"]');
-      const likeEl = parentEl?.querySelector('[class*="Vote"], [class*="Like"], [class*="vote"]') ||
-                     block.querySelector('[class*="Vote"], [class*="Like"]');
-      const likes = parseInt(likeEl?.textContent?.trim()) || 0;
-      const commentEl = parentEl?.querySelector('[class*="Comment"], [class*="comment"]') ||
-                        block.querySelector('[class*="Comment"], [class*="-comment"]');
-      const comments = parseInt(commentEl?.textContent?.trim()) || 0;
+      // 找点赞数
+      const voteEl = card.querySelector('[class*="VoteButton"], [class*="vote"]');
+      const likes = parseInt(voteEl?.textContent?.trim()) || 0;
 
-      // 查找此文本块内的图片
+      // 找评论数
+      const cmtEl = card.querySelector('[class*="Comment"]');
+      const comments = parseInt(cmtEl?.textContent?.trim()) || 0;
+
+      // 只提取正文区域内的图片（排除头像、表情等）
       const images = [];
-      block.querySelectorAll('img').forEach(img => {
-        const src = img.getAttribute('src') || img.getAttribute('data-src') || '';
-        if (src && !src.includes('data:image') && !src.includes('needBackground=1') && !src.includes('avatar')) {
-          images.push(src);
-        }
-      });
+      if (contentEl) {
+        contentEl.querySelectorAll('img').forEach(img => {
+          const src = img.getAttribute('src') || img.getAttribute('data-src') || '';
+          if (src && !src.includes('data:image') && !src.includes('needBackground=1')) {
+            images.push(src);
+          }
+        });
+      }
 
-      items.push({ content: text, created, likes: 0, comments: 0, images });
+      items.push({ content, created, likes, comments, images });
     });
 
     return items;
