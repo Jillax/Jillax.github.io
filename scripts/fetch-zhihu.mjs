@@ -170,10 +170,14 @@ async function fetchPins(page) {
       const content = contentEl?.textContent?.trim() || '';
       if (!content || content.length < 5) return;
 
-      // 从卡片内找发布时间
-      const timeEl = card.querySelector('time, [datetime]');
-      const created = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
-
+      // 从正文中提取发布时间（知乎把时间渲染在 RichText 内）
+      let created = "";
+      const timeM = content.match(/发布于(\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2})/);
+      if (timeM) created = timeM[1].trim();
+      if (!created) {
+        const editM = content.match(/编辑于(\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2})/);
+        if (editM) created = editM[1].trim();
+      }
       // 找点赞数
       const voteEl = card.querySelector('[class*="VoteButton"], [class*="vote"]');
       const likes = parseInt(voteEl?.textContent?.trim()) || 0;
