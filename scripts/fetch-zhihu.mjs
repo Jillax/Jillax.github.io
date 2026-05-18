@@ -193,7 +193,16 @@ async function fetchPins(page) {
         });
       }
 
-      items.push({ content, created, likes, comments, images });
+      // 清洗正文：去掉"发布于/编辑于"等时间戳文字（知乎渲染在 RichText 内）
+      const cleaned = content
+        .replace(/发布于\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}/g, '')
+        .replace(/编辑于\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}/g, '')
+        .replace(/发布于\s*\d{2}:\d{2}/g, '')
+        .replace(/编辑于\s*\d{2}:\d{2}/g, '')
+        .trim();
+      if (!cleaned) return;
+
+      items.push({ content: cleaned, created, likes, comments, images });
     });
 
     return items;
