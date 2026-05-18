@@ -204,87 +204,76 @@ async function fetchPins(page) {
 }
 
 async function fetchArticles(page) {
-  const url = `https://www.zhihu.com/people/${USER_URL_TOKEN}/posts`;
-  console.log(`访问文章页: ${url}`);
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForTimeout(5000);
+  // 先用知乎 API 抓文章（返回 JSON，不依赖 DOM 选择器）
+  let allArticles = [];
+  let offset = 0;
+  const limit = 20;
 
-  // 尝试点击"文章"标签
-  try {
-    const clicked = await page.evaluate(() => {
-      const els = document.querySelectorAll('a, button, [role="tab"], .Tabs-item');
-      for (const el of els) {
-        if (el.textContent.includes('文章') && !el.textContent.includes('回答')) {
-          el.click();
-          return true;
-        }
+  for (let pageNum = 0; pageNum < 5; pageNum++) {
+    const apiUrl = `https://www.zhihu.com/api/v4/members/${USER_URL_TOKEN}/articles?limit=${limit}&offset=${offset}`;
+    console.log(`请求文章 API: offset=${offset}`);
+    try {
+      const data = await page.evaluate(async (url) => {
+        const resp = await fetch(url, {
+          credentials: 'include',
+          headers: { 'Accept': 'application/json' }
+        });
+        if (!resp.ok) return null;
+        return await resp.json();
+      }, apiUrl);
+
+      if (!data || !data.data || data.data.length === 0) {
+        console.log('文章 API 无更多数据');
+        break;
       }
-      return false;
-    });
-    if (clicked) {
-      console.log('已点击"文章"标签');
-      await page.waitForTimeout(3000);
+
+      const articles = data.data.map(a => ({
+        title: a.title || '',
+        summary: a.excerpt || '',
+        created: a.created ? new Date(a.created * 1000).toISOString().split('T')[0] : '',
+        url: a.url || '',
+        likes: a.voteup_count || 0,
+        comments: a.comment_count || 0,
+      })).filter(a => a.title);
+
+      allArticles = allArticles.concat(articles);
+      console.log(`文章 API 第 ${pageNum + 1} 页: ${articles.length} 篇`);
+
+      if (data.paging && data.paging.is_end) break;
+      offset += limit;
+    } catch (e) {
+      console.log(`文章 API 请求失败: ${e.message}`);
+      break;
     }
-  } catch(e) { console.log('文章标签点击失败'); }
-
-  // 滚动加载更多
-  let prevCount = 0;
-  let staleScrolls = 0;
-  for (let i = 0; i < 30; i++) {
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(1500);
-
-    const currentCount = await page.evaluate(() => {
-      const links = document.querySelectorAll('a[href*="/p/"]');
-      return links.length;
-    });
-
-    if (currentCount === prevCount) {
-      staleScrolls++;
-      if (staleScrolls >= STALE_SCROLL_LIMIT) break;
-    } else {
-      staleScrolls = 0;
-    }
-    prevCount = currentCount;
   }
 
-  // 仅从 DOM 提取文章数据
+  if (allArticles.length > 0) {
+    console.log(`API 共获取 ${allArticles.length} 篇文章`);
+    return allArticles;
+  }
+
+  // API 没拿到数据，降级到 DOM 提取
+  console.log('API 方式未获取到文章，降级 DOM 提取...');
+  const url = `https://www.zhihu.com/people/${USER_URL_TOKEN}/posts`;
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForTimeout(3000);
+
   const articles = await page.evaluate(() => {
     const items = [];
     const seen = new Set();
-
-    const cards = document.querySelectorAll('[class*="ContentItem"], [class*="PostItem"], [class*="TopstoryItem"]');
-    cards.forEach(card => {
-      const link = card.querySelector('a[href*="/p/"]');
-      if (!link) return;
-
+    document.querySelectorAll('a[href*="/p/"]').forEach(link => {
       const href = link.getAttribute('href') || '';
       const url = href.startsWith('http') ? href : `https://www.zhihu.com${href}`;
       if (seen.has(url)) return;
       seen.add(url);
-
       const title = link.textContent.trim();
       if (!title || title.length < 2) return;
-
-      const summaryEl = card.querySelector('[class*="excerpt"], [class*="summary"], .RichText');
-      const summary = summaryEl?.textContent?.trim() || '';
-
-      const timeEl = card.querySelector('time, [datetime]');
-      const created = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
-
-      const likeEl = card.querySelector('[class*="Vote"], [class*="Like"]');
-      const likes = parseInt(likeEl?.textContent?.trim()) || 0;
-
-      const commentEl = card.querySelector('[class*="Comment"], [class*="comment"]');
-      const comments = parseInt(commentEl?.textContent?.trim()) || 0;
-
-      items.push({ title, summary, created, url, likes, comments });
+      items.push({ title, summary: '', created: '', url, likes: 0, comments: 0 });
     });
-
     return items;
   });
 
-  console.log(`DOM 提取到 ${articles.length} 篇文章`);
+  console.log(`DOM 降级提取到 ${articles.length} 篇文章`);
   return articles;
 }
 
