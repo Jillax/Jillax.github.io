@@ -114,33 +114,41 @@ async function main() {
 async function fetchPins(page) {
   const url = `https://www.zhihu.com/people/${USER_URL_TOKEN}/pins`;
   console.log(`访问想法页: ${url}`);
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-  await page.waitForTimeout(3000);
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  // 等待 React 渲染完成
+  await page.waitForTimeout(5000);
 
   // 滚动加载更多，直到无新内容或达到上限
   let prevCount = 0;
   let staleScrolls = 0;
   for (let i = 0; i < SCROLL_TIMES; i++) {
-    // 展开所有"阅读全文"（用遍历 textContent 替代 :has-text，因为它在 page.evaluate 中不可用）
+    // 展开所有"阅读全文"（用 try-catch 避免个别按钮报错）
     await page.evaluate(() => {
-      document.querySelectorAll('button, .RichText-expandButton').forEach(b => {
-        if (b.textContent.includes('展开阅读全文') || b.textContent.includes('阅读全文')) {
-          b.click();
-        }
+      document.querySelectorAll('button').forEach(b => {
+        try {
+          if (b.textContent.includes('阅读全文')) b.click();
+        } catch(e) {}
       });
     });
 
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(1500);
 
     const currentCount = await page.evaluate(() => {
-      return document.querySelectorAll('.PinItem, [data-za-module="PinItem"], .TopstoryItem--pin').length;
+      // 统计包含实质文本的元素数量，作为卡片数的代理指标
+      const all = document.querySelectorAll('[class*="Topstory"], [class*="Pin"], [class*="Item"]');
+      let count = 0;
+      all.forEach(el => {
+        const text = el.textContent.trim();
+        if (text.length > 20) count++;
+      });
+      return count;
     });
 
     if (currentCount === prevCount) {
       staleScrolls++;
       if (staleScrolls >= STALE_SCROLL_LIMIT) {
-        console.log(`滚动 ${i + 1} 次后无新内容，停止`);
+        console.log(`想法滚动 ${i + 1} 次后无新内容，停止`);
         break;
       }
     } else {
@@ -149,113 +157,79 @@ async function fetchPins(page) {
     prevCount = currentCount;
   }
 
-  // 提取想法数据
+  // 仅从 DOM 提取想法数据（不依赖 initialData，后者只有首屏数据）
   const pins = await page.evaluate(() => {
     const items = [];
+    const allTexts = new Set();
 
-    // 尝试 initialData（React 渲染数据）
-    try {
-      const initialData = JSON.parse(
-        document.querySelector('script#js-initialData')?.textContent ||
-        document.querySelector('script[data-initial-state]')?.textContent ||
-        '{}'
-      );
-      if (initialData?.people?.pins) {
-        const raw = Object.values(initialData.people.pins);
-        return raw.map(p => ({
-          content: p.excerpt || p.content || '',
-          created: p.created || p.updated || '',
-          likes: p.like_count || 0,
-          comments: p.comment_count || 0,
-          images: (p.content_images || [])
-            .map(img => (typeof img === 'string') ? img : (img.url || img))
-            .filter(url => url && !url.includes('needBackground=1')),
-          url: p.url || '',
-        })).filter(p => p.content);
-      }
-    } catch (e) {
-      // fallback to DOM
-    }
+    // 收集页面上所有像想法内容的文本块
+    const textBlocks = document.querySelectorAll('.RichText, [class*="ContentItem"], [class*="PinItem"]');
 
-    // DOM 提取
-    const cards = document.querySelectorAll('.PinItem, [data-za-module="PinItem"], .TopstoryItem--pin');
-    cards.forEach(card => {
-      // 先点击"阅读全文"
-      const expandBtn = card.querySelector('.RichText-expandButton') ||
-                (card.querySelector('button') && Array.from(card.querySelectorAll('button')).find(b => b.textContent.includes('展开阅读全文') || b.textContent.includes('阅读全文')));
-      if (expandBtn) expandBtn.click();
+    textBlocks.forEach(block => {
+      const text = block.textContent.trim();
+      if (!text || text.length < 10) return;
 
-      const contentEl = card.querySelector('.RichText');
-      const timeEl = card.querySelector('time, .PublishTime, .Time');
-      const likeEl = card.querySelector('.VoteButton--up, .LikeButton, .zm-item-vote-count');
-      const commentEl = card.querySelector('.CommentButton, .zm-item-meta-comment');
+      // 按文本内容去重
+      if (allTexts.has(text)) return;
+      allTexts.add(text);
 
-      const content = contentEl?.textContent?.trim() || '';
-      const timeStr = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
-      const likes = parseInt(likeEl?.textContent?.trim()) || 0;
-      const comments = parseInt(commentEl?.textContent?.trim()) || 0;
+      const timeEl = block.closest('[class*="Item"]')?.querySelector('time, [datetime]') ||
+                     block.querySelector('time');
+      const created = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
 
-      // 只从内容区域提取图片
+      // 查找此文本块内的图片
       const images = [];
-      if (contentEl) {
-        contentEl.querySelectorAll('img').forEach(img => {
-          const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-actualsrc');
-          if (src && !src.includes('data:image') && !src.includes('needBackground=1')) {
-            const w = img.naturalWidth || img.width;
-            const h = img.naturalHeight || img.height;
-            if ((w >= 50 && h >= 50) || (w === 0 && h === 0)) {
-              images.push(src);
-            }
-          }
-        });
-      }
+      block.querySelectorAll('img').forEach(img => {
+        const src = img.getAttribute('src') || img.getAttribute('data-src') || '';
+        if (src && !src.includes('data:image') && !src.includes('needBackground=1') && !src.includes('avatar')) {
+          images.push(src);
+        }
+      });
 
-      if (content) {
-        items.push({ content, created: timeStr, likes, comments, images });
-      }
+      items.push({ content: text, created, likes: 0, comments: 0, images });
     });
 
     return items;
   });
 
+  console.log(`DOM 提取到 ${pins.length} 条想法内容`);
   return pins;
 }
 
 async function fetchArticles(page) {
   const url = `https://www.zhihu.com/people/${USER_URL_TOKEN}/posts`;
   console.log(`访问文章页: ${url}`);
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-  await page.waitForTimeout(3000);
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForTimeout(5000);
 
   // 尝试点击"文章"标签
   try {
-    const tabClicked = await page.evaluate(() => {
-      const tabs = document.querySelectorAll('.Tabs-item, .Profile-tabs a, button, [role="tab"]');
-      for (const tab of tabs) {
-        if (tab.textContent.includes('文章')) {
-          tab.click();
+    const clicked = await page.evaluate(() => {
+      const els = document.querySelectorAll('a, button, [role="tab"], .Tabs-item');
+      for (const el of els) {
+        if (el.textContent.includes('文章') && !el.textContent.includes('回答')) {
+          el.click();
           return true;
         }
       }
       return false;
     });
-    if (tabClicked) {
+    if (clicked) {
       console.log('已点击"文章"标签');
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(3000);
     }
-  } catch (e) {
-    console.log('点击"文章"标签失败，继续滚动');
-  }
+  } catch(e) { console.log('文章标签点击失败'); }
 
   // 滚动加载更多
   let prevCount = 0;
   let staleScrolls = 0;
   for (let i = 0; i < 30; i++) {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(1500);
 
     const currentCount = await page.evaluate(() => {
-      return document.querySelectorAll('.ContentItem, .PostItem, .TopstoryItem, article').length;
+      const links = document.querySelectorAll('a[href*="/p/"]');
+      return links.length;
     });
 
     if (currentCount === prevCount) {
@@ -267,62 +241,42 @@ async function fetchArticles(page) {
     prevCount = currentCount;
   }
 
+  // 仅从 DOM 提取文章数据
   const articles = await page.evaluate(() => {
     const items = [];
+    const seen = new Set();
 
-    // 尝试 initialData
-    try {
-      const initialData = JSON.parse(
-        document.querySelector('script#js-initialData')?.textContent || '{}'
-      );
-      if (initialData?.people?.articles) {
-        const raw = Object.values(initialData.people.articles);
-        return raw.map(a => ({
-          title: a.title || '',
-          summary: a.excerpt || a.summary || '',
-          created: a.created || a.updated || '',
-          url: a.url || '',
-          likes: a.like_count || 0,
-          comments: a.comment_count || 0,
-        })).filter(a => a.title && a.url && !a.url.includes('/question/') && !a.url.includes('/answer/') && a.url.includes('/p/'));
-      }
-    } catch (e) {
-      // fallback to DOM
-    }
-
-    // DOM 提取
-    const cards = document.querySelectorAll('.ContentItem, .PostItem, [data-za-module="PostItem"], .TopstoryItem');
+    const cards = document.querySelectorAll('[class*="ContentItem"], [class*="PostItem"], [class*="TopstoryItem"]');
     cards.forEach(card => {
-      const titleEl = card.querySelector('h2 a, .ContentItem-title a, .PostItem-title a');
-      const summaryEl = card.querySelector('.RichText, .PostItem-excerpt');
-      const timeEl = card.querySelector('time, .PublishTime, .Time, .Date');
-      const likeEl = card.querySelector('.VoteButton--up, .LikeButton');
-      const commentEl = card.querySelector('.CommentButton');
+      const link = card.querySelector('a[href*="/p/"]');
+      if (!link) return;
 
-      const title = titleEl?.textContent?.trim() || '';
+      const href = link.getAttribute('href') || '';
+      const url = href.startsWith('http') ? href : `https://www.zhihu.com${href}`;
+      if (seen.has(url)) return;
+      seen.add(url);
+
+      const title = link.textContent.trim();
+      if (!title || title.length < 2) return;
+
+      const summaryEl = card.querySelector('[class*="excerpt"], [class*="summary"], .RichText');
       const summary = summaryEl?.textContent?.trim() || '';
-      const timeStr = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
-      const href = titleEl?.getAttribute('href') || '';
+
+      const timeEl = card.querySelector('time, [datetime]');
+      const created = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
+
+      const likeEl = card.querySelector('[class*="Vote"], [class*="Like"]');
       const likes = parseInt(likeEl?.textContent?.trim()) || 0;
+
+      const commentEl = card.querySelector('[class*="Comment"], [class*="comment"]');
       const comments = parseInt(commentEl?.textContent?.trim()) || 0;
 
-      const fullUrl = href.startsWith('http') ? href : `https://www.zhihu.com${href}`;
-
-      // 只保留文章（/p/路径），排除回答（/question/和/answer/路径）
-      if (title && fullUrl && !fullUrl.includes('/question/') && !fullUrl.includes('/answer/') && fullUrl.includes('/p/')) {
-        items.push({
-          title,
-          summary,
-          created: timeStr,
-          url: fullUrl,
-          likes,
-          comments,
-        });
-      }
+      items.push({ title, summary, created, url, likes, comments });
     });
 
     return items;
   });
 
+  console.log(`DOM 提取到 ${articles.length} 篇文章`);
   return articles;
 }
