@@ -547,6 +547,13 @@
                 if (n >= 10000) return (n / 10000).toFixed(1) + '万';
                 return String(n);
             }
+
+            function fmtDate(dateStr) {
+                if (!dateStr) return '';
+                var d = new Date(dateStr);
+                return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
+            }
+
             function fmtTime(dateStr) {
                 if (!dateStr) return '';
                 const d = new Date(dateStr);
@@ -705,7 +712,7 @@
 
                 const name = data.profile?.name || 'Jillax';
                 feed.innerHTML = pins.map(pin => {
-                    const timeStr = fmtTime(pin.created);
+                    const timeStr = fmtDate(pin.created);
                     const content = (pin.content || '').replace(/\n/g, '<br>');
                     const hasImages = pin.images && pin.images.length > 0;
 
