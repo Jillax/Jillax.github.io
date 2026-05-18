@@ -362,6 +362,36 @@
         }
         .lightbox-close:hover { color: #fff; }
 
+        /* ===== Search ===== */
+        .blog-search {
+            width: 100%;
+            padding: 10px 16px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            font-family: var(--font-body);
+            color: var(--text-soft);
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .blog-search::placeholder { color: var(--text-faint); }
+        .blog-search:focus { border-color: var(--gold-dim); }
+        .blog-search.hidden { display: none; }
+
+        /* ===== Reading Progress Bar ===== */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            z-index: 9999;
+            transition: width 0.1s linear;
+            pointer-events: none;
+        }
+
         /* ===== Empty ===== */
         .empty-state {
             text-align: center; padding: 60px 20px;
@@ -377,6 +407,9 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== Reading Progress Bar ===== -->
+    <div class="reading-progress" id="readingProgress"></div>
 
     <!-- ===== Nav ===== -->
     <nav>
@@ -405,6 +438,9 @@
             <h1 data-i18n="page.blog.title">📝 随笔</h1>
             <p data-i18n="page.blog.desc">笔记 · 思考 · 记录</p>
         </div>
+
+        <!-- ===== Search ===== -->
+        <input class="blog-search" id="blogSearch" type="text" placeholder="搜索文章、想法、内容…">
 
         <!-- ===== Tabs ===== -->
         <div class="blog-tabs">
@@ -499,6 +535,9 @@
             const postCount = document.getElementById('postCount');
             const pinCount = document.getElementById('pinCount');
             const articleCount = document.getElementById('articleCount');
+            const blogSearch = document.getElementById('blogSearch');
+            let searchQuery = '';
+            let allDataRaw = null;
             let posts = [];
             let currentTab = 'posts';
 
@@ -523,6 +562,33 @@
                 });
             }
 
+            // ===== Reading Progress =====
+            let readingActive = false;
+            function trackReadingProgress(active) {
+                readingActive = active;
+                const bar = document.getElementById('readingProgress');
+                if (!active) { bar.style.width = '0'; return; }
+                setTimeout(function() {
+                    var articleEl = document.getElementById('articleContent');
+                    if (!articleEl) return;
+                    var rect = articleEl.getBoundingClientRect();
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    var articleTop = rect.top + scrollTop;
+                    var articleHeight = articleEl.scrollHeight;
+                    var winHeight = window.innerHeight;
+                    var totalScrollable = articleHeight - winHeight + Math.max(articleTop - 80, 0);
+                    if (totalScrollable <= 0) { bar.style.width = '100%'; return; }
+                    function updateBar() {
+                        if (!readingActive) return;
+                        var st = window.pageYOffset || document.documentElement.scrollTop;
+                        var progress = Math.min(Math.max((st - articleTop + 80) / totalScrollable, 0), 1);
+                        bar.style.width = (progress * 100) + '%';
+                        requestAnimationFrame(updateBar);
+                    }
+                    updateBar();
+                }, 100);
+            }
+
             // ===== Tab Switching =====
             function switchTab(tab) {
                 currentTab = tab;
@@ -539,10 +605,23 @@
                 });
             });
 
+            // ===== Search Filter =====
+            if (blogSearch) {
+                blogSearch.addEventListener('input', function() {
+                    searchQuery = this.value.trim().toLowerCase();
+                    const activeTab = document.querySelector('.blog-tab.active');
+                    const tab = activeTab ? activeTab.dataset.tab : 'posts';
+                    if (tab === 'pins') renderPins(allDataRaw);
+                    else if (tab === 'articles') renderArticles(allDataRaw);
+                    else if (tab === 'posts') renderList();
+                });
+            }
+
             // ===== Posts =====
             function showList() {
                 postList.style.display = '';
                 articleView.classList.remove('active');
+                trackReadingProgress(false);
                 if (currentTab === 'posts') {
                     history.pushState(null, '', 'blog.html');
                 }
@@ -557,7 +636,10 @@
                 articleView.classList.add('active');
                 articleTitle.textContent = post.title;
                 articleMeta.textContent = post.date + (post.tags ? '  ·  ' + post.tags.join(' · ') : '');
-                articleContent.innerHTML = '<p style="color:var(--text-faint)">加载中...</p>';
+                ararticleContent.innerHTML = '<p style="color:var(--text-faint)">加载中...</p>';
+
+                // 开始跟踪阅读进度
+                trackReadingProgress(true);
 
                 history.pushState(null, '', 'blog.html#' + postId);
 
@@ -575,14 +657,22 @@
             }
 
             function renderList() {
-                postCount.textContent = posts.length || '';
-                if (posts.length === 0) {
+                let filtered = posts;
+                if (searchQuery) {
+                    filtered = posts.filter(p => {
+                        const title = (p.title || '').toLowerCase();
+                        const tags = (p.tags || []).join(' ').toLowerCase();
+                        return title.includes(searchQuery) || tags.includes(searchQuery);
+                    });
+                }
+                postCount.textContent = filtered.length || '';
+                if (filtered.length === 0) {
                     postList.innerHTML = '';
                     emptyState.style.display = 'block';
                     return;
                 }
                 emptyState.style.display = 'none';
-                postList.innerHTML = posts.map(p => `
+                postList.innerHTML = filtered.map(p => `
                     <div class="post-item" data-id="${p.id}">
                         <div class="post-title">${p.title}</div>
                         <div class="post-meta">
@@ -600,7 +690,10 @@
 
             // ===== Pins =====
             function renderPins(data) {
-                const pins = data.pins || [];
+                let pins = data.pins || [];
+                if (searchQuery) {
+                    pins = pins.filter(p => (p.content || '').toLowerCase().includes(searchQuery));
+                }
                 pinCount.textContent = pins.length || '';
 
                 if (pins.length === 0) {
@@ -644,7 +737,14 @@
             // ===== Articles =====
             function renderArticles(data) {
                 window.__zhArticleData = data.articles || [];
-                const articles = data.articles || [];
+                let articles = data.articles || [];
+                if (searchQuery) {
+                    articles = articles.filter(a => {
+                        const title = (a.title || '').toLowerCase();
+                        const summary = (a.summary || '').toLowerCase();
+                        return title.includes(searchQuery) || summary.includes(searchQuery);
+                    });
+                }
                 articleCount.textContent = articles.length || '';
 
                 if (articles.length === 0) {
@@ -715,6 +815,7 @@
                     return r.json();
                 })
                 .then(data => {
+                    allDataRaw = data;
                     renderPins(data);
                     renderArticles(data);
                 })
