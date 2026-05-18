@@ -164,15 +164,19 @@ async function fetchPins(page) {
       const content = contentEl?.textContent?.trim() || '';
       if (!content || content.length < 5) return;
 
-      // 从正文中提取发布时间（知乎把时间渲染在 RichText 内）
+      // 从卡片 DOM 中查找发布时间（不在 RichText 内）
       let created = "";
-      const t = content.match(/发布于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
-      if (t) created = t[1] + 'T' + t[2] + ':00+08:00';
+      var ct = card.textContent || "";
+      var tm = ct.match(/发布于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
+      if (tm) created = tm[1] + "T" + tm[2] + ":00+08:00";
       if (!created) {
-        const e = content.match(/编辑于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
-        if (e) created = e[1] + 'T' + e[2] + ':00+08:00';
+        var em = ct.match(/编辑于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
+        if (em) created = em[1] + "T" + em[2] + ":00+08:00";
       }
-      // 找点赞数
+      if (!created) {
+        var te = card.querySelector("time, [datetime]");
+        if (te) created = te.getAttribute("datetime") || "";
+      }
       const voteEl = card.querySelector('[class*="VoteButton"], [class*="vote"]');
       const likes = parseInt(voteEl?.textContent?.trim()) || 0;
 
