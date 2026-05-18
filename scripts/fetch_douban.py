@@ -106,7 +106,7 @@ def parse_collection_page(html, category):
     soup = BeautifulSoup(html, "html.parser")
     items = []
 
-    # 书籍用 .subject-item（新版），电影/音乐用 .item（旧版）
+    # 书籍用 .subject-item（新版），电影/音乐/游戏用 .item（旧版）
     if category == "book":
         item_els = soup.select(".subject-item")
     else:
@@ -193,6 +193,7 @@ def fetch_category_collections(category, statuses):
         "book": "book.douban.com",
         "movie": "movie.douban.com",
         "music": "music.douban.com",
+        "game": "game.douban.com",
     }
     domain = domains.get(category, f"{category}.douban.com")
     all_items = []
@@ -230,13 +231,13 @@ def fetch_recent_from_homepage():
     url = f"https://www.douban.com/people/{USER_ID}/"
     html = fetch_page(url)
     if not html:
-        return {"books": [], "movies": [], "music": []}
+        return {"books": [], "movies": [], "music": [], "games": []}
 
     soup = BeautifulSoup(html, "html.parser")
-    result = {"books": [], "movies": [], "music": []}
-    cat_map = {"book": "books", "movie": "movies", "music": "music"}
+    result = {"books": [], "movies": [], "music": [], "games": []}
+    cat_map = {"book": "books", "movie": "movies", "music": "music", "game": "games"}
 
-    for category in ["book", "movie", "music"]:
+    for category in ["book", "movie", "music", "game"]:
         section = soup.select_one(f"#{category}")
         if not section:
             continue
@@ -290,6 +291,7 @@ def main():
             "books": [],
             "movies": [],
             "music": [],
+            "games": [],
         }
 
         log("\n--- 书籍 ---")
@@ -301,9 +303,13 @@ def main():
         log("\n--- 音乐 ---")
         all_data["music"] = fetch_category_collections("music", ["collect"])
 
+        log("\n--- 游戏 ---")
+        all_data["games"] = fetch_category_collections("game", ["collect"])
+
         log(f"\n总计: 书籍 {len(all_data['books'])} 条, "
              f"电影 {len(all_data['movies'])} 条, "
-             f"音乐 {len(all_data['music'])} 条")
+             f"音乐 {len(all_data['music'])} 条, "
+             f"游戏 {len(all_data['games'])} 条")
     else:
         # 无 Cookie：从主页抓取最近条目
         log("\n无 Cookie，从主页抓取最近条目...")
@@ -313,10 +319,12 @@ def main():
             "books": recent.get("books", []),
             "movies": recent.get("movies", []),
             "music": recent.get("music", []),
+            "games": recent.get("games", []),
         }
         log(f"主页条目: 书籍 {len(all_data['books'])} 条, "
              f"电影 {len(all_data['movies'])} 条, "
-             f"音乐 {len(all_data['music'])} 条")
+             f"音乐 {len(all_data['music'])} 条, "
+             f"游戏 {len(all_data['games'])} 条")
 
     # 写入 JSON
     with open(DATA_FILE, "w", encoding="utf-8") as f:

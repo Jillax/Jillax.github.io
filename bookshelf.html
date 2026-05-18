@@ -329,6 +329,7 @@
             <button class="cat-tab active" data-cat="books">书籍 <span class="count" id="countBooks">0</span></button>
             <button class="cat-tab" data-cat="movies">电影 <span class="count" id="countMovies">0</span></button>
             <button class="cat-tab" data-cat="music">音乐 <span class="count" id="countMusic">0</span></button>
+            <button class="cat-tab" data-cat="games">游戏 <span class="count" id="countGames">0</span></button>
         </div>
 
         <!-- ===== Stats Cards ===== -->
@@ -391,7 +392,7 @@
             const filterCount = document.getElementById('filterCount');
             let cumulativeChartInstance = null;
 
-            let allData = { books: [], movies: [], music: [] };
+            let allData = { books: [], movies: [], music: [], games: [] };
             let currentCat = 'books';
             let ratingFilter = 0;
 
@@ -399,6 +400,7 @@
                 books: { collect: '读过', wish: '想读', do: '在读' },
                 movies: { collect: '看过', wish: '想看', do: '在看' },
                 music: { collect: '听过', wish: '想听', do: '在听' },
+                games: { collect: '玩过', wish: '想玩', do: '在玩' },
             };
 
             function renderStars(rating) {
@@ -412,7 +414,7 @@
             }
 
             function getCatLabel() {
-                const map = { books: '本', movies: '部', music: '张' };
+                const map = { books: '本', movies: '部', music: '张', games: '款' };
                 return map[currentCat] || '项';
             }
 
@@ -436,7 +438,7 @@
                 const lastYearCount = lastYearCollect.length;
 
                 const label = getCatLabel();
-                const unitMap = { books: '本', movies: '部', music: '张' };
+                const unitMap = { books: '本', movies: '部', music: '张', games: '款' };
                 const unit = unitMap[currentCat] || '项';
 
                 statCards.innerHTML = `
@@ -686,6 +688,7 @@
                     document.getElementById('countBooks').textContent = (data.books || []).length;
                     document.getElementById('countMovies').textContent = (data.movies || []).length;
                     document.getElementById('countMusic').textContent = (data.music || []).length;
+                    document.getElementById('countGames').textContent = (data.games || []).length;
 
                     if (data.updated) {
                         const d = new Date(data.updated);
