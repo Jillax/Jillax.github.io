@@ -79,12 +79,12 @@ async function main() {
     // 合并想法（去重）
     const existingPinIds = new Set(existingData.pins?.map(p => p.content || p.url) || []);
     const newPins = pins.filter(p => !existingPinIds.has(p.content || p.url));
-    const mergedPins = [...pins, ...(existingData.pins || [])].slice(0, MAX_PINS);
+    const mergedPins = [...pins, ...(existingData.pins || [])];
 
     // 合并文章（去重）
     const existingArticleIds = new Set(existingData.articles?.map(a => a.url) || []);
     const newArticles = articles.filter(a => !existingArticleIds.has(a.url));
-    const mergedArticles = [...articles, ...(existingData.articles || [])].slice(0, MAX_ARTICLES);
+    const mergedArticles = [...articles, ...(existingData.articles || [])];
 
     const output = {
       updated: new Date().toISOString(),
