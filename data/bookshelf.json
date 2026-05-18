@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-16T15:13:24Z",
+  "updated": "2026-05-18T13:33:13Z",
   "books": [
     {
       "id": "2996046",
@@ -8275,7 +8275,7 @@
       "id": "20470074",
       "title": "言叶之庭 / 言の葉の庭",
       "author": "2013-05-31(日本) / 入野自由 / 花泽香菜 / 平野文 / 前田刚 / 寺崎裕香 / 星野贵纪 / 井上优 / 潘惠美 / 小松未可子 / 早志勇纪 / 日本 / www.kotonohanoniwa.jp / 新海诚 / 46分钟(日本) / 言叶之庭 / 爱情 / 动画 / 新海诚 Makoto Shinkai / 日语",
-      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1958733032.jpg",
+      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2914391978.jpg",
       "url": "https://movie.douban.com/subject/20470074/",
       "rating": 3,
       "tags": [],
@@ -16203,5 +16203,6 @@
       "status": "collect",
       "category": "music"
     }
-  ]
+  ],
+  "games": []
 }
