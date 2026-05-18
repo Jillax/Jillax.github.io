@@ -121,9 +121,13 @@ async function fetchPins(page) {
   let prevCount = 0;
   let staleScrolls = 0;
   for (let i = 0; i < SCROLL_TIMES; i++) {
-    // 展开所有"阅读全文"
+    // 展开所有"阅读全文"（用遍历 textContent 替代 :has-text，因为它在 page.evaluate 中不可用）
     await page.evaluate(() => {
-      document.querySelectorAll('.RichText-expandButton, button:has-text("展开阅读全文")').forEach(b => b.click());
+      document.querySelectorAll('button, .RichText-expandButton').forEach(b => {
+        if (b.textContent.includes('展开阅读全文') || b.textContent.includes('阅读全文')) {
+          b.click();
+        }
+      });
     });
 
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
@@ -177,7 +181,8 @@ async function fetchPins(page) {
     const cards = document.querySelectorAll('.PinItem, [data-za-module="PinItem"], .TopstoryItem--pin');
     cards.forEach(card => {
       // 先点击"阅读全文"
-      const expandBtn = card.querySelector('.RichText-expandButton, button:has-text("展开阅读全文")');
+      const expandBtn = card.querySelector('.RichText-expandButton') ||
+                (card.querySelector('button') && Array.from(card.querySelectorAll('button')).find(b => b.textContent.includes('展开阅读全文') || b.textContent.includes('阅读全文')));
       if (expandBtn) expandBtn.click();
 
       const contentEl = card.querySelector('.RichText');
