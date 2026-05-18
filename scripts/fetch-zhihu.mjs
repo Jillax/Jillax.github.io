@@ -177,6 +177,15 @@ async function fetchPins(page) {
                      block.querySelector('time');
       const created = timeEl?.getAttribute('datetime') || timeEl?.textContent?.trim() || '';
 
+      // 查找点赞和评论数
+      const parentEl = block.closest('[class*="Item"]');
+      const likeEl = parentEl?.querySelector('[class*="Vote"], [class*="Like"], [class*="vote"]') ||
+                     block.querySelector('[class*="Vote"], [class*="Like"]');
+      const likes = parseInt(likeEl?.textContent?.trim()) || 0;
+      const commentEl = parentEl?.querySelector('[class*="Comment"], [class*="comment"]') ||
+                        block.querySelector('[class*="Comment"], [class*="-comment"]');
+      const comments = parseInt(commentEl?.textContent?.trim()) || 0;
+
       // 查找此文本块内的图片
       const images = [];
       block.querySelectorAll('img').forEach(img => {
@@ -280,3 +289,5 @@ async function fetchArticles(page) {
   console.log(`DOM 提取到 ${articles.length} 篇文章`);
   return articles;
 }
+
+main();
