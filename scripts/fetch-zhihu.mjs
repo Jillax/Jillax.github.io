@@ -166,11 +166,11 @@ async function fetchPins(page) {
 
       // 从正文中提取发布时间（知乎把时间渲染在 RichText 内）
       let created = "";
-      const timeM = content.match(/发布于(\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2})/);
-      if (timeM) created = timeM[1].trim();
+      const t = content.match(/发布于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
+      if (t) created = t[1] + 'T' + t[2] + ':00+08:00';
       if (!created) {
-        const editM = content.match(/编辑于(\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2})/);
-        if (editM) created = editM[1].trim();
+        const e = content.match(/编辑于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
+        if (e) created = e[1] + 'T' + e[2] + ':00+08:00';
       }
       // 找点赞数
       const voteEl = card.querySelector('[class*="VoteButton"], [class*="vote"]');
@@ -254,7 +254,31 @@ async function fetchArticles(page) {
     }
   }
 
+  // 获取每篇文章的完整正文（通过专栏API）
   if (allArticles.length > 0) {
+    console.log(`获取 ${allArticles.length} 篇文章的正文...`);
+    let fc = 0;
+    for (const a of allArticles) {
+      const m = a.url.match(/\/p\/(\d+)/);
+      if (!m) continue;
+      try {
+        const html = await page.evaluate(async (aid) => {
+          const r = await fetch('https://zhuanlan.zhihu.com/api/articles/' + aid, {
+            credentials: 'include',
+            headers: { 'Accept': 'application/json' }
+          });
+          if (!r.ok) return '';
+          const d = await r.json();
+          return d.content || '';
+        }, m[1]);
+        a.body_html = html;
+        fc++;
+        if (fc % 10 === 0) console.log(`  正文: ${fc}/${allArticles.length}`);
+      } catch(e) {
+        a.body_html = '';
+      }
+    }
+    console.log(`正文获取完成: ${fc} 篇`);
     console.log(`API 共获取 ${allArticles.length} 篇文章`);
     return allArticles;
   }

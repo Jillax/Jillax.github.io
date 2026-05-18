@@ -441,6 +441,14 @@
             </div>
         </div>
 
+        <!-- ===== Zhihu Article Viewer ===== -->
+        <div id="zhArticleView" style="display:none">
+            <button class="article-back" id="zhArtBack">← 返回列表</button>
+            <div id="zhArtTitle" style="font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.4"></div>
+            <div id="zhArtMeta" style="font-size:0.75rem;color:var(--text-faint);margin-bottom:20px"></div>
+            <div id="zhArtBody" class="article-content"></div>
+        </div>
+
         <!-- ===== Articles Section ===== -->
         <div id="articlesSection" style="display:none">
             <div class="article-list" id="articleList"></div>
@@ -635,6 +643,7 @@
 
             // ===== Articles =====
             function renderArticles(data) {
+                window.__zhArticleData = data.articles || [];
                 const articles = data.articles || [];
                 articleCount.textContent = articles.length || '';
 
@@ -648,7 +657,7 @@
                 articleList.innerHTML = articles.map(a => {
                     const timeStr = fmtTime(a.created);
                     return `
-                        <div class="article-card">
+                        <div class="article-card" onclick="openZhArticle('${a.url}')">
                             <div class="article-card-title">
                                 <a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
                             </div>
@@ -664,6 +673,22 @@
                     `;
                 }).join('');
             }
+
+            // ===== Zhihu Article Viewer =====
+            window.openZhArticle = function(url) {
+                const arts = window.__zhArticleData || [];
+                const a = arts.find(x => x.url === url);
+                if (!a || !a.body_html) { window.open(url, '_blank'); return; }
+                document.getElementById('articlesSection').style.display = 'none';
+                document.getElementById('zhArticleView').style.display = '';
+                document.getElementById('zhArtTitle').textContent = a.title;
+                document.getElementById('zhArtMeta').innerHTML = fmtTime(a.created) + ' · 👍 ' + fmtNum(a.likes) + ' · 💬 ' + fmtNum(a.comments);
+                document.getElementById('zhArtBody').innerHTML = a.body_html;
+            };
+            document.getElementById('zhArtBack').addEventListener('click', function() {
+                document.getElementById('zhArticleView').style.display = 'none';
+                document.getElementById('articlesSection').style.display = '';
+            });
 
             // ===== Load Data =====
             fetch('data/posts.json')
