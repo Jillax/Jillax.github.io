@@ -283,12 +283,12 @@
 
         function renderBreadcrumb(path) {
             const parts = path ? path.split('/') : [];
-            let html = `<a href="#" data-path="">根目录</a>`;
+            let html = '';
             let accumulated = '';
             parts.forEach((part, i) => {
                 accumulated += (accumulated ? '/' : '') + part;
                 const isLast = i === parts.length - 1;
-                html += `<span class="sep">›</span>`;
+                if (i > 0) html += '<span class="sep">›</span>';
                 if (isLast) {
                     html += `<span class="current">${part}</span>`;
                 } else {
