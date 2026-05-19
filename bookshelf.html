@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的书影音清单">
-    <title>书影音 · Jillax</title>
+    <meta name="description" content="Jillax 的书影音游清单">
+    <title>书影音游 · Jillax</title>
 
     <link rel="stylesheet" href="css/main.css">
+    <meta name="referrer" content="no-referrer">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
@@ -306,7 +307,7 @@
                 <a href="contact.html" data-i18n="nav.contact">联系</a>
                 <a href="share.html" data-i18n="nav.share">分享</a>
                 <a href="translations.html" data-i18n="nav.translations">译制</a>
-                <a href="bookshelf.html" class="current" data-i18n="nav.bookshelf">书影音</a>
+                <a href="bookshelf.html" class="current" data-i18n="nav.bookshelf">书影音游</a>
                 <a href="blog.html" data-i18n="nav.blog">随笔</a>
                 <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
                 <button class="lang-toggle" title="语言/Language">EN</button>
@@ -320,8 +321,8 @@
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home" data-i18n="home.back">← 返回主页</a>
-            <h1 data-i18n="page.bookshelf.title">📖 书影音清单</h1>
-            <p data-i18n="page.bookshelf.desc">书籍 · 电影 · 音乐</p>
+            <h1 data-i18n="page.bookshelf.title">📖 书影音游清单</h1>
+            <p data-i18n="page.bookshelf.desc">书籍 · 电影 · 音乐 · 游戏</p>
         </div>
 
         <!-- ===== Category Tabs ===== -->
@@ -411,6 +412,14 @@
             function getStatusText(cat, status) {
                 const labels = statusLabels[cat] || statusLabels.books;
                 return labels[status] || status;
+            }
+
+            function proxyCover(url) {
+                if (!url) return '';
+                if (url.includes('doubanio.com') || url.includes('douban.com')) {
+                    return 'https://images.weserv.nl/?url=' + encodeURIComponent(url) + '&w=120&h=170&fit=cover';
+                }
+                return url;
             }
 
             function getCatLabel() {
@@ -642,7 +651,7 @@
                         <div class="item-card">
                             <div class="item-cover">
                                 ${hasCover
-                                    ? `<img src="${item.cover}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
+                                    ? `<img src="${proxyCover(item.cover)}" alt="${item.title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<span class=placeholder>${initial}</span>'">`
                                     : `<span class="placeholder">${initial}</span>`
                                 }
                             </div>
