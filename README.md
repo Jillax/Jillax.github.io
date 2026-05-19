@@ -1,8 +1,8 @@
 # Jillax.github.io
 
-个人主页 · 书影音清单 · 译制作品 · 随笔博客
+个人主页 · 书影音游清单 · 译制作品 · 随笔博客 · AI 文本
 
-归档风格的个人网站，托管于 GitHub Pages。
+归档风格的个人网站，托管于 GitHub Pages。100% 由 AI Agent 构筑。
 
 ---
 
@@ -10,13 +10,84 @@
 
 | 页面 | 说明 |
 |------|------|
-| `index.html` | 个人主页：关于我、笔墨项目、快捷导航 |
-| `portfolio.html` | 投资组合（Chart.js 可视化） |
+| `index.html` | 个人主页：Jillax 介绍、名言轮播、快捷导航 |
+| `about.html` | 关于：个人简介、技能树、时间线、项目展示 |
+| `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细） |
 | `contact.html` | 联系方式：GitHub / Bilibili / 豆瓣 / 知乎 / 邮箱 |
-| `share.html` | 文件分享（GitHub API 文件列表） |
-| `translations.html` | 译制作品清单 |
-| `bookshelf.html` | 书影音清单（豆瓣数据自动同步） |
-| `blog.html` | 随笔博客（Markdown 渲染） |
+| `share.html` | 文件分享：GitHub API 文件列表浏览与下载 |
+| `translations.html` | 译制作品清单：Bilibili 视频译制作品管理与展示 |
+| `bookshelf.html` | 书影音游清单：豆瓣数据自动同步，含累计趋势折线图 |
+| `blog.html` | 随笔博客：四合一内容聚合页 |
+
+### 博客页面（blog.html）
+
+四个标签页：
+
+| 标签 | 内容 | 说明 |
+|------|------|------|
+| 文章 | 本地 Markdown 博客 | 从 `data/posts/` 读取，marked.js 渲染，支持全文阅读 |
+| 知乎想法 | 同步的知乎想法 | 自动抓取展示，含时间/图片/互动数据 |
+| 知乎文章 | 同步的知乎文章 | 自动抓取展示，含内联全文阅读器 |
+| AI 文本 | 深度分析文档 | 从 `thesis/` 读取的 AI 生成分析报告 |
+
+**特色功能：**
+- 🔍 **全文搜索**：跨所有标签页实时搜索内容
+- 📖 **阅读进度条**：阅读文章时顶部金色进度指示器
+- 📷 **图片灯箱**：点击想法图片放大查看
+
+## 书影音游（bookshelf.html）
+
+展示书籍、电影、音乐、游戏的收藏清单，数据每日自动从豆瓣同步。
+
+### 功能
+
+- **四个分类标签**：书籍 / 电影 / 音乐 / 游戏
+- **累计趋势折线图**：Chart.js 实现，展示分类下收藏量的累计增长曲线
+- **评分分布**：各评分等级的柱状分布
+- **评分筛选**：按 3★ / 4★ / 5★ 精确匹配
+- **豆瓣封面代理**：通过 images.weserv.nl 代理加载豆瓣封面，解决防盗链问题
+
+### 工作原理
+
+1. GitHub Actions 每天 UTC 11:00（北京时间 19:00）自动运行
+2. Python 脚本通过 Cookie 登录豆瓣，抓取用户标记为"已完成"的条目
+3. 数据保存到 `data/bookshelf.json`，页面读取该 JSON 渲染
+
+## 投资组合（portfolio.html）
+
+使用 Chart.js 展示投资组合数据。
+
+- **总资产走势折线图**：每次更新组合时新增时间点
+- **资产配置环形图**：现金类 / 债券类 / 权益类 分布
+- **持仓明细表**：分类展示各投资品种的成本、现值、盈亏、收益率
+- **可展开子项**：点击品类展开查看各公司/基金明细
+
+## 知乎同步
+
+通过 Playwright + Chromium 自动抓取知乎想法和文章。
+
+### 同步内容
+
+- **想法（Pins）**：最多 500 条，含正文、发布时间、图片、点赞/评论数
+- **文章（Articles）**：自动抓取文章列表及完整正文
+
+### 工作流程
+
+1. GitHub Actions 每天 UTC 6:00（北京时间 14:00）运行
+2. 使用 Playwright 无头浏览器加载知乎页面
+3. DOM 提取想法数据（含时间从卡片文字中解析）
+4. 知乎 API 获取文章列表
+5. 逐篇通过专栏 API 获取完整正文
+6. 数据保存到 `data/zhihu.json`（每次完全替换，不累积旧数据）
+
+## 译制作品（translations.html）
+
+管理 Bilibili 视频译制作品清单。
+
+- 展示已完成/译制中的作品
+- 统计面板：总作品数、已发布数、总播放量、平均播放
+- 搜索、排序（按时间/播放量）
+- 标签筛选（已完成/译制中）
 
 ## 设计
 
@@ -26,72 +97,45 @@
 - **CSS 变量驱动**：统一的设计令牌系统（颜色、字体、间距）
 - **字体**：英文衬线 `Fraunces` / `Spectral`，中文衬线 `Noto Serif SC`
 - **响应式**：适配桌面端与移动端
+- **页面过渡动画**：页面间切换淡入淡出效果
+- **滚动浮现动画**：内容进入视口时渐入
 
 ### 色彩系统
 
 | 令牌 | 暗色 | 亮色 |
 |------|------|------|
-| 背景 `--bg` | `#181410` 暖黑 | `#f5f0e8` 米白 |
-| 文字 `--text` | `#e4dbcc` 暖白 | `#2c2824` 暖黑 |
-| 金色 `--gold` | `#c4a35a` | `#c4a35a` |
-| 橄榄绿 `--olive` | `#7a8b6e` | `#6b8f71` |
+| 背景 `--bg` | `#1a1714` 暖黑 | `#e6dfd4` 米白 |
+| 文字 `--text` | `#ddd3c4` 暖白 | `#2b221a` 暖黑 |
+| 金色 `--gold` | `#c4a35a` | `#b8963e` |
+| 背景噪点 | SVG 颗粒纹理覆盖 | 同左 |
 
 ## 技术栈
 
 - **纯静态**：HTML / CSS / JavaScript，无构建工具
 - **托管**：GitHub Pages
-- **自动化**：GitHub Actions 定时任务
-- **博客**：`marked.js` Markdown 渲染
-- **图表**：`Chart.js` 投资组合可视化
+- **自动化**：GitHub Actions 定时任务（支持 Token 远程触发）
+- **博客渲染**：`marked.js` Markdown 渲染
+- **图表可视化**：`Chart.js`（投资组合、累计趋势）
+- **浏览器自动化**：`Playwright`（知乎内容抓取）
+- **数据抓取**：`Python` + `requests` + `BeautifulSoup`（豆瓣）
 - **统计**：不蒜子访问统计
+- **国际化**：内置中英双语切换（`data/i18n.json`）
 
-## 豆瓣书影音同步
+## GitHub Actions 工作流
 
-`bookshelf.html` 页面展示书籍、电影、音乐的收藏清单，数据每日自动从豆瓣同步。
+| 工作流 | 触发方式 | 说明 |
+|--------|---------|------|
+| 同步豆瓣书影音数据 | 定时 (UTC 11:00) / 手动 | 抓取豆瓣书籍/电影/音乐/游戏收藏 |
+| 同步知乎想法 | 定时 (UTC 6:00) / 手动 | 抓取知乎想法（含正文+图片+时间+互动数据）和文章（含正文） |
+| 同步译制作品数据 | 手动 | 更新 Bilibili 译制作品列表 |
 
-### 工作原理
+## AI 文本（thesis/）
 
-1. GitHub Actions 每天 UTC 6:00（北京时间 14:00）自动运行
-2. Python 脚本通过 Cookie 登录豆瓣，抓取用户标记为"已完成"的条目
-3. 数据保存到 `data/bookshelf.json`，页面读取该 JSON 渲染
+存放 AI 生成的深度分析文档，支持完整 Markdown 渲染阅读。
 
-### 设置方法
-
-1. 登录豆瓣网页版，从浏览器开发者工具中复制 Cookie
-2. 在 GitHub 仓库 Settings → Secrets and variables → Actions 中添加：
-   - **Secret**：`DOUBAN_COOKIE` → 你的豆瓣登录 Cookie
-   - **Variable**（可选）：`DOUBAN_USER_ID` → 豆瓣用户 ID（默认 `233706855`）
-3. 手动触发一次工作流验证：Actions → 同步豆瓣书影音数据 → Run workflow
-
-> 不设置 Cookie 也能工作，但只会抓取用户主页上最近约 10 条条目。
-
-### 数据格式
-
-```json
-{
-  "updated": "2026-05-16T06:00:00Z",
-  "books": [
-    {
-      "id": "1234567",
-      "title": "书名",
-      "author": "作者",
-      "cover": "https://...",
-      "url": "https://book.douban.com/subject/1234567/",
-      "rating": 4,
-      "tags": ["女性主义", "社会学"],
-      "comment": "短评",
-      "date": "2026-05-15",
-      "status": "collect"
-    }
-  ],
-  "movies": [...],
-  "music": [...]
-}
-```
-
-## 博客系统
-
-`blog.html` 从 `data/posts/` 目录读取 Markdown 文件，通过 `marked.js` 渲染为 HTML 页面。文章列表索引保存在 `data/posts.json`。
+- 自动生成文档索引（`thesis/index.json`）
+- 最新文档排在列表顶部
+- 支持标签分类
 
 ## 本地开发
 
@@ -105,7 +149,7 @@ git clone https://github.com/Jillax/Jillax.github.io.git
 open index.html
 ```
 
-> 注意：豆瓣数据同步需要 Python 环境，仅在 GitHub Actions 中运行。本地测试可手动运行 `scripts/fetch_douban.py`。
+> 注意：豆瓣数据同步需要 Python 环境（requests + beautifulsoup4），知乎同步需要 Node.js + Playwright。数据抓取脚本仅在 GitHub Actions 中自动运行。
 
 ## 部署
 
