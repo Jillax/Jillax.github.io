@@ -399,7 +399,7 @@ def main():
         all_data["music"] = fetch_category_collections("music", ["collect"])
 
         log("\n--- 游戏 ---")
-        all_data["games"] = fetch_category_collections("game", ["wish", "do", "collect"])
+        all_data["games"] = fetch_category_collections("game", ["collect"])
 
         log(f"\n总计: 书籍 {len(all_data['books'])} 条, "
              f"电影 {len(all_data['movies'])} 条, "
