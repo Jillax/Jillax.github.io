@@ -237,6 +237,21 @@
             border-bottom: none; padding-top: 12px;
             font-weight: 600; color: var(--text);
         }
+        .projection-blended {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 14px 20px;
+            border: 1px solid var(--border-light);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+        .projection-blended strong {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin: 0 4px;
+        }
         .projection-chart-box {
             border: 1px solid var(--border);
             padding: 24px;
@@ -386,6 +401,7 @@
 
         <div class="section">
             <div class="section-title">未来预计资产变化 <span style="font-weight:300;color:var(--text-faint)">· 基于历史平均年化收益率的保守估算</span></div>
+            <div class="projection-blended" id="projectionBlended"></div>
             <div class="projection-grid">
                 <div class="projection-table-wrap">
                     <table class="projection-table">
@@ -811,6 +827,21 @@
                     });
                     return sum;
                 });
+
+                // Calculate blended annualized return (value-weighted average)
+                var weightedSum = 0;
+                items.forEach(function(item) {
+                    weightedSum += item.value * item.rate;
+                });
+                var blendedRate = totalCurrent > 0 ? (weightedSum / totalCurrent) : 0;
+
+                // Display blended rate
+                var blendedEl = document.getElementById('projectionBlended');
+                if (blendedEl) {
+                    blendedEl.innerHTML = '\u6295\u8d44\u7ec4\u5408\u9884\u8ba1\u5e74\u5316 <strong>'
+                        + (blendedRate * 100).toFixed(1) + '%</strong>'
+                        + ' \u00b7 \u6743\u91cd\u5747\u5747\uff0c\u57fa\u4e8e\u5404\u7c7b\u8d44\u4ea7\u5f53\u524d\u5e02\u503c\u5206\u914d';
+                }
 
                 // Render table
                 var tbody = document.getElementById('projectionTableBody');
