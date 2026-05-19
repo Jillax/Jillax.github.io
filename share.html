@@ -238,7 +238,7 @@
         //  以下代码不用动
         // ============================================================
 
-        let currentPath = ROOT_PATH;
+        let currentPath = path || ROOT_PATH;
         const fileGrid = document.getElementById('fileGrid');
         const stateMsg = document.getElementById('stateMsg');
         const stateIcon = document.getElementById('stateIcon');
@@ -268,13 +268,16 @@
             return `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${BRANCH}/${path}`;
         }
 
-        async function listDir() {
-            const url = "https://raw.githubusercontent.com/Jillax/Jillax.github.io/main/Share/index.json";
-            const res = await fetch(url);
-            if (!res.ok) throw new Error("索引文件加载失败");
-            const data = await res.json();
+        async function listDir(dirPath) {
+            var indexPath = dirPath ? "Share/" + dirPath + "/index.json" : "Share/index.json";
+            var url = "https://raw.githubusercontent.com/Jillax/Jillax.github.io/main/" + indexPath;
+            var res = await fetch(url);
+            if (!res.ok) throw new Error("目录加载失败");
+            var data = await res.json();
             return (data.files || []).map(function(f) {
-              return { type: "file", name: f.name, path: "Share/" + f.name, size: f.size || 0 };
+              var fp = dirPath ? dirPath + "/" + f.name : f.name;
+              if (f.type === "dir") return { type: "dir", name: f.name, path: fp };
+              return { type: "file", name: f.name, path: "Share/" + fp, size: f.size || 0 };
             });
           }
 
@@ -315,13 +318,14 @@
             fileGrid.style.display = 'grid';
         }
 
-        async function navigateTo() {
-            currentPath = ROOT_PATH;
+        async function navigateTo(path) {
+            currentPath = path || ROOT_PATH;
             renderBreadcrumb(currentPath);
             showState('⏳', '加载中...', '');
 
             try {
-                const items = await listDir();
+                var relPath = currentPath === ROOT_PATH ? "" : currentPath.replace(ROOT_PATH + "/", "");
+                const items = await listDir(relPath);
                 showGrid();
                 fileGrid.innerHTML = '';
 
@@ -347,7 +351,7 @@
                             <div class="file-icon">📁</div>
                             <div class="file-name">${item.name}</div>
                         `;
-                        
+                        div.addEventListener('click', () => navigateTo(item.path));
                     } else if (isImage(item.name)) {
                         const thumbUrl = getCdnUrl(item.path);
                         div.innerHTML = `
@@ -397,7 +401,7 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        navigateTo();
+        navigateTo(ROOT_PATH);
     </script>
 
     <script src="js/main.js"></script>
