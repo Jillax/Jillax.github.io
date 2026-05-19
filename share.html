@@ -276,7 +276,7 @@
             var data = await res.json();
             return (data.files || []).map(function(f) {
               var fp = dirPath ? dirPath + "/" + f.name : f.name;
-              if (f.type === "dir") return { type: "dir", name: f.name, path: fp };
+              if (f.type === "dir") return { type: "dir", name: f.name, path: ROOT_PATH + "/" + fp };
               return { type: "file", name: f.name, path: "Share/" + fp, size: f.size || 0 };
             });
           }
