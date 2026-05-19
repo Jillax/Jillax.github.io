@@ -57,6 +57,15 @@ RATING_MAP = {
     "rating5-t": 5,
 }
 
+# 游戏评分映射（豆瓣游戏页用 allstar 类名）
+GAME_RATING_MAP = {
+    "allstar10": 1,
+    "allstar20": 2,
+    "allstar30": 3,
+    "allstar40": 4,
+    "allstar50": 5,
+}
+
 # 推荐语映射（豆瓣收藏页的文本）
 RATING_TEXT_MAP = {
     "很差": 1,
@@ -101,12 +110,94 @@ def fetch_page(url, max_retries=3):
     return None
 
 
+def parse_game_page(soup):
+    """解析豆瓣游戏收藏页（结构完全不同：.common-item + .rating-star allstar*）"""
+    items = []
+    item_els = soup.select(".common-item")
+
+    for item in item_els:
+        try:
+            # 封面图片
+            img_el = item.select_one(".pic img")
+            if not img_el:
+                continue
+            cover = img_el.get("src", "").strip()
+            cover = re.sub(r"/s_ratio_poster/", "/l_ratio_poster/", cover)
+            cover = re.sub(r"/s/public/", "/l/public/", cover)
+            cover = re.sub(r"/s_ratio_poster$", "/l_ratio_poster", cover)
+
+            # 链接和 ID（游戏页 URL 是 /game/ 而非 /subject/）
+            link_el = item.select_one(".pic a")
+            url = link_el.get("href", "").strip() if link_el else ""
+            item_id = ""
+            for id_pattern in [r"/game/(\d+)/", r"/subject/(\d+)/"]:
+                id_match = re.search(id_pattern, url)
+                if id_match:
+                    item_id = id_match.group(1)
+                    break
+
+            # 标题
+            title_el = item.select_one(".title a")
+            title = title_el.get_text(strip=True) if title_el else ""
+
+            # 作者/开发商信息（游戏页没有单独的 author 字段，混在 .desc 里）
+            author = ""
+
+            # 评分（游戏页用 .rating-star.allstar50 这样的类名）
+            rating = 0
+            star_el = item.select_one(".rating-star")
+            if star_el:
+                for cls in star_el.get("class", []):
+                    if cls in GAME_RATING_MAP:
+                        rating = GAME_RATING_MAP[cls]
+                        break
+
+            # 日期
+            date_el = item.select_one(".date")
+            date = ""
+            if date_el:
+                raw = date_el.get_text(strip=True)
+                date = raw.split("\n")[0].strip() if raw else ""
+
+            # 标签（留空）
+            tags = []
+
+            # 评论（游戏页的评论文本在 .desc 后面的 div 里）
+            comment = ""
+            desc_el = item.select_one(".desc")
+            if desc_el:
+                comment_el = desc_el.find_next_sibling("div")
+                if comment_el and "user-operation" not in " ".join(comment_el.get("class", [])):
+                    comment = comment_el.get_text(strip=True)
+
+            items.append({
+                "id": item_id,
+                "title": title,
+                "author": author,
+                "cover": cover,
+                "url": url,
+                "rating": rating,
+                "tags": tags,
+                "comment": comment,
+                "date": date,
+            })
+        except Exception as e:
+            log(f"  解析游戏条目出错: {e}")
+            continue
+
+    return items
+
+
 def parse_collection_page(html, category):
     """解析豆瓣收藏页的 HTML，返回条目列表"""
     soup = BeautifulSoup(html, "html.parser")
     items = []
 
-    # 书籍用 .subject-item（新版），电影/音乐/游戏用 .item（旧版）
+    # 书籍用 .subject-item（新版），电影/音乐用 .item（旧版）
+    # 游戏用 .common-item（完全不同结构，单独处理）
+    if category == "game":
+        return parse_game_page(soup)
+
     if category == "book":
         item_els = soup.select(".subject-item")
     else:
@@ -193,7 +284,7 @@ def fetch_category_collections(category, statuses):
         "book": "book.douban.com",
         "movie": "movie.douban.com",
         "music": "music.douban.com",
-        "game": "game.douban.com",
+        "game": "www.douban.com",
     }
     domain = domains.get(category, f"{category}.douban.com")
     all_items = []
@@ -201,7 +292,11 @@ def fetch_category_collections(category, statuses):
     for status in statuses:
         page = 0
         while True:
-            url = f"https://{domain}/people/{USER_ID}/{status}?start={page}&sort=time&rating=all&filter=all&mode=grid"
+            # 游戏页的 URL 结构完全不同，且需要区分玩过/想玩/在玩
+            if category == "game":
+                url = f"https://{domain}/people/{USER_ID}/games?action={status}&start={page}"
+            else:
+                url = f"https://{domain}/people/{USER_ID}/{status}?start={page}&sort=time&rating=all&filter=all&mode=grid"
             log(f"  抓取 {category}/{status} (start={page})...")
             html = fetch_page(url)
             if not html:
@@ -304,7 +399,7 @@ def main():
         all_data["music"] = fetch_category_collections("music", ["collect"])
 
         log("\n--- 游戏 ---")
-        all_data["games"] = fetch_category_collections("game", ["collect"])
+        all_data["games"] = fetch_category_collections("game", ["wish", "do", "collect"])
 
         log(f"\n总计: 书籍 {len(all_data['books'])} 条, "
              f"电影 {len(all_data['movies'])} 条, "
