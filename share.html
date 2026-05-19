@@ -230,8 +230,7 @@
 
         const GITHUB_OWNER = 'Jillax';
         const GITHUB_REPO = 'Jillax.github.io';
-        const GITHUB_TOKEN = '';
-        const BRANCH = 'main';
+                const BRANCH = 'main';
         const ROOT_PATH = 'Share';
         const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg'];
 
@@ -269,30 +268,15 @@
             return `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${BRANCH}/${path}`;
         }
 
-        async function listDir(path) {
-            const encodedPath = path ? encodeURIComponent(path) : '';
-            const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents${encodedPath ? '/' + encodedPath : ''}?ref=${BRANCH}`;
-            const headers = { Accept: 'application/vnd.github.v3+json' };
-            if (GITHUB_TOKEN) {
-                headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
-            }
-            const res = await fetch(url, { headers });
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                const msg = err.message || res.statusText;
-                const remaining = res.headers.get('X-RateLimit-Remaining');
-                if (remaining === '0') {
-                    const reset = res.headers.get('X-RateLimit-Reset');
-                    const resetDate = new Date(parseInt(reset) * 1000);
-                    throw new Error(`API 频率限制已达上限，将在 ${resetDate.toLocaleTimeString()} 后重置。建议配置 Token 以提升限制。`);
-                }
-                if (res.status === 404) {
-                    throw new Error(`路径不存在：${path}`);
-                }
-                throw new Error(`请求失败：${msg}`);
-            }
-            return res.json();
-        }
+        async function listDir() {
+            const url = "https://raw.githubusercontent.com/Jillax/Jillax.github.io/main/Share/index.json";
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("索引文件加载失败");
+            const data = await res.json();
+            return (data.files || []).map(function(f) {
+              return { type: "file", name: f.name, path: "Share/" + f.name, size: f.size || 0 };
+            });
+          }
 
         function renderBreadcrumb(path) {
             const parts = path ? path.split('/') : [];
@@ -331,13 +315,13 @@
             fileGrid.style.display = 'grid';
         }
 
-        async function navigateTo(path) {
-            currentPath = path;
-            renderBreadcrumb(path);
+        async function navigateTo() {
+            currentPath = ROOT_PATH;
+            renderBreadcrumb(currentPath);
             showState('⏳', '加载中...', '');
 
             try {
-                const items = await listDir(path);
+                const items = await listDir();
                 showGrid();
                 fileGrid.innerHTML = '';
 
@@ -363,7 +347,7 @@
                             <div class="file-icon">📁</div>
                             <div class="file-name">${item.name}</div>
                         `;
-                        div.addEventListener('click', () => navigateTo(item.path));
+                        
                     } else if (isImage(item.name)) {
                         const thumbUrl = getCdnUrl(item.path);
                         div.innerHTML = `
@@ -413,7 +397,7 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        navigateTo(ROOT_PATH);
+        navigateTo();
     </script>
 
     <script src="js/main.js"></script>
