@@ -205,12 +205,60 @@
             margin-top: 12px; font-style: italic;
         }
 
+        /* ===== Projection ===== */
+        .projection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        .projection-table-wrap {
+            border: 1px solid var(--border);
+            padding: 24px;
+            overflow-x: auto;
+        }
+        .projection-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        .projection-table th {
+            font-size: 0.6rem; color: var(--text-faint); letter-spacing: 2px;
+            font-weight: 400; text-align: right; padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .projection-table th:first-child { text-align: left; }
+        .projection-table td {
+            text-align: right; padding: 8px 10px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-soft); font-weight: 300;
+            white-space: nowrap;
+        }
+        .projection-table td:first-child { text-align: left; }
+        .projection-table .num { font-family: var(--font-display); }
+        .projection-table .rate-cell { color: var(--gold-soft); font-weight: 500; }
+        .projection-total td {
+            border-bottom: none; padding-top: 12px;
+            font-weight: 600; color: var(--text);
+        }
+        .projection-chart-box {
+            border: 1px solid var(--border);
+            padding: 24px;
+        }
+        .projection-note {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: var(--text-faint);
+            line-height: 1.7;
+            text-align: center;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         @media (max-width: 768px) {
             .stat-value { font-size: 1.3rem; }
             .portfolio-table { font-size: 0.78rem; }
             .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
             .sub-row td:first-child { padding-left: 28px; }
             .allocation-grid { grid-template-columns: 1fr; }
+            .projection-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .stats-bar { grid-template-columns: repeat(3, 1fr); }
@@ -336,6 +384,36 @@
             <div class="update-note" id="updateNote"></div>
         </div>
 
+        <div class="section">
+            <div class="section-title">未来预计资产变化 <span style="font-weight:300;color:var(--text-faint)">· 基于历史平均年化收益率的保守估算</span></div>
+            <div class="projection-grid">
+                <div class="projection-table-wrap">
+                    <table class="projection-table">
+                        <thead>
+                            <tr>
+                                <th>资产</th>
+                                <th>当前市值</th>
+                                <th>预计年化</th>
+                                <th>1年后</th>
+                                <th>3年后</th>
+                                <th>5年后</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectionTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="projection-chart-box">
+                    <div class="chart-canvas-wrap" style="height:200px">
+                        <canvas id="projectionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="projection-note">
+                注：年化收益率为保守估算，基于各类资产长期历史表现（近5-10年）。<br>
+                定投中的资产按当前市值计算，未考虑未来追加投入。实际收益因市场波动可能显著不同。
+            </div>
+        </div>
+
         <div class="philosophy">
             <p>相信人类科技进步，持续买入优质资产，保持在场。</p>
         </div>
@@ -357,6 +435,7 @@
                     renderChart(data);
                     renderPctBars(data);
                     renderTable(data);
+                    renderProjection(data);
                     document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
                 })
                 .catch(() => {
@@ -689,6 +768,153 @@
                         const isOpen = this.classList.toggle('expanded');
                         subs.forEach(s => s.classList.toggle('open', isOpen));
                     });
+                });
+            }
+
+            // ===== Future Projection =====
+            function renderProjection(data) {
+                var returnRates = {
+                    '\u5b9a\u671f\u5b58\u6b3e': 0.0125,
+                    '\u77ed\u503a': 0.028,
+                    '\u6caa\u6df1300': 0.06,
+                    '\u6807\u666e500': 0.10,
+                    '\u7eb3\u65af\u8fbe\u514b100': 0.12,
+                    '\u6052\u751f\u79d1\u6280': 0.06,
+                    '\u6052\u751fETF': 0.04
+                };
+
+                var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+
+                // Aggregate items and compute projections
+                var items = [];
+                var totalCurrent = 0;
+                data.categories.forEach(function(cat) {
+                    cat.items.forEach(function(item) {
+                        var c = calcItem(item);
+                        var rate = returnRates[item.name] || 0;
+                        items.push({
+                            name: item.name,
+                            value: c.value,
+                            rate: rate,
+                            color: cat.color
+                        });
+                        totalCurrent += c.value;
+                    });
+                });
+
+                // Yearly totals: year 0 (current) through 5
+                var projYears = [0, 1, 2, 3, 4, 5];
+                var projTotals = projYears.map(function(year) {
+                    var sum = 0;
+                    items.forEach(function(item) {
+                        sum += item.value * Math.pow(1 + item.rate, year);
+                    });
+                    return sum;
+                });
+
+                // Render table
+                var tbody = document.getElementById('projectionTableBody');
+                var html = '';
+                items.forEach(function(item) {
+                    html += '<tr>'
+                        + '<td><span class="dot" style="background:' + item.color + '"></span>' + item.name + '</td>'
+                        + '<td class="num">' + fmt(item.value) + '</td>'
+                        + '<td class="num rate-cell">' + (item.rate * 100).toFixed(1) + '%</td>'
+                        + '<td class="num">' + fmt(item.value * Math.pow(1 + item.rate, 1)) + '</td>'
+                        + '<td class="num">' + fmt(item.value * Math.pow(1 + item.rate, 3)) + '</td>'
+                        + '<td class="num">' + fmt(item.value * Math.pow(1 + item.rate, 5)) + '</td>'
+                        + '</tr>';
+                });
+                // Total row
+                html += '<tr class="projection-total">'
+                    + '<td>合计</td>'
+                    + '<td class="num">' + fmt(projTotals[0]) + '</td>'
+                    + '<td></td>'
+                    + '<td class="num">' + fmt(projTotals[1]) + '</td>'
+                    + '<td class="num">' + fmt(projTotals[3]) + '</td>'
+                    + '<td class="num">' + fmt(projTotals[5]) + '</td>'
+                    + '</tr>';
+                tbody.innerHTML = html;
+
+                // Render chart
+                var canvas = document.getElementById('projectionChart');
+                if (!canvas) return;
+                var ctx = canvas.getContext('2d');
+                var parent = canvas.parentElement;
+                canvas.width = parent.offsetWidth;
+                canvas.height = parent.offsetHeight;
+
+                var labelColor = isDark ? 'rgba(228, 219, 204, 0.5)' : 'rgba(80, 70, 60, 0.5)';
+                var gridColor = isDark ? 'rgba(228, 219, 204, 0.08)' : 'rgba(80, 70, 60, 0.1)';
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['\u73b0\u5728', '1\u5e74', '2\u5e74', '3\u5e74', '4\u5e74', '5\u5e74'],
+                        datasets: [{
+                            data: projTotals,
+                            borderColor: '#c4a35a',
+                            backgroundColor: function(context) {
+                                var chart = context.chart;
+                                var c = chart.ctx;
+                                var ca = chart.chartArea;
+                                if (!ca) return null;
+                                var g = c.createLinearGradient(0, ca.top, 0, ca.bottom);
+                                g.addColorStop(0, 'rgba(196, 163, 90, 0.2)');
+                                g.addColorStop(1, 'rgba(196, 163, 90, 0.01)');
+                                return g;
+                            },
+                            borderWidth: 1.5,
+                            pointBackgroundColor: '#c4a35a',
+                            pointBorderColor: isDark ? '#181410' : '#f5f0e8',
+                            pointBorderWidth: 1.5,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(24, 20, 16, 0.92)',
+                                titleFont: { family: 'Noto Serif SC, serif', size: 12 },
+                                bodyFont: { family: 'Spectral, serif', size: 13, weight: '600' },
+                                padding: 12,
+                                cornerRadius: 0,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(ctx) {
+                                        return fmt(ctx.parsed.y);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    color: labelColor,
+                                    font: { family: 'Spectral, serif', size: 10 }
+                                }
+                            },
+                            y: {
+                                grid: { color: gridColor, drawBorder: false },
+                                ticks: {
+                                    color: labelColor,
+                                    font: { family: 'Spectral, serif', size: 10 },
+                                    callback: function(v) { return '\u00a5' + Math.round(v).toLocaleString(); }
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        }
+                    }
                 });
             }
         });
