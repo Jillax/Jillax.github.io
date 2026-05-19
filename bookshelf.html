@@ -361,8 +361,8 @@
         <div class="filter-bar" id="filterBar">
             <span class="filter-label">评分筛选</span>
             <button class="filter-tab active" data-rating="0">全部</button>
-            <button class="filter-tab" data-rating="3">3 星+</button>
-            <button class="filter-tab" data-rating="4">4 星+</button>
+            <button class="filter-tab" data-rating="3">3 星</button>
+            <button class="filter-tab" data-rating="4">4 星</button>
             <button class="filter-tab" data-rating="5">5 星</button>
             <span class="filter-count" id="filterCount"></span>
         </div>
@@ -614,7 +614,7 @@
             function getFilteredItems(cat) {
                 let items = allData[cat] || [];
                 if (ratingFilter > 0) {
-                    items = items.filter(i => i.rating >= ratingFilter);
+                    items = items.filter(i => i.rating === ratingFilter);
                 }
                 return items;
             }
