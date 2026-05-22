@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-20T19:35:50Z",
+  "updated": "2026-05-22T17:29:48Z",
   "books": [
     {
       "id": "2996046",
@@ -3326,7 +3326,7 @@
       "url": "https://movie.douban.com/subject/3592854/",
       "rating": 4,
       "tags": [],
-      "comment": "纯纯商业爽片",
+      "comment": "纯纯商业爽片，架空世界观多给一星",
       "date": "2025-05-25",
       "status": "collect",
       "category": "movie"
@@ -10576,7 +10576,7 @@
       "id": "1300055",
       "title": "全金属外壳 / Full Metal Jacket",
       "author": "1987-06-17 / 马修·莫迪恩 / 亚当·鲍德温 / 文森特·多诺费奥 / 李·厄米 / 道林·海伍德 / 艾利斯·霍华德 / 埃德·欧罗斯 / 约翰·特里 / 蒂姆·科尔切里 / 布鲁斯·博阿 / 英国 / 美国 / 斯坦利·库布里克 / 116 分钟 / 全金属外壳 / 剧情 / 战争 / 斯坦利·库布里克 Stanley Kubrick / 迈克尔·海尔 Michael Herr / 古斯塔夫·哈斯福德 Gustav Hasford / 英语 / 越南语",
-      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p1270638696.jpg",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2904461413.jpg",
       "url": "https://movie.douban.com/subject/1300055/",
       "rating": 4,
       "tags": [],
@@ -13083,6 +13083,19 @@
     }
   ],
   "music": [
+    {
+      "id": "36384290",
+      "title": "Daylight",
+      "author": "David Kushner / 2023-04-14 / 单曲 / 流行",
+      "cover": "https://img2.doubanio.com/view/subject/l/public/s34513561.jpg",
+      "url": "https://music.douban.com/subject/36384290/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-05-21",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "36879379",
       "title": "Not Like Us",
@@ -16896,7 +16909,7 @@
     },
     {
       "id": "30226850",
-      "title": "皇帝：罗马 Imperator: Rome",
+      "title": "英白拉多：罗马 Imperator: Rome",
       "author": "",
       "cover": "https://img1.doubanio.com/lpic/s33751469.jpg",
       "url": "https://www.douban.com/game/30226850/",
