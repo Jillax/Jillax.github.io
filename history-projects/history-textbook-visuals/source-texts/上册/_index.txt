@@ -1,0 +1,58 @@
+Lesson 01:   1233 chars | 第 1 课  中华文明的起源与早期国家
+Lesson 01:   4825 chars | 统编版第 1 课
+Lesson 02:      0 chars | 第 2 课
+Lesson 02:     16 chars | 第 2 课  诸侯纷争与变法运动
+Lesson 03:  10566 chars | 第 3 课  秦统一多民族封建国家的建立
+Lesson 03:      0 chars | 统编版第 3 课
+Lesson 04:  15408 chars | 第 4 课  西汉与东汉——统一多民族封建国家的巩固  20
+Lesson 04:      0 chars | 统编版第 4 课
+Lesson 05:  20103 chars | 第 5 课  三国两晋南北朝的政权更迭与民族交融
+Lesson 05:      0 chars | 统编版第 5 课
+Lesson 06:  24448 chars | 第 6 课  从隋唐盛世到五代十国
+Lesson 06:      0 chars | 统编版第 6 课
+Lesson 07:  29197 chars | 第 7 课  隋唐制度的变化与创新
+Lesson 07:      0 chars | 统编版第 7 课
+Lesson 08:  31990 chars | 第 8 课  三国至隋唐的文化
+Lesson 08:      0 chars | 统编版第 8 课
+Lesson 09:  36448 chars | 第 9 课  两宋的政治和军事
+Lesson 09:      0 chars | 统编版第 9 课
+Lesson 10:  41490 chars | 第 10 课  辽夏金元的统治
+Lesson 10:      0 chars | 统编版第 10 课
+Lesson 11:  45938 chars | 第 11 课  辽宋夏金元的经济与社会
+Lesson 11:      0 chars | 统编版第 11 课
+Lesson 12:  49543 chars | 第 12 课  辽宋夏金元的文化
+Lesson 12:      0 chars | 统编版第 12 课
+Lesson 13:  53668 chars | 第 13 课  从明朝建立到清军入关
+Lesson 13:      0 chars | 统编版第 13 课
+Lesson 14:  57586 chars | 第 14 课  清朝前中期的鼎盛与危机
+Lesson 14:      0 chars | 统编版第 14 课
+Lesson 15:  61957 chars | 第 15 课  明至清中叶的经济与文化
+Lesson 15:      0 chars | 统编版第 15 课
+Lesson 16:  66962 chars | 第 16 课  两次鸦片战争
+Lesson 16:      0 chars | 统编版第 16 课
+Lesson 17:  71012 chars | 第 17 课  国家出路的探索与列强侵略的加剧
+Lesson 17:      0 chars | 统编版第 17 课
+Lesson 18:  76188 chars | 第 18 课  挽救民族危亡的斗争
+Lesson 18:      0 chars | 统编版第 18 课
+Lesson 19:  80598 chars | 第 19 课  辛亥革命
+Lesson 19:      0 chars | 统编版第 19 课
+Lesson 20:  84469 chars | 第 20 课  北洋军阀统治时期的政治、经济与文化
+Lesson 20:      0 chars | 统编版第 20 课
+Lesson 21:  89364 chars | 第 21 课  五四运动与中国共产党的诞生
+Lesson 21:      0 chars | 统编版第 21 课
+Lesson 22:  94226 chars | 第 22 课  南京国民政府的统治和中国共产党开辟
+Lesson 22:      0 chars | 统编版第 22 课
+Lesson 23:  99372 chars | 第 23 课  从局部抗战到全面抗战
+Lesson 23:      0 chars | 统编版第 23 课
+Lesson 24: 104576 chars | 第 24 课  全民族浴血奋战与抗日战争的胜利
+Lesson 24:   6977 chars | 统编版第 24 课
+Lesson 25:      0 chars | 第 25 课
+Lesson 25:     40 chars | 第 25 课  人民解放战争
+Lesson 26: 118127 chars | 第 26 课  中华人民共和国成立和向社会主义的过渡  155
+Lesson 26:      0 chars | 统编版第 26 课
+Lesson 27: 124397 chars | 第 27 课  社会主义建设在探索中曲折发展
+Lesson 27:      0 chars | 统编版第 27 课
+Lesson 28: 130057 chars | 第 28 课  中国特色社会主义道路的开辟与发展
+Lesson 28:      0 chars | 统编版第 28 课
+Lesson 29: 135090 chars | 第 29 课  改革开放以来的巨大成就
+Lesson 29:  15278 chars | 统编版第 29 课

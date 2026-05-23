@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jillax 的个人项目 — 历史教育工具与 AI 实验。">
+    <meta name="author" content="Jillax">
+    <meta property="og:title" content="项目 · Jillax">
+    <meta property="og:description" content="历史教育工具与 AI 实验。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jillax.github.io/projects.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://jillax.github.io/projects.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>项目 · Jillax</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .project-category {
+            margin-bottom: 56px;
+        }
+        .project-category-title {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-faint);
+            margin-bottom: 24px;
+            font-variation-settings: 'SOFT' 100, 'WONK' 0;
+        }
+        .project-category-title::before {
+            content: '✦ ';
+            font-size: 0.5rem;
+            color: var(--gold-soft);
+            margin-right: 6px;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .project-card {
+            border: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .project-card:hover {
+            border-color: var(--gold-dim);
+            background: var(--gold-dim);
+        }
+        .project-card-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+        .project-card-name {
+            font-family: var(--font-chinese);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .project-card-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        .project-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: auto;
+        }
+        .project-card-tag {
+            font-size: 0.65rem;
+            padding: 1px 8px;
+            border: 1px solid var(--border);
+            color: var(--text-faint);
+        }
+        @media (max-width: 768px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body data-page="projects">
+    <noscript>
+        <div style="text-align:center;padding:60px 20px;font-family:serif;color:#ddd3c4;background:#1a1714">
+            <h1>🔧 项目</h1>
+            <p>历史教育工具与 AI 实验</p>
+            <p style="margin-top:20px;font-size:0.9rem;color:#888">此网站需要 JavaScript 才能正常浏览。</p>
+        </div>
+    </noscript>
+
+    <main>
+    <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-home">← 返回主页</a>
+            <h1>🔧 项目</h1>
+            <p>历史教育工具与 AI 实验</p>
+        </div>
+
+        <!-- ===== 历史教育 ===== -->
+        <div class="project-category reveal">
+            <div class="project-category-title">历史教育</div>
+            <div class="project-grid">
+                <a href="history-projects/ancient-battles/" class="project-card" target="_blank">
+                    <div class="project-card-icon">⚔️</div>
+                    <div class="project-card-name">古代战役</div>
+                    <div class="project-card-desc">交互式古代战役可视化，探索历史上的重要战役。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">交互式</span>
+                        <span class="project-card-tag">可视化</span>
+                    </div>
+                </a>
+                <a href="history-projects/timeline-map/" class="project-card" target="_blank">
+                    <div class="project-card-icon">🗺️</div>
+                    <div class="project-card-name">时间线地图</div>
+                    <div class="project-card-desc">历史事件的时间线与地图联动展示。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">地图</span>
+                        <span class="project-card-tag">时间线</span>
+                    </div>
+                </a>
+                <a href="history-projects/timeline-generator/" class="project-card" target="_blank">
+                    <div class="project-card-icon">📅</div>
+                    <div class="project-card-name">时间线生成器</div>
+                    <div class="project-card-desc">自动生成历史事件时间线的工具。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">生成器</span>
+                        <span class="project-card-tag">工具</span>
+                    </div>
+                </a>
+                <a href="history-projects/counterfactual/" class="project-card" target="_blank">
+                    <div class="project-card-icon">🤔</div>
+                    <div class="project-card-name">反事实推演</div>
+                    <div class="project-card-desc">如果历史走向不同，世界会怎样？反事实历史探索。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">反事实</span>
+                        <span class="project-card-tag">推演</span>
+                    </div>
+                </a>
+                <a href="history-projects/flashcards/" class="project-card" target="_blank">
+                    <div class="project-card-icon">📇</div>
+                    <div class="project-card-name">历史闪卡</div>
+                    <div class="project-card-desc">历史知识点闪卡复习工具。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">学习</span>
+                        <span class="project-card-tag">闪卡</span>
+                    </div>
+                </a>
+                <a href="history-projects/classroom-tools/" class="project-card" target="_blank">
+                    <div class="project-card-icon">🏫</div>
+                    <div class="project-card-name">课堂工具</div>
+                    <div class="project-card-desc">面向历史课堂的辅助教学工具集。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">教学</span>
+                        <span class="project-card-tag">工具</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ===== AI 实验 ===== -->
+        <div class="project-category reveal">
+            <div class="project-category-title">AI 实验</div>
+            <div class="project-grid">
+                <div class="project-card" style="cursor:default; opacity:0.6">
+                    <div class="project-card-icon">🤖</div>
+                    <div class="project-card-name">AI Agent 探索</div>
+                    <div class="project-card-desc">尝试各种 AI 工具与智能体，探索自动化在人文领域中的应用可能。本站所有页面均由 AI Agent 构筑。</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">Vibe Coding</span>
+                        <span class="project-card-tag">AI Agent</span>
+                    </div>
+                </div>
+                <div class="project-card" style="cursor:default; opacity:0.6">
+                    <div class="project-card-icon">📋</div>
+                    <div class="project-card-name">TODO · 未来计划</div>
+                    <div class="project-card-desc">用 Agent 实现出高考模拟题 · 用 Agent 实现教材-课标-备课自动化</div>
+                    <div class="project-card-tags">
+                        <span class="project-card-tag">教育科技</span>
+                        <span class="project-card-tag">AI 自动化</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Scroll reveal
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

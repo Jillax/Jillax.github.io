@@ -1,6 +1,3 @@
-# 历史项目子仓库（独立部署，与本站点无关）
-history-projects/
-
 # 依赖
 node_modules/
 package-lock.json
