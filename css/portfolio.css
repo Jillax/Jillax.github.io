@@ -2,9 +2,6 @@
    Jillax.github.io — 投资组合
    ============================================ */
 
-/* ---- 容器加宽 ---- */
-:root { --pw: 900px; }
-
 /* ---- 颜色变量 ---- */
 :root {
     --green: #6b8f71;
@@ -331,7 +328,7 @@
     color: var(--text-faint);
     line-height: 1.7;
     text-align: center;
-    max-width: 520px;
+    max-width: 720px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -348,7 +345,7 @@
     color: var(--gold-soft);
     line-height: 2;
     letter-spacing: 1px;
-    max-width: 400px;
+    max-width: 560px;
     margin: 0 auto;
     font-size: 0.92rem;
 }

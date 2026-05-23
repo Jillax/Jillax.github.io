@@ -21,7 +21,7 @@
     pointer-events: none;
 }
 .hero-content {
-    max-width: 600px;
+    max-width: 720px;
     position: relative;
 }
 .hero-ornament {
@@ -117,7 +117,7 @@
     position: relative;
 }
 .quote-block {
-    max-width: 520px;
+    max-width: 640px;
     margin: 0 auto;
     text-align: center;
     position: relative;
