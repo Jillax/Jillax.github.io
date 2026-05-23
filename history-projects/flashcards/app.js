@@ -48,8 +48,11 @@ const CARDS=[
 ];
 const ERAS=[...new Set(CARDS.map(c=>c.era))];
 const LS='flashcards-v1';
+const LS_STREAK='flashcards-streak';
 function load(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return{}}}
 function save(d){localStorage.setItem(LS,JSON.stringify(d))}
+function getStreak(){try{return parseInt(localStorage.getItem(LS_STREAK))||0}catch(e){return 0}}
+function setStreak(n){localStorage.setItem(LS_STREAK,n)}
 function getSRS(id){var d=load();return d[id]||{ease:2.5,interval:0,reps:0,next:0,last:0,status:'new'}}
 function putSRS(id,s){var d=load();d[id]=s;save(d)}
 function review(id,rating){
@@ -67,6 +70,7 @@ function review(id,rating){
     s.ease=Math.max(1.3,s.ease+0.15);s.reps++;s.status=s.interval>21?'mature':'review';
   }
   s.last=now;s.next=now+s.interval*60*1000;putSRS(id,s);
+  if(rating===0){setStreak(0)}else{setStreak(getStreak()+1)}
 }
 function dueCards(){var now=Date.now();return CARDS.filter(c=>{var s=getSRS(c.id);return!s.next||s.next<=now})}
 function mastery(id){var s=getSRS(id);return s.status||'new'}
@@ -143,12 +147,10 @@ function fmtInterval(mins){
   return Math.round(mins/1440)+'天';
 }
 function calcStats(){
-  var due=dueCards().length,learned=0,total=CARDS.length,streak=0;
+  var due=dueCards().length,learned=0,total=CARDS.length;
   var d=load();
   CARDS.forEach(c=>{if(d[c.id]&&d[c.id].reps>0)learned++});
-  var sorted=[...CARDS].sort((a,b)=>{var sa=getSRS(a.id),sb=getSRS(b.id);return(sb.last||0)-(sa.last||0)});
-  for(var i=0;i<sorted.length;i++){var s=getSRS(sorted[i].id);if(s.status==='new'||s.status==='learning')break;if(s.reps>0)streak++;else break}
-  return{due,learned,total,streak};
+  return{due,learned,total,streak:getStreak()};
 }
 function renderBrowse(){
   var el=document.getElementById('viewBrowse');
@@ -191,7 +193,7 @@ function renderAchievements(){
   var html=ACHS.map(a=>{var ok=a.check();return'<div class="ach '+(ok?'unlocked':'locked')+'"><div class="ach-icon">'+a.icon+'</div><div class="ach-name">'+a.name+'</div><div class="ach-desc">'+a.desc+'</div></div>'}).join('');
   el.innerHTML='<h2 style="font-family:var(--font);font-size:1.2rem;margin-bottom:20px;letter-spacing:2px">成就墙</h2><div class="ach-grid">'+html+'</div>';
 }
-function resetAll(){if(confirm('确定要重置所有学习进度吗？')){localStorage.removeItem(LS);renderCurrentView()}}
+function resetAll(){if(confirm('确定要重置所有学习进度吗？')){localStorage.removeItem(LS);localStorage.removeItem(LS_STREAK);renderCurrentView()}}
 document.querySelectorAll('.nav-tab').forEach(t=>{t.addEventListener('click',function(){switchView(this.dataset.view)})});
 document.addEventListener('keydown',function(e){
   if(view!=='review'||reviewQ.length===0)return;
