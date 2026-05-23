@@ -202,7 +202,7 @@ function renderReview(){
   if(due.length===0){
     var total=CARDS.length,reviewed=0;
     CARDS.forEach(c=>{var s=getSRS(c.id);if(s.reps>0)reviewed++});
-    el.innerHTML='<div class="review-empty"><div class="icon">&#x2728;</div><p>今日复习已完成！</p><p style="margin-top:8px;font-size:.82rem">已掌握 '+reviewed+'/'+total+' 张卡片</p><button onclick="resetAll()" style="margin-top:20px;padding:8px 20px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;border-radius:8px;font-size:.82rem">重置所有进度</button></div>';
+    el.innerHTML='<div class="review-empty"><div class="icon">&#x2728;<\/div><p>今日复习已完成！<\/p><p style="margin-top:8px;font-size:.82rem">已掌握 '+reviewed+'/'+total+' 张卡片<\/p><button onclick="resetAll()" style="margin-top:20px;padding:8px 20px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;border-radius:8px;font-size:.82rem">重置所有进度<\/button><\/div>';
     return;
   }
   reviewQ=due.sort(()=>Math.random()-0.5);reviewIdx=0;cardFlipped=false;
@@ -215,30 +215,30 @@ function renderReviewCard(){
   var stats=calcStats();
   el.innerHTML=
     '<div class="stats-row">'+
-    '<div class="sr"><div class="num">'+stats.due+'</div><div class="lbl">待复习</div></div>'+
-    '<div class="sr"><div class="num">'+stats.learned+'</div><div class="lbl">已掌握</div></div>'+
-    '<div class="sr"><div class="num">'+stats.total+'</div><div class="lbl">总卡片</div></div>'+
-    '</div>'+
-    (stats.streak>0?'<div class="streak"><span>&#x1F525;</span> 连续答对 '+stats.streak+' 张</div>':'')+
+    '<div class="sr"><div class="num">'+stats.due+'<\/div><div class="lbl">待复习<\/div><\/div>'+
+    '<div class="sr"><div class="num">'+stats.learned+'<\/div><div class="lbl">已掌握<\/div><\/div>'+
+    '<div class="sr"><div class="num">'+stats.total+'<\/div><div class="lbl">总卡片<\/div><\/div>'+
+    '<\/div>'+
+    (stats.streak>0?'<div class="streak"><span>&#x1F525;<\/span> 连续答对 '+stats.streak+' 张<\/div>':'')+
     '<div class="flashcard-wrap"><div class="flashcard'+(cardFlipped?' flipped':'')+'" onclick="flipCard()">'+
     '<div class="flashcard-face flashcard-front">'+
-    '<div class="fc-era">'+c.era+'</div>'+
-    '<div class="fc-type">'+c.type+'</div>'+
-    '<div class="fc-q">'+c.q+'</div>'+
-    '<div class="fc-hint">点击翻转查看答案</div>'+
-    '</div>'+
+    '<div class="fc-era">'+c.era+'<\/div>'+
+    '<div class="fc-type">'+c.type+'<\/div>'+
+    '<div class="fc-q">'+c.q+'<\/div>'+
+    '<div class="fc-hint">点击翻转查看答案<\/div>'+
+    '<\/div>'+
     '<div class="flashcard-face flashcard-back">'+
-    '<div class="back-title">'+c.q+'</div>'+
-    '<div class="back-era">'+c.era+' · '+c.type+'</div>'+
-    '<div class="back-body">'+c.a+'</div>'+
-    '</div></div></div>'+
+    '<div class="back-title">'+c.q+'<\/div>'+
+    '<div class="back-era">'+c.era+' · '+c.type+'<\/div>'+
+    '<div class="back-body">'+c.a+'<\/div>'+
+    '<\/div><\/div><\/div>'+
     (cardFlipped?
       '<div class="rating-bar">'+
-      '<button class="rate-btn again" onclick="rateCard(0)">忘了<span class="rate-lbl">&lt;1分钟</span></button>'+
-      '<button class="rate-btn hard" onclick="rateCard(1)">模糊<span class="rate-lbl">'+fmtInterval(s.interval*1.2)+'</span></button>'+
-      '<button class="rate-btn good" onclick="rateCard(2)">记得<span class="rate-lbl">'+fmtInterval(nextGood(s))+'</span></button>'+
-      '<button class="rate-btn easy" onclick="rateCard(3)">简单<span class="rate-lbl">'+fmtInterval(nextEasy(s))+'</span></button>'+
-      '</div>':'<p class="review-info">第 '+(reviewIdx+1)+' / '+reviewQ.length+' 张</p>');
+      '<button class="rate-btn again" onclick="rateCard(0)">忘了<span class="rate-lbl">\x3c1分钟<\/span><\/button>'+
+      '<button class="rate-btn hard" onclick="rateCard(1)">模糊<span class="rate-lbl">'+fmtInterval(s.interval*1.2)+'<\/span><\/button>'+
+      '<button class="rate-btn good" onclick="rateCard(2)">记得<span class="rate-lbl">'+fmtInterval(nextGood(s))+'<\/span><\/button>'+
+      '<button class="rate-btn easy" onclick="rateCard(3)">简单<span class="rate-lbl">'+fmtInterval(nextEasy(s))+'<\/span><\/button>'+
+      '<\/div>':'<p class="review-info">第 '+(reviewIdx+1)+' / '+reviewQ.length+' 张<\/p>');
 }
 function flipCard(){cardFlipped=!cardFlipped;renderReviewCard()}
 function rateCard(r){var c=reviewQ[reviewIdx];review(c.id,r);reviewIdx++;cardFlipped=false;renderReviewCard()}
@@ -258,8 +258,8 @@ function calcStats(){
 }
 function renderBrowse(){
   var el=document.getElementById('viewBrowse');
-  var pills='<button class="pill'+(filterEra==='all'?' active':'')+'" onclick="setEra(\'all\')">全部</button>';
-  ERAS.forEach(e=>{pills+='<button class="pill'+(filterEra===e?' active':'')+'" onclick="setEra(\''+e+'\')">'+e+'</button>'});
+  var pills='<button class="pill'+(filterEra==='all'?' active':'')+'" onclick="setEra(\'all\')">全部<\/button>';
+  ERAS.forEach(e=>{pills+='<button class="pill'+(filterEra===e?' active':'')+'" onclick="setEra(\''+e+'\')">'+e+'<\/button>'});
   var filtered=CARDS.filter(c=>{
     if(filterEra!=='all'&&c.era!==filterEra)return false;
     if(searchQ){var q=searchQ.toLowerCase();return c.q.toLowerCase().includes(q)||c.a.toLowerCase().includes(q)||c.era.includes(q)}
@@ -267,9 +267,9 @@ function renderBrowse(){
   });
   var grid=filtered.map(c=>{
     var m=mastery(c.id);var mc=m==='new'?'m-new':m==='learning'?'m-learning':m==='review'?'m-review':'m-mature';
-    return'<div class="grid-card" onclick="startReviewSingle('+c.id+')"><div class="gc-mastery '+mc+'"></div><div><span class="gc-era">'+c.era+'</span><span class="gc-type">'+c.type+'</span></div><div class="gc-title">'+c.q+'</div><div class="gc-preview">'+c.a+'</div></div>';
+    return'<div class="grid-card" onclick="startReviewSingle('+c.id+')"><div class="gc-mastery '+mc+'"><\/div><div><span class="gc-era">'+c.era+'<\/span><span class="gc-type">'+c.type+'<\/span><\/div><div class="gc-title">'+c.q+'<\/div><div class="gc-preview">'+c.a+'<\/div><\/div>';
   }).join('');
-  el.innerHTML='<div class="toolbar"><div class="filter-pills">'+pills+'</div><input class="s-input" placeholder="搜索卡片…" value="'+searchQ+'" oninput="searchQ=this.value;renderBrowse()"></div><div class="card-grid">'+grid+'</div>';
+  el.innerHTML='<div class="toolbar"><div class="filter-pills">'+pills+'<\/div><input class="s-input" placeholder="搜索卡片…" value="'+searchQ+'" oninput="searchQ=this.value;renderBrowse()"><\/div><div class="card-grid">'+grid+'<\/div>';
 }
 function setEra(e){filterEra=e;renderBrowse()}
 function startReviewSingle(id){
@@ -279,8 +279,8 @@ function startReviewSingle(id){
 function renderProgress(){
   var el=document.getElementById('viewProgress');var stats=calcStats();var pct=stats.total>0?Math.round(stats.learned/stats.total*100):0;
   var byEra=ERAS.map(e=>{var total=CARDS.filter(c=>c.era===e).length;var learned=CARDS.filter(c=>{if(c.era!==e)return false;var s=getSRS(c.id);return s.reps>0}).length;return{era:e,total,learned}});
-  var eraHTML=byEra.map(e=>'<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px"><span>'+e.era+'</span><span style="color:var(--text-faint)">'+e.learned+'/'+e.total+'</span></div><div class="prog-wrap"><div class="prog-fill" style="width:'+(e.total>0?Math.round(e.learned/e.total*100):0)+'%"></div></div></div>').join('');
-  el.innerHTML='<div class="stats-row"><div class="sr"><div class="num">'+stats.total+'</div><div class="lbl">总卡片</div></div><div class="sr"><div class="num">'+stats.learned+'</div><div class="lbl">已掌握</div></div><div class="sr"><div class="num">'+stats.due+'</div><div class="lbl">待复习</div></div><div class="sr"><div class="num">'+pct+'%</div><div class="lbl">完成度</div></div></div><h3 style="font-family:var(--font);font-size:.88rem;color:var(--text-muted);margin-bottom:16px;letter-spacing:2px">按朝代统计</h3>'+eraHTML;
+  var eraHTML=byEra.map(e=>'<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px"><span>'+e.era+'<\/span><span style="color:var(--text-faint)">'+e.learned+'/'+e.total+'<\/span><\/div><div class="prog-wrap"><div class="prog-fill" style="width:'+(e.total>0?Math.round(e.learned/e.total*100):0)+'%"><\/div><\/div><\/div>').join('');
+  el.innerHTML='<div class="stats-row"><div class="sr"><div class="num">'+stats.total+'<\/div><div class="lbl">总卡片<\/div><\/div><div class="sr"><div class="num">'+stats.learned+'<\/div><div class="lbl">已掌握<\/div><\/div><div class="sr"><div class="num">'+stats.due+'<\/div><div class="lbl">待复习<\/div><\/div><div class="sr"><div class="num">'+pct+'%<\/div><div class="lbl">完成度<\/div><\/div><\/div><h3 style="font-family:var(--font);font-size:.88rem;color:var(--text-muted);margin-bottom:16px;letter-spacing:2px">按朝代统计<\/h3>'+eraHTML;
 }
 var ACHS=[
   {id:'first',icon:'&#x1F3AF;',name:'初次记忆',desc:'完成第一张卡片复习',check:function(){var d=load();return Object.values(d).some(s=>s.reps>0)}},
@@ -294,8 +294,8 @@ var ACHS=[
 ];
 function renderAchievements(){
   var el=document.getElementById('viewAchievements');
-  var html=ACHS.map(a=>{var ok=a.check();return'<div class="ach '+(ok?'unlocked':'locked')+'"><div class="ach-icon">'+a.icon+'</div><div class="ach-name">'+a.name+'</div><div class="ach-desc">'+a.desc+'</div></div>'}).join('');
-  el.innerHTML='<h2 style="font-family:var(--font);font-size:1.2rem;margin-bottom:20px;letter-spacing:2px">成就墙</h2><div class="ach-grid">'+html+'</div>';
+  var html=ACHS.map(a=>{var ok=a.check();return'<div class="ach '+(ok?'unlocked':'locked')+'"><div class="ach-icon">'+a.icon+'<\/div><div class="ach-name">'+a.name+'<\/div><div class="ach-desc">'+a.desc+'<\/div><\/div>'}).join('');
+  el.innerHTML='<h2 style="font-family:var(--font);font-size:1.2rem;margin-bottom:20px;letter-spacing:2px">成就墙<\/h2><div class="ach-grid">'+html+'<\/div>';
 }
 function resetAll(){if(confirm('确定要重置所有学习进度吗？')){localStorage.removeItem(LS);localStorage.removeItem(LS_STREAK);renderCurrentView()}}
 document.querySelectorAll('.nav-tab').forEach(t=>{t.addEventListener('click',function(){switchView(this.dataset.view)})});
