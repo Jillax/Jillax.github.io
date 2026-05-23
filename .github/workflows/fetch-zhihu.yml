@@ -13,16 +13,24 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.60.0-jammy
     steps:
       - uses: actions/checkout@v4
 
-      - name: 安装 Node.js 依赖
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 安装 Playwright
         run: |
-          npm install
+          npm install playwright
+          npm install -g playwright
+
+      - name: 安装 Chromium 浏览器
+        run: npx playwright install chromium
+
+      - name: 安装系统依赖
+        run: sudo npx playwright install-deps chromium
 
       - name: 抓取知乎想法
         env:
@@ -30,11 +38,9 @@ jobs:
         run: node scripts/fetch-zhihu.mjs
 
       - name: 提交更新
-        working-directory: /github/workspace
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          pwd
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
