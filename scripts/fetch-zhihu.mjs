@@ -69,16 +69,38 @@ async function main() {
     console.log(`抓取到 ${articles.length} 篇文章`);
 
     // ===== 读取现有数据 =====
-    let existingData = { pins: [] };
+    let existingData = { pins: [], articles: [] };
     try {
       existingData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
     } catch (e) {
       // 文件不存在或格式错误
     }
 
-    // 直接用新数据替换旧数据（每次抓取已滚动加载全部内容）
-    const mergedPins = pins;
-    const mergedArticles = articles;
+    // 如果这次抓取没拿到任何数据，可能是 cookie 过期或网络问题，保留现有数据不覆盖
+    if (pins.length === 0 && articles.length === 0) {
+      console.log('本次抓取未获取到数据，保留现有数据，避免误覆盖');
+      existingData.updated = new Date().toISOString();
+      fs.writeFileSync(DATA_FILE, JSON.stringify(existingData, null, 2), 'utf-8');
+      return;
+    }
+
+    // 合并数据：保留已被知乎屏蔽的想法
+    // 通过 created 时间戳匹配：旧数据中有、新抓取中没有的，标记为 blocked
+    const newPinTimestamps = new Set(pins.map(p => p.created));
+    const blockedPins = (existingData.pins || [])
+      .filter(oldPin => !newPinTimestamps.has(oldPin.created))
+      .map(oldPin => ({ ...oldPin, blocked: true }));
+
+    const mergedPins = [...pins, ...blockedPins];
+
+    // 文章同理，通过 url 匹配
+    const newArticleUrls = new Set(articles.map(a => a.url));
+    const preservedArticles = (existingData.articles || [])
+      .filter(oldArt => !newArticleUrls.has(oldArt.url));
+    const mergedArticles = [...articles, ...preservedArticles];
+
+    console.log(`新想法: ${pins.length} 条, 归档(被屏蔽): ${blockedPins.length} 条`);
+    console.log(`新文章: ${articles.length} 篇, 保留: ${preservedArticles.length} 篇`);
 
     const output = {
       updated: new Date().toISOString(),
