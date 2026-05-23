@@ -1,106 +1,88 @@
 /* ============================================
-   Jillax.github.io — Bookshelf Page Styles
+   Jillax.github.io — 书影音游
    ============================================ */
 
-/* ===== Category Tabs ===== */
+/* ---- 分类标签 ---- */
 .cat-tabs {
-    display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap;
+    display: flex;
+    gap: 4px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
 }
 .cat-tab {
-    padding: 8px 20px; font-size: 0.82rem;
-    color: var(--text-muted); border: 1px solid var(--border);
-    background: none; cursor: pointer;
-    transition: all 0.3s ease; font-family: var(--font-body);
+    padding: 8px 22px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
 }
 .cat-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
-.cat-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
-.cat-tab .count { font-size: 0.65rem; color: var(--text-faint); margin-left: 4px; font-family: var(--font-display); }
-
-/* ===== Filter Bar ===== */
-.filter-bar {
-    display: flex; gap: 2px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
+.cat-tab.active {
+    border-color: var(--gold-dim);
+    background: var(--gold-dim);
+    color: var(--gold);
 }
-.filter-label {
-    font-size: 0.65rem; color: var(--text-faint);
-    margin-right: 8px; font-family: var(--font-display); letter-spacing: 0.5px;
-}
-.filter-tab {
-    padding: 4px 14px; font-size: 0.72rem;
-    color: var(--text-faint); border: 1px solid var(--border);
-    background: none; cursor: pointer;
-    transition: all 0.3s ease; font-family: var(--font-body);
-}
-.filter-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
-.filter-tab.active { border-color: var(--gold-dim); color: var(--text-soft); }
-.filter-count {
-    font-size: 0.6rem; color: var(--text-faint);
-    margin-left: 12px; font-family: var(--font-display);
-}
-
-/* ===== Stats Bar ===== */
-.stats-bar {
-    display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap;
-}
-.stat-item {
-    font-size: 0.72rem;
+.cat-tab .count {
+    font-size: 0.64rem;
     color: var(--text-faint);
+    margin-left: 4px;
     font-family: var(--font-display);
 }
-.stat-item strong {
-    color: var(--text-soft);
-    font-weight: 500;
-}
-.update-time {
-    font-size: 0.65rem;
-    color: var(--text-faint);
-    margin-bottom: 16px;
-    font-style: italic;
-}
 
-/* ===== Dashboard Section ===== */
-.dash-section {
-    border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 16px;
-}
-.dash-title {
-    font-family: var(--font-display);
-    font-size: 0.78rem;
-    color: var(--text-faint);
-    letter-spacing: 2px;
-    margin-bottom: 14px;
-    text-transform: uppercase;
-    font-variation-settings: 'SOFT' 100, 'WONK' 1;
-}
-
-/* ===== Stat Cards ===== */
+/* ---- 统计卡片 ---- */
 .stat-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 10px;
-    margin-bottom: 0;
+    margin-bottom: 4px;
 }
 .stat-card {
     border: 1px solid var(--border-light);
-    padding: 14px;
+    padding: 16px;
     text-align: center;
 }
 .stat-card .num {
     font-family: var(--font-display);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: var(--gold-soft);
     font-weight: 500;
     line-height: 1.1;
     font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .stat-card .label {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: var(--text-faint);
-    margin-top: 4px;
+    margin-top: 6px;
     letter-spacing: 0.5px;
 }
 
-/* ===== Rating Distribution ===== */
+.update-time {
+    font-size: 0.63rem;
+    color: var(--text-faint);
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* ---- 面板区块 ---- */
+.dash-section {
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 18px;
+}
+.dash-title {
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+
+/* ---- 评分分布条 ---- */
 .rating-bars {
     display: flex;
     flex-direction: column;
@@ -112,7 +94,7 @@
     gap: 10px;
 }
 .rating-label {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     width: 28px;
     flex-shrink: 0;
@@ -121,26 +103,77 @@
 }
 .rating-track {
     flex: 1;
-    height: 18px;
+    height: 20px;
     background: var(--border-light);
-    position: relative;
     overflow: hidden;
 }
 .rating-fill {
     height: 100%;
     background: var(--gold-dim);
-    transition: width 0.8s ease;
     width: 0;
+    transition: width 0.8s ease;
 }
 .rating-count {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     width: 32px;
     flex-shrink: 0;
     font-family: var(--font-display);
 }
 
-/* ===== Items Grid ===== */
+/* ---- 时间线图表 ---- */
+.line-chart-box {
+    border: 1px solid var(--border);
+    padding: 6px;
+}
+.chart-canvas-wrap {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.chart-canvas-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* ---- 评分筛选 ---- */
+.filter-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.filter-label {
+    font-size: 0.63rem;
+    color: var(--text-faint);
+    margin-right: 10px;
+    font-family: var(--font-display);
+    letter-spacing: 0.5px;
+}
+.filter-tab {
+    padding: 4px 14px;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+}
+.filter-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+.filter-tab.active {
+    border-color: var(--gold-dim);
+    color: var(--text-soft);
+}
+.filter-count {
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    margin-left: 14px;
+    font-family: var(--font-display);
+}
+
+/* ---- 条目网格 ---- */
 .items-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -150,8 +183,12 @@
     display: flex;
     gap: 14px;
     padding: 16px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease;
 }
+.item-card:hover { border-color: var(--gold-dim); }
 .item-card.hidden { display: none; }
+
 .item-cover {
     width: 60px;
     height: 85px;
@@ -169,23 +206,24 @@
     object-fit: cover;
 }
 .item-cover .placeholder {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-faint);
 }
+
 .item-info { flex: 1; min-width: 0; }
 .item-title {
     font-family: var(--font-chinese);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 500;
     color: var(--text);
-    margin-bottom: 1px;
+    margin-bottom: 2px;
     letter-spacing: 0.3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .item-author {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     margin-bottom: 6px;
     font-weight: 300;
@@ -200,29 +238,29 @@
     flex-wrap: wrap;
 }
 .item-status {
-    font-size: 0.6rem;
-    padding: 1px 7px;
+    font-size: 0.58rem;
+    padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
     letter-spacing: 0.5px;
 }
-.item-status.collect { border-color: rgba(122, 139, 110, 0.3); color: var(--olive); }
-.item-status.wish { border-color: var(--border); color: var(--text-faint); }
-.item-status.do { border-color: var(--gold-dim); color: var(--gold-soft); }
+.item-status.collect { border-color: rgba(122, 139, 110, 0.3); color: #7a8b6e; }
+.item-status.wish    { border-color: var(--border); color: var(--text-faint); }
+.item-status.do      { border-color: var(--gold-dim); color: var(--gold-soft); }
 .item-rating {
-    font-size: 0.65rem;
+    font-size: 0.64rem;
     color: var(--gold-soft);
     letter-spacing: 1px;
 }
 .item-date {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     color: var(--text-faint);
     margin-left: auto;
 }
 .item-comment {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
-    margin-top: 5px;
+    margin-top: 6px;
     font-weight: 300;
     line-height: 1.5;
     display: -webkit-box;
@@ -231,32 +269,25 @@
     overflow: hidden;
 }
 
-/* ===== Line Chart ===== */
-.line-chart-box {
-    border: 1px solid var(--border);
-    padding: 4px;
-}
-.chart-canvas-wrap {
-    position: relative;
-    max-width: 100%;
-    margin: 0 auto;
-}
-.chart-canvas-wrap canvas {
-    width: 100% !important;
-    height: 100% !important;
+/* ---- 空状态 ---- */
+.empty-state {
+    text-align: center;
+    padding: 64px 20px;
+    color: var(--text-faint);
+    font-size: 0.84rem;
 }
 
-/* ===== Responsive ===== */
+/* ---- 响应式 ---- */
 @media (max-width: 768px) {
     .items-grid { grid-template-columns: 1fr; }
-    .dash-section { padding: 14px; }
+    .dash-section { padding: 16px; }
     .item-card { padding: 14px; }
     .stat-cards { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
-    .cat-tab { padding: 6px 14px; font-size: 0.78rem; }
-    .filter-tab { padding: 3px 10px; font-size: 0.68rem; }
-    .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 6px; }
-    .stat-card { padding: 10px; }
+    .cat-tab { padding: 6px 14px; font-size: 0.76rem; }
+    .filter-tab { padding: 3px 10px; font-size: 0.66rem; }
+    .stat-cards { gap: 6px; }
+    .stat-card { padding: 12px; }
     .stat-card .num { font-size: 1.3rem; }
 }

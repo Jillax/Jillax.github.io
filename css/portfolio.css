@@ -1,52 +1,77 @@
 /* ============================================
-   Jillax.github.io — Portfolio Page Styles
+   Jillax.github.io — 投资组合
    ============================================ */
 
+/* ---- 容器加宽 ---- */
+:root { --pw: 820px; }
+
+/* ---- 颜色变量 ---- */
 :root {
-    --container: 800px;
     --green: #6b8f71;
-    --green-soft: rgba(107, 143, 113, 0.35);
+    --green-bg: rgba(107, 143, 113, 0.18);
     --red: #b5706b;
-    --red-soft: rgba(181, 112, 107, 0.35);
-}
-[data-theme="light"] {
-    --gold: #c4a35a;
-    --green-soft: rgba(107, 143, 113, 0.3);
-    --red-soft: rgba(181, 112, 107, 0.3);
+    --red-bg: rgba(181, 112, 107, 0.18);
 }
 
-/* Stats Bar */
+/* ---- 总览统计 ---- */
 .stats-bar {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-    margin-bottom: 44px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 48px;
     border-top: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
 }
-.stat-item { text-align: center; padding: 28px 16px; border-right: 1px solid var(--border-light); }
+.stat-item {
+    text-align: center;
+    padding: 28px 16px;
+    border-right: 1px solid var(--border-light);
+}
 .stat-item:last-child { border-right: none; }
 .stat-label {
-    display: block; font-size: 0.65rem; color: var(--text-faint);
-    letter-spacing: 2px; margin-bottom: 8px; font-family: var(--font-body); text-transform: uppercase;
+    display: block;
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-family: var(--font-body);
+    text-transform: uppercase;
 }
 .stat-value {
-    font-family: var(--font-display); font-size: 1.6rem; font-weight: 600;
-    color: var(--text); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text);
+    font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .stat-value.green { color: var(--green); }
-.stat-value.red { color: var(--red); }
-.stat-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+.stat-value.red   { color: var(--red); }
+.stat-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
 
-/* ===== Line Chart ===== */
+/* ---- 区块标题 ---- */
+.section { margin-bottom: 56px; }
+.section-title {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-family: var(--font-chinese);
+}
+
+/* ---- 走势图 ---- */
 .line-chart-box {
     border: 1px solid var(--border);
     padding: 24px;
-    margin-bottom: 0;
 }
 .line-chart-box .chart-canvas-wrap {
     position: relative;
     max-width: 100%;
     margin: 0 auto;
-    height: 240px;
+    height: 260px;
 }
 .line-chart-box canvas {
     width: 100% !important;
@@ -54,53 +79,53 @@
 }
 .line-chart-empty {
     text-align: center;
-    padding: 60px 20px;
+    padding: 64px 20px;
     color: var(--text-faint);
     font-size: 0.82rem;
 }
 
-/* Section */
-.section { margin-bottom: 48px; }
-.section-title {
-    font-size: 0.7rem; color: var(--text-faint); letter-spacing: 2px;
-    margin-bottom: 20px; font-family: var(--font-chinese);
-}
-
-/* Chart */
-.chart-box { border: 1px solid var(--border); padding: 24px; }
-.chart-canvas-wrap { position: relative; max-width: 280px; margin: 0 auto; }
-
+/* ---- 资产配置：双栏 ---- */
 .allocation-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 20px;
     align-items: start;
 }
 
-/* Percentage bars */
-.pct-bars {
+/* 饼图 */
+.chart-box {
     border: 1px solid var(--border);
     padding: 24px;
 }
-.pct-row {
-    margin-bottom: 20px;
+.chart-canvas-wrap {
+    position: relative;
+    max-width: 280px;
+    margin: 0 auto;
 }
-.pct-row:last-child { margin-bottom: 0; }
+
+/* 百分比条 */
+.pct-bars {
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+.pct-row { }
 .pct-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .pct-label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 .pct-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
 }
@@ -122,116 +147,120 @@
     height: 6px;
     background: var(--border);
     overflow: hidden;
-    transition: background 0.3s ease;
-}
-.pct-row:hover .pct-track {
-    background: var(--border-light);
 }
 .pct-fill {
     height: 100%;
     width: 0;
-    border-radius: 0;
     transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Table */
-.portfolio-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+/* ---- 持仓表格 ---- */
+.portfolio-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+}
 .portfolio-table th {
-    font-size: 0.65rem; color: var(--text-faint); letter-spacing: 2px;
-    font-weight: 400; text-align: right; padding: 10px 12px;
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    font-weight: 400;
+    text-align: right;
+    padding: 10px 14px;
     border-bottom: 1px solid var(--border);
 }
 .portfolio-table th:first-child { text-align: left; }
 .portfolio-table td {
-    text-align: right; padding: 10px 12px;
+    text-align: right;
+    padding: 10px 14px;
     border-bottom: 1px solid var(--border-light);
-    color: var(--text-soft); font-weight: 300;
+    color: var(--text-soft);
+    font-weight: 300;
 }
 .portfolio-table td:first-child { text-align: left; }
+
+/* 品类分组行 */
 .cat-row td {
     border-bottom: 1px solid var(--border);
-    padding-top: 18px; padding-bottom: 6px;
-    font-weight: 500; color: var(--text);
+    padding-top: 20px;
+    padding-bottom: 8px;
+    font-weight: 500;
+    color: var(--text);
 }
-.cat-row td:first-child { font-family: var(--font-chinese); letter-spacing: 0.5px; }
+.cat-row td:first-child {
+    font-family: var(--font-chinese);
+    letter-spacing: 0.5px;
+}
 
-/* Expandable rows */
+/* 可展开行 */
 .item-row { cursor: pointer; user-select: none; }
 .item-row:hover td { color: var(--text); }
-.item-row .arrow { display: inline-block; width: 16px; transition: transform 0.2s; font-size: 0.7rem; color: var(--text-faint); }
+.item-row .arrow {
+    display: inline-block;
+    width: 16px;
+    transition: transform 0.2s;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+}
 .item-row.expanded .arrow { transform: rotate(90deg); }
 .item-row td { padding-top: 12px; padding-bottom: 12px; }
 
+/* 子行 */
 .sub-row { display: none; }
 .sub-row.open { display: table-row; }
-.sub-row td { padding-top: 8px; padding-bottom: 8px; }
-.sub-row td:first-child { padding-left: 40px; font-size: 0.82rem; }
+.sub-row td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.sub-row td:first-child {
+    padding-left: 36px;
+    font-size: 0.8rem;
+}
 
+/* 标签订投中 */
 .dca-badge {
-    display: inline-block; font-size: 0.6rem;
-    padding: 1px 6px; margin-left: 6px;
-    border: 1px solid var(--gold-dim); color: var(--gold-soft);
+    display: inline-block;
+    font-size: 0.58rem;
+    padding: 1px 7px;
+    margin-left: 8px;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-soft);
     letter-spacing: 0.3px;
 }
 
+/* 盈亏颜色 */
 .gain-pos { color: var(--green) !important; }
 .gain-neg { color: var(--red) !important; }
 
+/* 合计行 */
 .total-row td {
-    border-bottom: none; padding-top: 14px;
-    font-weight: 500; color: var(--text);
+    border-bottom: none;
+    padding-top: 16px;
+    font-weight: 500;
+    color: var(--text);
+}
+.dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
-.dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
-
-/* Philosophy */
-.philosophy { margin-top: 56px; text-align: center; padding: 40px 0; border-top: 1px solid var(--border); }
-.philosophy p {
-    font-family: var(--font-chinese); color: var(--gold-soft); line-height: 1.9;
-    letter-spacing: 1px; max-width: 400px; margin: 0 auto;
-}
-
+/* 更新提示 */
 .update-note {
-    text-align: right; font-size: 0.65rem; color: var(--text-faint);
-    margin-top: 12px; font-style: italic;
+    text-align: right;
+    font-size: 0.62rem;
+    color: var(--text-faint);
+    margin-top: 12px;
+    font-style: italic;
 }
 
-/* ===== Projection ===== */
-.projection-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    align-items: start;
-}
-.projection-table-wrap {
-    border: 1px solid var(--border);
-    padding: 24px;
-    overflow-x: auto;
-}
-.projection-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-.projection-table th {
-    font-size: 0.6rem; color: var(--text-faint); letter-spacing: 2px;
-    font-weight: 400; text-align: right; padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
-}
-.projection-table th:first-child { text-align: left; }
-.projection-table td {
-    text-align: right; padding: 8px 10px;
-    border-bottom: 1px solid var(--border-light);
-    color: var(--text-soft); font-weight: 300;
-    white-space: nowrap;
-}
-.projection-table td:first-child { text-align: left; }
-.projection-table .num { font-family: var(--font-display); }
-.projection-table .rate-cell { color: var(--gold-soft); font-weight: 500; }
-.projection-total td {
-    border-bottom: none; padding-top: 12px;
-    font-weight: 600; color: var(--text);
-}
+/* ---- 预测区块 ---- */
 .projection-blended {
     text-align: center;
     margin-bottom: 24px;
-    padding: 14px 20px;
+    padding: 16px 20px;
     border: 1px solid var(--border-light);
     font-size: 0.82rem;
     color: var(--text-muted);
@@ -243,13 +272,62 @@
     font-weight: 600;
     margin: 0 4px;
 }
+
+.projection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.projection-table-wrap {
+    border: 1px solid var(--border);
+    padding: 24px;
+    overflow-x: auto;
+}
+
+.projection-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+.projection-table th {
+    font-size: 0.58rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    font-weight: 400;
+    text-align: right;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+}
+.projection-table th:first-child { text-align: left; }
+.projection-table td {
+    text-align: right;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-soft);
+    font-weight: 300;
+    white-space: nowrap;
+}
+.projection-table td:first-child { text-align: left; }
+.projection-table .num       { font-family: var(--font-display); }
+.projection-table .rate-cell { color: var(--gold-soft); font-weight: 500; }
+
+.projection-total td {
+    border-bottom: none;
+    padding-top: 14px;
+    font-weight: 600;
+    color: var(--text);
+}
+
 .projection-chart-box {
     border: 1px solid var(--border);
     padding: 24px;
 }
+
 .projection-note {
-    margin-top: 20px;
-    font-size: 0.7rem;
+    margin-top: 24px;
+    font-size: 0.68rem;
     color: var(--text-faint);
     line-height: 1.7;
     text-align: center;
@@ -258,14 +336,31 @@
     margin-right: auto;
 }
 
+/* ---- 投资哲学 ---- */
+.philosophy {
+    margin-top: 60px;
+    text-align: center;
+    padding: 44px 0;
+    border-top: 1px solid var(--border);
+}
+.philosophy p {
+    font-family: var(--font-chinese);
+    color: var(--gold-soft);
+    line-height: 2;
+    letter-spacing: 1px;
+    max-width: 400px;
+    margin: 0 auto;
+    font-size: 0.88rem;
+}
+
+/* ---- 响应式 ---- */
 @media (max-width: 768px) {
     .stat-value { font-size: 1.3rem; }
-    .portfolio-table { font-size: 0.78rem; }
+    .portfolio-table { font-size: 0.76rem; }
     .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
-    .sub-row td:first-child { padding-left: 28px; }
+    .sub-row td:first-child { padding-left: 24px; }
     .allocation-grid { grid-template-columns: 1fr; }
     .projection-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
     .stats-bar { grid-template-columns: repeat(3, 1fr); }
+    .stat-item { padding: 20px 10px; }
 }
