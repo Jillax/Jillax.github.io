@@ -2,7 +2,7 @@
   "updated": "2026-05-17",
   "currency": "CNY",
   "history": [
-    { "date": "2026-05-17", "value": 66080.76 }
+    { "date": "2026-05-17", "value": 56087.69 }
   ],
   "categories": [
     {
@@ -13,18 +13,6 @@
           "name": "定期存款",
           "subItems": [
             { "name": "三年期（建行+招商）", "value": 20845, "cost": 20000 }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "债券类",
-      "color": "#8b7355",
-      "items": [
-        {
-          "name": "短债",
-          "subItems": [
-            { "name": "短债债券", "value": 9993.07, "cost": 9948.24 }
           ]
         }
       ]
