@@ -11,7 +11,7 @@
 }
 .cat-tab {
     padding: 8px 22px;
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     color: var(--text-muted);
     border: 1px solid var(--border);
     background: none;
@@ -26,7 +26,7 @@
     color: var(--gold);
 }
 .cat-tab .count {
-    font-size: 0.64rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-left: 4px;
     font-family: var(--font-display);
@@ -53,14 +53,14 @@
     font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .stat-card .label {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-top: 6px;
     letter-spacing: 0.5px;
 }
 
 .update-time {
-    font-size: 0.63rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-bottom: 20px;
     font-style: italic;
@@ -74,7 +74,7 @@
 }
 .dash-title {
     font-family: var(--font-display);
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     color: var(--text-faint);
     letter-spacing: 2px;
     margin-bottom: 16px;
@@ -94,7 +94,7 @@
     gap: 10px;
 }
 .rating-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
     width: 28px;
     flex-shrink: 0;
@@ -145,7 +145,7 @@
     align-items: center;
 }
 .filter-label {
-    font-size: 0.63rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-right: 10px;
     font-family: var(--font-display);
@@ -153,7 +153,7 @@
 }
 .filter-tab {
     padding: 4px 14px;
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     color: var(--text-faint);
     border: 1px solid var(--border);
     background: none;
@@ -167,7 +167,7 @@
     color: var(--text-soft);
 }
 .filter-count {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     color: var(--text-faint);
     margin-left: 14px;
     font-family: var(--font-display);
@@ -213,7 +213,7 @@
 .item-info { flex: 1; min-width: 0; }
 .item-title {
     font-family: var(--font-chinese);
-    font-size: 0.86rem;
+    font-size: 0.92rem;
     font-weight: 500;
     color: var(--text);
     margin-bottom: 2px;
@@ -223,7 +223,7 @@
     text-overflow: ellipsis;
 }
 .item-author {
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     color: var(--text-muted);
     margin-bottom: 6px;
     font-weight: 300;
@@ -238,7 +238,7 @@
     flex-wrap: wrap;
 }
 .item-status {
-    font-size: 0.58rem;
+    font-size: 0.65rem;
     padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
@@ -248,17 +248,17 @@
 .item-status.wish    { border-color: var(--border); color: var(--text-faint); }
 .item-status.do      { border-color: var(--gold-dim); color: var(--gold-soft); }
 .item-rating {
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     color: var(--gold-soft);
     letter-spacing: 1px;
 }
 .item-date {
-    font-size: 0.58rem;
+    font-size: 0.65rem;
     color: var(--text-faint);
     margin-left: auto;
 }
 .item-comment {
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     color: var(--text-muted);
     margin-top: 6px;
     font-weight: 300;
@@ -274,7 +274,7 @@
     text-align: center;
     padding: 64px 20px;
     color: var(--text-faint);
-    font-size: 0.84rem;
+    font-size: 0.88rem;
 }
 
 /* ---- 响应式 ---- */

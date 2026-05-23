@@ -73,9 +73,9 @@
     animation: fadeUp 1s ease 0.45s forwards;
 }
 .hero-desc {
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: var(--text-muted);
-    max-width: 420px;
+    max-width: 460px;
     margin-bottom: 44px;
     line-height: 2;
     letter-spacing: 0.2px;

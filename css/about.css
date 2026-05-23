@@ -8,7 +8,7 @@
 }
 .about-content p {
     color: var(--text-soft);
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     line-height: 2.1;
     letter-spacing: 0.2px;
     font-weight: 300;
@@ -20,7 +20,7 @@
 }
 .about-epigraph {
     font-family: var(--font-chinese);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--gold-soft);
     font-style: italic;
     margin-top: 44px;
@@ -62,7 +62,7 @@
 }
 .section-label {
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -92,7 +92,7 @@
 }
 .skill-cat-name {
     font-family: var(--font-chinese);
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     color: var(--text-soft);
     font-weight: 500;
     margin-bottom: 14px;
@@ -104,7 +104,7 @@
     gap: 6px;
 }
 .skill-tag {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     padding: 3px 10px;
     border: 1px solid var(--border);
     color: var(--text-muted);
@@ -131,7 +131,7 @@
 }
 .tl-filter-btn {
     padding: 5px 14px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     border: 1px solid var(--border);
     background: none;
@@ -149,7 +149,7 @@
     color: var(--gold);
 }
 .tl-filter-count {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     color: var(--text-faint);
     margin-left: 4px;
 }
@@ -203,18 +203,18 @@
 }
 .tl-title {
     font-family: var(--font-chinese);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--text);
 }
 .tl-subtitle {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--text-muted);
     margin-top: 2px;
     font-weight: 300;
 }
 .tl-badge {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     padding: 2px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
@@ -234,14 +234,14 @@
     color: #6b8f71;
 }
 .tl-date {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     color: var(--text-faint);
     margin-top: 8px;
     font-weight: 300;
     letter-spacing: 0.5px;
 }
 .tl-desc {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     margin-top: 10px;
     line-height: 1.8;
@@ -254,7 +254,7 @@
     margin-top: 12px;
 }
 .tl-tag {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
@@ -263,7 +263,7 @@
     text-align: center;
     padding: 40px 20px;
     color: var(--text-faint);
-    font-size: 0.82rem;
+    font-size: 0.88rem;
 }
 
 /* ===== Projects Showcase ===== */
@@ -291,13 +291,13 @@
 }
 .showcase-name {
     font-family: var(--font-chinese);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--text);
     margin-bottom: 4px;
 }
 .showcase-desc {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.7;
     font-weight: 300;
@@ -309,7 +309,7 @@
     margin-top: 10px;
 }
 .showcase-tag {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
@@ -319,7 +319,7 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 0.72rem;
+    font-size: 0.76rem;
     color: var(--gold-soft);
     transition: color 0.3s ease;
 }
@@ -335,7 +335,7 @@
 }
 .about-detail h3 {
     font-family: var(--font-display);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 5px;
     color: var(--text-faint);
@@ -348,7 +348,7 @@
 }
 .about-detail p {
     color: var(--text-soft);
-    font-size: 0.88rem;
+    font-size: 0.95rem;
     line-height: 2;
     font-weight: 300;
 }
@@ -358,7 +358,7 @@
 }
 .about-detail ul li {
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     line-height: 2;
     font-weight: 300;
     padding-left: 16px;

@@ -3,7 +3,7 @@
    ============================================ */
 
 /* ---- 容器加宽 ---- */
-:root { --pw: 820px; }
+:root { --pw: 900px; }
 
 /* ---- 颜色变量 ---- */
 :root {
@@ -30,7 +30,7 @@
 .stat-item:last-child { border-right: none; }
 .stat-label {
     display: block;
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     letter-spacing: 2px;
     margin-bottom: 8px;
@@ -55,7 +55,7 @@
 /* ---- 区块标题 ---- */
 .section { margin-bottom: 56px; }
 .section-title {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--text-faint);
     letter-spacing: 2px;
     margin-bottom: 20px;
@@ -131,7 +131,7 @@
 }
 .pct-name {
     font-family: var(--font-chinese);
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     color: var(--text-soft);
     font-weight: 500;
     letter-spacing: 0.3px;
@@ -158,10 +158,10 @@
 .portfolio-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.84rem;
+    font-size: 0.88rem;
 }
 .portfolio-table th {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     letter-spacing: 2px;
     font-weight: 400;
@@ -250,7 +250,7 @@
 /* 更新提示 */
 .update-note {
     text-align: right;
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-top: 12px;
     font-style: italic;
@@ -262,7 +262,7 @@
     margin-bottom: 24px;
     padding: 16px 20px;
     border: 1px solid var(--border-light);
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     color: var(--text-muted);
 }
 .projection-blended strong {
@@ -289,7 +289,7 @@
 .projection-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 .projection-table th {
     font-size: 0.58rem;
@@ -327,7 +327,7 @@
 
 .projection-note {
     margin-top: 24px;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     color: var(--text-faint);
     line-height: 1.7;
     text-align: center;
@@ -350,7 +350,7 @@
     letter-spacing: 1px;
     max-width: 400px;
     margin: 0 auto;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
 }
 
 /* ---- 响应式 ---- */

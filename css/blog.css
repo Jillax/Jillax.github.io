@@ -7,7 +7,7 @@
     width: 100%;
     padding: 10px 16px;
     margin-bottom: 20px;
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     font-family: var(--font-body);
     color: var(--text-soft);
     background: var(--bg-soft);
@@ -27,7 +27,7 @@
 }
 .blog-tab {
     padding: 10px 22px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     background: none;
     border: none;
@@ -43,7 +43,7 @@
     border-bottom-color: var(--gold);
 }
 .blog-tab .count {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-left: 4px;
     font-family: var(--font-display);
@@ -67,7 +67,7 @@
 
 .post-title {
     font-family: var(--font-chinese);
-    font-size: 1.02rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: var(--text);
     margin-bottom: 6px;
@@ -76,19 +76,19 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     color: var(--text-faint);
     margin-bottom: 10px;
 }
 .post-tag {
-    font-size: 0.58rem;
+    font-size: 0.65rem;
     padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-muted);
     letter-spacing: 0.5px;
 }
 .post-summary {
-    font-size: 0.84rem;
+    font-size: 0.92rem;
     color: var(--text-muted);
     font-weight: 300;
     line-height: 1.7;
@@ -104,7 +104,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     margin-bottom: 36px;
     transition: color 0.3s ease;
@@ -131,17 +131,17 @@
     font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .article-header .article-meta {
-    font-size: 0.76rem;
+    font-size: 0.82rem;
     color: var(--text-faint);
     margin-top: 14px;
 }
 
 /* Markdown 正文 */
 .article-content {
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     color: var(--text-soft);
     font-weight: 300;
-    line-height: 2;
+    line-height: 1.85;
 }
 .article-content h1, .article-content h2, .article-content h3 {
     font-family: var(--font-chinese);
@@ -151,10 +151,10 @@
     margin-bottom: 16px;
     letter-spacing: 0.3px;
 }
-.article-content h1 { font-size: 1.4rem; }
-.article-content h2 { font-size: 1.18rem; }
-.article-content h3 { font-size: 1.04rem; }
-.article-content p { margin-bottom: 18px; }
+.article-content h1 { font-size: 1.6rem; }
+.article-content h2 { font-size: 1.35rem; }
+.article-content h3 { font-size: 1.15rem; }
+.article-content p { margin-bottom: 22px; }
 .article-content strong { color: var(--text); font-weight: 500; }
 .article-content em { font-style: italic; }
 .article-content a {
@@ -243,18 +243,18 @@
     flex-shrink: 0;
 }
 .pin-author {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--text-soft);
     font-weight: 500;
 }
 .pin-time {
-    font-size: 0.64rem;
+    font-size: 0.68rem;
     color: var(--text-faint);
     margin-left: auto;
     font-family: var(--font-display);
 }
 .pin-content {
-    font-size: 0.84rem;
+    font-size: 0.9rem;
     color: var(--text-soft);
     line-height: 1.9;
     font-weight: 300;
@@ -286,7 +286,7 @@
     margin-top: 14px;
 }
 .pin-stat {
-    font-size: 0.66rem;
+    font-size: 0.7rem;
     color: var(--text-faint);
     display: inline-flex;
     align-items: center;
@@ -320,7 +320,7 @@
 .pin-source {
     text-align: center;
     margin-top: 28px;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     color: var(--text-faint);
 }
 .pin-source a {
@@ -345,7 +345,7 @@
 .article-card:hover { padding-left: 6px; }
 .article-card-title {
     font-family: var(--font-chinese);
-    font-size: 0.98rem;
+    font-size: 1.02rem;
     font-weight: 500;
     color: var(--text);
     margin-bottom: 6px;
@@ -359,12 +359,12 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--text-faint);
     margin-bottom: 8px;
 }
 .article-card-summary {
-    font-size: 0.84rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     font-weight: 300;
     line-height: 1.7;
@@ -373,7 +373,7 @@
     display: flex;
     gap: 16px;
     margin-top: 8px;
-    font-size: 0.66rem;
+    font-size: 0.7rem;
     color: var(--text-faint);
 }
 
@@ -431,13 +431,13 @@
     text-align: center;
     padding: 64px 20px;
     color: var(--text-faint);
-    font-size: 0.84rem;
+    font-size: 0.88rem;
 }
 
 /* ---- AI 摘录来源标签 ---- */
 .excerpt-source-badge {
     display: inline-block;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--gold-soft);
     border: 1px solid var(--gold-dim);
     padding: 3px 10px;
