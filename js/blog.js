@@ -33,10 +33,21 @@ document.addEventListener('DOMContentLoaded', function() {
     var thesisArticleMeta = document.getElementById('thesisArticleMeta');
     var thesisArticleContent = document.getElementById('thesisArticleContent');
     var thesisArticleBack = document.getElementById('thesisArticleBack');
+    var excerptsSection = document.getElementById('excerptsSection');
+    var excerptList = document.getElementById('excerptList');
+    var excerptsEmpty = document.getElementById('excerptsEmpty');
+    var excerptCount = document.getElementById('excerptCount');
+    var excerptArticleView = document.getElementById('excerptArticleView');
+    var excerptArticleTitle = document.getElementById('excerptArticleTitle');
+    var excerptArticleMeta = document.getElementById('excerptArticleMeta');
+    var excerptArticleContent = document.getElementById('excerptArticleContent');
+    var excerptArticleBack = document.getElementById('excerptArticleBack');
+    var excerptSourceBadge = document.getElementById('excerptSourceBadge');
     var searchQuery = '';
     var allDataRaw = null;
     var posts = [];
     var thesisPosts = [];
+    var excerpts = [];
     var currentTab = 'posts';
 
     function fmtNum(n) {
@@ -99,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pinsSection.style.display = tab === 'pins' ? '' : 'none';
         articlesSection.style.display = tab === 'articles' ? '' : 'none';
         thesisSection.style.display = tab === 'thesis' ? '' : 'none';
+        excerptsSection.style.display = tab === 'excerpts' ? '' : 'none';
         history.pushState(null, '', 'blog.html' + (tab !== 'posts' ? '#' + tab : ''));
     }
 
@@ -117,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (tab === 'pins') renderPins(allDataRaw);
             else if (tab === 'articles') renderArticles(allDataRaw);
             else if (tab === 'posts') renderList();
+            else if (tab === 'thesis') renderThesisList();
+            else if (tab === 'excerpts') renderExcerptList();
         });
     }
 
@@ -266,15 +280,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Thesis
     function renderThesisList() {
-        if (thesisPosts.length === 0) {
+        var filtered = thesisPosts;
+        if (searchQuery) {
+            filtered = thesisPosts.filter(function(p) {
+                var title = (p.title || '').toLowerCase();
+                var tags = (p.tags || []).join(' ').toLowerCase();
+                return title.includes(searchQuery) || tags.includes(searchQuery);
+            });
+        }
+        if (filtered.length === 0) {
             thesisList.innerHTML = '';
             thesisEmpty.style.display = 'block';
             thesisCount.textContent = '';
             return;
         }
         thesisEmpty.style.display = 'none';
-        thesisCount.textContent = thesisPosts.length || '';
-        thesisList.innerHTML = thesisPosts.map(function(p) {
+        thesisCount.textContent = filtered.length || '';
+        thesisList.innerHTML = filtered.map(function(p) {
             return '<div class="post-item" data-id="' + p.id + '">' +
                 '<div class="post-title">' + p.title + '</div>' +
                 '<div class="post-meta"><span>' + p.date + '</span>' +
@@ -320,6 +342,72 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // Excerpts
+    function renderExcerptList() {
+        var filtered = excerpts;
+        if (searchQuery) {
+            filtered = excerpts.filter(function(p) {
+                var title = (p.title || '').toLowerCase();
+                var tags = (p.tags || []).join(' ').toLowerCase();
+                var summary = (p.summary || '').toLowerCase();
+                return title.includes(searchQuery) || tags.includes(searchQuery) || summary.includes(searchQuery);
+            });
+        }
+        if (filtered.length === 0) {
+            excerptList.innerHTML = '';
+            excerptsEmpty.style.display = 'block';
+            excerptCount.textContent = '';
+            return;
+        }
+        excerptsEmpty.style.display = 'none';
+        excerptCount.textContent = filtered.length || '';
+        excerptList.innerHTML = filtered.map(function(p) {
+            return '<div class="post-item" data-id="' + p.id + '">' +
+                '<div class="post-title">' + p.title + '</div>' +
+                '<div class="post-meta"><span>' + p.date + '</span>' +
+                (p.tags ? p.tags.map(function(t) { return '<span class="post-tag">' + t + '</span>'; }).join('') : '') +
+                '</div>' +
+                '<div class="post-summary">' + p.summary + '</div></div>';
+        }).join('');
+
+        excerptList.querySelectorAll('.post-item').forEach(function(el) {
+            el.addEventListener('click', function() { showExcerptArticle(el.dataset.id); });
+        });
+    }
+
+    function showExcerptList() {
+        excerptList.style.display = '';
+        excerptArticleView.classList.remove('active');
+        trackReadingProgress(false);
+    }
+
+    function showExcerptArticle(postId) {
+        var post = excerpts.find(function(p) { return p.id === postId; });
+        if (!post) { showExcerptList(); return; }
+
+        switchTab('excerpts');
+        excerptList.style.display = 'none';
+        excerptArticleView.classList.add('active');
+        excerptArticleTitle.textContent = post.title;
+        excerptArticleMeta.textContent = post.date;
+        excerptSourceBadge.textContent = post.source ? '✎ 摘自 ' + post.source : '';
+        excerptArticleContent.innerHTML = '<p style="color:var(--text-faint)">加载中...</p>';
+
+        trackReadingProgress(true);
+
+        fetch(post.file)
+            .then(function(r) {
+                if (!r.ok) throw new Error('Not found');
+                return r.text();
+            })
+            .then(function(md) {
+                excerptArticleContent.innerHTML = marked.parse(md);
+            })
+            .catch(function() {
+                excerptArticleContent.innerHTML = '<p style="color:var(--text-muted)">加载失败</p>';
+            });
+    }
+
     // Zhihu Article Viewer
     window.openZhArticle = function(url) {
         var arts = window.__zhArticleData || [];
@@ -345,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderList();
 
             var hash = window.location.hash.slice(1);
-            if (hash === 'pins' || hash === 'articles' || hash === 'thesis') {
+            if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts') {
                 switchTab(hash);
             } else if (hash) {
                 var found = posts.find(function(p) { return p.id === hash; });
@@ -377,6 +465,27 @@ document.addEventListener('DOMContentLoaded', function() {
             thesisCount.textContent = '';
         });
 
+    fetch('data/excerpts.json')
+        .then(function(r) {
+            if (!r.ok) throw new Error('Not found');
+            return r.json();
+        })
+        .then(function(data) {
+            excerpts = data;
+            renderExcerptList();
+
+            var hash = window.location.hash.slice(1);
+            if (hash) {
+                var found = excerpts.find(function(p) { return p.id === hash; });
+                if (found) showExcerptArticle(hash);
+            }
+        })
+        .catch(function() {
+            excerptList.innerHTML = '';
+            excerptsEmpty.style.display = 'block';
+            excerptCount.textContent = '';
+        });
+
     fetch('data/zhihu.json')
         .then(function(r) {
             if (!r.ok) throw new Error('Not found');
@@ -397,6 +506,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back Buttons
     articleBack.addEventListener('click', showList);
     thesisArticleBack.addEventListener('click', showThesisList);
+    excerptArticleBack.addEventListener('click', showExcerptList);
 
     // Lightbox
     document.getElementById('lightboxClose').addEventListener('click', function() {
@@ -419,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Browser Navigation
     window.addEventListener('popstate', function() {
         var hash = window.location.hash.slice(1);
-        if (hash === 'pins' || hash === 'articles' || hash === 'thesis') {
+        if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts') {
             switchTab(hash);
         } else if (hash) {
             var found = posts.find(function(p) { return p.id === hash; });
@@ -427,6 +537,10 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
                 var t = thesisPosts.find(function(p) { return p.id === hash; });
                 if (t) showThesisArticle(hash);
+                else {
+                    var e = excerpts.find(function(p) { return p.id === hash; });
+                    if (e) showExcerptArticle(hash);
+                }
             }
         } else {
             switchTab('posts');

@@ -31,6 +31,7 @@
             <button class="blog-tab" data-tab="pins"><span data-i18n="blog.zhihu">知乎想法</span> <span class="count" id="pinCount"></span></button>
             <button class="blog-tab" data-tab="articles"><span data-i18n="blog.articles">知乎文章</span> <span class="count" id="articleCount"></span></button>
             <button class="blog-tab" data-tab="thesis">AI 文本 <span class="count" id="thesisCount"></span></button>
+            <button class="blog-tab" data-tab="excerpts">AI 摘录 <span class="count" id="excerptCount"></span></button>
         </div>
 
         <!-- ===== Posts Section ===== -->
@@ -93,6 +94,22 @@
                     <div class="article-meta" id="thesisArticleMeta"></div>
                 </div>
                 <div class="article-content" id="thesisArticleContent"></div>
+            </div>
+        </div>
+
+        <!-- ===== Excerpts Section ===== -->
+        <div id="excerptsSection" style="display:none">
+            <div class="post-list" id="excerptList"></div>
+            <div class="empty-state" id="excerptsEmpty" style="display:none">还没有 AI 摘录</div>
+
+            <div class="article-view" id="excerptArticleView">
+                <button class="article-back" id="excerptArticleBack">← 返回列表</button>
+                <div class="article-header">
+                    <div class="excerpt-source-badge" id="excerptSourceBadge"></div>
+                    <h1 id="excerptArticleTitle"></h1>
+                    <div class="article-meta" id="excerptArticleMeta"></div>
+                </div>
+                <div class="article-content" id="excerptArticleContent"></div>
             </div>
         </div>
 
