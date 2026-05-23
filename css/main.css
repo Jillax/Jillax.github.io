@@ -49,6 +49,27 @@ body::after {
     --font-chinese: 'Noto Serif SC', serif;
 }
 
+/* Auto-detect OS-level preference for first-time visitors */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        --bg: #e6dfd4;
+        --bg-soft: #ece5db;
+        --bg-surface: #f0ebe2;
+        --bg-nav: rgba(230, 223, 212, 0.82);
+        --text: #2b221a;
+        --text-soft: #5c5142;
+        --text-muted: #8c7e6c;
+        --text-faint: #b0a493;
+        --gold: #b8963e;
+        --gold-soft: #c4a35a;
+        --gold-dim: rgba(184, 150, 62, 0.12);
+        --border: rgba(44, 40, 36, 0.08);
+        --border-light: rgba(44, 40, 36, 0.04);
+        --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        --overlay-bg: #e6dfd4;
+    }
+}
+
 [data-theme="light"] {
     /* Light mode — warm parchment with depth */
     --bg: #e6dfd4;
