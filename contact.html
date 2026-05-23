@@ -5,92 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="联系 Jillax">
     <title>联系 · Jillax</title>
-
     <link rel="stylesheet" href="css/main.css">
-
-    <style>
-        /* ===== Contact ===== */
-        .contact-intro {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            font-weight: 300;
-            letter-spacing: 0.2px;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            max-width: 500px;
-        }
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            color: var(--text-soft);
-            font-size: 0.85rem;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-light);
-            margin: -0.5px;
-            font-family: var(--font-body);
-        }
-        .contact-item:hover {
-            color: var(--gold);
-            border-color: var(--gold-dim);
-            background: var(--gold-dim);
-            z-index: 1;
-            position: relative;
-        }
-        .contact-item svg {
-            width: 15px; height: 15px;
-            opacity: 0.5; flex-shrink: 0;
-            transition: opacity 0.3s ease;
-        }
-        .contact-item:hover svg { opacity: 0.9; }
-        .contact-item .contact-sub {
-            font-size: 0.65rem;
-            color: var(--text-faint);
-            margin-left: auto;
-            font-family: var(--font-display);
-            font-style: italic;
-            font-variation-settings: 'SOFT' 100, 'WONK' 1;
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            .contact-grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 480px) {
-            .contact-item { padding: 12px 14px; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/contact.css">
 </head>
-<body>
+<body data-page="contact">
 
-    <!-- ===== Nav ===== -->
-    <nav>
-        <div class="container">
-            <a href="index.html" class="nav-logo">Jillax</a>
-            <div class="nav-links">
-                <a href="about.html" data-i18n="nav.about">关于</a>
-                <a href="portfolio.html" data-i18n="nav.portfolio">投资</a>
-                <a href="contact.html" class="current" data-i18n="nav.contact">联系</a>
-                <a href="share.html" data-i18n="nav.share">分享</a>
-                <a href="translations.html" data-i18n="nav.translations">译制</a>
-                <a href="bookshelf.html" data-i18n="nav.bookshelf">书影音</a>
-                <a href="blog.html" data-i18n="nav.blog">随笔</a>
-                <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
-                <button class="lang-toggle" title="语言/Language">EN</button>
-            </div>
-        </div>
-    </nav>
-
-    <div id="page-transition-overlay" style="position:fixed;inset:0;z-index:9998;background:#1a1714;opacity:1;pointer-events:none"></div>
-
-    <!-- ===== Header ===== -->
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home" data-i18n="home.back">← 返回主页</a>
@@ -121,7 +40,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M8 12h8"/>
-                    <path d="M12 8v8"/>
+                    <path d="M12 8v12"/>
                     <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
                 </svg>
                 豆瓣
@@ -146,13 +65,7 @@
         </div>
     </div>
 
-    <!-- ===== Footer ===== -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Jillax</p>
-        </div>
-    </footer>
-
+    <script src="js/components.js"></script>
     <script src="js/main.js"></script>
 
 </body>

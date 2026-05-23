@@ -1,0 +1,58 @@
+/* ============================================
+   Jillax.github.io — Contact Page Styles
+   ============================================ */
+
+.contact-intro {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 500px;
+}
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    color: var(--text-soft);
+    font-size: 0.85rem;
+    font-weight: 400;
+    border: 1px solid var(--border-light);
+    margin: -0.5px;
+    font-family: var(--font-body);
+}
+.contact-item:hover {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+    background: var(--gold-dim);
+    z-index: 1;
+    position: relative;
+}
+.contact-item svg {
+    width: 15px; height: 15px;
+    opacity: 0.5; flex-shrink: 0;
+    transition: opacity 0.3s ease;
+}
+.contact-item:hover svg { opacity: 0.9; }
+.contact-item .contact-sub {
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    margin-left: auto;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    .contact-item { padding: 12px 14px; }
+}

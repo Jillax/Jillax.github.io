@@ -1,0 +1,218 @@
+/* ============================================
+   Jillax.github.io — Bookshelf Page Styles
+   ============================================ */
+
+/* ===== Stats Bar ===== */
+.stats-bar {
+    display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.stat-item {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    font-family: var(--font-display);
+}
+.stat-item strong {
+    color: var(--text-soft);
+    font-weight: 500;
+}
+.update-time {
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    font-style: italic;
+}
+
+/* ===== Dashboard Section ===== */
+.dash-section {
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 16px;
+}
+.dash-title {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+
+/* ===== Stat Cards ===== */
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-bottom: 0;
+}
+.stat-card {
+    border: 1px solid var(--border-light);
+    padding: 14px;
+    text-align: center;
+}
+.stat-card .num {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--gold-soft);
+    font-weight: 500;
+    line-height: 1.1;
+    font-variation-settings: 'SOFT' 60, 'WONK' 0;
+}
+.stat-card .label {
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* ===== Rating Distribution ===== */
+.rating-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.rating-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    width: 28px;
+    flex-shrink: 0;
+    text-align: right;
+    font-family: var(--font-display);
+}
+.rating-track {
+    flex: 1;
+    height: 18px;
+    background: var(--border-light);
+    position: relative;
+    overflow: hidden;
+}
+.rating-fill {
+    height: 100%;
+    background: var(--gold-dim);
+    transition: width 0.8s ease;
+    width: 0;
+}
+.rating-count {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    width: 32px;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+}
+
+/* ===== Items Grid ===== */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+}
+.item-card {
+    display: flex;
+    gap: 14px;
+    padding: 16px;
+}
+.item-card.hidden { display: none; }
+.item-cover {
+    width: 60px;
+    height: 85px;
+    flex-shrink: 0;
+    background: var(--border-light);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.item-cover .placeholder {
+    font-size: 1.2rem;
+    color: var(--text-faint);
+}
+.item-info { flex: 1; min-width: 0; }
+.item-title {
+    font-family: var(--font-chinese);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.item-author {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.item-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.item-status {
+    font-size: 0.6rem;
+    padding: 1px 7px;
+    border: 1px solid var(--border);
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+}
+.item-status.collect { border-color: rgba(122, 139, 110, 0.3); color: var(--olive); }
+.item-status.wish { border-color: var(--border); color: var(--text-faint); }
+.item-status.do { border-color: var(--gold-dim); color: var(--gold-soft); }
+.item-rating {
+    font-size: 0.65rem;
+    color: var(--gold-soft);
+    letter-spacing: 1px;
+}
+.item-date {
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    margin-left: auto;
+}
+.item-comment {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    font-weight: 300;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ===== Line Chart ===== */
+.line-chart-box {
+    border: 1px solid var(--border);
+    padding: 4px;
+}
+.chart-canvas-wrap {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.chart-canvas-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .items-grid { grid-template-columns: 1fr; }
+    .dash-section { padding: 14px; }
+}

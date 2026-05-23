@@ -1,0 +1,130 @@
+/* ============================================
+   Jillax.github.io — Share Page Styles
+   ============================================ */
+
+.file-list { display: flex; flex-direction: column; gap: 8px; }
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+.file-item:hover { border-color: var(--gold-dim); }
+.file-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+    color: var(--text-faint);
+}
+.file-info { flex: 1; min-width: 0; }
+.file-name {
+    font-family: var(--font-chinese);
+    font-size: 0.85rem;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+.file-size {
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    font-family: var(--font-display);
+}
+.file-download {
+    font-size: 0.7rem;
+    color: var(--gold-soft);
+    padding: 4px 12px;
+    border: 1px solid var(--gold-dim);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+.file-download:hover {
+    background: var(--gold-dim);
+    color: var(--gold);
+}
+.file-breadcrumb {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    font-family: var(--font-display);
+}
+.file-breadcrumb a {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+.file-breadcrumb a:hover { color: var(--gold); }
+.file-breadcrumb span { color: var(--text-faint); margin: 0 4px; }
+
+/* ===== Image Grid ===== */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+.image-item {
+    aspect-ratio: 1;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.image-item:hover { border-color: var(--gold-dim); transform: scale(1.02); }
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.image-item .img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--text-faint);
+    background: var(--border-light);
+}
+
+/* ===== Lightbox ===== */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+.lightbox.active { display: flex; }
+.lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 1px solid var(--border);
+}
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.lightbox-close:hover { color: var(--gold); }
+
+/* ===== Loading ===== */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-faint);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .image-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    .file-item { padding: 12px; }
+}

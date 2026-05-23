@@ -1,0 +1,165 @@
+/* ============================================
+   Jillax.github.io — Translations Page Styles
+   ============================================ */
+
+/* ===== Stats ===== */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-bottom: 28px;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+}
+.stat-item {
+    text-align: center;
+    padding: 20px 12px;
+    border-right: 1px solid var(--border-light);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    font-variation-settings: 'SOFT' 60, 'WONK' 0;
+}
+.stat-label {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+}
+
+/* ===== Sort Bar ===== */
+.sort-bar {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* ===== Cards ===== */
+.trans-list { display: flex; flex-direction: column; gap: 14px; }
+.trans-card {
+    display: flex; gap: 20px;
+    padding: 20px;
+}
+.trans-card.hidden { display: none; }
+.trans-cover {
+    width: 120px;
+    height: 75px;
+    flex-shrink: 0;
+    background: var(--border-light);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.trans-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.trans-cover .placeholder {
+    font-size: 1.5rem;
+    color: var(--text-faint);
+}
+.trans-body { flex: 1; min-width: 0; }
+.trans-title {
+    font-family: var(--font-chinese);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+.trans-original {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 6px;
+    font-weight: 300;
+}
+.trans-meta {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.trans-status {
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    letter-spacing: 0.5px;
+}
+.trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--olive, #7a8b6e); }
+.trans-status.ongoing { border-color: var(--gold-dim); color: var(--gold-soft); }
+.trans-source {
+    font-size: 0.65rem;
+    color: var(--text-faint);
+}
+.trans-tags {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px;
+}
+.trans-tag {
+    font-size: 0.55rem;
+    padding: 1px 7px;
+    border: 1px solid var(--border);
+    color: var(--text-faint);
+    letter-spacing: 0.3px;
+}
+.trans-stats {
+    display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;
+}
+.trans-stat {
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    display: inline-flex; align-items: center; gap: 3px;
+}
+.trans-stat .num { color: var(--text-muted); font-family: var(--font-display); }
+.trans-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+.trans-links {
+    margin-top: 8px;
+    display: flex; gap: 12px;
+}
+.trans-link {
+    font-size: 0.7rem;
+    color: var(--gold-soft);
+    transition: color 0.3s ease;
+    display: inline-flex; align-items: center; gap: 4px;
+}
+.trans-link:hover { color: var(--gold); }
+.trans-date {
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    margin-left: auto;
+}
+
+/* ===== Result count ===== */
+.result-count {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    margin-bottom: 12px;
+    font-family: var(--font-display);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .trans-card { padding: 16px; flex-direction: column; gap: 10px; }
+    .trans-cover { width: 100%; height: 140px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { padding: 14px 10px; }
+    .stat-num { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+    .filter-tab { padding: 4px 10px; font-size: 0.68rem; }
+}

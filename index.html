@@ -5,252 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Jillax 的个人主页">
     <title>Jillax · 个人主页</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/main.css">
-
-    <style>
-        /* ========== Hero ========== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 0 80px;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -20%;
-            width: 70%;
-            height: 80%;
-            background: radial-gradient(ellipse at center, rgba(196, 163, 90, 0.04) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero-content {
-            max-width: 600px;
-            position: relative;
-        }
-        .hero-ornament {
-            font-family: var(--font-display);
-            font-size: 0.7rem;
-            color: var(--gold-soft);
-            margin-bottom: 28px;
-            letter-spacing: 6px;
-            font-variation-settings: 'SOFT' 100, 'WONK' 1;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.15s forwards;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .hero-ornament::before,
-        .hero-ornament::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-        }
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(3.2rem, 8vw, 5.2rem);
-            font-weight: 600;
-            line-height: 1.05;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            color: var(--text);
-            font-variation-settings: 'SOFT' 60, 'WONK' 0;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.3s forwards;
-        }
-        .hero h1 .highlight {
-            color: var(--gold);
-            font-style: italic;
-            font-variation-settings: 'SOFT' 80, 'WONK' 1;
-        }
-        .hero-subtitle {
-            font-family: var(--font-body);
-            font-size: clamp(1rem, 1.6vw, 1.1rem);
-            color: var(--text-soft);
-            font-weight: 400;
-            font-style: italic;
-            margin-bottom: 32px;
-            letter-spacing: 0.8px;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.45s forwards;
-        }
-        .hero-desc {
-            font-size: 0.92rem;
-            color: var(--text-muted);
-            max-width: 420px;
-            margin-bottom: 44px;
-            line-height: 2;
-            letter-spacing: 0.2px;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.55s forwards;
-        }
-        .hero-actions {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.65s forwards;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 20px;
-            margin-right: 4px;
-            font-weight: 400;
-            font-size: 0.82rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-soft);
-            letter-spacing: 0.5px;
-            font-family: var(--font-body);
-        }
-        .btn:hover {
-            border-color: var(--gold-dim);
-            background: var(--gold-dim);
-            color: var(--gold);
-        }
-
-        /* ========== Quote ========== */
-        .quote-section {
-            padding: 80px 0 40px;
-            position: relative;
-        }
-        .quote-block {
-            max-width: 520px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-        }
-        .quote-mark {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            color: var(--gold-dim);
-            line-height: 0.6;
-            margin-bottom: 16px;
-            font-variation-settings: 'SOFT' 100, 'WONK' 1;
-            opacity: 0.5;
-        }
-        .quote-text {
-            font-family: var(--font-chinese);
-            font-size: 1.05rem;
-            color: var(--text-soft);
-            line-height: 1.9;
-            letter-spacing: 0.8px;
-            font-style: italic;
-            min-height: 3.8em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .quote-source {
-            font-size: 0.78rem;
-            color: var(--text-faint);
-            margin-top: 16px;
-            font-family: var(--font-body);
-            font-style: normal;
-            letter-spacing: 0.5px;
-        }
-        .quote-source:empty { display: none; }
-        .quote-refresh {
-            position: absolute;
-            bottom: -32px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: none;
-            border: none;
-            color: var(--text-faint);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            padding: 4px 12px;
-            font-family: var(--font-body);
-            opacity: 0.4;
-        }
-        .quote-refresh:hover {
-            color: var(--gold);
-            opacity: 1;
-            transform: translateX(-50%) rotate(180deg);
-        }
-
-        .footer-update {
-            margin-top: 6px;
-            font-size: 0.65rem;
-            color: rgba(228, 219, 204, 0.08);
-            font-style: normal;
-            font-family: var(--font-body);
-            font-weight: 300;
-        }
-        .footer-counter {
-            margin-top: 4px;
-            font-size: 0.6rem;
-            color: rgba(228, 219, 204, 0.06);
-            font-style: normal;
-            font-family: var(--font-body);
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        /* ========== Animations ========== */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== Responsive ========== */
-        @media (max-width: 768px) {
-            .quote-section { padding: 60px 0 20px; }
-            .quote-text { font-size: 0.95rem; }
-            .hero { padding: 90px 0 60px; min-height: auto; }
-            .hero h1 { font-size: clamp(2.5rem, 10vw, 3.2rem); }
-            .hero-desc { max-width: 100%; }
-            .btn { padding: 8px 16px; font-size: 0.78rem; }
-        }
-        @media (max-width: 480px) {
-            .hero-actions { flex-direction: column; align-items: stretch; }
-            .hero-actions .btn { margin-right: 0; justify-content: center; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
-<body>
+<body data-page="index">
 
-    <!-- ========== Navigation ========== -->
-    <nav>
-        <div class="container">
-            <a href="#" class="nav-logo">Jillax</a>
-            <div class="nav-links">
-                <a href="about.html" data-i18n="nav.about">关于</a>
-                <a href="portfolio.html" data-i18n="nav.portfolio">投资</a>
-                <a href="contact.html" data-i18n="nav.contact">联系</a>
-                <a href="share.html" data-i18n="nav.share">分享</a>
-                <a href="translations.html" data-i18n="nav.translations">译制</a>
-                <a href="bookshelf.html" data-i18n="nav.bookshelf">书影音</a>
-                <a href="blog.html" data-i18n="nav.blog">随笔</a>
-                <button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>
-                <button class="lang-toggle" title="语言/Language">EN</button>
-            </div>
-        </div>
-    </nav>
-
-    <div id="page-transition-overlay" style="position:fixed;inset:0;z-index:9998;background:#1a1714;opacity:1;pointer-events:none"></div>
-
-    <!-- ========== Hero ========== -->
+    <!-- ===== Hero ===== -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-ornament" data-i18n="hero.ornament">科技 · 人文</div>
                 <h1><span class="highlight">Jillax</span></h1>
                 <div class="hero-subtitle" data-i18n="hero.subtitle">个人小站，集成存放一些我在意的东西</div>
-                <p class="hero-desc" data-i18n="hero.desc">
-                    社媒内容 · Agent 实验 · Vibe Coding
-                </p>
+                <p class="hero-desc" data-i18n="hero.desc">社媒内容 · Agent 实验 · Vibe Coding</p>
                 <div class="hero-actions">
                     <a href="about.html" class="btn" data-i18n="btn.about">关于</a>
                     <a href="portfolio.html" class="btn" data-i18n="btn.portfolio">投资组合</a>
@@ -264,7 +33,7 @@
         </div>
     </section>
 
-    <!-- ========== Quote ========== -->
+    <!-- ===== Quote ===== -->
     <section class="quote-section" id="quote">
         <div class="container">
             <div class="quote-block reveal">
@@ -276,82 +45,10 @@
         </div>
     </section>
 
-    <!-- ========== Footer ========== -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Jillax · AI降临派，比起人还是更喜欢人工智能</p>
-            <p class="footer-update">最后更新：<span id="lastUpdate">加载中...</span></p>
-            <p class="footer-counter">访客 <span id="busuanzi_value_site_uv"></span> · 访问 <span id="busuanzi_value_site_pv"></span></p>
-        </div>
-    </footer>
-
-    <!-- 不蒜子访问统计 -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+    <script src="js/components.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
 
-    <!-- Last Updated -->
-    <script>
-        fetch('https://api.github.com/repos/Jillax/Jillax.github.io/commits?per_page=1')
-            .then(r => r.json())
-            .then(data => {
-                if (data && data[0] && data[0].commit) {
-                    const date = new Date(data[0].commit.committer.date);
-                    const y = date.getFullYear();
-                    const m = String(date.getMonth() + 1).padStart(2, '0');
-                    const d = String(date.getDate()).padStart(2, '0');
-                    const h = String(date.getHours()).padStart(2, '0');
-                    const min = String(date.getMinutes()).padStart(2, '0');
-                    document.getElementById('lastUpdate').textContent = `${y}-${m}-${d} ${h}:${min}`;
-                } else {
-                    document.getElementById('lastUpdate').textContent = '—';
-                }
-            })
-            .catch(() => {
-                document.getElementById('lastUpdate').textContent = '—';
-            });
-    </script>
-
-    <!-- ========== Quotes ========== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const quoteText = document.getElementById('quoteText');
-            const quoteSource = document.getElementById('quoteSource');
-            const quoteRefresh = document.getElementById('quoteRefresh');
-            let quotes = [];
-
-            fetch('data/quotes.json')
-                .then(r => r.json())
-                .then(data => {
-                    quotes = data;
-                    showRandomQuote();
-                })
-                .catch(() => {
-                    quoteText.textContent = '对混沌和未来保持谦虚，寻找属于这个时代的回答。';
-                    quoteSource.textContent = 'Jillax';
-                });
-
-            function showRandomQuote() {
-                if (quotes.length === 0) return;
-                const q = quotes[Math.floor(Math.random() * quotes.length)];
-                quoteText.textContent = q.text;
-                quoteSource.textContent = q.source || '';
-            }
-
-            if (quoteRefresh) {
-                quoteRefresh.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showRandomQuote();
-                    this.style.transition = 'transform 0.4s ease';
-                    this.style.transform = 'translateX(-50%) rotate(180deg)';
-                    setTimeout(() => {
-                        this.style.transition = 'none';
-                        this.style.transform = 'translateX(-50%)';
-                    }, 400);
-                });
-            }
-        });
-    </script>
-
-    </body>
+</body>
 </html>
