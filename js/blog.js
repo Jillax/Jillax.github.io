@@ -43,11 +43,21 @@ document.addEventListener('DOMContentLoaded', function() {
     var excerptArticleContent = document.getElementById('excerptArticleContent');
     var excerptArticleBack = document.getElementById('excerptArticleBack');
     var excerptSourceBadge = document.getElementById('excerptSourceBadge');
+    var copywritingSection = document.getElementById('copywritingSection');
+    var copywritingList = document.getElementById('copywritingList');
+    var copywritingEmpty = document.getElementById('copywritingEmpty');
+    var copywritingCount = document.getElementById('copywritingCount');
+    var copywritingArticleView = document.getElementById('copywritingArticleView');
+    var copywritingArticleTitle = document.getElementById('copywritingArticleTitle');
+    var copywritingArticleMeta = document.getElementById('copywritingArticleMeta');
+    var copywritingArticleContent = document.getElementById('copywritingArticleContent');
+    var copywritingArticleBack = document.getElementById('copywritingArticleBack');
     var searchQuery = '';
     var allDataRaw = null;
     var posts = [];
     var thesisPosts = [];
     var excerpts = [];
+    var copywritingData = [];
     var currentTab = 'posts';
 
     function fmtNum(n) {
@@ -111,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         articlesSection.style.display = tab === 'articles' ? '' : 'none';
         thesisSection.style.display = tab === 'thesis' ? '' : 'none';
         excerptsSection.style.display = tab === 'excerpts' ? '' : 'none';
+        copywritingSection.style.display = tab === 'copywriting' ? '' : 'none';
         history.pushState(null, '', 'blog.html' + (tab !== 'posts' ? '#' + tab : ''));
     }
 
@@ -131,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (tab === 'posts') renderList();
             else if (tab === 'thesis') renderThesisList();
             else if (tab === 'excerpts') renderExcerptList();
+            else if (tab === 'copywriting') renderCopywritingList();
         });
     }
 
@@ -408,6 +420,59 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // Copywriting
+    function renderCopywritingList() {
+        var filtered = copywritingData;
+        if (searchQuery) {
+            filtered = copywritingData.filter(function(p) {
+                var title = (p.title || '').toLowerCase();
+                var tags = (p.tags || []).join(' ').toLowerCase();
+                var content = (p.content || '').toLowerCase();
+                return title.includes(searchQuery) || tags.includes(searchQuery) || content.includes(searchQuery);
+            });
+        }
+        if (filtered.length === 0) {
+            copywritingList.innerHTML = '';
+            copywritingEmpty.style.display = 'block';
+            copywritingCount.textContent = '';
+            return;
+        }
+        copywritingEmpty.style.display = 'none';
+        copywritingCount.textContent = filtered.length || '';
+        copywritingList.innerHTML = filtered.map(function(p) {
+            return '<div class="post-item" data-id="' + p.id + '">' +
+                '<div class="post-title">' + p.title + '</div>' +
+                '<div class="post-meta"><span>' + p.date + '</span>' +
+                (p.tags ? p.tags.map(function(t) { return '<span class="post-tag">' + t + '</span>'; }).join('') : '') +
+                '</div>' +
+                '<div class="post-summary">' + (p.content ? p.content.slice(0, 120).replace(/[#*>\n]/g, '') + '…' : '') + '</div></div>';
+        }).join('');
+
+        copywritingList.querySelectorAll('.post-item').forEach(function(el) {
+            el.addEventListener('click', function() { showCopywritingArticle(el.dataset.id); });
+        });
+    }
+
+    function showCopywritingList() {
+        copywritingList.style.display = '';
+        copywritingArticleView.classList.remove('active');
+        trackReadingProgress(false);
+    }
+
+    function showCopywritingArticle(postId) {
+        var post = copywritingData.find(function(p) { return p.id === postId; });
+        if (!post) { showCopywritingList(); return; }
+
+        switchTab('copywriting');
+        copywritingList.style.display = 'none';
+        copywritingArticleView.classList.add('active');
+        copywritingArticleTitle.textContent = post.title;
+        copywritingArticleMeta.textContent = post.date + (post.tags ? '  ·  ' + post.tags.join(' · ') : '');
+        copywritingArticleContent.innerHTML = marked.parse(post.content || '');
+
+        trackReadingProgress(true);
+    }
+
     // Zhihu Article Viewer
     window.openZhArticle = function(url) {
         var arts = window.__zhArticleData || [];
@@ -433,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderList();
 
             var hash = window.location.hash.slice(1);
-            if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts') {
+            if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts' || hash === 'copywriting') {
                 switchTab(hash);
             } else if (hash) {
                 var found = posts.find(function(p) { return p.id === hash; });
@@ -486,6 +551,27 @@ document.addEventListener('DOMContentLoaded', function() {
             excerptCount.textContent = '';
         });
 
+    fetch('data/copywriting.json')
+        .then(function(r) {
+            if (!r.ok) throw new Error('Not found');
+            return r.json();
+        })
+        .then(function(data) {
+            copywritingData = data;
+            renderCopywritingList();
+
+            var hash = window.location.hash.slice(1);
+            if (hash) {
+                var found = copywritingData.find(function(p) { return p.id === hash; });
+                if (found) showCopywritingArticle(hash);
+            }
+        })
+        .catch(function() {
+            copywritingList.innerHTML = '';
+            copywritingEmpty.style.display = 'block';
+            copywritingCount.textContent = '';
+        });
+
     fetch('data/zhihu.json')
         .then(function(r) {
             if (!r.ok) throw new Error('Not found');
@@ -507,6 +593,7 @@ document.addEventListener('DOMContentLoaded', function() {
     articleBack.addEventListener('click', showList);
     thesisArticleBack.addEventListener('click', showThesisList);
     excerptArticleBack.addEventListener('click', showExcerptList);
+    copywritingArticleBack.addEventListener('click', showCopywritingList);
 
     // Lightbox
     document.getElementById('lightboxClose').addEventListener('click', function() {
@@ -529,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Browser Navigation
     window.addEventListener('popstate', function() {
         var hash = window.location.hash.slice(1);
-        if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts') {
+        if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts' || hash === 'copywriting') {
             switchTab(hash);
         } else if (hash) {
             var found = posts.find(function(p) { return p.id === hash; });
@@ -540,6 +627,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 else {
                     var e = excerpts.find(function(p) { return p.id === hash; });
                     if (e) showExcerptArticle(hash);
+                    else {
+                        var c = copywritingData.find(function(p) { return p.id === hash; });
+                        if (c) showCopywritingArticle(hash);
+                    }
                 }
             }
         } else {

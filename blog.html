@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的随笔与笔记">
-    <title>随笔 · Jillax</title>
+    <meta name="description" content="Jillax 的文本存档">
+    <title>文本 · Jillax</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/blog.css">
     <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
@@ -18,8 +18,8 @@
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home" data-i18n="home.back">← 返回主页</a>
-            <h1 data-i18n="page.blog.title">📝 随笔</h1>
-            <p data-i18n="page.blog.desc">笔记 · 思考 · 记录</p>
+            <h1 data-i18n="page.blog.title">📝 文本</h1>
+            <p data-i18n="page.blog.desc">文章 · 文案 · 笔记</p>
         </div>
 
         <!-- ===== Search ===== -->
@@ -32,6 +32,7 @@
             <button class="blog-tab" data-tab="articles"><span data-i18n="blog.articles">知乎文章</span> <span class="count" id="articleCount"></span></button>
             <button class="blog-tab" data-tab="thesis">AI 文本 <span class="count" id="thesisCount"></span></button>
             <button class="blog-tab" data-tab="excerpts">AI 摘录 <span class="count" id="excerptCount"></span></button>
+            <button class="blog-tab" data-tab="copywriting">文案 <span class="count" id="copywritingCount"></span></button>
         </div>
 
         <!-- ===== Posts Section ===== -->
@@ -110,6 +111,21 @@
                     <div class="article-meta" id="excerptArticleMeta"></div>
                 </div>
                 <div class="article-content" id="excerptArticleContent"></div>
+            </div>
+        </div>
+
+        <!-- ===== Copywriting Section ===== -->
+        <div id="copywritingSection" style="display:none">
+            <div class="post-list" id="copywritingList"></div>
+            <div class="empty-state" id="copywritingEmpty" style="display:none">还没有文案</div>
+
+            <div class="article-view" id="copywritingArticleView">
+                <button class="article-back" id="copywritingArticleBack">← 返回列表</button>
+                <div class="article-header">
+                    <h1 id="copywritingArticleTitle"></h1>
+                    <div class="article-meta" id="copywritingArticleMeta"></div>
+                </div>
+                <div class="article-content" id="copywritingArticleContent"></div>
             </div>
         </div>
 
