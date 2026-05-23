@@ -34,14 +34,48 @@
     text-transform: uppercase;
 }
 
+/* ===== Filter & Search ===== */
+.filter-bar {
+    display: flex; gap: 4px; margin-bottom: 4px; flex-wrap: wrap; align-items: center;
+}
+.filter-label {
+    font-size: 0.65rem; color: var(--text-faint);
+    margin-right: 6px; font-family: var(--font-display); letter-spacing: 0.5px;
+}
+.filter-tab {
+    padding: 5px 14px; font-size: 0.72rem;
+    color: var(--text-muted); border: 1px solid var(--border);
+    background: none; cursor: pointer;
+    transition: all 0.3s ease; font-family: var(--font-body);
+}
+.filter-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
+.filter-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
+.filter-tab .count { font-size: 0.6rem; color: var(--text-faint); margin-left: 3px; }
+.filter-tab.tag { font-size: 0.68rem; padding: 4px 12px; }
+.filter-tab.tag.active { background: transparent; border-color: var(--gold-soft); color: var(--gold-soft); }
+
+.search-wrap { margin-bottom: 16px; position: relative; }
+.search-input {
+    width: 100%; padding: 10px 16px; font-size: 0.82rem;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-soft); font-family: var(--font-body);
+    outline: none; transition: border-color 0.3s ease; box-sizing: border-box;
+}
+.search-input:focus { border-color: var(--gold-dim); }
+.search-input::placeholder { color: var(--text-faint); font-style: italic; }
+
 /* ===== Sort Bar ===== */
 .sort-bar {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    align-items: center;
+    display: flex; gap: 2px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;
 }
+.sort-btn {
+    padding: 3px 12px; font-size: 0.68rem;
+    color: var(--text-faint); border: 1px solid var(--border);
+    background: none; cursor: pointer;
+    transition: all 0.3s ease; font-family: var(--font-body);
+}
+.sort-btn:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+.sort-btn.active { border-color: var(--gold-dim); color: var(--text-soft); }
 
 /* ===== Cards ===== */
 .trans-list { display: flex; flex-direction: column; gap: 14px; }

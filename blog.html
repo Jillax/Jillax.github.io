@@ -11,6 +11,9 @@
 </head>
 <body data-page="blog">
 
+    <!-- ===== Reading Progress Bar ===== -->
+    <div class="reading-progress" id="readingProgress"></div>
+
     <!-- ===== Header ===== -->
     <div class="container">
         <div class="page-header">
@@ -33,7 +36,7 @@
         <!-- ===== Posts Section ===== -->
         <div id="postsSection">
             <div class="post-list" id="postList"></div>
-            <div class="empty-state" id="emptyState">还没有文章</div>
+            <div class="empty-state" id="emptyState" style="display:none">还没有文章</div>
 
             <!-- ===== Article View ===== -->
             <div class="article-view" id="articleView">
@@ -47,9 +50,9 @@
         </div>
 
         <!-- ===== Pins Section ===== -->
-        <div id="pinsSection">
+        <div id="pinsSection" style="display:none">
             <div class="feed" id="feed"></div>
-            <div class="empty-state" id="pinsEmpty">
+            <div class="empty-state" id="pinsEmpty" style="display:none">
                 <p data-i18n="blog.empty.pins">知乎想法会在推送后自动同步</p>
             </div>
             <div class="pin-source">
@@ -59,17 +62,17 @@
         </div>
 
         <!-- ===== Zhihu Article Viewer ===== -->
-        <div id="zhArticleView">
+        <div id="zhArticleView" style="display:none">
             <button class="article-back" id="zhArtBack">← 返回列表</button>
-            <div id="zhArtTitle"></div>
-            <div id="zhArtMeta"></div>
+            <div id="zhArtTitle" style="font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.4"></div>
+            <div id="zhArtMeta" style="font-size:0.75rem;color:var(--text-faint);margin-bottom:20px"></div>
             <div id="zhArtBody" class="article-content"></div>
         </div>
 
         <!-- ===== Articles Section ===== -->
-        <div id="articlesSection">
+        <div id="articlesSection" style="display:none">
             <div class="article-list" id="articleList"></div>
-            <div class="empty-state" id="articlesEmpty">
+            <div class="empty-state" id="articlesEmpty" style="display:none">
                 <p data-i18n="blog.empty.articles">知乎文章会在推送后自动同步</p>
             </div>
             <div class="pin-source">
@@ -79,9 +82,9 @@
         </div>
 
         <!-- ===== Thesis Section ===== -->
-        <div id="thesisSection">
+        <div id="thesisSection" style="display:none">
             <div class="post-list" id="thesisList"></div>
-            <div class="empty-state" id="thesisEmpty">还没有 AI 文本</div>
+            <div class="empty-state" id="thesisEmpty" style="display:none">还没有 AI 文本</div>
 
             <div class="article-view" id="thesisArticleView">
                 <button class="article-back" id="thesisArticleBack">← 返回列表</button>
@@ -103,5 +106,6 @@
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
     <script src="js/blog.js"></script>
+
 </body>
 </html>

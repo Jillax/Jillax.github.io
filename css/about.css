@@ -129,6 +129,25 @@
     margin-bottom: 32px;
     flex-wrap: wrap;
 }
+.tl-filter-btn {
+    padding: 5px 14px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+}
+.tl-filter-btn:hover {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+}
+.tl-filter-btn.active {
+    border-color: var(--gold-dim);
+    background: var(--gold-dim);
+    color: var(--gold);
+}
 .tl-filter-count {
     font-size: 0.65rem;
     color: var(--text-faint);

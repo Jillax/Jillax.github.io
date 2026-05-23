@@ -2,6 +2,41 @@
    Jillax.github.io — Bookshelf Page Styles
    ============================================ */
 
+/* ===== Category Tabs ===== */
+.cat-tabs {
+    display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.cat-tab {
+    padding: 8px 20px; font-size: 0.82rem;
+    color: var(--text-muted); border: 1px solid var(--border);
+    background: none; cursor: pointer;
+    transition: all 0.3s ease; font-family: var(--font-body);
+}
+.cat-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
+.cat-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
+.cat-tab .count { font-size: 0.65rem; color: var(--text-faint); margin-left: 4px; font-family: var(--font-display); }
+
+/* ===== Filter Bar ===== */
+.filter-bar {
+    display: flex; gap: 2px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
+}
+.filter-label {
+    font-size: 0.65rem; color: var(--text-faint);
+    margin-right: 8px; font-family: var(--font-display); letter-spacing: 0.5px;
+}
+.filter-tab {
+    padding: 4px 14px; font-size: 0.72rem;
+    color: var(--text-faint); border: 1px solid var(--border);
+    background: none; cursor: pointer;
+    transition: all 0.3s ease; font-family: var(--font-body);
+}
+.filter-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+.filter-tab.active { border-color: var(--gold-dim); color: var(--text-soft); }
+.filter-count {
+    font-size: 0.6rem; color: var(--text-faint);
+    margin-left: 12px; font-family: var(--font-display);
+}
+
 /* ===== Stats Bar ===== */
 .stats-bar {
     display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap;
@@ -215,4 +250,13 @@
 @media (max-width: 768px) {
     .items-grid { grid-template-columns: 1fr; }
     .dash-section { padding: 14px; }
+    .item-card { padding: 14px; }
+    .stat-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+    .cat-tab { padding: 6px 14px; font-size: 0.78rem; }
+    .filter-tab { padding: 3px 10px; font-size: 0.68rem; }
+    .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .stat-card { padding: 10px; }
+    .stat-card .num { font-size: 1.3rem; }
 }
