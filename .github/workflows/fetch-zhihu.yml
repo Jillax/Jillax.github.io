@@ -26,8 +26,11 @@ jobs:
           npm init -y
           npm install playwright
 
-      - name: 安装浏览器（含系统依赖）
-        run: npx playwright install --with-deps chromium
+      - name: 安装 Chromium 浏览器
+        run: ./node_modules/.bin/playwright install chromium
+
+      - name: 安装系统依赖
+        run: sudo ./node_modules/.bin/playwright install-deps chromium
 
       - name: 抓取知乎想法
         env:
