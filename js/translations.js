@@ -94,7 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('countAll').textContent = total;
         document.getElementById('countDone').textContent = published;
-        document.getElementById('countOngoing').textContent = total - published;
+    var ongoingEl = document.getElementById('countOngoing');
+    if (ongoingEl) ongoingEl.textContent = total - published;
     }
 
     function renderTags(items) {
