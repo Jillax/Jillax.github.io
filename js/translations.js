@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var resultCount = document.getElementById('resultCount');
 
     var allItems = [];
-    var currentStatus = 'all';
     var currentTag = 'all';
     var currentSort = 'date';
     var searchQuery = '';
@@ -92,10 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('statAvg').textContent = fmtNum(avgPlay);
         document.getElementById('statPublished').textContent = published;
 
-        document.getElementById('countAll').textContent = total;
-        document.getElementById('countDone').textContent = published;
-    var ongoingEl = document.getElementById('countOngoing');
-    if (ongoingEl) ongoingEl.textContent = total - published;
     }
 
     function renderTags(items) {
@@ -144,10 +139,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getFilteredItems() {
         var items = allItems.slice();
-
-        if (currentStatus !== 'all') {
-            items = items.filter(function(i) { return i.status === currentStatus; });
-        }
 
         if (currentTag !== 'all') {
             items = items.filter(function(i) { return i.tags && i.tags.includes(currentTag); });
@@ -250,15 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     // Events
-    document.querySelectorAll('#statusBar .filter-tab').forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            document.querySelectorAll('#statusBar .filter-tab').forEach(function(t) { t.classList.remove('active'); });
-            this.classList.add('active');
-            currentStatus = this.dataset.filter;
-            applyFilters();
-        });
-    });
-
     document.querySelectorAll('.sort-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.sort-btn').forEach(function(b) { b.classList.remove('active'); });
