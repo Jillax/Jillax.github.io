@@ -74,58 +74,6 @@
     });
 })();
 
-// ===== i18n — Language Toggle =====
-(function() {
-    let currentLang = localStorage.getItem('lang') || 'zh';
-    let dict = {};
-    let loaded = false;
-
-    function applyTranslations() {
-        document.querySelectorAll('[data-i18n]').forEach(function(el) {
-            const key = el.getAttribute('data-i18n');
-            if (!key) return;
-            const entry = dict[key];
-            if (!entry) return;
-            const text = entry[currentLang];
-            if (text !== undefined && text !== null) {
-                el.textContent = text;
-            }
-        });
-        document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
-    }
-
-    function toggleLang(btn) {
-        currentLang = currentLang === 'zh' ? 'en' : 'zh';
-        localStorage.setItem('lang', currentLang);
-        if (btn) btn.textContent = currentLang === 'zh' ? 'EN' : '中';
-        applyTranslations();
-    }
-
-    function init() {
-        const btn = document.querySelector('.lang-toggle');
-        if (!btn) return;
-
-        btn.textContent = currentLang === 'zh' ? 'EN' : '中';
-
-        fetch('data/i18n.json')
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                dict = data;
-                loaded = true;
-                applyTranslations();
-            })
-            .catch(function() {
-                // i18n unavailable, fall back to Chinese
-            });
-
-        btn.addEventListener('click', function() {
-            toggleLang(btn);
-        });
-    }
-
-    init();
-})();
-
 // ===== Scroll Reveal =====
 (function() {
     const observer = new IntersectionObserver(function(entries) {

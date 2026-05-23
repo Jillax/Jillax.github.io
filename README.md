@@ -119,7 +119,7 @@
 - **浏览器自动化**：`Playwright`（知乎内容抓取）
 - **数据抓取**：`Python` + `requests` + `BeautifulSoup`（豆瓣）
 - **统计**：不蒜子访问统计
-- **国际化**：内置中英双语切换（`data/i18n.json`）
+- **双主题**：深色暖黑与亮色米白双主题切换（`localStorage` 持久化）
 
 ## GitHub Actions 工作流
 

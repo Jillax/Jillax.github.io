@@ -1,7 +1,7 @@
 /* ============================================
    Jillax.github.io — Shared Components
    Injects nav, footer, and page transition overlay
-   Must load BEFORE main.js (i18n depends on nav DOM)
+   Must load BEFORE main.js
    ============================================ */
 
 (function() {
@@ -11,20 +11,20 @@
     const logoHref = isHome ? '#' : 'index.html';
 
     const navItems = [
-        { href: 'about.html',    i18n: 'nav.about',       zh: '关于',   en: 'About', hide: '' },
-        { href: 'portfolio.html',i18n: 'nav.portfolio',   zh: '投资',   en: 'Portfolio', hide: '' },
-        { href: 'contact.html',  i18n: 'nav.contact',     zh: '联系',   en: 'Contact', hide: 'small' },
-        { href: 'share.html',    i18n: 'nav.share',       zh: '分享',   en: 'Share', hide: 'mobile' },
-        { href: 'translations.html', i18n: 'nav.translations', zh: '译制', en: 'Subs', hide: 'mobile' },
-        { href: 'bookshelf.html',i18n: 'nav.bookshelf',   zh: '书影音', en: 'Shelf+', hide: 'mobile' },
-        { href: 'blog.html',     i18n: 'nav.blog',        zh: '随笔',   en: 'Blog', hide: 'mobile' },
+        { href: 'about.html',     label: '关于',   hide: '' },
+        { href: 'portfolio.html', label: '投资',   hide: '' },
+        { href: 'contact.html',   label: '联系',   hide: 'small' },
+        { href: 'share.html',     label: '分享',   hide: 'mobile' },
+        { href: 'translations.html', label: '译制', hide: 'mobile' },
+        { href: 'bookshelf.html', label: '书影音', hide: 'mobile' },
+        { href: 'blog.html',      label: '随笔',   hide: 'mobile' },
     ];
 
     // ---- Build nav HTML ----
     const linksHTML = navItems.map(function(item) {
         var cls = (page !== 'index' && item.href.indexOf(page) !== -1) ? ' class="current"' : '';
         var hideAttr = item.hide ? ' data-nav-hide="' + item.hide + '"' : '';
-        return '<a href="' + item.href + '"' + cls + hideAttr + ' data-i18n="' + item.i18n + '">' + item.zh + '</a>';
+        return '<a href="' + item.href + '"' + cls + hideAttr + '>' + item.label + '</a>';
     }).join('\n                ');
 
     var navHTML =
@@ -34,8 +34,7 @@
         '<div class="nav-links">' +
         linksHTML +
         '<button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>' +
-        '<button class="lang-toggle" title="语言/Language">EN</button>' +
-        '</div>' +
+                '</div>' +
         '</div>' +
         '</nav>';
 

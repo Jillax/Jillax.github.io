@@ -43,7 +43,7 @@ body::after {
     /* Page transition overlay bg */
     --overlay-bg: #1a1714;
 
-    --container: 680px;
+    --container: 760px;
     --font-display: 'Fraunces', 'Noto Serif SC', serif;
     --font-body: 'Spectral', 'Noto Serif SC', serif;
     --font-chinese: 'Noto Serif SC', serif;
@@ -77,6 +77,7 @@ body::after {
 html { scroll-behavior: smooth; }
 body {
     font-family: var(--font-body);
+    font-size: 1.05rem;
     background: var(--bg);
     color: var(--text);
     line-height: 1.8;
@@ -332,20 +333,3 @@ footer {
     pointer-events: all;
 }
 
-/* ===== Language Toggle ===== */
-.lang-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 0.65rem;
-    padding: 2px 6px;
-    transition: color 0.4s ease, border-color 0.4s ease;
-    font-family: var(--font-display);
-    line-height: 1.4;
-    letter-spacing: 0.5px;
-}
-.lang-toggle:hover {
-    color: var(--text-soft);
-    border-color: var(--gold-dim);
-}
