@@ -3,14 +3,6 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', function() {
-    var postList = document.getElementById('postList');
-    var emptyState = document.getElementById('emptyState');
-    var articleView = document.getElementById('articleView');
-    var articleTitle = document.getElementById('articleTitle');
-    var articleMeta = document.getElementById('articleMeta');
-    var articleContent = document.getElementById('articleContent');
-    var articleBack = document.getElementById('articleBack');
-    var postsSection = document.getElementById('postsSection');
     var pinsSection = document.getElementById('pinsSection');
     var feed = document.getElementById('feed');
     var pinsEmpty = document.getElementById('pinsEmpty');
@@ -20,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var tabs = document.querySelectorAll('.blog-tab');
     var lightbox = document.getElementById('lightbox');
     var lightboxImg = document.getElementById('lightboxImg');
-    var postCount = document.getElementById('postCount');
     var pinCount = document.getElementById('pinCount');
     var articleCount = document.getElementById('articleCount');
     var thesisCount = document.getElementById('thesisCount');
@@ -43,22 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var excerptArticleContent = document.getElementById('excerptArticleContent');
     var excerptArticleBack = document.getElementById('excerptArticleBack');
     var excerptSourceBadge = document.getElementById('excerptSourceBadge');
-    var copywritingSection = document.getElementById('copywritingSection');
-    var copywritingList = document.getElementById('copywritingList');
-    var copywritingEmpty = document.getElementById('copywritingEmpty');
-    var copywritingCount = document.getElementById('copywritingCount');
-    var copywritingArticleView = document.getElementById('copywritingArticleView');
-    var copywritingArticleTitle = document.getElementById('copywritingArticleTitle');
-    var copywritingArticleMeta = document.getElementById('copywritingArticleMeta');
-    var copywritingArticleContent = document.getElementById('copywritingArticleContent');
-    var copywritingArticleBack = document.getElementById('copywritingArticleBack');
     var searchQuery = '';
     var allDataRaw = null;
-    var posts = [];
     var thesisPosts = [];
     var excerpts = [];
-    var copywritingData = [];
-    var currentTab = 'posts';
+    var currentTab = 'pins';
 
     function fmtNum(n) {
         if (!n && n !== 0) return '—';
@@ -92,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var bar = document.getElementById('readingProgress');
         if (!active) { bar.style.width = '0'; return; }
         setTimeout(function() {
-            var articleEl = document.getElementById('articleContent');
+            var articleEl = document.getElementById('thesisArticleContent') || document.getElementById('excerptArticleContent');
             if (!articleEl) return;
             var rect = articleEl.getBoundingClientRect();
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -116,13 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function switchTab(tab) {
         currentTab = tab;
         tabs.forEach(function(t) { t.classList.toggle('active', t.dataset.tab === tab); });
-        postsSection.style.display = tab === 'posts' ? '' : 'none';
         pinsSection.style.display = tab === 'pins' ? '' : 'none';
         articlesSection.style.display = tab === 'articles' ? '' : 'none';
         thesisSection.style.display = tab === 'thesis' ? '' : 'none';
         excerptsSection.style.display = tab === 'excerpts' ? '' : 'none';
-        copywritingSection.style.display = tab === 'copywriting' ? '' : 'none';
-        history.pushState(null, '', 'blog.html' + (tab !== 'posts' ? '#' + tab : ''));
+        // Hide zhihu article viewer when switching tabs
+        var zhView = document.getElementById('zhArticleView');
+        if (zhView) zhView.style.display = 'none';
+        history.pushState(null, '', 'blog.html' + (tab !== 'pins' ? '#' + tab : ''));
     }
 
     tabs.forEach(function(tab) {
@@ -136,86 +117,17 @@ document.addEventListener('DOMContentLoaded', function() {
         blogSearch.addEventListener('input', function() {
             searchQuery = this.value.trim().toLowerCase();
             var activeTab = document.querySelector('.blog-tab.active');
-            var tab = activeTab ? activeTab.dataset.tab : 'posts';
+            var tab = activeTab ? activeTab.dataset.tab : 'pins';
             if (tab === 'pins') renderPins(allDataRaw);
             else if (tab === 'articles') renderArticles(allDataRaw);
-            else if (tab === 'posts') renderList();
             else if (tab === 'thesis') renderThesisList();
             else if (tab === 'excerpts') renderExcerptList();
-            else if (tab === 'copywriting') renderCopywritingList();
-        });
-    }
-
-    // Posts
-    function showList() {
-        postList.style.display = '';
-        articleView.classList.remove('active');
-        trackReadingProgress(false);
-        if (currentTab === 'posts') {
-            history.pushState(null, '', 'blog.html');
-        }
-    }
-
-    function showArticle(postId) {
-        var post = posts.find(function(p) { return p.id === postId; });
-        if (!post) { showList(); return; }
-
-        switchTab('posts');
-        postList.style.display = 'none';
-        articleView.classList.add('active');
-        articleTitle.textContent = post.title;
-        articleMeta.textContent = post.date + (post.tags ? '  ·  ' + post.tags.join(' · ') : '');
-        articleContent.innerHTML = '<p style="color:var(--text-faint)">加载中...</p>';
-
-        trackReadingProgress(true);
-
-        history.pushState(null, '', 'blog.html#' + postId);
-
-        fetch('data/posts/' + post.file)
-            .then(function(r) {
-                if (!r.ok) throw new Error('Not found');
-                return r.text();
-            })
-            .then(function(md) {
-                articleContent.innerHTML = marked.parse(md);
-            })
-            .catch(function() {
-                articleContent.innerHTML = '<p style="color:var(--text-muted)">文章加载失败</p>';
-            });
-    }
-
-    function renderList() {
-        var filtered = posts;
-        if (searchQuery) {
-            filtered = posts.filter(function(p) {
-                var title = (p.title || '').toLowerCase();
-                var tags = (p.tags || []).join(' ').toLowerCase();
-                return title.includes(searchQuery) || tags.includes(searchQuery);
-            });
-        }
-        postCount.textContent = filtered.length || '';
-        if (filtered.length === 0) {
-            postList.innerHTML = '';
-            emptyState.style.display = 'block';
-            return;
-        }
-        emptyState.style.display = 'none';
-        postList.innerHTML = filtered.map(function(p) {
-            return '<div class="post-item" data-id="' + p.id + '">' +
-                '<div class="post-title">' + p.title + '</div>' +
-                '<div class="post-meta"><span>' + p.date + '</span>' +
-                (p.tags ? p.tags.map(function(t) { return '<span class="post-tag">' + t + '</span>'; }).join('') : '') +
-                '</div>' +
-                '<div class="post-summary">' + p.summary + '</div></div>';
-        }).join('');
-
-        postList.querySelectorAll('.post-item').forEach(function(el) {
-            el.addEventListener('click', function() { showArticle(el.dataset.id); });
         });
     }
 
     // Pins
     function renderPins(data) {
+        if (!data) return;
         var pins = data.pins || [];
         if (searchQuery) {
             pins = pins.filter(function(p) { return (p.content || '').toLowerCase().includes(searchQuery); });
@@ -259,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Articles
     function renderArticles(data) {
+        if (!data) return;
         window.__zhArticleData = data.articles || [];
         var articles = data.articles || [];
         if (searchQuery) {
@@ -420,59 +333,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // Copywriting
-    function renderCopywritingList() {
-        var filtered = copywritingData;
-        if (searchQuery) {
-            filtered = copywritingData.filter(function(p) {
-                var title = (p.title || '').toLowerCase();
-                var tags = (p.tags || []).join(' ').toLowerCase();
-                var content = (p.content || '').toLowerCase();
-                return title.includes(searchQuery) || tags.includes(searchQuery) || content.includes(searchQuery);
-            });
-        }
-        if (filtered.length === 0) {
-            copywritingList.innerHTML = '';
-            copywritingEmpty.style.display = 'block';
-            copywritingCount.textContent = '';
-            return;
-        }
-        copywritingEmpty.style.display = 'none';
-        copywritingCount.textContent = filtered.length || '';
-        copywritingList.innerHTML = filtered.map(function(p) {
-            return '<div class="post-item" data-id="' + p.id + '">' +
-                '<div class="post-title">' + p.title + '</div>' +
-                '<div class="post-meta"><span>' + p.date + '</span>' +
-                (p.tags ? p.tags.map(function(t) { return '<span class="post-tag">' + t + '</span>'; }).join('') : '') +
-                '</div>' +
-                '<div class="post-summary">' + (p.content ? p.content.slice(0, 120).replace(/[#*>\n]/g, '') + '…' : '') + '</div></div>';
-        }).join('');
-
-        copywritingList.querySelectorAll('.post-item').forEach(function(el) {
-            el.addEventListener('click', function() { showCopywritingArticle(el.dataset.id); });
-        });
-    }
-
-    function showCopywritingList() {
-        copywritingList.style.display = '';
-        copywritingArticleView.classList.remove('active');
-        trackReadingProgress(false);
-    }
-
-    function showCopywritingArticle(postId) {
-        var post = copywritingData.find(function(p) { return p.id === postId; });
-        if (!post) { showCopywritingList(); return; }
-
-        switchTab('copywriting');
-        copywritingList.style.display = 'none';
-        copywritingArticleView.classList.add('active');
-        copywritingArticleTitle.textContent = post.title;
-        copywritingArticleMeta.textContent = post.date + (post.tags ? '  ·  ' + post.tags.join(' · ') : '');
-        copywritingArticleContent.innerHTML = marked.parse(post.content || '');
-
-        trackReadingProgress(true);
-    }
-
     // Zhihu Article Viewer
     window.openZhArticle = function(url) {
         var arts = window.__zhArticleData || [];
@@ -491,24 +351,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Load Data
-    fetch('data/posts.json')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            posts = data;
-            renderList();
-
-            var hash = window.location.hash.slice(1);
-            if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts' || hash === 'copywriting') {
-                switchTab(hash);
-            } else if (hash) {
-                var found = posts.find(function(p) { return p.id === hash; });
-                if (found) showArticle(hash);
-            }
-        })
-        .catch(function() {
-            postList.innerHTML = '<div class="empty-state">加载失败</div>';
-        });
-
     fetch('thesis/index.json')
         .then(function(r) {
             if (!r.ok) throw new Error('Not found');
@@ -551,27 +393,6 @@ document.addEventListener('DOMContentLoaded', function() {
             excerptCount.textContent = '';
         });
 
-    fetch('data/copywriting.json')
-        .then(function(r) {
-            if (!r.ok) throw new Error('Not found');
-            return r.json();
-        })
-        .then(function(data) {
-            copywritingData = data;
-            renderCopywritingList();
-
-            var hash = window.location.hash.slice(1);
-            if (hash) {
-                var found = copywritingData.find(function(p) { return p.id === hash; });
-                if (found) showCopywritingArticle(hash);
-            }
-        })
-        .catch(function() {
-            copywritingList.innerHTML = '';
-            copywritingEmpty.style.display = 'block';
-            copywritingCount.textContent = '';
-        });
-
     fetch('data/zhihu.json')
         .then(function(r) {
             if (!r.ok) throw new Error('Not found');
@@ -589,11 +410,17 @@ document.addEventListener('DOMContentLoaded', function() {
             articlesEmpty.style.display = 'block';
         });
 
+    // Initial tab from URL hash
+    var initHash = window.location.hash.slice(1);
+    if (initHash === 'pins' || initHash === 'articles' || initHash === 'thesis' || initHash === 'excerpts') {
+        switchTab(initHash);
+    } else {
+        switchTab('pins');
+    }
+
     // Back Buttons
-    articleBack.addEventListener('click', showList);
     thesisArticleBack.addEventListener('click', showThesisList);
     excerptArticleBack.addEventListener('click', showExcerptList);
-    copywritingArticleBack.addEventListener('click', showCopywritingList);
 
     // Lightbox
     document.getElementById('lightboxClose').addEventListener('click', function() {
@@ -616,26 +443,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Browser Navigation
     window.addEventListener('popstate', function() {
         var hash = window.location.hash.slice(1);
-        if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts' || hash === 'copywriting') {
+        if (hash === 'pins' || hash === 'articles' || hash === 'thesis' || hash === 'excerpts') {
             switchTab(hash);
         } else if (hash) {
-            var found = posts.find(function(p) { return p.id === hash; });
-            if (found) showArticle(hash);
+            var t = thesisPosts.find(function(p) { return p.id === hash; });
+            if (t) showThesisArticle(hash);
             else {
-                var t = thesisPosts.find(function(p) { return p.id === hash; });
-                if (t) showThesisArticle(hash);
-                else {
-                    var e = excerpts.find(function(p) { return p.id === hash; });
-                    if (e) showExcerptArticle(hash);
-                    else {
-                        var c = copywritingData.find(function(p) { return p.id === hash; });
-                        if (c) showCopywritingArticle(hash);
-                    }
-                }
+                var e = excerpts.find(function(p) { return p.id === hash; });
+                if (e) showExcerptArticle(hash);
             }
         } else {
-            switchTab('posts');
-            showList();
+            switchTab('pins');
         }
     });
 });

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的文本存档 — 文章、知乎想法、知乎文章、AI 文本、AI 摘录、文案。">
+    <meta name="description" content="Jillax 的文本存档 — 知乎想法、知乎文章、AI 文本、AI 摘录。">
     <meta name="author" content="Jillax">
     <meta property="og:title" content="文本 · Jillax">
-    <meta property="og:description" content="文章、知乎想法、知乎文章、AI 文本、AI 摘录、文案。">
+    <meta property="og:description" content="知乎想法、知乎文章、AI 文本、AI 摘录。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jillax.github.io/blog.html">
     <meta name="twitter:card" content="summary">
@@ -21,7 +21,7 @@
     <noscript>
         <div style="text-align:center;padding:60px 20px;font-family:serif;color:#ddd3c4;background:#1a1714">
             <h1>📝 文本</h1>
-            <p>文章 · 文案 · 笔记</p>
+            <p>想法 · 文章 · AI 文本 · 摘录</p>
             <p style="margin-top:20px;font-size:0.9rem;color:#888">此网站需要 JavaScript 才能正常浏览。</p>
         </div>
     </noscript>
@@ -35,7 +35,7 @@
         <div class="page-header">
             <a href="index.html" class="back-home">← 返回主页</a>
             <h1>📝 文本</h1>
-            <p>文章 · 文案 · 笔记</p>
+            <p>想法 · 文章 · AI 文本 · 摘录</p>
         </div>
 
         <!-- ===== Search ===== -->
@@ -43,28 +43,10 @@
 
         <!-- ===== Tabs ===== -->
         <div class="blog-tabs">
-            <button class="blog-tab active" data-tab="posts"><span>文章</span> <span class="count" id="postCount"></span></button>
-            <button class="blog-tab" data-tab="pins"><span>知乎想法</span> <span class="count" id="pinCount"></span></button>
+            <button class="blog-tab active" data-tab="pins"><span>知乎想法</span> <span class="count" id="pinCount"></span></button>
             <button class="blog-tab" data-tab="articles"><span>知乎文章</span> <span class="count" id="articleCount"></span></button>
             <button class="blog-tab" data-tab="thesis">AI 文本 <span class="count" id="thesisCount"></span></button>
             <button class="blog-tab" data-tab="excerpts">AI 摘录 <span class="count" id="excerptCount"></span></button>
-            <button class="blog-tab" data-tab="copywriting">文案 <span class="count" id="copywritingCount"></span></button>
-        </div>
-
-        <!-- ===== Posts Section ===== -->
-        <div id="postsSection">
-            <div class="post-list" id="postList"></div>
-            <div class="empty-state" id="emptyState" style="display:none">还没有文章</div>
-
-            <!-- ===== Article View ===== -->
-            <div class="article-view" id="articleView">
-                <button class="article-back" id="articleBack">← 返回列表</button>
-                <div class="article-header">
-                    <h1 id="articleTitle"></h1>
-                    <div class="article-meta" id="articleMeta"></div>
-                </div>
-                <div class="article-content" id="articleContent"></div>
-            </div>
         </div>
 
         <!-- ===== Pins Section ===== -->
@@ -127,21 +109,6 @@
                     <div class="article-meta" id="excerptArticleMeta"></div>
                 </div>
                 <div class="article-content" id="excerptArticleContent"></div>
-            </div>
-        </div>
-
-        <!-- ===== Copywriting Section ===== -->
-        <div id="copywritingSection" style="display:none">
-            <div class="post-list" id="copywritingList"></div>
-            <div class="empty-state" id="copywritingEmpty" style="display:none">还没有文案</div>
-
-            <div class="article-view" id="copywritingArticleView">
-                <button class="article-back" id="copywritingArticleBack">← 返回列表</button>
-                <div class="article-header">
-                    <h1 id="copywritingArticleTitle"></h1>
-                    <div class="article-meta" id="copywritingArticleMeta"></div>
-                </div>
-                <div class="article-content" id="copywritingArticleContent"></div>
             </div>
         </div>
 
