@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赤壁之战 · 古代战场动画推演</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+    body {
+      background: #1a1714;
+      color: #f5f0e8;
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #c4a35a;
+      letter-spacing: 6px;
+      margin-bottom: 6px;
+    }
+    header .subtitle {
+      font-size: 0.85rem;
+      color: #a09080;
+      letter-spacing: 3px;
+    }
+    header .subtitle span {
+      color: #c4a35a;
+    }
+
+    /* Battle selector */
+    .battle-nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .battle-nav button {
+      background: #2a2520;
+      border: 1px solid #3a3530;
+      color: #a09080;
+      padding: 8px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    .battle-nav button:hover {
+      border-color: #c4a35a;
+      color: #c4a35a;
+    }
+    .battle-nav button.active {
+      background: #c4a35a;
+      color: #1a1714;
+      border-color: #c4a35a;
+      font-weight: 600;
+    }
+
+    /* Canvas wrapper */
+    .canvas-wrapper {
+      position: relative;
+      background: #2a2520;
+      border-radius: 8px;
+      border: 1px solid #3a3530;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .canvas-wrapper canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    /* Phase overlay labels */
+    .phase-label {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26,23,20,0.85);
+      border: 1px solid #c4a35a;
+      padding: 6px 24px;
+      border-radius: 4px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.95rem;
+      color: #c4a35a;
+      letter-spacing: 4px;
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    .phase-label.show { opacity: 1; }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: #2a2520;
+      border-top: 1px solid #3a3530;
+    }
+    .controls button {
+      background: none;
+      border: 1px solid #c4a35a;
+      color: #c4a35a;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .controls button:hover {
+      background: #c4a35a;
+      color: #1a1714;
+    }
+    .controls button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .controls .timeline {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .controls .timeline input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: #3a3530;
+      border-radius: 2px;
+      outline: none;
+    }
+    .controls .timeline input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #c4a35a;
+      cursor: pointer;
+    }
+    .controls .time-label {
+      font-size: 0.8rem;
+      color: #a09080;
+      font-family: 'Noto Serif SC', serif;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .controls .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #a09080;
+      font-size: 0.8rem;
+    }
+    .controls .speed-control select {
+      background: #1a1714;
+      border: 1px solid #3a3530;
+      color: #f5f0e8;
+      padding: 4px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    /* Phase markers */
+    .phase-markers {
+      display: flex;
+      padding: 0 72px 12px;
+      gap: 0;
+    }
+    .phase-markers .marker {
+      flex: 1;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6a6050;
+      font-family: 'Noto Serif SC', serif;
+      padding: 4px 0;
+      border-top: 2px solid #3a3530;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .phase-markers .marker.active {
+      color: #c4a35a;
+      border-top-color: #c4a35a;
+    }
+
+    /* Phase description */
+    .phase-desc {
+      padding: 16px 20px;
+      background: #1a1714;
+      border-top: 1px solid #3a3530;
+      min-height: 48px;
+    }
+    .phase-desc p {
+      font-size: 0.85rem;
+      color: #d0c8b8;
+      line-height: 1.6;
+    }
+    .phase-desc .highlight {
+      color: #c4a35a;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      padding: 12px 20px;
+      background: #1a1714;
+      border-top: 1px solid #3a3530;
+      flex-wrap: wrap;
+    }
+    .legend .item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #a09080;
+    }
+    .legend .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }
+    .legend .dot.cao { background: #8b2020; }
+    .legend .dot.sun { background: #1a6b3c; }
+    .legend .dot.liu { background: #2a6b8b; }
+    .legend .dot.fire { background: #e8852a; }
+
+    /* Info panel */
+    .info-panel {
+      margin-top: 20px;
+      background: #2a2520;
+      border: 1px solid #3a3530;
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .info-panel h3 {
+      font-family: 'Noto Serif SC', serif;
+      color: #c4a35a;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+    .info-panel p {
+      font-size: 0.85rem;
+      color: #a09080;
+      line-height: 1.8;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #5a5040;
+      letter-spacing: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      header h1 { font-size: 1.4rem; letter-spacing: 3px; }
+      .controls { flex-wrap: wrap; padding: 12px; }
+      .controls .timeline { order: 3; width: 100%; }
+      .phase-markers { padding: 0 12px 8px; }
+      .legend { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>古 战 场 · 动 画 推 演</h1>
+      <p class="subtitle">以<span> Canvas </span>重现历史的转折瞬间</p>
+    </header>
+
+    <div class="battle-nav">
+      <button class="active" data-battle="chibi">赤壁之战</button>
+      <button data-battle="feishui">淝水之战 <span style="font-size:0.7rem;color:#6a6050;">（待建）</span></button>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="battleCanvas" width="1066" height="600"></canvas>
+      <div class="phase-label" id="phaseLabel">— 对 峙 —</div>
+
+      <div class="phase-markers" id="phaseMarkers">
+        <div class="marker active" data-phase="0">对峙</div>
+        <div class="marker" data-phase="1">火攻</div>
+        <div class="marker" data-phase="2">火烧连营</div>
+        <div class="marker" data-phase="3">败退</div>
+      </div>
+
+      <div class="controls">
+        <button id="playBtn" title="播放/暂停">▶</button>
+        <button id="resetBtn" title="重置">⟳</button>
+        <div class="timeline">
+          <span class="time-label" id="timeLabel">0%</span>
+          <input type="range" id="timelineSlider" min="0" max="100" value="0">
+        </div>
+        <div class="speed-control">
+          <span>速度</span>
+          <select id="speedSelect">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+            <option value="3">3×</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="phase-desc" id="phaseDesc">
+        <p>建安十三年（公元208年），曹操率80万大军南下，与孙刘联军在赤壁隔江对峙。<span class="highlight">点击播放</span>观看战局推演。</p>
+      </div>
+
+      <div class="legend">
+        <div class="item"><span class="dot cao"></span>曹操 · 北方军</div>
+        <div class="item"><span class="dot sun"></span>孙权 · 江东军</div>
+        <div class="item"><span class="dot liu"></span>刘备 · 荆州军</div>
+        <div class="item"><span class="dot fire"></span>火攻</div>
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <h3>▎赤壁之战 · 概况</h3>
+      <p>
+        公元208年，曹操统一北方后挥师南下，企图一举吞并江东。孙刘联军以少胜多，
+        利用东南风火攻曹营，打破曹操不可战胜的神话。此战奠定了三国鼎立的基础，
+        是中国历史上著名的以少胜多的战役之一。
+      </p>
+    </div>
+
+    <footer>Jillax · 以 Canvas 重述历史</footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('battleCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    // State
+    let progress = 0;           // 0-100
+    let isPlaying = false;
+    let speed = 1;
+    let animId = null;
+    let particles = [];
+    let fireShips = [];
+    let fireProgress = 0;
+
+    // DOM refs
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const slider = document.getElementById('timelineSlider');
+    const timeLabel = document.getElementById('timeLabel');
+    const speedSelect = document.getElementById('speedSelect');
+    const phaseLabel = document.getElementById('phaseLabel');
+    const phaseDesc = document.getElementById('phaseDesc');
+    const markers = document.querySelectorAll('.marker');
+
+    const phaseNames = ['对峙', '火攻', '火烧连营', '败退'];
+    const phaseDescs = [
+      '建安十三年冬，曹操率大军南下，水陆并进。孙刘联军在周瑜、诸葛亮指挥下，于赤壁沿江南岸布防。<span class="highlight">双方隔江对峙</span>，曹军兵力数倍于联军。',
+      '黄盖献计火攻，率数十艘蒙冲斗舰载满薪草膏油，<span class="highlight">诈降驶向曹军水寨</span>。东南风骤起，船行如箭。',
+      '火船撞入曹军战船，因战船首尾相连，<span class="highlight">火势迅速蔓延</span>。曹军水寨陷入火海，人马烧溺死者无数。',
+      '曹操率残部从华容道北撤，途中遇泥泞，死伤惨重。孙刘联军趁势追击，<span class="highlight">曹军大败</span>。赤壁一战定三分。'
+    ];
+
+    // ---- Drawing helpers ----
+
+    function drawParchmentBg() {
+      ctx.fillStyle = '#e8e0d4';
+      ctx.fillRect(0, 0, W, H);
+      // Subtle grain
+      for (let i = 0; i < 200; i++) {
+        const x = Math.random() * W;
+        const y = Math.random() * H;
+        const a = Math.random() * 0.06;
+        ctx.fillStyle = `rgba(160,140,110,${a})`;
+        ctx.fillRect(x, y, 2, 2);
+      }
+    }
+
+    // Draw the Yangtze River
+    function drawRiver() {
+      const riverY = H * 0.42;
+      const riverH = H * 0.16;
+
+      // River gradient
+      const grad = ctx.createLinearGradient(0, riverY, 0, riverY + riverH);
+      grad.addColorStop(0, '#5b7a8a');
+      grad.addColorStop(0.3, '#7a9aaa');
+      grad.addColorStop(0.5, '#8aabbb');
+      grad.addColorStop(0.7, '#7a9aaa');
+      grad.addColorStop(1, '#5b7a8a');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.moveTo(0, riverY);
+      for (let x = 0; x <= W; x += 50) {
+        const wave = Math.sin(x * 0.008 + Date.now() * 0.0005) * 6;
+        ctx.lineTo(x, riverY + wave + riverH * 0.3);
+      }
+      for (let x = W; x >= 0; x -= 50) {
+        const wave = Math.sin(x * 0.008 + Date.now() * 0.0005 + 1) * 6;
+        ctx.lineTo(x, riverY + riverH * 0.7 + wave);
+      }
+      ctx.closePath();
+      ctx.fill();
+
+      // Water ripple lines
+      ctx.strokeStyle = 'rgba(200,220,230,0.15)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 6; i++) {
+        const y = riverY + 12 + i * (riverH - 24) / 5 + Math.sin(Date.now() * 0.0003 + i) * 3;
+        ctx.beginPath();
+        for (let x = 40; x < W - 40; x += 8) {
+          const wave = Math.sin(x * 0.015 + Date.now() * 0.0004 + i) * 4;
+          ctx.lineTo(x, y + wave);
+        }
+        ctx.stroke();
+      }
+
+      // River label
+      ctx.save();
+      ctx.font = '14px "Noto Serif SC", serif';
+      ctx.fillStyle = 'rgba(200,220,230,0.5)';
+      ctx.textAlign = 'center';
+      ctx.fillText('—— 长 江 ——', W / 2, riverY + riverH / 2 + 5);
+      ctx.restore();
+    }
+
+    // Draw camp
+    function drawCamp(x, y, count, color, flagColor, label, isNorth) {
+      // Ground
+      ctx.fillStyle = color.replace('0.8', '0.15');
+      ctx.beginPath();
+      ctx.ellipse(x, y, count * 3.5, 70, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Tents
+      for (let i = 0; i < count; i++) {
+        const tx = x + (Math.random() - 0.5) * count * 5;
+        const ty = y + (Math.random() - 0.5) * 100;
+        const size = 6 + Math.random() * 4;
+
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - size);
+        ctx.lineTo(tx - size * 0.8, ty + size * 0.5);
+        ctx.lineTo(tx + size * 0.8, ty + size * 0.5);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Banners
+      const bannerCount = Math.min(count, 20);
+      for (let i = 0; i < bannerCount; i++) {
+        const bx = x + (Math.random() - 0.5) * count * 4.5;
+        const by = y + (Math.random() - 0.5) * 90;
+
+        // Pole
+        ctx.strokeStyle = '#5a4a3a';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(bx, by - 20);
+        ctx.lineTo(bx, by + 5);
+        ctx.stroke();
+
+        // Flag
+        ctx.fillStyle = flagColor;
+        ctx.beginPath();
+        ctx.moveTo(bx + 1, by - 18);
+        ctx.lineTo(bx + 22, by - 13);
+        ctx.lineTo(bx + 1, by - 6);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Label
+      ctx.save();
+      ctx.font = 'bold 15px "Noto Serif SC", serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#3a3028';
+
+      const labelY = isNorth ? y - 75 : y + 80;
+      ctx.fillText(label, x, labelY);
+
+      // Subtitle
+      ctx.font = '11px "Noto Sans SC", sans-serif';
+      ctx.fillStyle = '#6a6050';
+      const subtitle = isNorth ? '约 80 万大军' : '约 5 万联军';
+      ctx.fillText(subtitle, x, labelY + 18);
+
+      ctx.restore();
+    }
+
+    function drawCaoCamp(progress) {
+      const cx = W * 0.45, cy = H * 0.15;
+      const count = Math.floor(35 * Math.min(1, progress / 0.1));
+      drawCamp(cx, cy, count, 'rgba(139,32,32,0.7)', '#cc3333', '曹 操 · 北 方 军', true);
+
+      // Chained ships visualization
+      if (progress > 0.05) {
+        const shipY = H * 0.36;
+        ctx.save();
+        for (let i = 0; i < 10; i++) {
+          const sx = cx - 120 + i * 26;
+          const sy = shipY - 5 + Math.sin(i * 0.7) * 4;
+          ctx.fillStyle = 'rgba(100,50,40,0.6)';
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(sx + 18, sy - 6);
+          ctx.lineTo(sx + 22, sy + 4);
+          ctx.lineTo(sx, sy + 6);
+          ctx.closePath();
+          ctx.fill();
+          // Chain links between ships
+          if (i < 9) {
+            ctx.strokeStyle = 'rgba(120,100,80,0.4)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(sx + 22, sy + 2);
+            ctx.lineTo(sx + 26, sy + Math.sin(i * 0.7 + 1) * 3);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+        ctx.save();
+        ctx.font = '10px "Noto Sans SC", sans-serif';
+        ctx.fillStyle = 'rgba(120,80,60,0.6)';
+        ctx.textAlign = 'center';
+        ctx.fillText('战船首尾相连', cx, H * 0.38);
+        ctx.restore();
+      }
+    }
+
+    function drawSunLiuCamp(progress) {
+      const sunX = W * 0.55, sunY = H * 0.78;
+      const liuX = W * 0.40, liuY = H * 0.85;
+      const countSun = Math.floor(12 * Math.min(1, progress / 0.1));
+      const countLiu = Math.floor(6 * Math.min(1, progress / 0.1));
+      drawCamp(sunX, sunY, countSun, 'rgba(26,107,60,0.7)', '#2a8b4c', '孙 权 · 江 东 军', false);
+      drawCamp(liuX, liuY, countLiu, 'rgba(42,107,139,0.7)', '#3a8bab', '刘 备 · 荆 州 军', false);
+
+      // Allied ships
+      if (progress > 0.05) {
+        ctx.save();
+        for (let i = 0; i < 5; i++) {
+          const sx = W * 0.48 + i * 20;
+          const sy = H * 0.60;
+          ctx.fillStyle = 'rgba(60,120,80,0.5)';
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(sx + 14, sy - 4);
+          ctx.lineTo(sx + 18, sy + 3);
+          ctx.lineTo(sx, sy + 5);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    // Fire ships animation
+    function drawFireShips(p) {
+      if (p < 0.15 || p > 0.7) return;
+
+      const shipProgress = Math.max(0, Math.min(1, (p - 0.15) / 0.25));
+      const numShips = 6;
+      const startX = W * 0.55;
+      const endX = W * 0.38;
+      const startY = H * 0.62;
+
+      ctx.save();
+      for (let i = 0; i < numShips; i++) {
+        const offset = i * 15 - 40;
+        const sx = startX + (endX - startX) * shipProgress + offset * (1 - shipProgress * 0.5);
+        const sy = startY - 30 * shipProgress + Math.sin(i * 1.2) * 8;
+        const size = 12 + Math.random() * 2;
+
+        // Ship body
+        ctx.fillStyle = '#5a3a2a';
+        ctx.beginPath();
+        ctx.moveTo(sx - size, sy);
+        ctx.lineTo(sx + size, sy - 3);
+        ctx.lineTo(sx + size + 4, sy + 4);
+        ctx.lineTo(sx - size, sy + 5);
+        ctx.closePath();
+        ctx.fill();
+
+        // Fire on ship
+        if (shipProgress > 0.1) {
+          const fireIntensity = Math.min(1, (shipProgress - 0.1) / 0.3);
+          for (let f = 0; f < 3 + fireIntensity * 5; f++) {
+            const fx = sx + (Math.random() - 0.5) * size * 1.2;
+            const fy = sy - 3 - Math.random() * 8 * fireIntensity;
+            const r = 3 + Math.random() * 6 * fireIntensity;
+            const alpha = 0.4 + Math.random() * 0.6 * fireIntensity;
+            const gradient = ctx.createRadialGradient(fx, fy, 0, fx, fy, r);
+            gradient.addColorStop(0, `rgba(255,200,50,${alpha})`);
+            gradient.addColorStop(0.5, `rgba(232,133,42,${alpha * 0.8})`);
+            gradient.addColorStop(1, `rgba(180,60,30,0)`);
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(fx, fy, r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // Label for fire ships
+        if (i === 0 && shipProgress < 0.8) {
+          ctx.font = '10px "Noto Serif SC", serif';
+          ctx.fillStyle = '#c4a35a';
+          ctx.textAlign = 'center';
+          ctx.fillText('黄盖火船', sx, sy - 18);
+        }
+      }
+      ctx.restore();
+
+      // Wind arrows showing southeast wind
+      if (p > 0.12 && p < 0.5) {
+        ctx.save();
+        const windAlpha = Math.min(1, (p - 0.12) / 0.1);
+        for (let i = 0; i < 8; i++) {
+          const wx = 100 + i * 120;
+          const wy = H * 0.35;
+          ctx.globalAlpha = windAlpha * 0.3;
+          ctx.strokeStyle = '#c4a35a';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 6]);
+          ctx.beginPath();
+          ctx.moveTo(wx + 30, wy);
+          ctx.lineTo(wx - 20, wy + 20);
+          ctx.stroke();
+          // Arrowhead
+          ctx.setLineDash([]);
+          ctx.beginPath();
+          ctx.moveTo(wx - 20, wy + 20);
+          ctx.lineTo(wx - 12, wy + 12);
+          ctx.moveTo(wx - 20, wy + 20);
+          ctx.lineTo(wx - 14, wy + 24);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+        ctx.setLineDash([]);
+        ctx.font = '11px "Noto Serif SC", serif';
+        ctx.fillStyle = `rgba(196,163,90,${windAlpha * 0.6})`;
+        ctx.textAlign = 'right';
+        ctx.fillText('东南风 ↗', W - 30, H * 0.33);
+        ctx.restore();
+      }
+    }
+
+    // Fire spread on Cao's fleet
+    function drawFireSpread(p) {
+      if (p < 0.35) return;
+      const intensity = Math.min(1, (p - 0.35) / 0.2);
+
+      ctx.save();
+      const cx = W * 0.45, cy = H * 0.34;
+      const fireCount = Math.floor(15 + intensity * 35);
+
+      for (let i = 0; i < fireCount; i++) {
+        const spread = intensity * 120;
+        const fx = cx - 100 + Math.random() * 200 * intensity + Math.random() * spread;
+        const fy = cy - 20 + Math.random() * 40 + Math.random() * spread * 0.3;
+        const r = 3 + Math.random() * 12 * intensity;
+        const alpha = 0.3 + Math.random() * 0.7 * intensity;
+
+        const gradient = ctx.createRadialGradient(fx, fy, 0, fx, fy, r);
+        gradient.addColorStop(0, `rgba(255,220,80,${alpha})`);
+        gradient.addColorStop(0.4, `rgba(232,133,42,${alpha * 0.9})`);
+        gradient.addColorStop(0.7, `rgba(200,60,30,${alpha * 0.5})`);
+        gradient.addColorStop(1, `rgba(100,30,20,0)`);
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(fx, fy, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Smoke
+      if (intensity > 0.3) {
+        const smokeAlpha = (intensity - 0.3) * 0.4;
+        for (let i = 0; i < 15; i++) {
+          const sx = cx - 80 + Math.random() * 160 * intensity + Math.random() * 60;
+          const sy = cy - 30 - Math.random() * 50 * intensity;
+          const r = 15 + Math.random() * 30 * intensity;
+          const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, r);
+          grad.addColorStop(0, `rgba(80,70,60,${smokeAlpha * 0.5})`);
+          grad.addColorStop(1, `rgba(80,70,60,0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(sx, sy, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    // Retreat markers
+    function drawRetreat(p) {
+      if (p < 0.6) return;
+      const intensity = Math.min(1, (p - 0.6) / 0.25);
+      ctx.save();
+
+      // Arrow showing retreat direction
+      ctx.strokeStyle = `rgba(139,32,32,${intensity * 0.6})`;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(W * 0.45, H * 0.15);
+      ctx.lineTo(W * 0.15, H * 0.12);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrowhead
+      ctx.beginPath();
+      ctx.moveTo(W * 0.15, H * 0.12);
+      ctx.lineTo(W * 0.2, H * 0.08);
+      ctx.moveTo(W * 0.15, H * 0.12);
+      ctx.lineTo(W * 0.2, H * 0.17);
+      ctx.stroke();
+
+      ctx.font = '12px "Noto Serif SC", serif';
+      ctx.fillStyle = `rgba(139,32,32,${intensity * 0.7})`;
+      ctx.textAlign = 'center';
+      ctx.fillText('曹操败退华容道', W * 0.3, H * 0.08);
+
+      // Scattered remnants
+      for (let i = 0; i < intensity * 20; i++) {
+        const rx = W * 0.4 - Math.random() * 150 * intensity;
+        const ry = H * 0.12 + (Math.random() - 0.5) * 40;
+        ctx.fillStyle = `rgba(139,32,32,${0.2 + Math.random() * 0.3})`;
+        ctx.beginPath();
+        ctx.arc(rx, ry, 2 + Math.random() * 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
+    // Labels for key locations
+    function drawLabels() {
+      ctx.save();
+      ctx.font = '12px "Noto Serif SC", serif';
+      ctx.textAlign = 'center';
+
+      // Location labels
+      const locations = [
+        { x: W * 0.7, y: H * 0.4, label: '乌林' },
+        { x: W * 0.25, y: H * 0.6, label: '赤壁' },
+        { x: W * 0.9, y: H * 0.5, label: '江陵' },
+        { x: W * 0.08, y: H * 0.3, label: '华容道' },
+      ];
+
+      locations.forEach(loc => {
+        ctx.fillStyle = 'rgba(80,60,40,0.5)';
+        ctx.fillText('▸ ' + loc.label, loc.x, loc.y);
+      });
+
+      ctx.restore();
+    }
+
+    // Phase info text
+    function drawPhaseInfo(p) {
+      ctx.save();
+
+      // Title at top-left
+      ctx.font = 'bold 16px "Noto Serif SC", serif';
+      ctx.fillStyle = 'rgba(60,50,40,0.6)';
+      ctx.textAlign = 'left';
+      ctx.fillText('赤壁之战 · 208年', 20, 30);
+
+      // Year
+      ctx.font = '11px "Noto Sans SC", sans-serif';
+      ctx.fillStyle = 'rgba(100,90,80,0.4)';
+      ctx.fillText('建安十三年 冬', 20, 48);
+
+      // Phase progress bar
+      const barX = 20, barY = 58, barW = 200, barH = 3;
+      ctx.fillStyle = 'rgba(180,170,160,0.2)';
+      ctx.fillRect(barX, barY, barW, barH);
+      ctx.fillStyle = 'rgba(196,163,90,0.4)';
+      ctx.fillRect(barX, barY, barW * (p / 100), barH);
+
+      ctx.restore();
+    }
+
+    // ---- Main render ----
+
+    function render() {
+      const p = progress / 100;
+
+      drawParchmentBg();
+      drawRiver();
+      drawLabels();
+      drawCaoCamp(p);
+      drawSunLiuCamp(p);
+      drawFireShips(p);
+      drawFireSpread(p);
+      drawRetreat(p);
+      drawPhaseInfo(progress);
+
+      // Update phase label
+      const phaseIdx = p < 0.15 ? 0 : p < 0.35 ? 1 : p < 0.6 ? 2 : 3;
+      phaseLabel.textContent = '— ' + phaseNames[phaseIdx] + ' —';
+      phaseLabel.classList.add('show');
+
+      // Update markers
+      markers.forEach((m, i) => {
+        m.classList.toggle('active', i === phaseIdx);
+      });
+
+      // Update description
+      phaseDesc.innerHTML = phaseDescs[phaseIdx];
+    }
+
+    // ---- Animation loop ----
+
+    function animate() {
+      if (isPlaying) {
+        progress += 0.15 * speed;
+        if (progress > 100) {
+          progress = 100;
+          isPlaying = false;
+          playBtn.textContent = '▶';
+        }
+        slider.value = Math.round(progress);
+        timeLabel.textContent = Math.round(progress) + '%';
+        render();
+      }
+      animId = requestAnimationFrame(animate);
+    }
+
+    // ---- Controls ----
+
+    playBtn.addEventListener('click', () => {
+      if (progress >= 100) {
+        progress = 0;
+        slider.value = 0;
+        timeLabel.textContent = '0%';
+        render();
+      }
+      isPlaying = !isPlaying;
+      playBtn.textContent = isPlaying ? '⏸' : '▶';
+    });
+
+    resetBtn.addEventListener('click', () => {
+      isPlaying = false;
+      playBtn.textContent = '▶';
+      progress = 0;
+      slider.value = 0;
+      timeLabel.textContent = '0%';
+      render();
+    });
+
+    slider.addEventListener('input', (e) => {
+      if (isPlaying) {
+        isPlaying = false;
+        playBtn.textContent = '▶';
+      }
+      progress = parseFloat(e.target.value);
+      timeLabel.textContent = Math.round(progress) + '%';
+      render();
+    });
+
+    speedSelect.addEventListener('change', (e) => {
+      speed = parseFloat(e.target.value);
+    });
+
+    markers.forEach(m => {
+      m.addEventListener('click', () => {
+        const phaseStart = [0, 15, 35, 60][parseInt(m.dataset.phase)];
+        if (isPlaying) {
+          isPlaying = false;
+          playBtn.textContent = '▶';
+        }
+        progress = phaseStart;
+        slider.value = progress;
+        timeLabel.textContent = Math.round(progress) + '%';
+        render();
+      });
+    });
+
+    // Battle selector
+    document.querySelectorAll('.battle-nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.battle-nav .active').classList.remove('active');
+        btn.classList.add('active');
+        if (btn.dataset.battle === 'feishui') {
+          phaseDesc.innerHTML = '<p>淝水之战正在制作中……敬请期待 <span class="highlight">⚔</span></p>';
+        }
+      });
+    });
+
+    // ---- Init ----
+    render();
+    animate();
+  </script>
+</body>
+</html>

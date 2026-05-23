@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课堂互动工具 · 计时器 + 随机点名</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+    :root {
+      --bg: #f5f0e8;
+      --surface: #ede6d8;
+      --text: #2a2520;
+      --text-secondary: #7a7060;
+      --text-muted: #a09888;
+      --gold: #c4a35a;
+      --gold-light: #e0c878;
+      --gold-dark: #a08030;
+      --border: #d8d0c0;
+      --card-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      --red: #b84a4a;
+      --green: #4a8b5c;
+    }
+    html { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      text-align: center;
+      padding: 28px 20px 14px;
+      background: linear-gradient(180deg, #ede6d8 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+    .header h1 span { color: var(--gold); }
+    .header .sub {
+      margin-top: 2px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      letter-spacing: 3px;
+    }
+
+    /* ---- Tabs ---- */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .tabs .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      transition: all 0.3s;
+      border-bottom: 2px solid transparent;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+    .tabs .tab:hover { color: var(--text-secondary); }
+    .tabs .tab.active {
+      color: var(--gold-dark);
+      border-bottom-color: var(--gold);
+      background: #fff;
+    }
+
+    /* ---- Panel ---- */
+    .panel {
+      display: none;
+      flex: 1;
+      padding: 24px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .panel.active { display: flex; flex-direction: column; align-items: center; }
+
+    /* ============================================================ */
+    /*  TIMER PANEL                                                  */
+    /* ============================================================ */
+
+    .timer-display {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 10px auto 16px;
+    }
+    .timer-display svg {
+      transform: rotate(-90deg);
+    }
+    .timer-display .bg-ring {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 8;
+    }
+    .timer-display .progress-ring {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.4s ease;
+    }
+    .timer-display .progress-ring.warning {
+      stroke: var(--red);
+    }
+    .timer-display .time-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .timer-display .time-text .mmss {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 4px;
+      line-height: 1;
+    }
+    .timer-display .time-text .mmss.warning { color: var(--red); }
+    .timer-display .time-text .label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      letter-spacing: 2px;
+    }
+
+    .timer-presets {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .timer-presets button {
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--text-secondary);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .timer-presets button:hover { border-color: var(--gold); color: var(--gold-dark); }
+    .timer-presets button.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .timer-controls button {
+      padding: 10px 32px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+    }
+    .timer-controls .start-btn {
+      background: var(--gold);
+      color: #fff;
+    }
+    .timer-controls .start-btn:hover { background: var(--gold-dark); }
+    .timer-controls .start-btn.running { background: var(--red); }
+    .timer-controls .start-btn.running:hover { background: #9a3030; }
+    .timer-controls .reset-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .timer-controls .reset-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+
+    .timer-activity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .timer-activity input {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.82rem;
+      color: var(--text);
+      text-align: center;
+      width: 180px;
+      outline: none;
+    }
+    .timer-activity input:focus { border-color: var(--gold); }
+
+    /* ---- Timer flash overlay ---- */
+    .timer-flash {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(196,163,90,0.08);
+      pointer-events: none;
+      animation: flashPulse 1.5s ease-out;
+    }
+    .timer-flash.show { display: block; }
+    @keyframes flashPulse {
+      0% { background: rgba(196,163,90,0.25); }
+      100% { background: rgba(196,163,90,0); }
+    }
+
+    /* ============================================================ */
+    /*  PICKER PANEL                                                 */
+    /* ============================================================ */
+
+    .picker-area {
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    .picker-display {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .picker-display.spinning .picked-name {
+      animation: nameCycle 0.08s infinite;
+    }
+    @keyframes nameCycle {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-2px); }
+    }
+    .picker-display.selected {
+      border-color: var(--gold);
+      box-shadow: 0 0 30px rgba(196,163,90,0.15);
+    }
+
+    .picker-display .picked-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+    .picker-display .picked-name.highlight {
+      color: var(--gold-dark);
+      font-size: 2.8rem;
+    }
+
+    .picker-display .figure-match {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(196,163,90,0.08);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+    .picker-display .figure-match .fig-icon { font-size: 1.2rem; }
+    .picker-display .figure-match .fig-name {
+      font-family: 'Noto Serif SC', serif;
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+    .picker-display .figure-match .fig-title {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+    }
+
+    .picker-display .idle-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-family: 'Noto Serif SC', serif;
+      letter-spacing: 3px;
+    }
+
+    .picker-display .pick-count {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .picker-btn {
+      padding: 14px 48px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 4px;
+      background: var(--gold);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(196,163,90,0.3);
+    }
+    .picker-btn:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(196,163,90,0.35);
+    }
+    .picker-btn:active { transform: translateY(0); }
+    .picker-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Pick history */
+    .pick-history {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .pick-history .h-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pick-history .h-title button {
+      background: none;
+      border: none;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .pick-history .h-title button:hover { color: var(--red); }
+    .pick-history .h-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pick-history .h-list .h-item {
+      padding: 3px 10px;
+      background: var(--surface);
+      border-radius: 10px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================ */
+    /*  SETTINGS PANEL                                               */
+    /* ============================================================ */
+
+    .settings-area {
+      width: 100%;
+      max-width: 480px;
+    }
+    .settings-area .section {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .settings-area .section h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .settings-area .section .hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .settings-area .section textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text);
+      resize: vertical;
+    }
+    .settings-area .section textarea:focus { outline: none; border-color: var(--gold); }
+    .settings-area .section .save-btn {
+      margin-top: 8px;
+      padding: 6px 20px;
+      border: none;
+      border-radius: 6px;
+      background: var(--gold);
+      color: #fff;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+    .settings-area .section .save-btn:hover { background: var(--gold-dark); }
+    .settings-area .section .count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .settings-area .section .count span { color: var(--gold-dark); font-weight: 600; }
+
+    /* Toggle */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+    .toggle-row .label { font-size: 0.82rem; color: var(--text-secondary); }
+    .toggle {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .toggle.on { background: var(--gold); }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .toggle.on::after { left: 22px; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 500px) {
+      .timer-display { width: 220px; height: 220px; }
+      .timer-display .time-text .mmss { font-size: 2.4rem; }
+      .picker-display .picked-name { font-size: 1.8rem; }
+      .picker-display .picked-name.highlight { font-size: 2.2rem; }
+    }
+
+    /* ---- Footer ---- */
+    .footer {
+      text-align: center;
+      padding: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>课 堂 互 动 <span>工 具</span></h1>
+    <p class="sub">计时器 · 随机点名 · 微格教学伴侣</p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" data-tab="timer">⏱ 计时器</div>
+    <div class="tab" data-tab="picker">🎯 随机点名</div>
+    <div class="tab" data-tab="settings">⚙ 班级设置</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  TIMER PANEL                                                  -->
+  <!-- ============================================================ -->
+  <div class="panel active" id="panelTimer">
+    <div class="timer-display" id="timerDisplay">
+      <svg width="100%" height="100%" viewBox="0 0 120 120">
+        <circle class="bg-ring" cx="60" cy="60" r="52"/>
+        <circle class="progress-ring" id="progressRing" cx="60" cy="60" r="52"
+          stroke-dasharray="326.73" stroke-dashoffset="0"/>
+      </svg>
+      <div class="time-text">
+        <div class="mmss" id="timerText">05:00</div>
+        <div class="label" id="timerLabel">课堂活动</div>
+      </div>
+    </div>
+
+    <div class="timer-presets" id="presetGroup">
+      <button data-sec="60">1分</button>
+      <button data-sec="180">3分</button>
+      <button data-sec="300" class="active">5分</button>
+      <button data-sec="600">10分</button>
+      <button data-sec="900">15分</button>
+      <button data-sec="1200">20分</button>
+    </div>
+
+    <div class="timer-controls">
+      <button class="start-btn" id="timerStart">▶ 开始</button>
+      <button class="reset-btn" id="timerReset">⟳ 重置</button>
+    </div>
+
+    <div class="timer-activity">
+      <span style="font-size:0.78rem;color:var(--text-muted);letter-spacing:1px;">活动名称</span>
+      <input type="text" id="activityInput" value="课堂活动" placeholder="如：分组讨论">
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  PICKER PANEL                                                 -->
+  <!-- ============================================================ -->
+  <div class="panel" id="panelPicker">
+    <div class="picker-area">
+      <div class="picker-display" id="pickerDisplay">
+        <div class="idle-text" id="idleText">🎯 准备好了吗？</div>
+        <div class="picked-name" id="pickedName" style="display:none;"></div>
+        <div class="figure-match" id="figureMatch" style="display:none;"></div>
+        <div class="pick-count" id="pickCount"></div>
+      </div>
+
+      <button class="picker-btn" id="pickerBtn">🎯 点 名</button>
+
+      <div class="pick-history" id="pickHistory">
+        <div class="h-title">
+          <span>📋 点名记录</span>
+          <button id="clearHistory">清空</button>
+        </div>
+        <div class="h-list" id="historyList">
+          <span style="color:var(--text-muted);font-size:0.75rem;">暂无记录</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  SETTINGS PANEL                                               -->
+  <!-- ============================================================ -->
+  <div class="panel" id="panelSettings">
+    <div class="settings-area">
+      <div class="section">
+        <h3>📋 学生花名册</h3>
+        <p class="hint">每行一个学生姓名</p>
+        <textarea id="rosterInput" spellcheck="false"></textarea>
+        <button class="save-btn" id="saveRoster">✓ 保存名单</button>
+        <div class="count">当前共 <span id="rosterCount">0</span> 名学生</div>
+      </div>
+
+      <div class="section">
+        <h3>🔔 声音</h3>
+        <div class="toggle-row">
+          <span class="label">计时结束提示音</span>
+          <div class="toggle on" id="toggleSound"></div>
+        </div>
+        <div class="toggle-row" style="margin-top:6px;">
+          <span class="label">点名音效</span>
+          <div class="toggle on" id="togglePickSound"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>ℹ 关于</h3>
+        <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;">
+          课堂互动工具 · 专为历史课堂设计<br>
+          点名时自动匹配一位历史人物，增加课堂趣味性<br>
+          数据保存在浏览器本地，刷新不会丢失
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="timer-flash" id="timerFlash"></div>
+
+  <footer class="footer">Jillax · 微格教学伴侣</footer>
+
+  <script>
+    // ============================================================
+    //  Data
+    // ============================================================
+
+    const FIGURES = [
+      { name: '孔子', title: '至圣先师', emoji: '📖' },
+      { name: '秦始皇', title: '千古一帝', emoji: '👑' },
+      { name: '汉武帝', title: '雄才大略', emoji: '🏹' },
+      { name: '诸葛亮', title: '智慧化身', emoji: '🪶' },
+      { name: '武则天', title: '一代女皇', emoji: '🌺' },
+      { name: '李白', title: '诗仙', emoji: '🌙' },
+      { name: '杜甫', title: '诗圣', emoji: '🏔' },
+      { name: '岳飞', title: '精忠报国', emoji: '⚔' },
+      { name: '成吉思汗', title: '一代天骄', emoji: '🐎' },
+      { name: '郑和', title: '航海家', emoji: '⛵' },
+      { name: '王阳明', title: '心学大师', emoji: '🧠' },
+      { name: '林则徐', title: '虎门销烟', emoji: '🔥' },
+      { name: '孙中山', title: '革命先驱', emoji: '⭐' },
+      { name: '鲁迅', title: '文学革命', emoji: '✒️' },
+      { name: '司马迁', title: '史家绝唱', emoji: '📜' },
+      { name: '张骞', title: '丝绸之路', emoji: '🐪' },
+      { name: '玄奘', title: '西行取经', emoji: '🪷' },
+      { name: '苏轼', title: '文豪', emoji: '🍶' },
+      { name: '王安石', title: '改革家', emoji: '📋' },
+      { name: '郑成功', title: '收复台湾', emoji: '🏴' },
+    ];
+
+    // ============================================================
+    //  State
+    // ============================================================
+
+    // Timer
+    let timerSeconds = 300;          // 5 min default
+    let timerRemaining = 300;
+    let timerRunning = false;
+    let timerInterval = null;
+    let timerPreset = 300;
+
+    // Picker
+    let students = [];
+    let pickHistory = [];
+    let isSpinning = false;
+
+    // Settings
+    let soundEnabled = true;
+    let pickSoundEnabled = true;
+
+    // DOM refs
+    const timerText = document.getElementById('timerText');
+    const timerLabel = document.getElementById('timerLabel');
+    const progressRing = document.getElementById('progressRing');
+    const timerStart = document.getElementById('timerStart');
+    const timerReset = document.getElementById('timerReset');
+    const activityInput = document.getElementById('activityInput');
+    const presetGroup = document.getElementById('presetGroup');
+    const timerFlash = document.getElementById('timerFlash');
+    const CIRCUMFERENCE = 2 * Math.PI * 52; // ~326.73
+
+    const pickerDisplay = document.getElementById('pickerDisplay');
+    const pickedName = document.getElementById('pickedName');
+    const figureMatch = document.getElementById('figureMatch');
+    const idleText = document.getElementById('idleText');
+    const pickerBtn = document.getElementById('pickerBtn');
+    const pickCount = document.getElementById('pickCount');
+    const historyList = document.getElementById('historyList');
+    const clearHistory = document.getElementById('clearHistory');
+
+    const rosterInput = document.getElementById('rosterInput');
+    const saveRoster = document.getElementById('saveRoster');
+    const rosterCount = document.getElementById('rosterCount');
+    const toggleSound = document.getElementById('toggleSound');
+    const togglePickSound = document.getElementById('togglePickSound');
+
+    // ============================================================
+    //  Audio (Web Audio beep)
+    // ============================================================
+
+    function playBeep(freq = 800, duration = 200) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration / 1000);
+      } catch(e) { /* audio not available */ }
+    }
+
+    function playPickSound() {
+      if (!pickSoundEnabled) return;
+      playBeep(600, 80);
+      setTimeout(() => playBeep(900, 120), 120);
+    }
+
+    function playAlarm() {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => playBeep(880, 200), i * 300);
+      }
+    }
+
+    // ============================================================
+    //  Timer
+    // ============================================================
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerRemaining / 60);
+      const secs = timerRemaining % 60;
+      timerText.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+      const offset = CIRCUMFERENCE * (1 - timerRemaining / timerSeconds);
+      progressRing.setAttribute('stroke-dashoffset', offset);
+
+      // Warning color when < 30s
+      if (timerRemaining <= 30 && timerRunning) {
+        progressRing.classList.add('warning');
+        timerText.classList.add('warning');
+      } else {
+        progressRing.classList.remove('warning');
+        timerText.classList.remove('warning');
+      }
+    }
+
+    function setTimer(seconds) {
+      if (timerRunning) return;
+      timerSeconds = seconds;
+      timerRemaining = seconds;
+      timerPreset = seconds;
+      updateTimerDisplay();
+    }
+
+    function startTimer() {
+      if (timerRunning) return;
+      if (timerRemaining <= 0) {
+        timerRemaining = timerSeconds;
+      }
+      timerRunning = true;
+      timerStart.textContent = '⏸ 暂停';
+      timerStart.classList.add('running');
+
+      timerInterval = setInterval(() => {
+        timerRemaining--;
+        updateTimerDisplay();
+        timerLabel.textContent = activityInput.value || '课堂活动';
+
+        if (timerRemaining <= 0) {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          timerStart.textContent = '▶ 开始';
+          timerStart.classList.remove('running');
+          playAlarm();
+          // Flash
+          timerFlash.classList.remove('show');
+          void timerFlash.offsetWidth;
+          timerFlash.classList.add('show');
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerStart.textContent = '▶ 继续';
+      timerStart.classList.remove('running');
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerStart.textContent = '▶ 开始';
+      timerStart.classList.remove('running');
+      timerRemaining = timerSeconds;
+      updateTimerDisplay();
+      timerLabel.textContent = activityInput.value || '课堂活动';
+    }
+
+    timerStart.addEventListener('click', () => {
+      if (timerRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    timerReset.addEventListener('click', resetTimer);
+
+    activityInput.addEventListener('input', () => {
+      timerLabel.textContent = activityInput.value || '课堂活动';
+    });
+
+    // Presets
+    presetGroup.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (timerRunning) return;
+        presetGroup.querySelector('.active')?.classList.remove('active');
+        btn.classList.add('active');
+        setTimer(parseInt(btn.dataset.sec));
+      });
+    });
+
+    // ============================================================
+    //  Picker
+    // ============================================================
+
+    function getRandomFigure() {
+      return FIGURES[Math.floor(Math.random() * FIGURES.length)];
+    }
+
+    function updateRosterCount() {
+      rosterCount.textContent = students.length;
+    }
+
+    function pickStudent() {
+      if (isSpinning) return;
+      if (students.length === 0) {
+        alert('花名册为空！请先到「班级设置」添加学生名单。');
+        return;
+      }
+
+      isSpinning = true;
+      pickerBtn.disabled = true;
+      pickerDisplay.classList.remove('selected');
+      idleText.style.display = 'none';
+      pickedName.style.display = 'block';
+      figureMatch.style.display = 'none';
+
+      // Spinning animation
+      pickerDisplay.classList.add('spinning');
+      let spinCount = 0;
+      const spinInterval = setInterval(() => {
+        const randomStudent = students[Math.floor(Math.random() * students.length)];
+        pickedName.textContent = randomStudent;
+        pickedName.classList.remove('highlight');
+        spinCount++;
+        if (spinCount > 25) {
+          clearInterval(spinInterval);
+          // Final pick
+          const finalStudent = students[Math.floor(Math.random() * students.length)];
+          const figure = getRandomFigure();
+          pickedName.textContent = finalStudent;
+          pickedName.classList.add('highlight');
+          pickerDisplay.classList.remove('spinning');
+          pickerDisplay.classList.add('selected');
+          figureMatch.style.display = 'flex';
+          figureMatch.innerHTML = `
+            <span class="fig-icon">${figure.emoji}</span>
+            <span class="fig-name">${figure.name}</span>
+            <span class="fig-title">· ${figure.title}</span>
+          `;
+
+          // Record
+          pickHistory.unshift({ student: finalStudent, figure: figure.name, time: new Date() });
+          renderHistory();
+          pickCount.textContent = `已点 ${pickHistory.length} 次`;
+
+          playPickSound();
+          isSpinning = false;
+          pickerBtn.disabled = false;
+          pickerBtn.textContent = '🎯 再点一次';
+        }
+      }, 50 + spinCount * 5);
+    }
+
+    function renderHistory() {
+      if (pickHistory.length === 0) {
+        historyList.innerHTML = '<span style="color:var(--text-muted);font-size:0.75rem;">暂无记录</span>';
+        return;
+      }
+      historyList.innerHTML = pickHistory.slice(0, 20).map(h =>
+        `<span class="h-item">${h.student}</span>`
+      ).join('');
+    }
+
+    pickerBtn.addEventListener('click', pickStudent);
+
+    clearHistory.addEventListener('click', () => {
+      pickHistory = [];
+      renderHistory();
+      pickCount.textContent = '';
+      pickerBtn.textContent = '🎯 点 名';
+      idleText.style.display = 'block';
+      pickedName.style.display = 'none';
+      figureMatch.style.display = 'none';
+      pickerDisplay.classList.remove('selected');
+    });
+
+    // Keyboard shortcut: Space to pick
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (document.querySelector('.tab[data-tab="picker"].active')) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          pickerBtn.click();
+        }
+      }
+    });
+
+    // ============================================================
+    //  Settings
+    // ============================================================
+
+    function loadFromStorage() {
+      try {
+        const saved = localStorage.getItem('classroom_students');
+        if (saved) {
+          students = JSON.parse(saved);
+          rosterInput.value = students.join('\n');
+          updateRosterCount();
+        } else {
+          // Default demo roster
+          students = ['张三', '李四', '王五', '赵六', '陈七', '刘八', '周九', '吴十',
+                      '郑同学', '孙同学', '钱同学', '黄同学', '杨同学', '马同学'];
+          rosterInput.value = students.join('\n');
+          updateRosterCount();
+          localStorage.setItem('classroom_students', JSON.stringify(students));
+        }
+
+        const sound = localStorage.getItem('classroom_sound');
+        if (sound !== null) {
+          soundEnabled = sound === 'true';
+          toggleSound.classList.toggle('on', soundEnabled);
+        }
+        const pickSound = localStorage.getItem('classroom_pickSound');
+        if (pickSound !== null) {
+          pickSoundEnabled = pickSound === 'true';
+          togglePickSound.classList.toggle('on', pickSoundEnabled);
+        }
+      } catch(e) {}
+    }
+
+    saveRoster.addEventListener('click', () => {
+      const names = rosterInput.value.split('\n')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
+      if (names.length === 0) {
+        alert('名单不能为空！');
+        return;
+      }
+      students = names;
+      localStorage.setItem('classroom_students', JSON.stringify(students));
+      updateRosterCount();
+      // Reset picker state
+      pickHistory = [];
+      renderHistory();
+      pickCount.textContent = '';
+      pickerBtn.textContent = '🎯 点 名';
+      idleText.style.display = 'block';
+      pickedName.style.display = 'none';
+      figureMatch.style.display = 'none';
+    });
+
+    // Toggle sound
+    toggleSound.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      toggleSound.classList.toggle('on', soundEnabled);
+      localStorage.setItem('classroom_sound', soundEnabled);
+    });
+    togglePickSound.addEventListener('click', () => {
+      pickSoundEnabled = !pickSoundEnabled;
+      togglePickSound.classList.toggle('on', pickSoundEnabled);
+      localStorage.setItem('classroom_pickSound', pickSoundEnabled);
+    });
+
+    // ============================================================
+    //  Tab switching
+    // ============================================================
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelector('.tab.active').classList.remove('active');
+        tab.classList.add('active');
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('panel' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1)).classList.add('active');
+      });
+    });
+
+    // ============================================================
+    //  Init
+    // ============================================================
+
+    progressRing.setAttribute('stroke-dasharray', CIRCUMFERENCE);
+    loadFromStorage();
+    updateTimerDisplay();
+    timerLabel.textContent = activityInput.value || '课堂活动';
+
+    // Quick intro animation for picker
+    setTimeout(() => {
+      if (students.length > 0) {
+        pickCount.textContent = `共 ${students.length} 名学生`;
+      }
+    }, 300);
+  </script>
+</body>
+</html>

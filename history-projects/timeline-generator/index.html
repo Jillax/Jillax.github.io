@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史时间线 · 事件编年生成器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+    :root {
+      --bg: #f5f0e8;
+      --surface: #ede6d8;
+      --text: #2a2520;
+      --text-secondary: #7a7060;
+      --text-muted: #a09888;
+      --gold: #c4a35a;
+      --gold-light: #e0c878;
+      --gold-dark: #a08030;
+      --line: #d0c8b8;
+      --border: #d8d0c0;
+      --cao: #8b2020;
+      --tang: #2a5a8b;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ---- Header ---- */
+    .site-header {
+      text-align: center;
+      padding: 40px 20px 24px;
+      background: linear-gradient(180deg, #ede6d8 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 6px;
+    }
+    .site-header h1 span { color: var(--gold); }
+    .site-header .subtitle {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      letter-spacing: 2px;
+    }
+    .site-header .topic-badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 18px;
+      background: var(--gold);
+      color: #fff;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      border-radius: 20px;
+      letter-spacing: 2px;
+    }
+
+    /* ---- Controls bar ---- */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .controls-bar button {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+    .controls-bar button:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+    }
+    .controls-bar button.active {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+    .controls-bar .stat {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .controls-bar .stat span { color: var(--gold-dark); font-weight: 600; }
+
+    /* ---- Custom panel ---- */
+    .custom-panel {
+      max-width: 900px;
+      margin: 0 auto 20px;
+      padding: 0 20px;
+      display: none;
+    }
+    .custom-panel.open { display: block; }
+
+    .custom-panel .panel-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .custom-panel h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .custom-panel .hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .custom-panel .hint code {
+      background: rgba(0,0,0,0.04);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+    }
+    .custom-panel textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text);
+      resize: vertical;
+    }
+    .custom-panel textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .custom-panel .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .custom-panel .actions button {
+      padding: 8px 24px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+    }
+    .custom-panel .actions .btn-generate {
+      background: var(--gold);
+      color: #fff;
+    }
+    .custom-panel .actions .btn-generate:hover { background: var(--gold-dark); }
+    .custom-panel .actions .btn-example {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .custom-panel .actions .btn-example:hover { border-color: var(--gold); color: var(--gold-dark); }
+
+    /* ---- Timeline ---- */
+    .timeline-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 20px 60px;
+      position: relative;
+    }
+
+    /* Central line */
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--line);
+      transform: translateX(-50%);
+    }
+
+    /* Timeline header markers (dynasty/era) */
+    .era-marker {
+      text-align: center;
+      margin: 40px 0 30px;
+      position: relative;
+      z-index: 2;
+    }
+    .era-marker .label {
+      display: inline-block;
+      padding: 6px 28px;
+      background: var(--gold);
+      color: #fff;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      letter-spacing: 4px;
+      border-radius: 4px;
+      position: relative;
+    }
+    .era-marker .label::before,
+    .era-marker .label::after {
+      content: '◆';
+      font-size: 0.5rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.5);
+    }
+    .era-marker .label::before { left: 10px; }
+    .era-marker .label::after { right: 10px; }
+
+    /* Event card */
+    .event-card {
+      position: relative;
+      width: 50%;
+      padding: 0 40px 36px;
+      z-index: 2;
+    }
+    .event-card:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
+    .event-card:nth-child(even) {
+      left: 50%;
+      text-align: left;
+    }
+
+    /* Central dot */
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      z-index: 3;
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+    .event-card:nth-child(odd)::before {
+      right: -7px;
+    }
+    .event-card:nth-child(even)::before {
+      left: -7px;
+    }
+
+    /* Connector line */
+    .event-card::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      height: 2px;
+      background: var(--line);
+      z-index: 1;
+    }
+    .event-card:nth-child(odd)::after {
+      right: 0;
+      left: calc(100% - 14px);
+    }
+    .event-card:nth-child(even)::after {
+      left: 0;
+      right: calc(100% - 14px);
+    }
+
+    /* Card content */
+    .event-card .card {
+      display: inline-block;
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--card-shadow);
+      max-width: 100%;
+      position: relative;
+    }
+    .event-card:nth-child(odd) .card {
+      text-align: right;
+    }
+    .event-card .card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 4px 20px rgba(196,163,90,0.15);
+      transform: translateY(-2px);
+    }
+    .event-card .card.active {
+      border-color: var(--gold);
+      box-shadow: 0 4px 20px rgba(196,163,90,0.2);
+    }
+
+    .event-card .year-badge {
+      display: inline-block;
+      padding: 2px 12px;
+      background: var(--gold);
+      color: #fff;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.8rem;
+      border-radius: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .event-card:nth-child(odd) .year-badge {
+      /* keep it left-aligned inside a right-aligned card, looks odd */
+    }
+    .event-card .card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .event-card .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .event-card .card-meta .cat {
+      display: inline-block;
+      padding: 1px 8px;
+      background: var(--surface);
+      border-radius: 8px;
+      font-size: 0.7rem;
+    }
+
+    /* Expanded detail */
+    .event-card .detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+      opacity: 0;
+    }
+    .event-card .card.active .detail {
+      max-height: 400px;
+      opacity: 1;
+      padding-top: 12px;
+    }
+    .event-card .detail p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+    .event-card .detail .figures {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .event-card .detail .figures span {
+      display: inline-block;
+      padding: 1px 8px;
+      background: rgba(196,163,90,0.1);
+      border-radius: 8px;
+      margin-right: 4px;
+      color: var(--gold-dark);
+    }
+
+    /* Entry animation */
+    .event-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .event-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 700px) {
+      .site-header h1 { font-size: 1.4rem; letter-spacing: 3px; }
+
+      .timeline-container::before { left: 24px; }
+
+      .event-card {
+        width: 100%;
+        padding: 0 0 28px 52px;
+        left: 0 !important;
+        text-align: left !important;
+      }
+      .event-card:nth-child(odd) .card,
+      .event-card:nth-child(even) .card {
+        text-align: left !important;
+      }
+      .event-card::before {
+        left: 17px !important;
+        right: auto !important;
+      }
+      .event-card::after {
+        left: 24px !important;
+        right: auto !important;
+        width: 24px !important;
+      }
+      .event-card:nth-child(odd)::after {
+        left: 24px !important;
+        right: auto !important;
+      }
+
+      .custom-panel textarea { min-height: 150px; }
+    }
+
+    /* ---- Footer ---- */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <h1>历 史 · 时 间 线 <span>生 成 器</span></h1>
+    <p class="subtitle">以时间为轴，重述历史的每一个关键瞬间</p>
+    <div class="topic-badge" id="topicBadge">安史之乱 · 755–763</div>
+  </header>
+
+  <!-- Controls -->
+  <div class="controls-bar">
+    <button id="btnCustom" class="active">✎ 自定义模式</button>
+    <button id="btnReset">⟳ 重置到安史之乱</button>
+    <span class="stat">共 <span id="eventCount">0</span> 个事件</span>
+  </div>
+
+  <!-- Custom Panel -->
+  <div class="custom-panel open" id="customPanel">
+    <div class="panel-inner">
+      <h3>▎输入事件数据</h3>
+      <p class="hint">
+        每行一个事件，用 <code>|</code> 分隔：<code>年份 | 标题 | 详细描述 | 类别（可选）</code><br>
+        例如：<code>755年十一月 | 安禄山范阳起兵 | 安禄山在范阳以讨伐杨国忠为名起兵… | 军事</code>
+      </p>
+      <textarea id="eventInput" spellcheck="false"></textarea>
+      <div class="actions">
+        <button class="btn-generate" id="btnGenerate">✦ 生成时间线</button>
+        <button class="btn-example" id="btnExample">载入示例</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline-container" id="timelineContainer">
+    <div class="era-marker"><span class="label">唐 · 玄 宗 至 代 宗</span></div>
+  </div>
+
+  <footer class="site-footer">Jillax · 以时间线重述历史</footer>
+
+  <script>
+    // ============================================================
+    //  Data
+    // ============================================================
+
+    const DEFAULT_EVENTS = [
+      {
+        year: '755年',
+        month: '十一月',
+        title: '安禄山范阳起兵',
+        desc: '安禄山在范阳（今北京）以讨伐奸臣杨国忠为名，起兵十五万南下，号称二十万。唐承平日久，武备废弛，叛军势如破竹。',
+        cat: '军事',
+        figures: ['安禄山', '史思明']
+      },
+      {
+        year: '755年',
+        month: '十二月',
+        title: '洛阳陷落',
+        desc: '安禄山攻占东都洛阳。唐将封常清、高仙芝退守潼关，却被朝廷处死。叛军一路烧杀抢掠，中原大乱。',
+        cat: '军事',
+        figures: ['安禄山', '封常清', '高仙芝']
+      },
+      {
+        year: '756年',
+        month: '正月',
+        title: '安禄山称帝',
+        desc: '安禄山在洛阳登基称帝，国号大燕，年号圣武。建立割据政权，与唐廷分庭抗礼。',
+        cat: '政治',
+        figures: ['安禄山']
+      },
+      {
+        year: '756年',
+        month: '六月',
+        title: '潼关失守 · 长安陷落',
+        desc: '唐玄宗强令哥舒翰出潼关决战，结果大败。潼关失守后，长安门户大开，玄宗仓皇西逃。长安被叛军占领，唐朝陷入空前危机。',
+        cat: '军事',
+        figures: ['唐玄宗', '哥舒翰']
+      },
+      {
+        year: '756年',
+        month: '七月',
+        title: '马嵬坡兵变',
+        desc: '唐玄宗逃至马嵬驿，随行禁军哗变，杀死杨国忠，并逼迫玄宗缢死杨贵妃。杨贵妃年仅38岁。此后玄宗入蜀，太子李亨北上灵武。',
+        cat: '政治',
+        figures: ['唐玄宗', '杨贵妃', '杨国忠', '李亨']
+      },
+      {
+        year: '756年',
+        month: '七月',
+        title: '肃宗灵武即位',
+        desc: '太子李亨在灵武（今宁夏）即皇帝位，是为唐肃宗，遥尊玄宗为太上皇。肃宗重用郭子仪、李光弼等将领，组织反攻。',
+        cat: '政治',
+        figures: ['唐肃宗', '郭子仪', '李光弼']
+      },
+      {
+        year: '757年',
+        month: '正月',
+        title: '安庆绪杀安禄山',
+        desc: '安禄山因眼疾脾气暴躁，被次子安庆绪联合大臣严庄、宦官李猪儿刺杀。安庆绪继位，叛军内部出现裂痕。',
+        cat: '政治',
+        figures: ['安禄山', '安庆绪']
+      },
+      {
+        year: '757年',
+        month: '九月',
+        title: '郭子仪收复长安',
+        desc: '郭子仪率唐军十五万，在回纥骑兵帮助下，于香积寺大败叛军。随后收复长安，百姓夹道欢迎。此役是平叛的关键转折点。',
+        cat: '军事',
+        figures: ['郭子仪', '回纥']
+      },
+      {
+        year: '757年',
+        month: '十月',
+        title: '收复洛阳',
+        desc: '唐军乘胜追击，收复洛阳。安庆绪逃往邺城（今河北临漳），叛军势力受到沉重打击。',
+        cat: '军事',
+        figures: ['郭子仪', '安庆绪']
+      },
+      {
+        year: '758年',
+        month: '',
+        title: '九节度使围邺',
+        desc: '唐肃宗派九位节度使率六十万大军围攻邺城，但因不设统帅、指挥不一，围城数月不下。史思明率兵来援。',
+        cat: '军事',
+        figures: ['史思明']
+      },
+      {
+        year: '759年',
+        month: '三月',
+        title: '史思明杀安庆绪',
+        desc: '史思明击败唐军解邺城之围后，设计杀死安庆绪，吞并其部众，自称大燕皇帝。叛军内部再度整合。',
+        cat: '政治',
+        figures: ['史思明', '安庆绪']
+      },
+      {
+        year: '761年',
+        month: '三月',
+        title: '史朝义杀史思明',
+        desc: '史思明被其子史朝义所杀。史朝义继位后，叛军内部更加分裂，将领互不统属，士气低落。',
+        cat: '政治',
+        figures: ['史思明', '史朝义']
+      },
+      {
+        year: '762年',
+        month: '',
+        title: '代宗借兵收复洛阳',
+        desc: '唐代宗（李豫）即位后，再次向回纥借兵，发起新一轮攻势。唐军与回纥联军大破史朝义，收复洛阳。',
+        cat: '军事',
+        figures: ['唐代宗', '史朝义']
+      },
+      {
+        year: '763年',
+        month: '正月',
+        title: '史朝义自缢 · 乱平',
+        desc: '史朝义逃至莫州（今河北），走投无路之下自缢身亡。历时七年多的安史之乱至此终结。但唐朝藩镇割据、宦官专权的隐患从此埋下，盛唐气象一去不返。',
+        cat: '政治',
+        figures: ['史朝义']
+      }
+    ];
+
+    // ============================================================
+    //  State
+    // ============================================================
+
+    let currentEvents = [...DEFAULT_EVENTS];
+
+    // ============================================================
+    //  DOM refs
+    // ============================================================
+
+    const container = document.getElementById('timelineContainer');
+    const eventInput = document.getElementById('eventInput');
+    const btnGenerate = document.getElementById('btnGenerate');
+    const btnCustom = document.getElementById('btnCustom');
+    const btnReset = document.getElementById('btnReset');
+    const btnExample = document.getElementById('btnExample');
+    const customPanel = document.getElementById('customPanel');
+    const topicBadge = document.getElementById('topicBadge');
+    const eventCount = document.getElementById('eventCount');
+
+    // ============================================================
+    //  Parser
+    // ============================================================
+
+    function parseEvents(text) {
+      const lines = text.trim().split('\n').filter(l => l.trim());
+      return lines.map((line, i) => {
+        const parts = line.split('|').map(s => s.trim());
+        const yearMatch = parts[0] ? parts[0].match(/([\d]+年)/) : null;
+        return {
+          year: parts[0] || '',
+          month: '',
+          title: parts[1] || `事件 ${i + 1}`,
+          desc: parts[2] || '',
+          cat: parts[3] || '其他',
+          figures: []
+        };
+      }).filter(e => e.title);
+    }
+
+    function formatEventsForInput(events) {
+      return events.map(e =>
+        [e.year + (e.month ? e.month : ''), e.title, e.desc, e.cat].join(' | ')
+      ).join('\n');
+    }
+
+    // ============================================================
+    //  Render
+    // ============================================================
+
+    function renderTimeline(events) {
+      // Keep era marker, remove all event cards
+      const marker = container.querySelector('.era-marker');
+      container.innerHTML = '';
+      if (marker) container.appendChild(marker);
+
+      if (!events || events.length === 0) {
+        const empty = document.createElement('div');
+        empty.style.cssText = 'text-align:center;padding:60px 20px;color:var(--text-muted);font-family:"Noto Serif SC",serif;';
+        empty.textContent = '暂无事件数据，请在自定义模式中输入。';
+        container.appendChild(empty);
+        eventCount.textContent = '0';
+        return;
+      }
+
+      eventCount.textContent = events.length;
+
+      events.forEach((event, index) => {
+        const card = document.createElement('div');
+        card.className = 'event-card';
+
+        card.innerHTML = `
+          <div class="card" data-index="${index}">
+            <span class="year-badge">${event.year}</span>
+            <div class="card-title">${event.title}</div>
+            <div class="card-meta">
+              ${event.cat ? `<span class="cat">${event.cat}</span>` : ''}
+            </div>
+            <div class="detail">
+              <p>${event.desc || '暂无详细描述。'}</p>
+              ${event.figures && event.figures.length > 0
+                ? `<div class="figures">相关人物：${event.figures.map(f => `<span>${f}</span>`).join('')}</div>`
+                : ''}
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+
+        // Click to expand
+        const cardEl = card.querySelector('.card');
+        cardEl.addEventListener('click', () => {
+          const wasActive = cardEl.classList.contains('active');
+          // Close all
+          document.querySelectorAll('.event-card .card.active').forEach(c => c.classList.remove('active'));
+          if (!wasActive) cardEl.classList.add('active');
+        });
+
+        // Scroll-in animation
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 80);
+      });
+
+      // Scroll-trigger animation
+      observeCards();
+    }
+
+    function observeCards() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.event-card:not(.visible)').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // ============================================================
+    //  Controls
+    // ============================================================
+
+    // Toggle custom panel
+    btnCustom.addEventListener('click', () => {
+      customPanel.classList.toggle('open');
+      btnCustom.classList.toggle('active');
+    });
+
+    // Generate from input
+    btnGenerate.addEventListener('click', () => {
+      const text = eventInput.value.trim();
+      if (!text) return;
+      const events = parseEvents(text);
+      if (events.length === 0) return;
+      currentEvents = events;
+      topicBadge.textContent = '自定义时间线';
+      renderTimeline(events);
+      customPanel.classList.remove('open');
+      btnCustom.classList.remove('active');
+    });
+
+    // Reset to default
+    btnReset.addEventListener('click', () => {
+      currentEvents = [...DEFAULT_EVENTS];
+      topicBadge.textContent = '安史之乱 · 755–763';
+      eventInput.value = formatEventsForInput(DEFAULT_EVENTS);
+      renderTimeline(DEFAULT_EVENTS);
+    });
+
+    // Load example into textarea
+    btnExample.addEventListener('click', () => {
+      eventInput.value = formatEventsForInput(DEFAULT_EVENTS);
+    });
+
+    // Keyboard: Ctrl+Enter to generate
+    eventInput.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
+        btnGenerate.click();
+      }
+    });
+
+    // ============================================================
+    //  Init
+    // ============================================================
+
+    eventInput.value = formatEventsForInput(DEFAULT_EVENTS);
+    renderTimeline(DEFAULT_EVENTS);
+  </script>
+</body>
+</html>

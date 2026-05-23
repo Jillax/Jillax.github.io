@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史知识卡片集</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+    :root {
+      --bg: #f5f0e8;
+      --surface: #ede6d8;
+      --text: #2a2520;
+      --text-secondary: #7a7060;
+      --text-muted: #a09888;
+      --gold: #c4a35a;
+      --gold-light: #e8d898;
+      --gold-dark: #a08030;
+      --border: #d8d0c0;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      text-align: center;
+      padding: 36px 20px 20px;
+      background: linear-gradient(180deg, #ede6d8 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 5px;
+    }
+    .header h1 span { color: var(--gold); }
+    .header .sub {
+      margin-top: 4px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      letter-spacing: 2px;
+    }
+
+    /* ---- Toolbar ---- */
+    .toolbar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Dynasty filters */
+    .filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-group .pill {
+      padding: 5px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Noto Serif SC', serif;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .filter-group .pill:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+    }
+    .filter-group .pill.active {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+
+    /* Search */
+    .search-box {
+      position: relative;
+      margin-left: auto;
+    }
+    .search-box input {
+      padding: 6px 14px 6px 32px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text);
+      width: 180px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .search-box input:focus {
+      border-color: var(--gold);
+      width: 220px;
+    }
+    .search-box .icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* View toggles */
+    .view-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .view-actions button {
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .view-actions button:hover {
+      border-color: var(--gold);
+      color: var(--gold-dark);
+    }
+
+    /* Stat */
+    .stat-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .stat-bar span { color: var(--gold-dark); font-weight: 600; }
+
+    /* ---- Card Grid ---- */
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    /* ---- Card ---- */
+    .card {
+      perspective: 1200px;
+      height: 260px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+
+    /* ---- Front ---- */
+    .card-front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card-front .dynasty-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 2px 10px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-family: 'Noto Serif SC', serif;
+      background: var(--surface);
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      border: 1px solid var(--border);
+    }
+
+    .card-front .type-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: rgba(196,163,90,0.1);
+      color: var(--gold-dark);
+    }
+
+    .card-front .main-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.3;
+      margin-top: 8px;
+    }
+
+    .card-front .hint {
+      position: absolute;
+      bottom: 14px;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+      letter-spacing: 1px;
+    }
+    .card:hover .card-front .hint {
+      opacity: 1;
+    }
+
+    /* ---- Back ---- */
+    .card-back {
+      transform: rotateY(180deg);
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-back::-webkit-scrollbar { width: 3px; }
+    .card-back::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .card-back .back-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-back .back-dynasty {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .card-back .back-dynasty span {
+      display: inline-block;
+      padding: 1px 8px;
+      background: var(--surface);
+      border-radius: 8px;
+    }
+    .card-back .back-body {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .card-back .back-tags {
+      margin-top: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .card-back .back-tags span {
+      font-size: 0.65rem;
+      padding: 1px 8px;
+      background: rgba(196,163,90,0.08);
+      border-radius: 8px;
+      color: var(--text-muted);
+    }
+
+    /* ---- Print styles ---- */
+    @media print {
+      .header { padding: 20px; }
+      .toolbar { display: none; }
+      .stat-bar { display: none; }
+      .card { break-inside: avoid; height: auto; perspective: none; }
+      .card-inner { transform: none !important; }
+      .card-face { position: relative; backface-visibility: visible; }
+      .card-back { transform: none; display: block; }
+      .card .card-front .hint { display: none; }
+      .grid { gap: 12px; }
+    }
+
+    /* ---- Study mode overlay ---- */
+    .study-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,23,20,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .study-overlay.open { display: flex; }
+
+    .study-card {
+      width: 100%;
+      max-width: 520px;
+      height: 360px;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+    .study-card .card-inner {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .study-card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .study-card .card-face {
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .study-card .card-front .main-text {
+      font-size: 2rem;
+    }
+    .study-card .card-back {
+      padding: 40px;
+    }
+    .study-card .card-back .back-body {
+      font-size: 0.95rem;
+    }
+
+    .study-controls {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      z-index: 1001;
+    }
+    .study-controls button {
+      padding: 10px 28px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+    .study-controls .prev {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .study-controls .prev:hover { background: rgba(255,255,255,0.2); }
+    .study-controls .next {
+      background: var(--gold);
+      color: #fff;
+    }
+    .study-controls .next:hover { background: var(--gold-dark); }
+    .study-controls .close-study {
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+    }
+    .study-controls .close-study:hover { color: #fff; }
+
+    .study-progress {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.5);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      z-index: 1001;
+      letter-spacing: 2px;
+    }
+    .study-progress span { color: var(--gold); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 700px) {
+      .header h1 { font-size: 1.3rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .card { height: 200px; }
+      .card-front .main-text { font-size: 1.1rem; }
+      .search-box input { width: 120px; }
+      .search-box input:focus { width: 150px; }
+      .toolbar { padding: 12px; }
+    }
+    @media (max-width: 450px) {
+      .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .card { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>历 史 · 卡 片 <span>集</span></h1>
+    <p class="sub">翻转卡片 · 温故知新</p>
+  </header>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="filter-group" id="filterGroup">
+      <button class="pill active" data-filter="all">全部</button>
+    </div>
+    <div class="search-box">
+      <span class="icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="搜索卡片…">
+    </div>
+    <div class="view-actions">
+      <button id="studyBtn">📖 学习模式</button>
+      <button id="printBtn">🖨 打印 / PDF</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-bar">共 <span id="cardCount">0</span> 张卡片，显示 <span id="visibleCount">0</span></div>
+
+  <!-- Grid -->
+  <div class="grid" id="grid"></div>
+
+  <!-- Study overlay -->
+  <div class="study-overlay" id="studyOverlay">
+    <div class="study-progress"><span id="studyIdx">1</span> / <span id="studyTotal">1</span></div>
+    <div class="study-card" id="studyCard">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="dynasty-tag" id="studyDynasty"></div>
+          <div class="type-tag" id="studyType"></div>
+          <div class="main-text" id="studyFrontText"></div>
+          <div class="hint">点击翻转</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-title" id="studyBackTitle"></div>
+          <div class="back-dynasty"><span id="studyBackDynasty"></span></div>
+          <div class="back-body" id="studyBackBody"></div>
+          <div class="back-tags" id="studyBackTags"></div>
+        </div>
+      </div>
+    </div>
+    <div class="study-controls">
+      <button class="close-study" id="studyClose">✕ 退出</button>
+      <button class="prev" id="studyPrev">◀ 上一张</button>
+      <button class="next" id="studyNext">下一张 ▶</button>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    //  Data
+    // ============================================================
+
+    const dynasties = ['秦汉', '三国', '魏晋南北朝', '隋唐', '宋', '元', '明', '清'];
+
+    const ALL_CARDS = [
+      { id: 1,  dynasty: '秦汉', type: '人物', title: '秦始皇', body: '嬴政，公元前221年统一六国，建立中国历史上第一个大一统中央集权王朝——秦。推行郡县制、书同文、车同轨、统一度量衡。', tags: ['统一', '集权'] },
+      { id: 2,  dynasty: '秦汉', type: '概念', title: '郡县制', body: '地方行政制度，郡下设县，长官由中央直接任免。取代分封制，加强了中央集权，为后世历代沿用。', tags: ['制度', '集权'] },
+      { id: 3,  dynasty: '秦汉', type: '事件', title: '焚书坑儒', body: '秦始皇采纳李斯建议，焚烧百家典籍、坑杀方士儒生。旨在统一思想，但造成大量先秦文献失传。', tags: ['思想控制'] },
+      { id: 4,  dynasty: '秦汉', type: '概念', title: '长城', body: '秦朝连接修缮战国时期长城，西起临洮东至辽东，抵御北方匈奴。后世历代多次修缮，成为中华民族的象征。', tags: ['防御', '工程'] },
+      { id: 5,  dynasty: '秦汉', type: '人物', title: '汉武帝', body: '刘彻（前141-前87年在位），推行推恩令削弱诸侯，独尊儒术统一思想，北击匈奴、开通丝绸之路，将西汉推向鼎盛。', tags: ['大一统', '盛世'] },
+      { id: 6,  dynasty: '秦汉', type: '概念', title: '丝绸之路', body: '张骞出使西域后形成的贸易路线，以长安为起点，经河西走廊通往中亚、西亚乃至欧洲。促进了中外经济文化交流。', tags: ['交流', '贸易'] },
+      { id: 7,  dynasty: '秦汉', type: '概念', title: '罢黜百家·独尊儒术', body: '董仲舒向汉武帝提出"罢黜百家，独尊儒术"，将儒家思想确立为官方正统。从此儒学成为中国两千多年封建社会的正统思想。', tags: ['思想', '制度'] },
+      { id: 8,  dynasty: '三国', type: '概念', title: '三国鼎立', body: '赤壁之战后形成魏（曹操）、蜀（刘备）、吴（孙权）三国鼎立局面。三个政权各占北方、西南、东南，持续六十余年。', tags: ['分裂', '战争'] },
+      { id: 9,  dynasty: '魏晋南北朝', type: '概念', title: '九品中正制', body: '魏晋南北朝时期的选官制度，由中正官按门第和才能评定九品。初期兼顾才能，后来逐渐被士族门阀垄断，形成"上品无寒门，下品无世族"。', tags: ['选官', '门阀'] },
+      { id: 10, dynasty: '魏晋南北朝', type: '事件', title: '孝文帝改革', body: '北魏孝文帝推行汉化改革：迁都洛阳、改汉姓、穿汉服、说汉语、通婚姻。促进了北方民族大融合。', tags: ['改革', '民族融合'] },
+      { id: 11, dynasty: '隋唐', type: '概念', title: '科举制', body: '隋朝创立、唐朝完善的选官制度。通过分科考试选拔人才，打破门阀垄断，为寒门子弟提供上升通道，沿用一千三百年。', tags: ['制度', '选官'] },
+      { id: 12, dynasty: '隋唐', type: '概念', title: '三省六部制', body: '唐朝中央官制：中书省决策、门下省审议、尚书省执行。六部分别为吏户礼兵刑工。相互制衡，是古代政治制度的成熟形态。', tags: ['制度', '中央'] },
+      { id: 13, dynasty: '隋唐', type: '概念', title: '贞观之治', body: '唐太宗李世民在位期间（627-649年），政治清明、经济恢复、文化繁荣、边疆稳定。以"水能载舟亦能覆舟"为治国理念，开创大唐盛世。', tags: ['盛世', '治世'] },
+      { id: 14, dynasty: '隋唐', type: '人物', title: '武则天', body: '中国历史上唯一的女皇帝（690-705年在位）。改国号为周，发展科举、轻徭薄赋、维护边疆。统治期间社会经济持续发展。', tags: ['女皇', '政治'] },
+      { id: 15, dynasty: '隋唐', type: '事件', title: '安史之乱', body: '755-763年，安禄山、史思明发动的叛乱。唐朝由盛转衰的标志性事件，此后藩镇割据、宦官专权等问题日益严重。', tags: ['叛乱', '转折'] },
+      { id: 16, dynasty: '隋唐', type: '概念', title: '均田制', body: '隋唐时期的土地制度，国家将无主土地按人口分配给农民耕作，受田农民承担租庸调。保证了农业生产和国家赋税。', tags: ['制度', '土地'] },
+      { id: 17, dynasty: '宋', type: '人物', title: '赵匡胤', body: '宋太祖（960-976年在位），通过"陈桥兵变"黄袍加身。杯酒释兵权削弱武将权力，推行重文轻武政策，奠定宋朝文官政治格局。', tags: ['开国', '集权'] },
+      { id: 18, dynasty: '宋', type: '事件', title: '靖康之耻', body: '1127年，金军攻破东京汴梁（今开封），掳走宋徽宗、钦宗二帝及大量宗室、官员，北宋灭亡。宋朝皇室南迁，史称南宋。', tags: ['亡国', '屈辱'] },
+      { id: 19, dynasty: '宋', type: '概念', title: '活字印刷术', body: '北宋毕昇发明的胶泥活字印刷技术，比欧洲古登堡早了四百多年。推动了知识的传播和文化发展，是中国四大发明之一。', tags: ['科技', '发明'] },
+      { id: 20, dynasty: '宋', type: '概念', title: '程朱理学', body: '宋代儒家新形态，以程颢、程颐、朱熹为代表。强调"存天理、灭人欲"，注重格物致知。成为后世官方哲学，影响深远。', tags: ['思想', '哲学'] },
+      { id: 21, dynasty: '元', type: '概念', title: '行省制', body: '元朝创立的地方行政制度，在中央设中书省，地方设行中书省（行省）。行省管辖范围庞大，为明清所沿用，奠定了今日中国省制的基础。', tags: ['制度', '地方'] },
+      { id: 22, dynasty: '元', type: '概念', title: '四等人制', body: '元朝推行的民族等级制度：蒙古人最上、色目人次之、汉人第三、南人最末。体现了民族压迫政策，加剧了社会矛盾。', tags: ['制度', '民族'] },
+      { id: 23, dynasty: '明', type: '事件', title: '郑和下西洋', body: '1405-1433年，郑和率船队七次出使西洋，最远到达非洲东海岸。宝船规模远超同时期欧洲船只，是古代世界最庞大的远洋航行。', tags: ['航海', '外交'] },
+      { id: 24, dynasty: '明', type: '概念', title: '内阁制', body: '明朝废除丞相后设立的内阁制度。内阁大学士最初仅是顾问，后来逐渐掌握实权，首辅相当于宰相。是明代中央制度的核心特征。', tags: ['制度', '中央'] },
+      { id: 25, dynasty: '明', type: '事件', title: '一条鞭法', body: '张居正推行的赋税改革：将各种赋税合并为一条，统一折银征收。简化了税制，增加了财政收入，推动了商品经济发展。', tags: ['改革', '赋税'] },
+      { id: 26, dynasty: '明', type: '概念', title: '海禁政策', body: '明朝限制民间海外贸易的政策，严禁私人出海贸易。虽有郑和下西洋的官方航海，但民间海禁严重抑制了海洋经济和对外交流。', tags: ['政策', '对外'] },
+      { id: 27, dynasty: '清', type: '概念', title: '康乾盛世', body: '清朝康熙、雍正、乾隆三朝（1661-1795年）的繁荣时期。疆域空前辽阔，人口大幅增长，经济文化达到传统社会的顶峰。', tags: ['盛世', '治世'] },
+      { id: 28, dynasty: '清', type: '事件', title: '鸦片战争', body: '1840-1842年，英国以虎门销烟为借口发动的侵华战争。清政府战败，签订《南京条约》，中国开始沦为半殖民地半封建社会。', tags: ['近代', '殖民'] },
+      { id: 29, dynasty: '清', type: '事件', title: '太平天国运动', body: '1851-1864年，洪秀全领导的农民起义。定都天京（南京），颁布《天朝田亩制度》。规模浩大，沉重打击了清朝统治。', tags: ['起义', '近代'] },
+      { id: 30, dynasty: '清', type: '事件', title: '洋务运动', body: '19世纪60-90年代，以"自强""求富"为口号的近代化运动。创办江南制造局、福州船政局等军工企业，推动了中国的近代化起步。', tags: ['改革', '近代化'] },
+      { id: 31, dynasty: '清', type: '事件', title: '戊戌变法', body: '1898年，康有为、梁启超等推动的维新变法运动。光绪帝颁布一系列改革诏令，但在慈禧太后政变后失败，历时仅103天。', tags: ['改革', '维新'] },
+      { id: 32, dynasty: '清', type: '事件', title: '甲午战争', body: '1894-1895年的中日战争。北洋水师全军覆没，清政府战败签订《马关条约》，割让台湾、赔款两亿两白银。中国半殖民地化进一步加深。', tags: ['战争', '屈辱'] },
+    ];
+
+    // ============================================================
+    //  State
+    // ============================================================
+
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let currentCards = [...ALL_CARDS];
+
+    // Study mode
+    let studyCards = [];
+    let studyIndex = 0;
+
+    // ============================================================
+    //  Render filters
+    // ============================================================
+
+    function renderFilters() {
+      const group = document.getElementById('filterGroup');
+      group.innerHTML = '<button class="pill active" data-filter="all">全部</button>';
+      dynasties.forEach(d => {
+        const btn = document.createElement('button');
+        btn.className = 'pill';
+        btn.dataset.filter = d;
+        btn.textContent = d;
+        group.appendChild(btn);
+      });
+
+      group.querySelectorAll('.pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          group.querySelector('.active').classList.remove('active');
+          btn.classList.add('active');
+          activeFilter = btn.dataset.filter;
+          applyFilters();
+        });
+      });
+    }
+
+    // ============================================================
+    //  Card rendering
+    // ============================================================
+
+    function buildCardHTML(card) {
+      return `
+        <div class="card" data-id="${card.id}">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="dynasty-tag">${card.dynasty}</div>
+              <div class="type-tag">${card.type}</div>
+              <div class="main-text">${card.title}</div>
+              <div class="hint">点击翻转</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="back-title">${card.title}</div>
+              <div class="back-dynasty"><span>${card.dynasty} · ${card.type}</span></div>
+              <div class="back-body">${card.body}</div>
+              <div class="back-tags">${card.tags.map(t => `<span>#${t}</span>`).join('')}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGrid(cards) {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = cards.map(c => buildCardHTML(c)).join('');
+
+      // Flip on click
+      grid.querySelectorAll('.card').forEach(el => {
+        el.addEventListener('click', () => {
+          el.classList.toggle('flipped');
+        });
+      });
+
+      // Update counts
+      document.getElementById('cardCount').textContent = ALL_CARDS.length;
+      document.getElementById('visibleCount').textContent = cards.length;
+    }
+
+    // ============================================================
+    //  Filter + Search
+    // ============================================================
+
+    function applyFilters() {
+      let filtered = [...ALL_CARDS];
+
+      // Dynasty filter
+      if (activeFilter !== 'all') {
+        filtered = filtered.filter(c => c.dynasty === activeFilter);
+      }
+
+      // Search
+      if (searchQuery.trim()) {
+        const q = searchQuery.trim().toLowerCase();
+        filtered = filtered.filter(c =>
+          c.title.includes(q) ||
+          c.body.includes(q) ||
+          c.dynasty.includes(q) ||
+          c.tags.some(t => t.includes(q))
+        );
+      }
+
+      currentCards = filtered;
+      renderGrid(filtered);
+    }
+
+    // ============================================================
+    //  Study mode
+    // ============================================================
+
+    function openStudyMode() {
+      studyCards = currentCards.length > 0 ? [...currentCards] : [...ALL_CARDS];
+      studyIndex = 0;
+      document.getElementById('studyOverlay').classList.add('open');
+      showStudyCard(0);
+    }
+
+    function showStudyCard(index) {
+      const card = studyCards[index];
+      const overlay = document.getElementById('studyCard');
+      overlay.classList.remove('flipped');
+
+      document.getElementById('studyIdx').textContent = index + 1;
+      document.getElementById('studyTotal').textContent = studyCards.length;
+      document.getElementById('studyDynasty').textContent = card.dynasty;
+      document.getElementById('studyType').textContent = card.type;
+      document.getElementById('studyFrontText').textContent = card.title;
+      document.getElementById('studyBackTitle').textContent = card.title;
+      document.getElementById('studyBackDynasty').textContent = card.dynasty + ' · ' + card.type;
+      document.getElementById('studyBackBody').textContent = card.body;
+      document.getElementById('studyBackTags').innerHTML = card.tags.map(t => `<span>#${t}</span>`).join('');
+
+      // Update button states
+      document.getElementById('studyPrev').style.visibility = index === 0 ? 'hidden' : 'visible';
+      document.getElementById('studyNext').textContent = index === studyCards.length - 1 ? '✓ 完成' : '下一张 ▶';
+    }
+
+    // ============================================================
+    //  Init
+    // ============================================================
+
+    renderFilters();
+    applyFilters();
+
+    // ---- Event listeners ----
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      applyFilters();
+    });
+
+    // Study mode
+    document.getElementById('studyBtn').addEventListener('click', openStudyMode);
+    document.getElementById('studyClose').addEventListener('click', () => {
+      document.getElementById('studyOverlay').classList.remove('open');
+    });
+    document.getElementById('studyCard').addEventListener('click', () => {
+      document.getElementById('studyCard').classList.toggle('flipped');
+    });
+    document.getElementById('studyNext').addEventListener('click', () => {
+      if (studyIndex < studyCards.length - 1) {
+        studyIndex++;
+        showStudyCard(studyIndex);
+      } else {
+        document.getElementById('studyOverlay').classList.remove('open');
+      }
+    });
+    document.getElementById('studyPrev').addEventListener('click', () => {
+      if (studyIndex > 0) {
+        studyIndex--;
+        showStudyCard(studyIndex);
+      }
+    });
+
+    // Keyboard shortcuts in study mode
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('studyOverlay').classList.contains('open')) return;
+
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        if (studyIndex < studyCards.length - 1) {
+          studyIndex++;
+          showStudyCard(studyIndex);
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (studyIndex > 0) {
+          studyIndex--;
+          showStudyCard(studyIndex);
+        }
+      } else if (e.key === 'Escape') {
+        document.getElementById('studyOverlay').classList.remove('open');
+      }
+    });
+
+    // Print / PDF
+    document.getElementById('printBtn').addEventListener('click', () => {
+      // First flip all cards to show front only in print
+      document.querySelectorAll('.card.flipped').forEach(c => c.classList.remove('flipped'));
+      window.print();
+    });
+  </script>
+</body>
+</html>

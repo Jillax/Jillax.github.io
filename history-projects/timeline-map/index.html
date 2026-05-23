@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时空地图 · 安史之乱</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+    :root {
+      --bg: #f5f0e8;
+      --surface: #ede6d8;
+      --text: #2a2520;
+      --text-secondary: #7a7060;
+      --text-muted: #a09888;
+      --gold: #c4a35a;
+      --gold-dark: #a08030;
+      --border: #d8d0c0;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+
+    /* ---- Layout ---- */
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Header */
+    .app-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .app-header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 3px;
+    }
+    .app-header h1 span { color: var(--gold); }
+    .app-header .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .app-header .header-meta .count span { color: var(--gold-dark); font-weight: 600; }
+
+    /* Time slider bar */
+    .time-bar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 24px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .time-bar label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-family: 'Noto Serif SC', serif;
+    }
+    .time-bar input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+    }
+    .time-bar input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .time-bar .year-range {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.85rem;
+      color: var(--gold-dark);
+      font-weight: 600;
+      min-width: 100px;
+      text-align: center;
+    }
+    .time-bar .year-range .arrow { color: var(--text-muted); margin: 0 4px; }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Timeline panel */
+    .timeline-panel {
+      width: 380px;
+      min-width: 380px;
+      overflow-y: auto;
+      background: var(--bg);
+      border-right: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    .timeline-panel::-webkit-scrollbar { width: 4px; }
+    .timeline-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Map panel */
+    .map-panel {
+      flex: 1;
+      position: relative;
+    }
+    .map-panel #map {
+      width: 100%;
+      height: 100%;
+    }
+    /* Warm filter on map */
+    .map-panel #map .leaflet-tile-pane {
+      filter: sepia(0.15) saturate(0.85) hue-rotate(350deg);
+    }
+
+    /* Map attribution */
+    .map-panel .map-attribution {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      color: rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.7);
+      padding: 2px 10px;
+      border-radius: 10px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    /* ---- Timeline cards ---- */
+    .tl-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+    .tl-card:hover {
+      background: rgba(196,163,90,0.06);
+    }
+    .tl-card.active {
+      background: rgba(196,163,90,0.1);
+      border-left-color: var(--gold);
+    }
+    .tl-card.hidden {
+      display: none;
+    }
+
+    .tl-card .tl-dot {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      margin-top: 4px;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--border);
+      transition: all 0.3s;
+    }
+    .tl-card.active .tl-dot {
+      background: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+    .tl-card.military .tl-dot { background: #8b2020; box-shadow: 0 0 0 1px #8b2020; }
+    .tl-card.military.active .tl-dot { background: #cc3333; box-shadow: 0 0 0 2px #cc3333; }
+    .tl-card.political .tl-dot { background: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+
+    .tl-card .tl-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .tl-card .tl-year {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .tl-card.active .tl-year { color: var(--gold-dark); }
+
+    .tl-card .tl-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 2px 0 2px;
+    }
+    .tl-card .tl-cat {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 1px 8px;
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text-muted);
+    }
+    .tl-card .tl-preview {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ---- Map popup ---- */
+    .map-popup {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .map-popup h4 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .map-popup .popup-year {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .map-popup .popup-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: 6px;
+      max-width: 220px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 800px) {
+      .main { flex-direction: column; }
+      .timeline-panel {
+        width: 100%;
+        min-width: unset;
+        height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .map-panel { height: 60vh; }
+      .app-header { flex-wrap: wrap; gap: 6px; }
+      .app-header h1 { font-size: 1rem; }
+    }
+
+    /* ---- Leaflet overrides ---- */
+    .leaflet-popup-content-wrapper {
+      border-radius: 6px !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+    }
+    .leaflet-popup-tip { box-shadow: none !important; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>时 空 地 图 · <span>安 史 之 乱</span></h1>
+      <div class="header-meta">
+        <span class="count">共 <span id="totalCount">0</span> 个事件</span>
+        <span style="display:flex;gap:8px;">
+          <span style="display:inline-flex;align-items:center;gap:4px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#8b2020;display:inline-block;"></span>军事
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:4px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block;"></span>政治
+          </span>
+        </span>
+      </div>
+    </header>
+
+    <!-- Time slider -->
+    <div class="time-bar">
+      <label>⏳ 时间筛选</label>
+      <input type="range" id="timeSlider" min="0" max="100" value="100">
+      <span class="year-range" id="yearDisplay">— <span class="arrow">→</span> —</span>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="timeline-panel" id="timelinePanel"></div>
+      <div class="map-panel">
+        <div id="map"></div>
+        <div class="map-attribution">位置为大致估算 · OpenStreetMap</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // ============================================================
+    //  Data
+    // ============================================================
+
+    const EVENTS = [
+      {
+        year: 755, month: '十一月', title: '安禄山范阳起兵',
+        desc: '安禄山在范阳以讨伐杨国忠为名起兵十五万南下，承平日久的唐朝措手不及。',
+        coords: [39.9042, 116.4074], loc: '范阳（今北京）',
+        cat: '军事',
+        figures: ['安禄山', '史思明']
+      },
+      {
+        year: 755, month: '十二月', title: '洛阳陷落',
+        desc: '安禄山攻占东都洛阳。唐将封常清、高仙芝退守潼关，却被朝廷处死。',
+        coords: [34.6181, 112.4539], loc: '洛阳',
+        cat: '军事',
+        figures: ['安禄山', '封常清', '高仙芝']
+      },
+      {
+        year: 756, month: '正月', title: '安禄山洛阳称帝',
+        desc: '安禄山在洛阳登基称帝，国号大燕，年号圣武，建立割据政权。',
+        coords: [34.6181, 112.4539], loc: '洛阳',
+        cat: '政治',
+        figures: ['安禄山']
+      },
+      {
+        year: 756, month: '六月', title: '潼关失守 · 长安陷落',
+        desc: '玄宗强令哥舒翰出潼关决战，大败。潼关失守后长安门户大开，玄宗仓皇西逃。',
+        coords: [34.5833, 110.2667], loc: '潼关',
+        cat: '军事',
+        figures: ['唐玄宗', '哥舒翰']
+      },
+      {
+        year: 756, month: '六月', title: '长安陷落',
+        desc: '安史叛军攻入长安，唐朝都城首次被攻陷。百姓遭掠，宫殿被焚。',
+        coords: [34.3416, 108.9398], loc: '长安（今西安）',
+        cat: '军事',
+        figures: ['安禄山']
+      },
+      {
+        year: 756, month: '七月', title: '马嵬坡兵变',
+        desc: '玄宗逃至马嵬驿，禁军哗变杀杨国忠，逼缢杨贵妃。太子李亨北上灵武。',
+        coords: [34.2833, 108.4500], loc: '马嵬驿（今陕西兴平）',
+        cat: '政治',
+        figures: ['唐玄宗', '杨贵妃', '杨国忠', '李亨']
+      },
+      {
+        year: 756, month: '七月', title: '肃宗灵武即位',
+        desc: '太子李亨在灵武即帝位（唐肃宗），遥尊玄宗为太上皇，组织平叛。',
+        coords: [38.0833, 106.2833], loc: '灵武（今宁夏灵武）',
+        cat: '政治',
+        figures: ['唐肃宗', '郭子仪', '李光弼']
+      },
+      {
+        year: 757, month: '正月', title: '安庆绪杀安禄山',
+        desc: '安禄山被次子安庆绪合谋刺杀。叛军内部分裂从此开始。',
+        coords: [34.6181, 112.4539], loc: '洛阳',
+        cat: '政治',
+        figures: ['安禄山', '安庆绪']
+      },
+      {
+        year: 757, month: '九月', title: '郭子仪收复长安',
+        desc: '郭子仪率唐军十五万在回纥骑兵帮助下大败叛军，收复长安。',
+        coords: [34.3416, 108.9398], loc: '长安（今西安）',
+        cat: '军事',
+        figures: ['郭子仪']
+      },
+      {
+        year: 757, month: '十月', title: '收复洛阳',
+        desc: '唐军乘胜收复洛阳。安庆绪逃往邺城，叛军势力受到沉重打击。',
+        coords: [34.6181, 112.4539], loc: '洛阳',
+        cat: '军事',
+        figures: ['郭子仪', '安庆绪']
+      },
+      {
+        year: 758, month: '', title: '九节度使围邺',
+        desc: '六十万唐军围攻邺城，因不设统帅而指挥不一，围城数月不下。',
+        coords: [36.3000, 114.6000], loc: '邺城（今河北临漳）',
+        cat: '军事',
+        figures: ['史思明']
+      },
+      {
+        year: 759, month: '三月', title: '史思明杀安庆绪',
+        desc: '史思明击败唐军解邺城之围后杀安庆绪，吞并其部众，自称大燕皇帝。',
+        coords: [36.3000, 114.6000], loc: '邺城（今河北临漳）',
+        cat: '政治',
+        figures: ['史思明', '安庆绪']
+      },
+      {
+        year: 761, month: '三月', title: '史朝义杀史思明',
+        desc: '史思明被其子史朝义所杀。叛军内部更加分裂，士气低落。',
+        coords: [39.9042, 116.4074], loc: '范阳（今北京）',
+        cat: '政治',
+        figures: ['史思明', '史朝义']
+      },
+      {
+        year: 762, month: '', title: '代宗借兵收复洛阳',
+        desc: '唐代宗向回纥借兵，唐回联军大破史朝义，再度收复洛阳。',
+        coords: [34.6181, 112.4539], loc: '洛阳',
+        cat: '军事',
+        figures: ['唐代宗', '史朝义']
+      },
+      {
+        year: 763, month: '正月', title: '史朝义自缢 · 乱平',
+        desc: '史朝义走投无路自缢身亡。历时七年多的安史之乱终结，但盛唐气象一去不返。',
+        coords: [38.7167, 116.0833], loc: '莫州（今河北任丘）',
+        cat: '政治',
+        figures: ['史朝义']
+      }
+    ];
+
+    // ============================================================
+    //  State
+    // ============================================================
+
+    let activeIndex = null;
+    let markers = [];
+    let map = null;
+
+    // Year range
+    const years = EVENTS.map(e => e.year);
+    const minYear = Math.min(...years);
+    const maxYear = Math.max(...years);
+
+    // ============================================================
+    //  Init Map
+    // ============================================================
+
+    function initMap() {
+      map = L.map('map', {
+        center: [34.5, 112],
+        zoom: 6,
+        zoomControl: true,
+        attributionControl: false
+      });
+
+      // CartoDB light tiles (warm-toned base)
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+      }).addTo(map);
+
+      // Add zoom control to top-right
+      map.zoomControl.setPosition('topright');
+    }
+
+    // ============================================================
+    //  Render
+    // ============================================================
+
+    function renderTimeline(visibleOnly = false) {
+      const panel = document.getElementById('timelinePanel');
+      panel.innerHTML = '';
+
+      EVENTS.forEach((ev, i) => {
+        const card = document.createElement('div');
+        card.className = `tl-card ${ev.cat === '军事' ? 'military' : 'political'}`;
+        card.dataset.index = i;
+
+        // Determine if visible by time filter
+        const slider = document.getElementById('timeSlider');
+        const cutoff = minYear + (maxYear - minYear) * (slider.value / 100);
+
+        if (ev.year > cutoff) {
+          card.classList.add('hidden');
+        }
+
+        card.innerHTML = `
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-year">${ev.year}年${ev.month ? '·' + ev.month : ''}　${ev.loc}</div>
+            <div class="tl-title">${ev.title}</div>
+            <span class="tl-cat">${ev.cat}</span>
+            <div class="tl-preview">${ev.desc}</div>
+          </div>
+        `;
+
+        card.addEventListener('click', () => focusEvent(i));
+        panel.appendChild(card);
+      });
+
+      document.getElementById('totalCount').textContent = EVENTS.length;
+    }
+
+    function renderMarkers() {
+      // Clear existing markers
+      markers.forEach(m => map.removeLayer(m));
+      markers = [];
+
+      EVENTS.forEach((ev, i) => {
+        const color = ev.cat === '军事' ? '#8b2020' : '#c4a35a';
+        const marker = L.circleMarker(ev.coords, {
+          radius: 10,
+          fillColor: color,
+          color: '#fff',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.7
+        });
+
+        marker.bindPopup(`
+          <div class="map-popup">
+            <h4>${ev.title}</h4>
+            <div class="popup-year">${ev.year}年${ev.month ? '·' + ev.month : ''} · ${ev.loc}</div>
+            <div class="popup-desc">${ev.desc}</div>
+          </div>
+        `);
+
+        marker.on('click', () => focusEvent(i));
+        markers.push(marker);
+        marker.addTo(map);
+      });
+    }
+
+    // ============================================================
+    //  Focus: card + map sync
+    // ============================================================
+
+    function focusEvent(index) {
+      const ev = EVENTS[index];
+
+      // Update active card
+      activeIndex = index;
+      document.querySelectorAll('.tl-card').forEach((c, i) => {
+        c.classList.toggle('active', i === index);
+      });
+
+      // Scroll card into view
+      const card = document.querySelector(`.tl-card[data-index="${index}"]`);
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Fly map to location
+      map.flyTo(ev.coords, 7, { duration: 0.8 });
+
+      // Highlight marker
+      markers.forEach((m, i) => {
+        if (i === index) {
+          m.setStyle({
+            radius: 14,
+            fillOpacity: 1,
+            color: '#2a2520',
+            weight: 3
+          });
+          m.openPopup();
+        } else {
+          const color = EVENTS[i].cat === '军事' ? '#8b2020' : '#c4a35a';
+          m.setStyle({
+            radius: 10,
+            fillOpacity: 0.7,
+            color: '#fff',
+            weight: 2
+          });
+        }
+      });
+    }
+
+    // ============================================================
+    //  Time filter
+    // ============================================================
+
+    function applyTimeFilter() {
+      const slider = document.getElementById('timeSlider');
+      const cutoff = minYear + (maxYear - minYear) * (slider.value / 100);
+      const cutoffYear = Math.round(cutoff);
+
+      // Update display
+      document.getElementById('yearDisplay').textContent =
+        `${minYear}年 → ${cutoffYear}年`;
+
+      // Filter cards
+      document.querySelectorAll('.tl-card').forEach((card, i) => {
+        const ev = EVENTS[i];
+        if (ev.year > cutoffYear) {
+          card.classList.add('hidden');
+        } else {
+          card.classList.remove('hidden');
+        }
+      });
+
+      // Filter markers
+      markers.forEach((m, i) => {
+        if (EVENTS[i].year > cutoffYear) {
+          map.removeLayer(m);
+        } else {
+          if (!map.hasLayer(m)) m.addTo(map);
+        }
+      });
+
+      // Update active index if current is hidden
+      if (activeIndex !== null) {
+        const activeCard = document.querySelector(`.tl-card[data-index="${activeIndex}"]`);
+        if (activeCard && activeCard.classList.contains('hidden')) {
+          // Find last visible card
+          const visibleCards = document.querySelectorAll('.tl-card:not(.hidden)');
+          if (visibleCards.length > 0) {
+            const lastIdx = parseInt(visibleCards[visibleCards.length - 1].dataset.index);
+            focusEvent(lastIdx);
+          }
+        }
+      }
+    }
+
+    // ============================================================
+    //  Init
+    // ============================================================
+
+    initMap();
+    renderTimeline();
+    renderMarkers();
+
+    // Initial fit
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.15));
+
+    // Focus first event after map loads
+    setTimeout(() => focusEvent(0), 500);
+
+    // Time slider
+    document.getElementById('timeSlider').addEventListener('input', applyTimeFilter);
+    // Initial filter state
+    document.getElementById('yearDisplay').textContent = `${minYear}年 → ${maxYear}年`;
+  </script>
+</body>
+</html>
