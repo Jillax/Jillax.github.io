@@ -423,96 +423,6 @@
     100% { transform: translateX(-50%); }
 }
 
-/* ===== Quote ===== */
-.quote-section {
-    padding: 80px 0 40px;
-    position: relative;
-}
-.quote-block {
-    max-width: 640px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    padding: 40px;
-    border: 1px solid var(--border);
-    background: rgba(155, 89, 255, 0.02);
-}
-/* Corner decorations */
-.quote-block::before,
-.quote-block::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-color: var(--purple);
-    opacity: 0.4;
-}
-.quote-block::before {
-    top: -1px;
-    left: -1px;
-    border-top: 2px solid;
-    border-left: 2px solid;
-    border-color: var(--purple);
-}
-.quote-block::after {
-    bottom: -1px;
-    right: -1px;
-    border-bottom: 2px solid;
-    border-right: 2px solid;
-    border-color: var(--purple);
-}
-.quote-mark {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    color: var(--purple);
-    line-height: 0.6;
-    margin-bottom: 16px;
-    opacity: 0.3;
-    text-shadow: 0 0 20px var(--purple-glow);
-}
-.quote-text {
-    font-family: var(--font-chinese);
-    font-size: 1.05rem;
-    color: var(--text-soft);
-    line-height: 2;
-    letter-spacing: 1px;
-    min-height: 3.8em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.quote-source {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-faint);
-    margin-top: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-.quote-source:empty { display: none; }
-.quote-refresh {
-    position: absolute;
-    bottom: -32px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-faint);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    padding: 4px 14px;
-    font-family: var(--font-mono);
-    opacity: 0.5;
-}
-.quote-refresh:hover {
-    color: var(--purple);
-    border-color: var(--purple);
-    opacity: 1;
-    transform: translateX(-50%) rotate(180deg);
-    box-shadow: 0 0 12px var(--purple-glow);
-}
-
 /* ===== Status Bar (footer area) ===== */
 .status-bar {
     display: flex;
@@ -604,9 +514,6 @@
     .hero-layout {
         padding: 0 24px;
     }
-    .quote-section { padding: 60px 0 20px; }
-    .quote-text { font-size: 0.95rem; }
-    .quote-block { padding: 28px 20px; }
     .hero { padding: 90px 0 40px; min-height: auto; }
     .hero h1 { font-size: clamp(2.5rem, 12vw, 3.5rem); letter-spacing: 2px; }
     .hero-mascot {
