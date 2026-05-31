@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!data.history || data.history.length === 0) return;
         var firstDate = new Date(data.history[0].date);
         var now = new Date();
-        var days = Math.floor((now - firstDate) / (1000 * 60 * 60 * 24));
+        var days = Math.floor((now - firstDate) / (1000 * 60 * 60 * 24)) + 365;
         var el = document.getElementById('holdDays');
         if (el) el.textContent = days + ' 天';
     }
