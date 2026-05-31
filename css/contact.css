@@ -1,56 +1,195 @@
 /* ============================================
-   Jillax.github.io — Contact Page Styles
+   Jillax.github.io — Contact Page
+   COMM TERMINAL Cyberpunk Style
    ============================================ */
 
-.contact-intro {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    margin-bottom: 32px;
-    font-weight: 300;
-    letter-spacing: 0.2px;
-}
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    max-width: 680px;
-}
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    color: var(--text-soft);
-    font-size: 0.9rem;
-    font-weight: 400;
-    border: 1px solid var(--border-light);
-    margin: -0.5px;
-    font-family: var(--font-body);
-}
-.contact-item:hover {
-    color: var(--purple-bright);
-    border-color: var(--border-glow);
-    background: var(--purple-soft);
-    z-index: 1;
+/* ===== Terminal Banner ===== */
+.comm-banner {
+    padding: 40px 0 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
     position: relative;
 }
-.contact-item svg {
-    width: 15px; height: 15px;
-    opacity: 0.5; flex-shrink: 0;
-    transition: opacity 0.3s ease;
+.comm-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--purple), transparent);
+    filter: blur(1px);
 }
-.contact-item:hover svg { opacity: 0.9; }
-.contact-item .contact-sub {
-    font-size: 0.65rem;
-    color: var(--text-faint);
-    margin-left: auto;
+.comm-banner-tag {
     font-family: var(--font-mono);
-    letter-spacing: 1px;
+    font-size: 0.6rem;
+    color: var(--neon-pink);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+.comm-banner-title {
+    font-family: var(--font-chinese);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-soft);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+}
+.comm-banner-cursor {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--purple);
+}
+.cursor-blink {
+    animation: cursorBlink 0.8s step-end infinite;
+}
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
-@media (max-width: 768px) {
-    .contact-grid { grid-template-columns: 1fr; }
+/* ===== Contact Grid ===== */
+.comm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
 }
-@media (max-width: 480px) {
-    .contact-item { padding: 12px 14px; }
+.comm-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.comm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--purple);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.comm-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(155, 89, 255, 0.12);
+}
+.comm-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 10px var(--purple-glow);
+}
+.comm-card-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+.comm-card-icon svg {
+    width: 24px;
+    height: 24px;
+}
+.comm-card:hover .comm-card-icon {
+    color: var(--purple-bright);
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px var(--purple-glow));
+}
+.comm-card-body {
+    flex: 1;
+    min-width: 0;
+}
+.comm-card-name {
+    font-family: var(--font-chinese);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-soft);
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+.comm-card:hover .comm-card-name {
+    color: var(--text);
+}
+.comm-card-user {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.comm-card-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+.comm-card:hover .comm-card-tag {
+    border-color: var(--border-glow);
+    color: var(--purple);
+    background: rgba(155, 89, 255, 0.06);
+}
+
+/* ===== Status Bar ===== */
+.comm-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.comm-status .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.comm-status .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 8px var(--neon-cyan-soft);
+    animation: neonPulse 2s ease-in-out infinite;
+}
+@keyframes neonPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .comm-grid {
+        grid-template-columns: 1fr;
+    }
+    .comm-banner-title {
+        font-size: 1.1rem;
+    }
+    .comm-status {
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+    }
 }
