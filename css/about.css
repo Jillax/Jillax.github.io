@@ -388,6 +388,188 @@
     left: 0;
 }
 
+/* ===== Profile / 画像 ===== */
+.profile-card {
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    padding: 0;
+    overflow: hidden;
+}
+.profile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(155, 89, 255, 0.04);
+}
+.profile-card-title {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.profile-card-code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--purple-bright);
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px var(--purple-glow);
+}
+
+/* Ideology block */
+.profile-ideology {
+    padding: 28px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+.ideology-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.ideology-name {
+    font-family: var(--font-chinese);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--purple-bright);
+    text-shadow: 0 0 20px var(--purple-glow);
+    margin-bottom: 2px;
+}
+.ideology-name-en {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+}
+.ideology-desc {
+    font-family: var(--font-chinese);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 20px;
+}
+.ideology-match {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    max-width: 320px;
+    margin: 0 auto;
+}
+.match-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    overflow: hidden;
+}
+.match-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--neon-pink));
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 8px var(--purple-glow);
+}
+.match-value {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--purple-bright);
+    text-shadow: 0 0 8px var(--purple-glow);
+    white-space: nowrap;
+}
+
+/* Axes */
+.profile-axes {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.axis-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.axis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.axis-label-left {
+    font-family: var(--font-chinese);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-soft);
+}
+.axis-title {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    letter-spacing: 1px;
+}
+.axis-bar {
+    display: flex;
+    height: 8px;
+    position: relative;
+    overflow: hidden;
+}
+.axis-fill-left {
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--purple-bright));
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 6px var(--purple-glow);
+}
+.axis-fill-right {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-pink), #ff7ac1);
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 6px var(--neon-pink-glow);
+}
+.axis-divider {
+    position: absolute;
+    left: 50%;
+    top: -2px;
+    bottom: -2px;
+    width: 2px;
+    background: var(--bg);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+.axis-values {
+    display: flex;
+    justify-content: space-between;
+}
+.axis-val-left,
+.axis-val-right {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+}
+.profile-source {
+    padding: 14px 24px;
+    border-top: 1px solid var(--border);
+    text-align: right;
+}
+.profile-source a {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--text-faint);
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+.profile-source a:hover {
+    color: var(--purple);
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
     .about-content { max-width: 100%; }

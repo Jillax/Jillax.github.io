@@ -418,6 +418,33 @@
     color: var(--purple);
     margin: 0 8px;
 }
+/* ===== About Site Section ===== */
+.about-site-section {
+    padding: 40px 0;
+}
+.about-site-block {
+    border: 1px solid var(--border);
+    background: rgba(155, 89, 255, 0.02);
+    padding: 28px 32px;
+    text-align: center;
+}
+.about-site-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--purple);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.about-site-text {
+    font-family: var(--font-chinese);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
 @keyframes ticker {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }

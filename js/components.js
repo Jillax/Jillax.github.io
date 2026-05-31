@@ -12,7 +12,7 @@
     const logoHref = isHome ? '#' : 'index.html';
 
     const navItems = [
-        { href: 'about.html',     label: '关于',   hide: '' },
+        { href: 'about.html',     label: '关于我',   hide: '' },
         { href: 'projects.html',  label: '项目',   hide: '' },
         { href: 'portfolio.html', label: '投资',   hide: 'small' },
         { href: 'contact.html',   label: '联系',   hide: 'small' },
