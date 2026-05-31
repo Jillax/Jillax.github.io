@@ -9,7 +9,7 @@
 }
 .about-content p {
     color: var(--text-soft);
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     line-height: 2.1;
     letter-spacing: 0.2px;
     font-weight: 300;
@@ -63,7 +63,7 @@
 }
 .section-label {
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 5px;
     text-transform: uppercase;
