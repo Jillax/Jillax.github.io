@@ -500,20 +500,15 @@
 }
 .axis-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: baseline;
 }
-.axis-label-left {
+.axis-title {
     font-family: var(--font-chinese);
     font-size: 0.82rem;
     font-weight: 500;
     color: var(--text-soft);
-}
-.axis-title {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--text-faint);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 .axis-bar {
     display: flex;
