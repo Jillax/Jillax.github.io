@@ -1,5 +1,5 @@
 /* ============================================
-   Jillax.github.io — 投资组合
+   Jillax.github.io — Portfolio GLITCH CITY SECURITIES
    ============================================ */
 
 /* ---- 颜色变量 ---- */
@@ -10,58 +10,106 @@
     --red-bg: rgba(255, 107, 138, 0.12);
 }
 
-/* ---- 总览统计 ---- */
-.stats-bar {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+/* ---- Hero Banner ---- */
+.pf-hero-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 0;
     margin-bottom: 48px;
-    border-top: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border);
+    position: relative;
 }
-.stat-item {
-    text-align: center;
-    padding: 28px 16px;
-    border-right: 1px solid var(--border-light);
+.pf-hero-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--purple), var(--neon-pink), var(--neon-cyan));
+    opacity: 0.5;
 }
-.stat-item:last-child { border-right: none; }
-.stat-label {
-    display: block;
-    font-size: 0.68rem;
+.pf-hero-left {
+    flex: 1;
+}
+.pf-hero-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--neon-pink);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+.pf-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+.pf-hero-sub {
+    font-family: var(--font-chinese);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+.pf-hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: right;
+}
+.pf-hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.pf-hero-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
     color: var(--text-faint);
     letter-spacing: 2px;
-    margin-bottom: 8px;
-    font-family: var(--font-body);
     text-transform: uppercase;
 }
-.stat-value {
+.pf-hero-stat-value {
     font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--text);
 }
-.stat-value.green { color: var(--green); text-shadow: 0 0 8px var(--green-bg); }
-.stat-value.red   { color: var(--red); text-shadow: 0 0 8px var(--red-bg); }
-.stat-sub {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    margin-top: 4px;
+.pf-hero-stat-value.pf-mono {
+    font-family: var(--font-mono);
 }
-
-/* ---- 区块标题 ---- */
-.section { margin-bottom: 56px; }
-.section-title {
+.pf-hero-stat-pct {
+    font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--text-faint);
+    color: var(--text-muted);
+}
+.pf-hero-stat-value.green { color: var(--green); text-shadow: 0 0 10px var(--green-bg); }
+.pf-hero-stat-value.red { color: var(--red); text-shadow: 0 0 10px var(--red-bg); }
+
+/* ---- Section Title ---- */
+.pf-section-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--purple);
     letter-spacing: 2px;
     margin-bottom: 20px;
-    font-family: var(--font-chinese);
+    text-shadow: 0 0 8px var(--purple-glow);
 }
+
+/* ---- 区块 ---- */
+.section { margin-bottom: 56px; }
 
 /* ---- 走势图 ---- */
 .line-chart-box {
     border: 1px solid var(--border);
     padding: 24px;
+    background: var(--bg-card);
 }
 .line-chart-box .chart-canvas-wrap {
     position: relative;
@@ -78,6 +126,7 @@
     padding: 64px 20px;
     color: var(--text-faint);
     font-size: 0.82rem;
+    font-family: var(--font-mono);
 }
 
 /* ---- 资产配置：双栏 ---- */
@@ -87,11 +136,10 @@
     gap: 20px;
     align-items: start;
 }
-
-/* 饼图 */
 .chart-box {
     border: 1px solid var(--border);
     padding: 24px;
+    background: var(--bg-card);
 }
 .chart-canvas-wrap {
     position: relative;
@@ -99,7 +147,7 @@
     margin: 0 auto;
 }
 
-/* 百分比条 */
+/* ---- 百分比条 ---- */
 .pct-bars {
     border: 1px solid var(--border);
     padding: 28px 24px;
@@ -107,8 +155,8 @@
     flex-direction: column;
     justify-content: center;
     gap: 24px;
+    background: var(--bg-card);
 }
-.pct-row { }
 .pct-header {
     display: flex;
     justify-content: space-between;
@@ -124,19 +172,19 @@
     width: 8px; height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
 }
 .pct-name {
     font-family: var(--font-chinese);
-    font-size: 0.88rem;
+    font-size: 0.95rem;
     color: var(--text-soft);
     font-weight: 500;
-    letter-spacing: 0.3px;
 }
 .pct-value {
-    font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
     color: var(--text);
-    font-weight: 600;
+    font-weight: 700;
 }
 .pct-track {
     height: 6px;
@@ -147,21 +195,44 @@
     height: 100%;
     width: 0;
     transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 8px currentColor;
+}
+
+/* ---- Terminal Table ---- */
+.terminal-table-wrap {
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    overflow: hidden;
+}
+.terminal-header {
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    border-bottom: 1px solid var(--border);
+    background: rgba(155, 89, 255, 0.03);
+    letter-spacing: 1px;
+}
+.terminal-prompt {
+    color: var(--neon-cyan);
+    margin-right: 6px;
 }
 
 /* ---- 持仓表格 ---- */
 .portfolio-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.88rem;
+    font-size: 0.95rem;
 }
 .portfolio-table th {
-    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
     color: var(--text-faint);
     letter-spacing: 2px;
+    text-transform: uppercase;
     font-weight: 400;
     text-align: right;
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-bottom: 1px solid var(--border);
 }
 .portfolio-table th:first-child { text-align: left; }
@@ -189,13 +260,13 @@
 
 /* 可展开行 */
 .item-row { cursor: pointer; user-select: none; }
-.item-row:hover td { color: var(--text); }
+.item-row:hover td { color: var(--text); background: rgba(155, 89, 255, 0.03); }
 .item-row .arrow {
     display: inline-block;
     width: 16px;
     transition: transform 0.2s;
     font-size: 0.7rem;
-    color: var(--text-faint);
+    color: var(--purple);
 }
 .item-row.expanded .arrow { transform: rotate(90deg); }
 .item-row td { padding-top: 12px; padding-bottom: 12px; }
@@ -209,31 +280,38 @@
 }
 .sub-row td:first-child {
     padding-left: 36px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
-/* 标签订投中 */
+/* DCA badge */
 .dca-badge {
     display: inline-block;
     font-size: 0.58rem;
-    padding: 1px 7px;
+    padding: 2px 8px;
     margin-left: 8px;
-    border: 1px solid var(--purple-soft);
-    color: var(--purple-bright);
-    letter-spacing: 0.3px;
+    border: 1px solid var(--neon-pink);
+    color: var(--neon-pink);
+    letter-spacing: 1px;
     font-family: var(--font-mono);
+    text-transform: uppercase;
+    animation: dcaGlow 2s ease-in-out infinite;
+}
+@keyframes dcaGlow {
+    0%, 100% { box-shadow: 0 0 4px rgba(255, 77, 166, 0.2); }
+    50% { box-shadow: 0 0 10px rgba(255, 77, 166, 0.4); }
 }
 
 /* 盈亏颜色 */
-.gain-pos { color: var(--green) !important; }
-.gain-neg { color: var(--red) !important; }
+.gain-pos { color: var(--green) !important; text-shadow: 0 0 6px var(--green-bg); }
+.gain-neg { color: var(--red) !important; text-shadow: 0 0 6px var(--red-bg); }
 
 /* 合计行 */
 .total-row td {
     border-bottom: none;
     padding-top: 16px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text);
+    border-top: 2px solid var(--border-glow);
 }
 .dot {
     display: inline-block;
@@ -241,6 +319,7 @@
     border-radius: 50%;
     margin-right: 10px;
     vertical-align: middle;
+    box-shadow: 0 0 6px currentColor;
 }
 
 /* 更新提示 */
@@ -249,7 +328,7 @@
     font-size: 0.68rem;
     color: var(--text-faint);
     margin-top: 12px;
-    font-style: italic;
+    font-family: var(--font-mono);
 }
 
 /* ---- 预测区块 ---- */
@@ -257,17 +336,19 @@
     text-align: center;
     margin-bottom: 24px;
     padding: 16px 20px;
-    border: 1px solid var(--border-light);
-    font-size: 0.88rem;
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
     color: var(--text-muted);
+    background: var(--bg-card);
+    font-family: var(--font-chinese);
 }
 .projection-blended strong {
     font-family: var(--font-display);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: var(--purple-bright);
-    font-weight: 600;
+    font-weight: 700;
     margin: 0 4px;
-    text-shadow: 0 0 10px var(--purple-glow);
+    text-shadow: 0 0 12px var(--purple-glow);
 }
 
 .projection-grid {
@@ -279,35 +360,36 @@
 
 .projection-table-wrap {
     border: 1px solid var(--border);
-    padding: 24px;
+    background: var(--bg-card);
     overflow-x: auto;
 }
-
 .projection-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 .projection-table th {
+    font-family: var(--font-mono);
     font-size: 0.58rem;
     color: var(--text-faint);
     letter-spacing: 2px;
+    text-transform: uppercase;
     font-weight: 400;
     text-align: right;
-    padding: 8px 10px;
+    padding: 10px;
     border-bottom: 1px solid var(--border);
 }
 .projection-table th:first-child { text-align: left; }
 .projection-table td {
     text-align: right;
-    padding: 8px 10px;
+    padding: 10px;
     border-bottom: 1px solid var(--border-light);
     color: var(--text-soft);
     font-weight: 300;
     white-space: nowrap;
 }
 .projection-table td:first-child { text-align: left; }
-.projection-table .num       { font-family: var(--font-display); }
+.projection-table .num { font-family: var(--font-mono); }
 .projection-table .rate-cell { color: var(--purple-bright); font-weight: 500; }
 
 .projection-total td {
@@ -315,11 +397,13 @@
     padding-top: 14px;
     font-weight: 600;
     color: var(--text);
+    border-top: 2px solid var(--border-glow);
 }
 
 .projection-chart-box {
     border: 1px solid var(--border);
     padding: 24px;
+    background: var(--bg-card);
 }
 
 .projection-note {
@@ -331,34 +415,100 @@
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
+    font-family: var(--font-mono);
 }
 
-/* ---- 投资哲学 ---- */
-.philosophy {
+/* ---- Philosophy ---- */
+.pf-philosophy {
     margin-top: 60px;
-    text-align: center;
-    padding: 44px 0;
-    border-top: 1px solid var(--border);
+    padding: 0 0 48px;
 }
-.philosophy p {
-    font-family: var(--font-chinese);
+.pf-philosophy-border {
+    border: 1px solid var(--border);
+    background: rgba(155, 89, 255, 0.02);
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+}
+.pf-philosophy-border::before,
+.pf-philosophy-border::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--purple);
+    opacity: 0.5;
+}
+.pf-philosophy-border::before {
+    top: -1px; left: -1px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+}
+.pf-philosophy-border::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+}
+.pf-philosophy-icon {
+    font-size: 1.2rem;
+    color: var(--purple);
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--purple-glow);
+}
+.pf-philosophy-title {
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-weight: 700;
     color: var(--purple-bright);
-    text-shadow: 0 0 10px var(--purple-glow);
-    line-height: 2;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px var(--purple-glow);
+}
+.pf-philosophy-text {
+    font-family: var(--font-chinese);
+    font-size: 1rem;
+    color: var(--text-soft);
+    line-height: 2.2;
     letter-spacing: 1px;
     max-width: 560px;
-    margin: 0 auto;
-    font-size: 0.92rem;
+    margin: 0 auto 28px;
+}
+.pf-philosophy-tags {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.pf-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 6px 16px;
+    border: 1px solid var(--border-glow);
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    background: rgba(155, 89, 255, 0.04);
 }
 
 /* ---- 响应式 ---- */
 @media (max-width: 768px) {
-    .stat-value { font-size: 1.3rem; }
-    .portfolio-table { font-size: 0.76rem; }
+    .pf-hero-banner {
+        flex-direction: column;
+        text-align: left;
+        gap: 24px;
+    }
+    .pf-hero-right {
+        flex-direction: row;
+        text-align: left;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+    .pf-hero-stat-value { font-size: 1.4rem; }
+    .portfolio-table { font-size: 0.8rem; }
     .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
     .sub-row td:first-child { padding-left: 24px; }
     .allocation-grid { grid-template-columns: 1fr; }
     .projection-grid { grid-template-columns: 1fr; }
-    .stats-bar { grid-template-columns: repeat(3, 1fr); }
-    .stat-item { padding: 20px 10px; }
+    .pf-philosophy-border { padding: 32px 20px; }
+    .pf-philosophy-tags { flex-direction: column; align-items: center; }
 }

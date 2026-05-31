@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
             renderPctBars(data);
             renderTable(data);
             renderProjection(data);
+            renderHoldDays(data);
+            var updateDateEl = document.getElementById('updateDate');
+            if (updateDateEl) updateDateEl.textContent = data.updated;
             document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
         })
         .catch(function() {
@@ -33,6 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function fmt(n) { return '¥' + Math.round(n).toLocaleString(); }
     function fmtGain(n) { return (n >= 0 ? '+' : '') + '¥' + Math.round(Math.abs(n)).toLocaleString(); }
 
+    function renderHoldDays(data) {
+        if (!data.history || data.history.length === 0) return;
+        var firstDate = new Date(data.history[0].date);
+        var now = new Date();
+        var days = Math.floor((now - firstDate) / (1000 * 60 * 60 * 24));
+        var el = document.getElementById('holdDays');
+        if (el) el.textContent = days + ' 天';
+    }
+
     function renderStats(data) {
         var totalValue = 0, totalCost = 0;
         data.categories.forEach(function(cat) {
@@ -47,10 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var isPos = gain >= 0;
 
         document.getElementById('totalValue').textContent = fmt(totalValue);
-        document.getElementById('totalCost').textContent = fmt(totalCost);
+        var totalCostEl = document.getElementById('totalCost');
+        if (totalCostEl) totalCostEl.textContent = fmt(totalCost);
 
         var gainEl = document.getElementById('totalGain');
-        gainEl.className = 'stat-value ' + (isPos ? 'green' : 'red');
+        gainEl.className = 'pf-hero-stat-value ' + (isPos ? 'green' : 'red');
         gainEl.textContent = fmtGain(gain);
         document.getElementById('gainPct').textContent = (isPos ? '+' : '') + pct + '%';
     }

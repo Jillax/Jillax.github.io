@@ -7,7 +7,7 @@
   "categories": [
     {
       "name": "现金类",
-      "color": "#c4a35a",
+      "color": "#00e5ff",
       "items": [
         {
           "name": "定期存款",
@@ -19,7 +19,7 @@
     },
     {
       "name": "权益类",
-      "color": "#6b8f71",
+      "color": "#9b59ff",
       "items": [
         {
           "name": "沪深300",

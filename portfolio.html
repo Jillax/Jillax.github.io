@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的投资组合 — 持仓明细、资产配置、收益走势与未来预计。">
+    <meta name="description" content="Jillax 的投资组合 — 相信人类科技进步，长期持有优质资产。">
     <meta name="author" content="Jillax">
     <meta property="og:title" content="投资 · Jillax">
-    <meta property="og:description" content="持仓明细、资产配置、收益走势与未来预计。">
+    <meta property="og:description" content="相信人类科技进步，长期持有优质资产。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jillax.github.io/portfolio.html">
     <meta name="twitter:card" content="summary">
@@ -19,10 +19,10 @@
 </head>
 <body data-page="portfolio">
     <noscript>
-        <div style="text-align:center;padding:60px 20px;font-family:serif;color:#ddd3c4;background:#1a1714">
-            <h1>📊 投资组合</h1>
-            <p>持仓明细、资产配置、收益走势</p>
-            <p style="margin-top:20px;font-size:0.9rem;color:#888">此网站需要 JavaScript 才能正常浏览。</p>
+        <div style="text-align:center;padding:60px 20px;font-family:monospace;color:#b47aff;background:#0d0a1a">
+            <h1>投资组合</h1>
+            <p>相信人类科技进步，长期持有优质资产。</p>
+            <p style="margin-top:20px;font-size:0.9rem;color:#6b5a8a">// 此网站需要 JavaScript 才能正常浏览。</p>
         </div>
     </noscript>
 
@@ -30,38 +30,36 @@
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home">← 返回主页</a>
-            <h1>📊 投资组合</h1>
-            <p>逐项点击展开查看各公司明细</p>
+            <h1>投资组合</h1>
         </div>
 
-        <div class="stats-bar" id="statsBar">
-            <div class="stat-item">
-                <span class="stat-label">总资产净值</span>
-                <span class="stat-value" id="totalValue">--</span>
+        <!-- ===== Hero Banner ===== -->
+        <div class="pf-hero-banner">
+            <div class="pf-hero-left">
+                <div class="pf-hero-tag">GLITCH CITY SECURITIES</div>
+                <div class="pf-hero-title">BELIEVE IN<br>HUMAN PROGRESS</div>
+                <div class="pf-hero-sub">长期投资标普500 · 纳指100 · 相信AI生产力飞升</div>
             </div>
-            <div class="stat-item">
-                <span class="stat-label">累计投入</span>
-                <span class="stat-value" id="totalCost">--</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">累计收益</span>
-                <span class="stat-value" id="totalGain">--</span>
-                <span class="stat-sub" id="gainPct"></span>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">总资产走势 <span style="font-weight:300;color:var(--text-faint)">· 每次更新组合时新增时间点</span></div>
-            <div class="line-chart-box" id="lineChartBox">
-                <div class="chart-canvas-wrap">
-                    <canvas id="lineChart"></canvas>
+            <div class="pf-hero-right">
+                <div class="pf-hero-stat">
+                    <span class="pf-hero-stat-label">总资产净值</span>
+                    <span class="pf-hero-stat-value" id="totalValue">--</span>
                 </div>
-                <div class="line-chart-empty" id="lineChartEmpty" style="display:none">暂无历史数据，下次更新组合时自动记录</div>
+                <div class="pf-hero-stat">
+                    <span class="pf-hero-stat-label">累计收益</span>
+                    <span class="pf-hero-stat-value" id="totalGain">--</span>
+                    <span class="pf-hero-stat-pct" id="gainPct"></span>
+                </div>
+                <div class="pf-hero-stat">
+                    <span class="pf-hero-stat-label">持仓天数</span>
+                    <span class="pf-hero-stat-value pf-mono" id="holdDays">--</span>
+                </div>
             </div>
         </div>
 
+        <!-- ===== Allocation ===== -->
         <div class="section">
-            <div class="section-title">资产配置</div>
+            <div class="pf-section-title">&gt; ALLOCATION // 资产配置</div>
             <div class="allocation-grid">
                 <div class="chart-box">
                     <div class="chart-canvas-wrap">
@@ -72,32 +70,8 @@
                     <div class="pct-row">
                         <div class="pct-header">
                             <div class="pct-label">
-                                <span class="pct-dot" style="background:var(--purple)"></span>
-                                <span class="pct-name">现金类</span>
-                            </div>
-                            <span class="pct-value">--</span>
-                        </div>
-                        <div class="pct-track">
-                            <div class="pct-fill" style="background:var(--purple)"></div>
-                        </div>
-                    </div>
-                    <div class="pct-row">
-                        <div class="pct-header">
-                            <div class="pct-label">
-                                <span class="pct-dot" style="background:var(--neon-pink)"></span>
-                                <span class="pct-name">债券类</span>
-                            </div>
-                            <span class="pct-value">--</span>
-                        </div>
-                        <div class="pct-track">
-                            <div class="pct-fill" style="background:var(--neon-pink)"></div>
-                        </div>
-                    </div>
-                    <div class="pct-row">
-                        <div class="pct-header">
-                            <div class="pct-label">
                                 <span class="pct-dot" style="background:var(--neon-cyan)"></span>
-                                <span class="pct-name">权益类</span>
+                                <span class="pct-name">现金类</span>
                             </div>
                             <span class="pct-value">--</span>
                         </div>
@@ -105,32 +79,65 @@
                             <div class="pct-fill" style="background:var(--neon-cyan)"></div>
                         </div>
                     </div>
+                    <div class="pct-row">
+                        <div class="pct-header">
+                            <div class="pct-label">
+                                <span class="pct-dot" style="background:var(--purple)"></span>
+                                <span class="pct-name">权益类</span>
+                            </div>
+                            <span class="pct-value">--</span>
+                        </div>
+                        <div class="pct-track">
+                            <div class="pct-fill" style="background:var(--purple)"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- ===== Holdings ===== -->
         <div class="section">
-            <div class="section-title">持仓明细 <span style="font-weight:300;color:var(--text-faint)">· 点击品类展开明细</span></div>
-            <table class="portfolio-table">
-                <thead>
-                    <tr>
-                        <th>名称</th>
-                        <th>成本</th>
-                        <th>现值</th>
-                        <th>盈亏</th>
-                        <th>收益率</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
+            <div class="pf-section-title">&gt; HOLDINGS // 持仓明细</div>
+            <div class="terminal-table-wrap">
+                <div class="terminal-header">
+                    <span class="terminal-prompt">$</span> portfolio.list --updated <span id="updateDate">--</span>
+                </div>
+                <table class="portfolio-table">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>成本</th>
+                            <th>现值</th>
+                            <th>盈亏</th>
+                            <th>收益率</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
             <div class="update-note" id="updateNote"></div>
         </div>
 
+        <!-- ===== Trend ===== -->
         <div class="section">
-            <div class="section-title">未来预计资产变化 <span style="font-weight:300;color:var(--text-faint)">· 基于历史平均年化收益率的保守估算</span></div>
+            <div class="pf-section-title">&gt; TREND // 总资产走势</div>
+            <div class="line-chart-box" id="lineChartBox">
+                <div class="chart-canvas-wrap">
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div class="line-chart-empty" id="lineChartEmpty" style="display:none">暂无历史数据，下次更新组合时自动记录</div>
+            </div>
+        </div>
+
+        <!-- ===== Projection ===== -->
+        <div class="section">
+            <div class="pf-section-title">&gt; PROJECTION // 未来预测</div>
             <div class="projection-blended" id="projectionBlended"></div>
             <div class="projection-grid">
                 <div class="projection-table-wrap">
+                    <div class="terminal-header">
+                        <span class="terminal-prompt">$</span> simulate --years=5 --conservative
+                    </div>
                     <table class="projection-table">
                         <thead>
                             <tr>
@@ -157,8 +164,21 @@
             </div>
         </div>
 
-        <div class="philosophy">
-            <p>相信人类科技进步，持续买入优质资产，保持在场。</p>
+        <!-- ===== Philosophy ===== -->
+        <div class="pf-philosophy">
+            <div class="pf-philosophy-border">
+                <div class="pf-philosophy-icon">✦</div>
+                <div class="pf-philosophy-title">BELIEVE IN HUMAN PROGRESS</div>
+                <div class="pf-philosophy-text">
+                    相信人类科技进步，相信自由体系下的自由探索创造。<br>
+                    相信前沿科技驱动的生产力飞升变革。<br>
+                    持续购入优质资产、保持在场，长期持有。
+                </div>
+                <div class="pf-philosophy-tags">
+                    <span class="pf-tag">标普500 // 人类文明的指数</span>
+                    <span class="pf-tag">纳指100 // 科技创新的引擎</span>
+                </div>
+            </div>
         </div>
     </div>
 
