@@ -81,12 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
         var values = data.history.map(function(h) { return h.value; });
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, 'rgba(196, 163, 90, 0.25)');
-        gradient.addColorStop(1, 'rgba(196, 163, 90, 0.01)');
+        gradient.addColorStop(0, 'rgba(155, 89, 255, 0.25)');
+        gradient.addColorStop(1, 'rgba(155, 89, 255, 0.01)');
 
         var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-        var textColor = isDark ? 'rgba(228, 219, 204, 0.5)' : 'rgba(80, 70, 60, 0.5)';
-        var gridColor = isDark ? 'rgba(228, 219, 204, 0.08)' : 'rgba(80, 70, 60, 0.1)';
+        var textColor = isDark ? 'rgba(212, 200, 239, 0.5)' : 'rgba(168, 150, 204, 0.5)';
+        var gridColor = isDark ? 'rgba(155, 89, 255, 0.06)' : 'rgba(155, 89, 255, 0.1)';
 
         var isSingle = data.history.length === 1;
 
@@ -98,11 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: isSingle
                         ? values.map(function(v, i) { return { x: i, y: v }; })
                         : values,
-                    borderColor: '#c4a35a',
+                    borderColor: '#9b59ff',
                     backgroundColor: gradient,
                     borderWidth: isSingle ? 0 : 1.5,
-                    pointBackgroundColor: '#c4a35a',
-                    pointBorderColor: isDark ? '#181410' : '#f5f0e8',
+                    pointBackgroundColor: '#9b59ff',
+                    pointBorderColor: isDark ? '#0d0a1a' : '#1a1530',
                     pointBorderWidth: 1.5,
                     pointRadius: isSingle ? 8 : 3,
                     pointHoverRadius: isSingle ? 10 : 5,
@@ -117,11 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(24, 20, 16, 0.92)',
-                        titleFont: { family: 'Noto Serif SC, serif', size: 12 },
-                        bodyFont: { family: 'Spectral, serif', size: 13, weight: '600' },
+                        backgroundColor: 'rgba(13, 10, 26, 0.95)',
+                        titleFont: { family: 'Noto Sans SC, sans-serif', size: 12 },
+                        bodyFont: { family: 'Rajdhani, sans-serif', size: 13, weight: '600' },
                         padding: 12,
-                        cornerRadius: 0,
+                        cornerRadius: 2,
+                        borderColor: 'rgba(155, 89, 255, 0.3)',
+                        borderWidth: 1,
                         displayColors: false,
                         callbacks: {
                             title: function(items) {
@@ -138,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         grid: { display: false },
                         ticks: {
                             color: textColor,
-                            font: { family: 'Spectral, serif', size: 10 },
+                            font: { family: 'Share Tech Mono, monospace', size: 10 },
                             maxTicksLimit: 8
                         }
                     },
@@ -146,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         grid: { color: gridColor, drawBorder: false },
                         ticks: {
                             color: textColor,
-                            font: { family: 'Spectral, serif', size: 10 },
+                            font: { family: 'Share Tech Mono, monospace', size: 10 },
                             callback: function(v) { return '¥' + Math.round(v).toLocaleString(); }
                         }
                     }
@@ -189,19 +191,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#e4dbcc',
-                            font: { family: 'Noto Serif SC', size: 11 },
+                            color: '#d4c8ef',
+                            font: { family: 'Noto Sans SC', size: 11 },
                             padding: 14,
                             usePointStyle: true,
                             pointStyle: 'circle'
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(24, 20, 16, 0.92)',
-                        titleFont: { family: 'Noto Serif SC', size: 13 },
-                        bodyFont: { family: 'Spectral', size: 12 },
+                        backgroundColor: 'rgba(13, 10, 26, 0.95)',
+                        titleFont: { family: 'Noto Sans SC', size: 13 },
+                        bodyFont: { family: 'Rajdhani', size: 12 },
                         padding: 14,
-                        cornerRadius: 0,
+                        cornerRadius: 2,
+                        borderColor: 'rgba(155, 89, 255, 0.3)',
+                        borderWidth: 1,
                         callbacks: {
                             label: function(ctx) {
                                 var total = values.reduce(function(a, b) { return a + b; }, 0);
@@ -400,8 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.width = parent.offsetWidth;
         canvas.height = parent.offsetHeight;
 
-        var labelColor = isDark ? 'rgba(228, 219, 204, 0.5)' : 'rgba(80, 70, 60, 0.5)';
-        var gridColor = isDark ? 'rgba(228, 219, 204, 0.08)' : 'rgba(80, 70, 60, 0.1)';
+        var labelColor = isDark ? 'rgba(212, 200, 239, 0.5)' : 'rgba(168, 150, 204, 0.5)';
+        var gridColor = isDark ? 'rgba(155, 89, 255, 0.06)' : 'rgba(155, 89, 255, 0.1)';
 
         new Chart(ctx, {
             type: 'line',
@@ -409,20 +413,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 labels: ['现在', '1年', '2年', '3年', '4年', '5年'],
                 datasets: [{
                     data: projTotals,
-                    borderColor: '#c4a35a',
+                    borderColor: '#ff4da6',
                     backgroundColor: function(context) {
                         var chart = context.chart;
                         var c = chart.ctx;
                         var ca = chart.chartArea;
                         if (!ca) return null;
                         var g = c.createLinearGradient(0, ca.top, 0, ca.bottom);
-                        g.addColorStop(0, 'rgba(196, 163, 90, 0.2)');
-                        g.addColorStop(1, 'rgba(196, 163, 90, 0.01)');
+                        g.addColorStop(0, 'rgba(255, 77, 166, 0.2)');
+                        g.addColorStop(1, 'rgba(255, 77, 166, 0.01)');
                         return g;
                     },
                     borderWidth: 1.5,
-                    pointBackgroundColor: '#c4a35a',
-                    pointBorderColor: isDark ? '#181410' : '#f5f0e8',
+                    pointBackgroundColor: '#ff4da6',
+                    pointBorderColor: isDark ? '#0d0a1a' : '#1a1530',
                     pointBorderWidth: 1.5,
                     pointRadius: 4,
                     pointHoverRadius: 6,
@@ -436,11 +440,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(24, 20, 16, 0.92)',
-                        titleFont: { family: 'Noto Serif SC, serif', size: 12 },
-                        bodyFont: { family: 'Spectral, serif', size: 13, weight: '600' },
+                        backgroundColor: 'rgba(13, 10, 26, 0.95)',
+                        titleFont: { family: 'Noto Sans SC, sans-serif', size: 12 },
+                        bodyFont: { family: 'Rajdhani, sans-serif', size: 13, weight: '600' },
                         padding: 12,
-                        cornerRadius: 0,
+                        cornerRadius: 2,
+                        borderColor: 'rgba(255, 77, 166, 0.3)',
+                        borderWidth: 1,
                         displayColors: false,
                         callbacks: {
                             label: function(ctx) { return fmt(ctx.parsed.y); }
@@ -450,13 +456,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 scales: {
                     x: {
                         grid: { display: false },
-                        ticks: { color: labelColor, font: { family: 'Spectral, serif', size: 10 } }
+                        ticks: { color: labelColor, font: { family: 'Share Tech Mono, monospace', size: 10 } }
                     },
                     y: {
                         grid: { color: gridColor, drawBorder: false },
                         ticks: {
                             color: labelColor,
-                            font: { family: 'Spectral, serif', size: 10 },
+                            font: { family: 'Share Tech Mono, monospace', size: 10 },
                             callback: function(v) { return '¥' + Math.round(v).toLocaleString(); }
                         }
                     }

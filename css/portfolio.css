@@ -4,10 +4,10 @@
 
 /* ---- 颜色变量 ---- */
 :root {
-    --green: #6b8f71;
-    --green-bg: rgba(107, 143, 113, 0.18);
-    --red: #b5706b;
-    --red-bg: rgba(181, 112, 107, 0.18);
+    --green: #4ade80;
+    --green-bg: rgba(74, 222, 128, 0.12);
+    --red: #ff6b8a;
+    --red-bg: rgba(255, 107, 138, 0.12);
 }
 
 /* ---- 总览统计 ---- */
@@ -39,10 +39,9 @@
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--text);
-    font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
-.stat-value.green { color: var(--green); }
-.stat-value.red   { color: var(--red); }
+.stat-value.green { color: var(--green); text-shadow: 0 0 8px var(--green-bg); }
+.stat-value.red   { color: var(--red); text-shadow: 0 0 8px var(--red-bg); }
 .stat-sub {
     font-size: 0.72rem;
     color: var(--text-muted);
@@ -138,7 +137,6 @@
     font-size: 0.9rem;
     color: var(--text);
     font-weight: 600;
-    font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .pct-track {
     height: 6px;
@@ -220,9 +218,10 @@
     font-size: 0.58rem;
     padding: 1px 7px;
     margin-left: 8px;
-    border: 1px solid var(--gold-dim);
-    color: var(--gold-soft);
+    border: 1px solid var(--purple-soft);
+    color: var(--purple-bright);
     letter-spacing: 0.3px;
+    font-family: var(--font-mono);
 }
 
 /* 盈亏颜色 */
@@ -265,9 +264,10 @@
 .projection-blended strong {
     font-family: var(--font-display);
     font-size: 1.3rem;
-    color: var(--gold);
+    color: var(--purple-bright);
     font-weight: 600;
     margin: 0 4px;
+    text-shadow: 0 0 10px var(--purple-glow);
 }
 
 .projection-grid {
@@ -308,7 +308,7 @@
 }
 .projection-table td:first-child { text-align: left; }
 .projection-table .num       { font-family: var(--font-display); }
-.projection-table .rate-cell { color: var(--gold-soft); font-weight: 500; }
+.projection-table .rate-cell { color: var(--purple-bright); font-weight: 500; }
 
 .projection-total td {
     border-bottom: none;
@@ -342,7 +342,8 @@
 }
 .philosophy p {
     font-family: var(--font-chinese);
-    color: var(--gold-soft);
+    color: var(--purple-bright);
+    text-shadow: 0 0 10px var(--purple-glow);
     line-height: 2;
     letter-spacing: 1px;
     max-width: 560px;
