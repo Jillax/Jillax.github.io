@@ -23,18 +23,21 @@
       "items": [
         {
           "name": "沪深300",
+          "color": "#b47aff",
           "subItems": [
             { "name": "易方达沪深300", "value": 8050.88, "cost": 7369.09 }
           ]
         },
         {
           "name": "标普500",
+          "color": "#9b59ff",
           "subItems": [
             { "name": "摩根标普500", "value": 14525.20, "cost": 13367.00, "dca": true }
           ]
         },
         {
           "name": "纳斯达克100",
+          "color": "#ff4da6",
           "subItems": [
             { "name": "天弘纳斯达克100", "value": 2615.37, "cost": 2331.09, "dca": true },
             { "name": "易方达纳斯达克100", "value": 785.37, "cost": 690.00 },
@@ -46,12 +49,14 @@
         },
         {
           "name": "恒生科技",
+          "color": "#ffaa40",
           "subItems": [
             { "name": "易方达恒生科技", "value": 1447.46, "cost": 1564.10 }
           ]
         },
         {
           "name": "恒生ETF",
+          "color": "#e8923a",
           "subItems": [
             { "name": "华夏恒生ETF", "value": 829.29, "cost": 785.11 }
           ]

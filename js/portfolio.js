@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var c = calcItem(item);
                 labels.push(item.name);
                 values.push(c.value);
-                colors.push(cat.color);
+                colors.push(item.color || cat.color);
             });
         });
 
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var catRet = catCost > 0 ? ((catGain / catCost) * 100).toFixed(2) + '%' : '-';
 
             html += '<tr class="cat-row">' +
-                '<td style="color:' + cat.color + '">' + cat.name + '</td>' +
+                '<td style="color:' + cat.color + ';font-family:var(--font-display);letter-spacing:1px">' + cat.name + '</td>' +
                 '<td>' + fmt(catCost) + '</td>' +
                 '<td>' + fmt(catValue) + '</td>' +
                 '<td class="' + catCls + '">' + fmtGain(catGain) + '</td>' +
@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cat.items.forEach(function(item) {
                 var c = calcItem(item);
                 var rate = returnRates[item.name] || 0;
-                items.push({ name: item.name, value: c.value, rate: rate, color: cat.color });
+                items.push({ name: item.name, value: c.value, rate: rate, color: item.color || cat.color });
                 totalCurrent += c.value;
             });
         });
