@@ -1,5 +1,6 @@
 /* ============================================
    Jillax.github.io — About Page Styles
+   VA-11 Hall-A Cyberpunk Theme
    ============================================ */
 
 /* ===== About Content ===== */
@@ -21,7 +22,7 @@
 .about-epigraph {
     font-family: var(--font-chinese);
     font-size: 0.95rem;
-    color: var(--gold-soft);
+    color: var(--purple-bright);
     font-style: italic;
     margin-top: 44px;
     padding-top: 28px;
@@ -34,7 +35,7 @@
     content: '"';
     font-family: var(--font-display);
     font-size: 2.5rem;
-    color: var(--gold-dim);
+    color: var(--purple-soft);
     position: absolute;
     top: 18px;
     left: -4px;
@@ -44,7 +45,7 @@
     content: '"';
     font-family: var(--font-display);
     font-size: 2.5rem;
-    color: var(--gold-dim);
+    color: var(--purple-soft);
     position: relative;
     top: 8px;
     line-height: 0;
@@ -63,17 +64,16 @@
 .section-label {
     font-family: var(--font-display);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 5px;
     text-transform: uppercase;
     color: var(--text-faint);
     margin-bottom: 28px;
-    font-variation-settings: 'SOFT' 100, 'WONK' 0;
 }
 .section-label::before {
-    content: '✦ ';
+    content: '◆ ';
     font-size: 0.5rem;
-    color: var(--gold-soft);
+    color: var(--purple);
     margin-right: 6px;
 }
 
@@ -85,10 +85,11 @@
 }
 .skill-category {
     padding: 20px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .skill-category:hover {
-    border-color: var(--gold-dim);
+    border-color: var(--border-glow);
+    box-shadow: 0 0 15px rgba(155, 89, 255, 0.1);
 }
 .skill-cat-name {
     font-family: var(--font-chinese);
@@ -113,13 +114,13 @@
     letter-spacing: 0.3px;
 }
 .skill-tag:hover {
-    border-color: var(--gold-dim);
-    color: var(--gold-soft);
-    background: var(--gold-dim);
+    border-color: var(--border-glow);
+    color: var(--purple-bright);
+    background: var(--purple-soft);
 }
 .skill-tag.high {
     color: var(--text-soft);
-    border-color: var(--gold-soft);
+    border-color: var(--purple);
 }
 
 /* ===== Timeline ===== */
@@ -138,15 +139,16 @@
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: var(--font-body);
+    letter-spacing: 0.5px;
 }
 .tl-filter-btn:hover {
-    border-color: var(--gold-dim);
-    color: var(--gold);
+    border-color: var(--border-glow);
+    color: var(--purple-bright);
 }
 .tl-filter-btn.active {
-    border-color: var(--gold-dim);
-    background: var(--gold-dim);
-    color: var(--gold);
+    border-color: var(--purple);
+    background: var(--purple-soft);
+    color: var(--purple-bright);
 }
 .tl-filter-count {
     font-size: 0.7rem;
@@ -164,7 +166,8 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: var(--border);
+    background: linear-gradient(to bottom, var(--purple), var(--border), var(--neon-pink));
+    opacity: 0.4;
 }
 .tl-item {
     position: relative;
@@ -184,15 +187,17 @@
     height: 9px;
     border-radius: 50%;
     background: var(--bg);
-    border: 1.5px solid var(--gold-soft);
-    transition: background 0.3s ease;
+    border: 1.5px solid var(--purple);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 6px var(--purple-glow);
 }
 .tl-item:hover .tl-dot {
-    background: var(--gold-soft);
+    background: var(--purple);
+    box-shadow: 0 0 12px var(--purple-glow);
 }
 .tl-card {
     padding: 20px 24px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 .tl-card-header {
     display: flex;
@@ -220,18 +225,19 @@
     color: var(--text-faint);
     letter-spacing: 0.5px;
     white-space: nowrap;
+    font-family: var(--font-mono);
 }
 .tl-badge.edu {
-    border-color: rgba(122, 139, 110, 0.3);
-    color: #7a8b6e;
+    border-color: rgba(0, 229, 255, 0.25);
+    color: var(--neon-cyan);
 }
 .tl-badge.work {
-    border-color: rgba(196, 163, 90, 0.3);
-    color: var(--gold-soft);
+    border-color: rgba(155, 89, 255, 0.3);
+    color: var(--purple-bright);
 }
 .tl-badge.project {
-    border-color: rgba(107, 143, 113, 0.3);
-    color: #6b8f71;
+    border-color: rgba(255, 77, 166, 0.25);
+    color: var(--neon-pink);
 }
 .tl-date {
     font-size: 0.78rem;
@@ -239,6 +245,7 @@
     margin-top: 8px;
     font-weight: 300;
     letter-spacing: 0.5px;
+    font-family: var(--font-mono);
 }
 .tl-desc {
     font-size: 0.9rem;
@@ -258,12 +265,14 @@
     padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
+    font-family: var(--font-mono);
 }
 .tl-empty {
     text-align: center;
     padding: 40px 20px;
     color: var(--text-faint);
     font-size: 0.88rem;
+    font-family: var(--font-mono);
 }
 
 /* ===== Projects Showcase ===== */
@@ -277,13 +286,17 @@
     gap: 20px;
     padding: 24px;
     align-items: flex-start;
+    transition: all 0.3s ease;
+}
+.showcase-card:hover {
+    transform: translateY(-2px);
 }
 .showcase-icon {
     font-size: 1.4rem;
     flex-shrink: 0;
     width: 36px;
     text-align: center;
-    color: var(--text-faint);
+    color: var(--purple);
 }
 .showcase-body {
     flex: 1;
@@ -313,6 +326,7 @@
     padding: 1px 8px;
     border: 1px solid var(--border);
     color: var(--text-faint);
+    font-family: var(--font-mono);
 }
 .showcase-link {
     margin-top: 10px;
@@ -320,11 +334,13 @@
     align-items: center;
     gap: 4px;
     font-size: 0.76rem;
-    color: var(--gold-soft);
-    transition: color 0.3s ease;
+    color: var(--purple-bright);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 8px var(--purple-glow);
 }
 .showcase-link:hover {
-    color: var(--gold);
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink-glow);
 }
 
 /* ===== Original Detail Sections ===== */
@@ -336,15 +352,16 @@
 .about-detail h3 {
     font-family: var(--font-display);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 5px;
     color: var(--text-faint);
     margin-bottom: 20px;
+    text-transform: uppercase;
 }
 .about-detail h3::before {
-    content: '✦ ';
+    content: '◆ ';
     font-size: 0.5rem;
-    color: var(--gold-soft);
+    color: var(--purple);
 }
 .about-detail p {
     color: var(--text-soft);
@@ -366,7 +383,7 @@
 }
 .about-detail ul li::before {
     content: '—';
-    color: var(--gold-dim);
+    color: var(--purple-soft);
     position: absolute;
     left: 0;
 }

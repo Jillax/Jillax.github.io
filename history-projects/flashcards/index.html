@@ -57,6 +57,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .pill{padding:5px 14px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:.78rem;cursor:pointer;transition:all .3s;font-family:var(--font);letter-spacing:.5px;border-radius:16px}
 .pill:hover{border-color:var(--gold-dim);color:var(--gold)}
 .pill.active{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-dim)}
+.review-info{font-size:.78rem;color:var(--text-faint);margin-top:8px;letter-spacing:.5px}
 .s-input{padding:6px 14px;border:1px solid var(--border);border-radius:16px;background:var(--bg-surface);color:var(--text);font-size:.82rem;outline:none;width:160px;transition:all .3s}
 .s-input:focus{border-color:var(--gold-dim);width:200px}
 .s-input::placeholder{color:var(--text-faint)}
@@ -179,6 +180,7 @@ function review(id,rating){
 function dueCards(){var now=Date.now();return CARDS.filter(c=>{var s=getSRS(c.id);return!s.next||s.next<=now})}
 function mastery(id){var s=getSRS(id);return s.status||'new'}
 var view='review',filterEra='all',searchQ='',reviewIdx=0,reviewQ=[],cardFlipped=false;
+function escHtml(s){return String(s).replace(/&/g,'&'+'amp;').replace(/"/g,'&'+'quot;').replace(/</g,'&'+'lt;').replace(/>/g,'&'+'gt;')}
 function switchView(v){
   view=v;document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
   ['viewReview','viewBrowse','viewProgress','viewAchievements'].forEach(id=>{
@@ -235,7 +237,7 @@ function renderReviewCard(){
     (cardFlipped?
       '<div class="rating-bar">'+
       '<button class="rate-btn again" onclick="rateCard(0)">忘了<span class="rate-lbl">\x3c1分钟<\/span><\/button>'+
-      '<button class="rate-btn hard" onclick="rateCard(1)">模糊<span class="rate-lbl">'+fmtInterval(s.interval*1.2)+'<\/span><\/button>'+
+      '<button class="rate-btn hard" onclick="rateCard(1)">模糊<span class="rate-lbl">'+fmtInterval(nextHard(s))+'<\/span><\/button>'+
       '<button class="rate-btn good" onclick="rateCard(2)">记得<span class="rate-lbl">'+fmtInterval(nextGood(s))+'<\/span><\/button>'+
       '<button class="rate-btn easy" onclick="rateCard(3)">简单<span class="rate-lbl">'+fmtInterval(nextEasy(s))+'<\/span><\/button>'+
       '<\/div>':'<p class="review-info">第 '+(reviewIdx+1)+' / '+reviewQ.length+' 张<\/p>');
@@ -243,7 +245,8 @@ function renderReviewCard(){
 function flipCard(){cardFlipped=!cardFlipped;renderReviewCard()}
 function rateCard(r){var c=reviewQ[reviewIdx];review(c.id,r);reviewIdx++;cardFlipped=false;renderReviewCard()}
 function nextGood(s){if(s.reps===0)return 1;if(s.reps===1)return 6;return Math.round(s.interval*s.ease)}
-function nextEasy(s){if(s.reps===0)return 4;return Math.round(s.interval*s.ease*1.3)}
+function nextEasy(s){if(s.reps===0)return 4;return Math.max(nextGood(s)+1,Math.round(s.interval*s.ease*1.3))}
+function nextHard(s){return Math.max(1/60,s.interval*1.2)}
 function fmtInterval(mins){
   if(mins<1)return Math.round(mins*60)+'秒';
   if(mins<60)return Math.round(mins)+'分钟';
@@ -269,7 +272,7 @@ function renderBrowse(){
     var m=mastery(c.id);var mc=m==='new'?'m-new':m==='learning'?'m-learning':m==='review'?'m-review':'m-mature';
     return'<div class="grid-card" onclick="startReviewSingle('+c.id+')"><div class="gc-mastery '+mc+'"><\/div><div><span class="gc-era">'+c.era+'<\/span><span class="gc-type">'+c.type+'<\/span><\/div><div class="gc-title">'+c.q+'<\/div><div class="gc-preview">'+c.a+'<\/div><\/div>';
   }).join('');
-  el.innerHTML='<div class="toolbar"><div class="filter-pills">'+pills+'<\/div><input class="s-input" placeholder="搜索卡片…" value="'+searchQ+'" oninput="searchQ=this.value;renderBrowse()"><\/div><div class="card-grid">'+grid+'<\/div>';
+  el.innerHTML='<div class="toolbar"><div class="filter-pills">'+pills+'<\/div><input class="s-input" placeholder="搜索卡片…" value="'+escHtml(searchQ)+'" oninput="searchQ=this.value;renderBrowse()"><\/div><div class="card-grid">'+grid+'<\/div>';
 }
 function setEra(e){filterEra=e;renderBrowse()}
 function startReviewSingle(id){

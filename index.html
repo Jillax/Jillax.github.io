@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Jillax 的个人主页 — 历史学师范生，探索人文与 AI 的融合。社媒内容、Agent 实验、Vibe Coding。">
     <meta name="author" content="Jillax">
-    <meta name="keywords" content="Jillax, 历史学, AI, 人文, 教育, Vibe Coding, Agent">
+    <meta name="keywords" content="Jillax, 历史学, AI, 人文, 教育, Vibe Coding, Agent, VA-11 Hall-A, 赛博朋克">
     <meta property="og:title" content="Jillax · 个人主页">
     <meta property="og:description" content="历史学师范生，探索人文与 AI 的融合。社媒内容、Agent 实验、Vibe Coding。">
     <meta property="og:type" content="website">
@@ -25,24 +25,28 @@
 </head>
 <body data-page="index">
     <noscript>
-        <div style="text-align:center;padding:60px 20px;font-family:serif;color:#ddd3c4;background:#1a1714">
-            <h1>Jillax</h1>
+        <div style="text-align:center;padding:60px 20px;font-family:monospace;color:#b47aff;background:#0d0a1a">
+            <h1>JILLAX</h1>
             <p>个人小站 · 社媒内容 · Agent 实验 · Vibe Coding</p>
-            <p style="margin-top:20px;font-size:0.9rem;color:#888">此网站需要 JavaScript 才能正常浏览。请启用 JavaScript 后刷新页面。</p>
+            <p style="margin-top:20px;font-size:0.9rem;color:#6b5a8a">// 此网站需要 JavaScript 才能正常浏览</p>
         </div>
     </noscript>
+
+    <!-- Background Effects -->
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-particles" id="particles" aria-hidden="true"></div>
 
     <main>
     <!-- ===== Hero ===== -->
     <section class="hero" id="home">
-        <div class="container">
+        <div class="hero-layout">
             <div class="hero-content">
-                <div class="hero-ornament">科技 · 人文</div>
-                <h1><span class="highlight">Jillax</span></h1>
-                <div class="hero-subtitle">个人小站，集成存放一些我在意的东西</div>
+                <div class="hero-ornament">HUMANITIES · AI · VA-11 HALL-A</div>
+<h1><span class="highlight">Jillax</span></h1>
+                <div class="hero-subtitle">对混沌和未来保持谦虚，寻找属于这个时代的回答</div>
                 <p class="hero-desc">社媒内容 · Agent 实验 · Vibe Coding</p>
                 <div class="hero-actions">
-                    <a href="about.html" class="btn">关于</a>
+                    <a href="about.html" class="btn btn-primary">关于</a>
                     <a href="projects.html" class="btn">项目</a>
                     <a href="portfolio.html" class="btn">投资组合</a>
                     <a href="contact.html" class="btn">联系方式</a>
@@ -52,8 +56,37 @@
                     <a href="blog.html" class="btn">随笔</a>
                 </div>
             </div>
+            <div class="hero-mascot">
+                <div class="mascot-frame">
+                    <img src="Share/Image-Share/Jill海报.png" alt="Jill — VA-11 Hall-A" class="mascot-img" loading="eager">
+                </div>
+                <div class="mascot-label">// JILL · BARTENDER</div>
+            </div>
         </div>
     </section>
+
+    <!-- ===== Ticker Bar ===== -->
+    <div class="ticker-bar">
+        <div class="ticker-content" id="tickerContent">
+            <span>Va-11 Hall-A</span><span class="ticker-dot">◆</span>
+            <span>赛博朋克酒保行动</span><span class="ticker-dot">◆</span>
+            <span>历史学师范生</span><span class="ticker-dot">◆</span>
+            <span>AI & 人文融合</span><span class="ticker-dot">◆</span>
+            <span>Agent 实验</span><span class="ticker-dot">◆</span>
+            <span>Vibe Coding</span><span class="ticker-dot">◆</span>
+            <span>社会媒体内容</span><span class="ticker-dot">◆</span>
+            <span>混合饮料与混合思想</span><span class="ticker-dot">◆</span>
+            <!-- Duplicate for seamless loop -->
+            <span>Va-11 Hall-A</span><span class="ticker-dot">◆</span>
+            <span>赛博朋克酒保行动</span><span class="ticker-dot">◆</span>
+            <span>历史学师范生</span><span class="ticker-dot">◆</span>
+            <span>AI & 人文融合</span><span class="ticker-dot">◆</span>
+            <span>Agent 实验</span><span class="ticker-dot">◆</span>
+            <span>Vibe Coding</span><span class="ticker-dot">◆</span>
+            <span>社会媒体内容</span><span class="ticker-dot">◆</span>
+            <span>混合饮料与混合思想</span><span class="ticker-dot">◆</span>
+        </div>
+    </div>
 
     <!-- ===== Quote ===== -->
     <section class="quote-section" id="quote">

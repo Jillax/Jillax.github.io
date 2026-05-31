@@ -1,5 +1,6 @@
 /* ============================================
    Jillax.github.io — Shared Components
+   VA-11 Hall-A Cyberpunk Theme
    Injects nav, footer, and page transition overlay
    Must load BEFORE main.js
    ============================================ */
@@ -31,7 +32,7 @@
     var navHTML =
         '<nav>' +
         '<div class="container">' +
-        '<a href="' + logoHref + '" class="nav-logo">Jillax</a>' +
+        '<a href="' + logoHref + '" class="nav-logo">◆ Jillax</a>' +
         '<div class="nav-links">' +
         linksHTML +
         '<button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>' +
@@ -52,7 +53,11 @@
     var footerHTML =
         '<footer>' +
         '<div class="container">' +
-        '<p>&copy; 2026 Jillax · AI降临派，比起人还是更喜欢人工智能</p>' +
+        '<p>&copy; 2026 Jillax · AI降临派 — 混合饮料与混合思想</p>' +
+        '<div class="status-bar">' +
+        '<span class="status-indicator"><span class="status-dot"></span> SYSTEM ONLINE</span>' +
+        '<span>GLITCH CITY · SECTOR 7</span>' +
+        '</div>' +
         footerExtra +
         '</div>' +
         '</footer>';
