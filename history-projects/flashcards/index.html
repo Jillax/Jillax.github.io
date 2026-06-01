@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>历史闪卡 · 间隔重复记忆系统</title>
 <link rel="icon" type="image/jpeg" href="../../favicon.jpg">
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
 
@@ -180,7 +182,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
       <button class="modal-btn secondary" id="btnImport">JSON 导入</button>
       <label class="modal-btn secondary" style="display:inline-block;cursor:pointer;margin:0">
         📂 文件导入
-        <input type="file" id="fileImport" multiple accept=".txt,.csv,.json,.md" style="display:none">
+        <input type="file" id="fileImport" multiple accept=".txt,.csv,.json,.md,.docx,.pdf" style="display:none">
       </label>
     </div>
     <div id="manageList"></div>
@@ -609,38 +611,96 @@ document.getElementById('fileImport').addEventListener('change', function(e) {
   var pending = files.length;
 
   files.forEach(function(file) {
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      var text = ev.target.result;
-      var parsed = parseFileToCards(text, file.name);
-      allCards = allCards.concat(parsed);
-      pending--;
-      if (pending === 0) {
-        if (allCards.length === 0) {
-          alert('未能从文件中解析出任何卡片。请检查文件格式。');
+    var ext = file.name.split('.').pop().toLowerCase();
+    if (ext === 'docx') {
+      // DOCX: use mammoth
+      var reader2 = new FileReader();
+      reader2.onload = function(ev2) {
+        mammoth.extractRawText({ arrayBuffer: ev2.target.result })
+          .then(function(result) {
+            var parsed = parseFileToCards(result.value, file.name);
+            allCards = allCards.concat(parsed);
+            pending--;
+            if (pending === 0) finishImport(allCards, bankName, existingBank, files.length);
+          })
+          .catch(function() { pending--; if (pending === 0) finishImport(allCards, bankName, existingBank, files.length); });
+      };
+      reader2.readAsArrayBuffer(file);
+    } else if (ext === 'pdf') {
+      // PDF: use pdfjs
+      var reader3 = new FileReader();
+      reader3.onload = function(ev3) {
+        if (typeof pdfjsLib === 'undefined') {
+          alert('PDF 解析库加载失败，请刷新页面重试');
+          pending--;
+          if (pending === 0) finishImport(allCards, bankName, existingBank, files.length);
           return;
         }
-        if (existingBank) {
-          existingBank.cards = existingBank.cards.concat(allCards);
-          currentBankId = existingBank.id;
-        } else {
-          var id = 'custom-' + Date.now();
-          banks.push({ id: id, name: bankName, desc: '文件导入 · ' + files.length + '个文件', cards: allCards });
-          currentBankId = id;
-        }
-        save();
-        renderBankGrid('bankGrid');
-        renderBankGrid('browseBankGrid');
-        renderManage();
-        renderStats();
-        renderCard();
-        alert('成功导入 ' + allCards.length + ' 张卡片到题库「' + (existingBank ? existingBank.name : bankName) + '」');
-      }
-    };
-    reader.readAsText(file, 'utf-8');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+        pdfjsLib.getDocument({ data: ev3.target.result }).promise.then(function(pdf) {
+          var textParts = [];
+          var numPages = pdf.numPages;
+          var loaded = 0;
+          for (var pi = 1; pi <= numPages; pi++) {
+            (function(pageNum) {
+              pdf.getPage(pageNum).then(function(page) {
+                page.getTextContent().then(function(tc) {
+                  textParts[pageNum - 1] = tc.items.map(function(item) { return item.str; }).join(' ');
+                  loaded++;
+                  if (loaded === numPages) {
+                    var fullText = textParts.join('\n\n');
+                    var parsed = parseFileToCards(fullText, file.name);
+                    allCards = allCards.concat(parsed);
+                    pending--;
+                    if (pending === 0) finishImport(allCards, bankName, existingBank, files.length);
+                  }
+                });
+              });
+            })(pi);
+          }
+        }).catch(function() {
+          pending--;
+          if (pending === 0) finishImport(allCards, bankName, existingBank, files.length);
+        });
+      };
+      reader3.readAsArrayBuffer(file);
+    } else {
+      // Text files: read as text
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        var text = ev.target.result;
+        var parsed = parseFileToCards(text, file.name);
+        allCards = allCards.concat(parsed);
+        pending--;
+        if (pending === 0) finishImport(allCards, bankName, existingBank, files.length);
+      };
+      reader.readAsText(file, 'utf-8');
+    }
   });
   e.target.value = '';
 });
+
+function finishImport(allCards, bankName, existingBank, fileCount) {
+  if (allCards.length === 0) {
+    alert('未能从文件中解析出任何卡片。请检查文件格式。');
+    return;
+  }
+  if (existingBank) {
+    existingBank.cards = existingBank.cards.concat(allCards);
+    currentBankId = existingBank.id;
+  } else {
+    var id = 'custom-' + Date.now();
+    banks.push({ id: id, name: bankName, desc: '文件导入 · ' + fileCount + '个文件', cards: allCards });
+    currentBankId = id;
+  }
+  save();
+  renderBankGrid('bankGrid');
+  renderBankGrid('browseBankGrid');
+  renderManage();
+  renderStats();
+  renderCard();
+  alert('成功导入 ' + allCards.length + ' 张卡片到题库「' + (existingBank ? existingBank.name : bankName) + '」');
+}
 
 function parseFileToCards(text, filename) {
   var cards = [];
