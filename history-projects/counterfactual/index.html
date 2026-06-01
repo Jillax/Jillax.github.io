@@ -5,23 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>如果历史不一样 · 反事实推演</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
-
     :root {
-      --bg: #f5f0e8;
-      --surface: #ede6d8;
-      --text: #2a2520;
-      --text-secondary: #7a7060;
-      --text-muted: #a09888;
-      --gold: #c4a35a;
-      --gold-dark: #a08030;
-      --border: #d8d0c0;
-      --card-shadow: 0 2px 12px rgba(0,0,0,0.07);
-      --line-color: #c8b898;
-      --node-bg: #fff;
-      --root-bg: #f0e8d8;
+      --bg: #0d0a1a;
+      --bg-soft: #130f24;
+      --bg-surface: #1a1530;
+      --bg-card: #1e1838;
+      --text: #d4c8ef;
+      --text-soft: #a896cc;
+      --text-muted: #6b5a8a;
+      --text-faint: #3d2f5c;
+      --purple: #9b59ff;
+      --purple-bright: #b47aff;
+      --purple-soft: rgba(155, 89, 255, 0.15);
+      --purple-glow: rgba(155, 89, 255, 0.4);
+      --neon-pink: #ff4da6;
+      --neon-pink-glow: rgba(255, 77, 166, 0.35);
+      --neon-cyan: #00e5ff;
+      --neon-cyan-soft: rgba(0, 229, 255, 0.12);
+      --amber: #ffaa40;
+      --amber-soft: rgba(255, 170, 64, 0.12);
+      --border: rgba(155, 89, 255, 0.15);
+      --border-glow: rgba(155, 89, 255, 0.3);
+      --line-color: rgba(155, 89, 255, 0.25);
     }
 
     body {
@@ -29,211 +38,573 @@
       color: var(--text);
       font-family: 'Noto Sans SC', sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ---- Header ---- */
+    /* === Header === */
     .header {
       text-align: center;
-      padding: 36px 20px 18px;
-      background: linear-gradient(180deg, #ede6d8 0%, var(--bg) 100%);
-      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 24px;
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--purple), transparent);
+    }
+    .header-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--neon-pink);
+      letter-spacing: 4px;
+      margin-bottom: 12px;
     }
     .header h1 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.7rem;
-      font-weight: 900;
-      letter-spacing: 4px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow: 0 0 20px var(--purple-glow);
     }
-    .header h1 span { color: var(--gold); }
+    .header h1 span {
+      color: var(--purple-bright);
+      text-shadow: 0 0 30px var(--purple-glow), 0 0 60px rgba(155, 89, 255, 0.2);
+    }
     .header .sub {
-      margin-top: 4px;
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      letter-spacing: 4px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 3px;
+      margin-top: 8px;
     }
 
-    /* ---- Scenario tabs ---- */
+    /* === Tabs === */
     .tabs {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 14px 20px 8px;
+      padding: 20px 24px 8px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       align-items: center;
     }
     .tabs .label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-right: 4px;
-      letter-spacing: 1px;
-      font-family: 'Noto Serif SC', serif;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-faint);
+      letter-spacing: 2px;
+      margin-right: 8px;
+      text-transform: uppercase;
     }
-    .tabs .tab {
-      padding: 5px 16px;
+    .tab {
+      padding: 6px 18px;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      background: #fff;
-      color: var(--text-secondary);
+      background: transparent;
+      color: var(--text-muted);
       font-size: 0.78rem;
       cursor: pointer;
       transition: all 0.3s;
-      font-family: 'Noto Serif SC', serif;
+      font-family: 'Noto Sans SC', sans-serif;
       letter-spacing: 1px;
       user-select: none;
     }
-    .tabs .tab:hover {
-      border-color: var(--gold);
-      color: var(--gold-dark);
+    .tab:hover {
+      border-color: var(--purple);
+      color: var(--purple-bright);
+      box-shadow: 0 0 10px rgba(155, 89, 255, 0.15);
     }
-    .tabs .tab.active {
-      background: var(--gold);
-      color: #fff;
-      border-color: var(--gold);
+    .tab.active {
+      background: var(--purple-soft);
+      color: var(--purple-bright);
+      border-color: var(--purple);
+      box-shadow: 0 0 15px rgba(155, 89, 255, 0.2);
+      text-shadow: 0 0 8px var(--purple-glow);
     }
-    .tabs .tab.custom-tab {
+    .tab.custom-tab {
       border-style: dashed;
+      border-color: var(--text-faint);
     }
 
-    /* ---- Custom panel ---- */
+    /* === Custom Panel === */
     .custom-panel {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 20px 12px;
+      padding: 0 24px 12px;
       display: none;
     }
     .custom-panel.open { display: block; }
     .custom-panel .inner {
-      background: var(--surface);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px 20px;
+      padding: 20px 24px;
     }
     .custom-panel h3 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 0.9rem;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--purple-bright);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
     }
     .custom-panel .hint {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
-      line-height: 1.6;
+      margin-bottom: 12px;
+      line-height: 1.8;
+      font-family: 'Share Tech Mono', monospace;
     }
     .custom-panel .hint code {
-      background: rgba(0,0,0,0.04);
+      background: var(--purple-soft);
       padding: 1px 6px;
-      border-radius: 3px;
-      font-size: 0.72rem;
+      color: var(--neon-cyan);
+      font-size: 0.7rem;
     }
     .custom-panel textarea {
       width: 100%;
-      min-height: 150px;
-      padding: 12px;
-      background: #fff;
+      min-height: 140px;
+      padding: 14px;
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      font-family: 'Noto Sans SC', sans-serif;
-      font-size: 0.82rem;
-      line-height: 1.6;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
       color: var(--text);
       resize: vertical;
     }
-    .custom-panel textarea:focus { outline: none; border-color: var(--gold); }
+    .custom-panel textarea:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 10px rgba(155, 89, 255, 0.15); }
     .custom-panel .actions {
       display: flex;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     .custom-panel .actions button {
-      padding: 6px 20px;
-      border-radius: 6px;
+      padding: 8px 22px;
       border: none;
       cursor: pointer;
-      font-family: 'Noto Serif SC', serif;
-      font-size: 0.82rem;
-      letter-spacing: 1px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       transition: all 0.3s;
     }
-    .custom-panel .actions .gen-btn {
-      background: var(--gold);
+    .gen-btn {
+      background: var(--purple);
       color: #fff;
+      box-shadow: 0 0 15px rgba(155, 89, 255, 0.3);
     }
-    .custom-panel .actions .gen-btn:hover { background: var(--gold-dark); }
-    .custom-panel .actions .eg-btn {
+    .gen-btn:hover { background: var(--purple-bright); box-shadow: 0 0 25px var(--purple-glow); }
+    .eg-btn {
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
+      border: 1px solid var(--border) !important;
+      color: var(--text-muted);
     }
-    .custom-panel .actions .eg-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+    .eg-btn:hover { border-color: var(--purple) !important; color: var(--purple-bright); }
 
-    /* ---- Tree area ---- */
+    /* === Tree Area === */
     .tree-area {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 10px 20px 40px;
+      padding: 16px 24px 60px;
+      overflow-x: auto;
     }
 
-    /* Detail side panel (floating) */
+    /* === Focus Tree === */
+    .focus-tree {
+      position: relative;
+      min-width: fit-content;
+      padding: 20px 0;
+    }
+
+    /* Root node */
+    .focus-root {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .focus-root-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, var(--purple) 0%, #7a3fd4 100%);
+      border: 2px solid var(--purple-bright);
+      box-shadow: 0 0 30px rgba(155, 89, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .focus-root-card::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 1px solid rgba(155, 89, 255, 0.2);
+      pointer-events: none;
+    }
+    .focus-root-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(155, 89, 255, 0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .focus-root-card .root-icon {
+      font-size: 1.6rem;
+    }
+    .focus-root-card .root-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    /* Connector lines */
+    .focus-connector {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    .focus-connector .v-line {
+      width: 2px;
+      height: 28px;
+      background: var(--line-color);
+      box-shadow: 0 0 6px rgba(155, 89, 255, 0.2);
+    }
+
+    /* Focus columns row */
+    .focus-columns {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      position: relative;
+    }
+    .focus-columns::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 80px;
+      right: 80px;
+      height: 2px;
+      background: var(--line-color);
+      box-shadow: 0 0 6px rgba(155, 89, 255, 0.2);
+    }
+
+    /* Individual focus column */
+    .focus-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      min-width: 200px;
+      max-width: 280px;
+      padding: 0 12px;
+    }
+    .focus-col::before {
+      content: '';
+      width: 2px;
+      height: 24px;
+      background: var(--line-color);
+      box-shadow: 0 0 6px rgba(155, 89, 255, 0.2);
+      flex-shrink: 0;
+    }
+
+    /* Focus node — HOI4 style */
+    .focus-node {
+      width: 100%;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Top accent bar */
+    .focus-node::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--purple);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .focus-node:hover {
+      border-color: var(--purple);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(155, 89, 255, 0.2);
+    }
+    .focus-node:hover::before { opacity: 1; }
+    .focus-node.active {
+      border-color: var(--purple-bright);
+      box-shadow: 0 0 20px rgba(155, 89, 255, 0.3);
+      background: rgba(155, 89, 255, 0.08);
+    }
+    .focus-node.active::before {
+      opacity: 1;
+      height: 3px;
+      background: var(--purple-bright);
+      box-shadow: 0 0 10px var(--purple-glow);
+    }
+
+    .node-inner {
+      padding: 14px 16px;
+    }
+    .node-icon {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .node-title {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: 0.3px;
+    }
+    .node-hint {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-faint);
+      margin-top: 6px;
+      letter-spacing: 1px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .focus-node:hover .node-hint { opacity: 0.7; }
+
+    /* Arrow indicators */
+    .focus-col + .focus-col::after {
+      content: '';
+      position: absolute;
+      left: -1px;
+      top: 0;
+      width: 2px;
+      height: 24px;
+      background: var(--line-color);
+    }
+
+    /* Sub-focus tree (children) */
+    .focus-children {
+      display: flex;
+      gap: 0;
+      position: relative;
+      padding-top: 4px;
+      width: 100%;
+      justify-content: center;
+    }
+    .focus-children::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background: var(--line-color);
+      box-shadow: 0 0 6px rgba(155, 89, 255, 0.2);
+    }
+    .focus-children .focus-col {
+      min-width: 160px;
+      max-width: 220px;
+    }
+    .focus-children .focus-col::before { height: 16px; }
+    .focus-children .focus-node .node-inner { padding: 10px 12px; }
+    .focus-children .focus-node .node-title { font-size: 0.75rem; }
+    .focus-children .focus-node .node-icon { font-size: 1rem; }
+
+    /* Third level */
+    .focus-children .focus-children { gap: 0; }
+    .focus-children .focus-children .focus-col { min-width: 130px; max-width: 180px; }
+    .focus-children .focus-children .focus-col::before { height: 12px; }
+    .focus-children .focus-children .focus-node .node-inner { padding: 8px 10px; }
+    .focus-children .focus-children .focus-node .node-title { font-size: 0.7rem; }
+    .focus-children .focus-children .focus-node .node-icon { font-size: 0.85rem; }
+
+    /* Add button */
+    .add-focus-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: 1px dashed var(--border);
+      background: transparent;
+      color: var(--text-faint);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+      flex-shrink: 0;
+    }
+    .add-focus-btn:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan-soft);
+    }
+
+    /* === Detail Panel === */
+    .detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(13, 10, 26, 0.7);
+      backdrop-filter: blur(4px);
+    }
+    .detail-overlay.open { display: block; }
     .detail-panel {
       display: none;
       position: fixed;
-      right: 24px;
+      right: 32px;
       top: 50%;
       transform: translateY(-50%);
-      width: 300px;
-      max-height: 60vh;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      padding: 20px;
-      overflow-y: auto;
+      width: 360px;
+      max-height: 70vh;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      box-shadow: 0 0 40px rgba(155, 89, 255, 0.15), 0 8px 32px rgba(0,0,0,0.4);
       z-index: 100;
+      overflow-y: auto;
     }
     .detail-panel.open { display: block; }
-    .detail-panel .close-detail {
-      float: right;
-      background: none;
-      border: none;
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .detail-panel .close-detail:hover { color: var(--text); }
-    .detail-panel h4 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1rem;
-      color: var(--gold-dark);
-      margin-bottom: 8px;
-      padding-right: 20px;
-    }
-    .detail-panel .dp-meta {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      padding-bottom: 8px;
+
+    .detail-header {
+      padding: 20px 24px 16px;
       border-bottom: 1px solid var(--border);
+      position: relative;
     }
-    .detail-panel .dp-body {
+    .detail-header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--purple), transparent);
+    }
+    .detail-header .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 28px;
+      height: 28px;
       font-size: 0.85rem;
-      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .detail-header .close-btn:hover {
+      border-color: var(--neon-pink);
+      color: var(--neon-pink);
+    }
+    .detail-header .detail-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--neon-pink);
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+    .detail-header h4 {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--purple-bright);
+      letter-spacing: 1px;
+      padding-right: 36px;
+    }
+    .detail-header .detail-meta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-faint);
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+
+    .detail-body {
+      padding: 20px 24px;
+    }
+    .detail-body p {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      line-height: 1.9;
+      letter-spacing: 0.3px;
+    }
+
+    .detail-discuss {
+      margin: 0 24px 24px;
+      padding: 16px;
+      background: rgba(155, 89, 255, 0.06);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .detail-discuss::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 8px var(--neon-cyan-soft);
+    }
+    .detail-discuss .discuss-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--neon-cyan);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+    .detail-discuss p {
+      font-size: 0.82rem;
+      color: var(--text-soft);
       line-height: 1.8;
     }
-    .detail-panel .dp-discuss {
-      margin-top: 12px;
-      padding: 12px;
-      background: rgba(196,163,90,0.08);
-      border-radius: 6px;
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
+
+    /* === Footer === */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-faint);
+      letter-spacing: 3px;
+      border-top: 1px solid var(--border);
+      position: relative;
     }
-    .detail-panel .dp-discuss strong {
-      color: var(--gold-dark);
-      font-family: 'Noto Serif SC', serif;
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--purple), transparent);
     }
+
+    /* === Empty State === */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-faint);
+    }
+    .empty-state .big { font-size: 3rem; margin-bottom: 16px; opacity: 0.3; }
+    .empty-state p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+
+    /* === Responsive === */
     @media (max-width: 900px) {
       .detail-panel {
         right: 12px;
@@ -242,241 +613,28 @@
         top: auto;
         bottom: 12px;
         transform: none;
-        max-height: 40vh;
+        max-height: 50vh;
       }
     }
-
-    /* ---- Tree ---- */
-    .tree {
-      padding: 10px 0;
-    }
-
-    /* Root node */
-    .tree-root {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .tree-root .root-card {
-      display: inline-block;
-      padding: 14px 32px;
-      background: var(--gold);
-      color: #fff;
-      border-radius: 10px;
-      font-family: 'Noto Serif SC', serif;
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 3px 12px rgba(196,163,90,0.3);
-      position: relative;
-    }
-    .tree-root .root-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(196,163,90,0.4);
-    }
-    .tree-root .root-card .q-mark {
-      font-size: 1.4rem;
-      margin-right: 8px;
-    }
-    /* Vertical line from root */
-    .root-line {
-      width: 2px;
-      height: 30px;
-      background: var(--line-color);
-      margin: 0 auto;
-    }
-
-    /* Children row (horizontal) */
-    .tree-row {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      position: relative;
-      padding: 6px 0 0;
-    }
-    /* Horizontal line spanning children */
-    .tree-row::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 60px;
-      right: 60px;
-      height: 2px;
-      background: var(--line-color);
-    }
-
-    /* Branch (vertical container for a subtree) */
-    .tree-branch {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      flex: 1;
-      max-width: 260px;
-      min-width: 120px;
-    }
-    /* Vertical line up from branch node */
-    .tree-branch::before {
-      content: '';
-      width: 2px;
-      height: 20px;
-      background: var(--line-color);
-      flex-shrink: 0;
-    }
-
-    /* Node card */
-    .tree-node {
-      width: 100%;
-      padding: 12px 14px;
-      background: var(--node-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: var(--card-shadow);
-      text-align: center;
-      position: relative;
-    }
-    .tree-node:hover {
-      border-color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(196,163,90,0.15);
-    }
-    .tree-node.active {
-      border-color: var(--gold);
-      background: rgba(196,163,90,0.04);
-      box-shadow: 0 0 0 2px rgba(196,163,90,0.2);
-    }
-
-    .tree-node .node-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.4;
-    }
-    .tree-node .node-click-hint {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      opacity: 0;
-      transition: opacity 0.3s;
-      margin-top: 4px;
-    }
-    .tree-node:hover .node-click-hint { opacity: 0.5; }
-
-    /* Children of a branch (sub-row) */
-    .branch-children {
-      display: flex;
-      gap: 24px;
-      position: relative;
-      padding-top: 6px;
-      width: 100%;
-      justify-content: center;
-    }
-    /* Horizontal line for sub-children */
-    .branch-children::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 30px;
-      right: 30px;
-      height: 2px;
-      background: var(--line-color);
-    }
-
-    .branch-children .tree-branch {
-      max-width: 200px;
-      min-width: 100px;
-    }
-    .branch-children .tree-branch::before {
-      height: 16px;
-    }
-    .branch-children .tree-node {
-      padding: 10px 12px;
-    }
-    .branch-children .tree-node .node-title {
-      font-size: 0.8rem;
-    }
-
-    /* Third level */
-    .branch-children .branch-children {
-      gap: 16px;
-    }
-    .branch-children .branch-children .tree-branch {
-      max-width: 160px;
-      min-width: 80px;
-    }
-    .branch-children .branch-children .tree-branch::before {
-      height: 12px;
-    }
-    .branch-children .branch-children .tree-node {
-      padding: 8px 10px;
-    }
-    .branch-children .branch-children .tree-node .node-title {
-      font-size: 0.75rem;
-    }
-
-    /* Add branch button */
-    .add-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 1px dashed var(--border);
-      background: #fff;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 8px;
-      flex-shrink: 0;
-    }
-    .add-btn:hover {
-      border-color: var(--gold);
-      color: var(--gold-dark);
-      background: rgba(196,163,90,0.05);
-    }
-
-    /* ---- Empty state ---- */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-muted);
-    }
-    .empty-state .big {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      opacity: 0.4;
-    }
-    .empty-state p {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-    }
-
-    /* ---- Responsive ---- */
     @media (max-width: 700px) {
-      .header h1 { font-size: 1.3rem; }
-      .tree-row { gap: 16px; flex-wrap: wrap; }
-      .tree-row::before { display: none; }
-      .tree-branch { max-width: 100%; min-width: 0; }
-      .tree-branch::before { display: none; }
-      .branch-children { gap: 12px; flex-wrap: wrap; }
-      .branch-children::before { display: none; }
-      .branch-children .branch-children .tree-branch { max-width: 100%; }
-      .tabs .tab { font-size: 0.72rem; padding: 4px 12px; }
+      .header h1 { font-size: 1.2rem; letter-spacing: 3px; }
+      .focus-columns { gap: 0; flex-wrap: wrap; }
+      .focus-columns::before { display: none; }
+      .focus-col { min-width: 0; max-width: 100%; }
+      .focus-col::before { display: none; }
+      .focus-children { flex-wrap: wrap; gap: 8px; }
+      .focus-children::before { display: none; }
+      .focus-children .focus-children .focus-col { max-width: 100%; }
+      .tab { font-size: 0.7rem; padding: 4px 12px; }
     }
 
-    /* ---- Footer ---- */
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-      border-top: 1px solid var(--border);
+    /* === Neon glow animation === */
+    @keyframes neonPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .focus-node.active::before {
+      animation: neonPulse 2s ease-in-out infinite;
     }
   </style>
 </head>
@@ -484,13 +642,14 @@
 
   <!-- Header -->
   <header class="header">
+    <div class="header-tag">COUNTERFACTUAL ANALYSIS SYSTEM</div>
     <h1>如 果 历 史 <span>不 一 样</span></h1>
-    <p class="sub">反事实推演 · 课堂讨论工具</p>
+    <p class="sub">反事实推演 · 国策树</p>
   </header>
 
   <!-- Tabs -->
   <div class="tabs" id="tabBar">
-    <span class="label">预设场景</span>
+    <span class="label">// 预设场景</span>
     <button class="tab active" data-scenario="0">戊戌变法成功</button>
     <button class="tab" data-scenario="1">赤壁曹操胜</button>
     <button class="tab" data-scenario="2">鸦片战争中国胜</button>
@@ -501,45 +660,59 @@
   <!-- Custom panel -->
   <div class="custom-panel" id="customPanel">
     <div class="inner">
-      <h3>▎输入推演结构</h3>
+      <h3>> INPUT FOCUS TREE</h3>
       <p class="hint">
         用 <code>##</code> 表示第一层分支，<code>###</code> 表示第二层。<br>
         每行格式：<code>标题 | 详细描述 | 课堂讨论问题</code>
       </p>
       <textarea id="customInput" spellcheck="false"></textarea>
       <div class="actions">
-        <button class="gen-btn" id="customGen">✦ 生成推演树</button>
-        <button class="eg-btn" id="customEg">载入示例</button>
+        <button class="gen-btn" id="customGen">GENERATE</button>
+        <button class="eg-btn" id="customEg">LOAD EXAMPLE</button>
       </div>
     </div>
   </div>
 
   <!-- Tree area -->
   <div class="tree-area" id="treeArea">
-    <div class="tree" id="treeContainer"></div>
+    <div class="focus-tree" id="treeContainer"></div>
   </div>
 
-  <!-- Detail panel -->
+  <!-- Detail overlay + panel -->
+  <div class="detail-overlay" id="detailOverlay"></div>
   <div class="detail-panel" id="detailPanel">
-    <button class="close-detail" id="closeDetail">✕</button>
-    <h4 id="detailTitle"></h4>
-    <div class="dp-meta" id="detailMeta"></div>
-    <div class="dp-body" id="detailBody"></div>
-    <div class="dp-discuss" id="detailDiscuss"></div>
+    <div class="detail-header">
+      <button class="close-btn" id="closeDetail">✕</button>
+      <div class="detail-tag">NATIONAL FOCUS DETAIL</div>
+      <h4 id="detailTitle"></h4>
+      <div class="detail-meta" id="detailMeta"></div>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+    <div class="detail-discuss" id="detailDiscuss">
+      <div class="discuss-label">CLASSROOM DISCUSSION</div>
+      <p id="detailDiscussText"></p>
+    </div>
   </div>
 
-  <footer class="footer">Jillax · 每一次假设，都是一次对历史的重新理解</footer>
+  <footer class="footer">JILLAX · 每一次假设，都是一次对历史的重新理解</footer>
 
   <script>
     // ============================================================
-    //  Data — Pre-built scenarios
+    //  Icons for different node types
     // ============================================================
+    const ICONS = ['⚔️','🏛️','📜','🌍','🎖️','👑','💡','🔬','🏴','🕊️','🗡️','📊','🎭','⚖️','🚂','🗼'];
+
+    function getIcon(depth, idx) {
+      return ICONS[(depth * 3 + idx) % ICONS.length];
+    }
 
     function makeId() { return 'n' + Math.random().toString(36).slice(2, 7); }
 
+    // ============================================================
+    //  Scenarios
+    // ============================================================
     const SCENARIOS = [
       {
-        // 0: 戊戌变法成功
         title: '如果戊戌变法成功了会怎样？',
         desc: '假设1898年慈禧太后未发动政变，光绪帝实权在握，变法得以持续推进……',
         discuss: '课堂讨论：结合当时列强环伺的国际环境，判断变法成功的可能性有多大？',
@@ -553,19 +726,19 @@
               content: '慈禧太后被迫归政，光绪帝真正掌握国家权力。维新派进入核心决策层，改革政令得以全面推行。',
               discuss: '光绪皇帝是否有足够的政治经验和手腕来驾驭各方势力？',
               children: [
-                { title: '君主立宪制建立', content: '参照日本明治维新模式，建立议会制度，制定宪法。中国成为亚洲第一个立宪国家，政治体制领先于俄国等传统大国。', discuss: '立宪制的建立能否一步到位？还是需要渐进过渡？' },
-                { title: '保守势力被清算', content: '慈禧、荣禄等顽固派被清除出权力中心。但满汉矛盾可能因此激化，引发新的政治危机。', discuss: '如何处理旧官僚体系中的既得利益者，是改革最棘手的问题。' },
+                { title: '君主立宪制建立', content: '参照日本明治维新模式，建立议会制度，制定宪法。中国成为亚洲第一个立宪国家。', discuss: '立宪制的建立能否一步到位？还是需要渐进过渡？' },
+                { title: '保守势力被清算', content: '慈禧、荣禄等顽固派被清除出权力中心。但满汉矛盾可能因此激化。', discuss: '如何处理旧官僚体系中的既得利益者？' },
                 { title: '新政全面推开', content: '废八股、兴学堂、练新军、办实业。教育体系全面改革，现代军队建设加速。', discuss: '这些改革措施中，哪一项对当时中国最为迫切？' }
               ]
             },
             {
               title: '列强的反应',
-              content: '列强对中国的突然改革措手不及，各自调整对华策略。国际环境变得更加复杂。',
+              content: '列强对中国的突然改革措手不及，各自调整对华策略。',
               discuss: '列强是真心希望中国强大，还是更希望中国保持软弱？',
               children: [
-                { title: '英国可能支持改革', content: '英国倾向于支持一个稳定的立宪政府，以维护其在华经济利益。但支持力度有限。', discuss: '为什么英国可能是列强中最"友好"的一个？' },
-                { title: '日本态度微妙', content: '日本一方面警惕中国改革后可能重新强大，另一方面又希望借改革进一步渗透中国。', discuss: '日本在亚洲的战略是什么？一个强大的中国对日本意味着什么？' },
-                { title: '瓜分危机暂时缓解', content: '"以华治华"策略延续。但列强的经济渗透可能加剧，形成新的控制方式。', discuss: '经济殖民与文化殖民是否比直接殖民统治更难对付？' }
+                { title: '英国可能支持改革', content: '英国倾向于支持一个稳定的立宪政府，以维护其在华经济利益。', discuss: '为什么英国可能是列强中最"友好"的一个？' },
+                { title: '日本态度微妙', content: '日本一方面警惕中国改革后可能重新强大，另一方面又希望借改革进一步渗透。', discuss: '一个强大的中国对日本意味着什么？' },
+                { title: '瓜分危机暂时缓解', content: '列强的经济渗透可能加剧，形成新的控制方式。', discuss: '经济殖民是否比直接殖民统治更难对付？' }
               ]
             },
             {
@@ -573,16 +746,15 @@
               content: '中国历史走向被彻底改变。20世纪的许多重大事件可能不会发生。',
               discuss: '历史的一个小小转折，能否真正改变一个国家的命运轨迹？',
               children: [
-                { title: '革命党势力减弱', content: '孙中山等革命党人的"驱除鞑虏"口号失去号召力。立宪与革命两条道路竞争中，立宪派占上风。', discuss: '如果戊戌变法成功，还会有辛亥革命吗？' },
-                { title: '军阀割据可能避免', content: '中央权威得以保持，地方督抚权力受到制约。20世纪初的军阀混战格局可能不会出现。', discuss: '统一 vs. 分裂：中央集权与地方分权如何平衡？' },
-                { title: '抗日战争格局改变', content: '如果中国提前三十年开启近代化，抗战实力将大大增强。但日本也可能更早发动侵略。', discuss: '一个更强大的中国能否阻止日本侵华？还是会引发更早的冲突？' }
+                { title: '革命党势力减弱', content: '孙中山等革命党人的"驱除鞑虏"口号失去号召力。立宪派占上风。', discuss: '如果戊戌变法成功，还会有辛亥革命吗？' },
+                { title: '军阀割据可能避免', content: '中央权威得以保持，地方督抚权力受到制约。', discuss: '中央集权与地方分权如何平衡？' },
+                { title: '抗日战争格局改变', content: '如果中国提前三十年开启近代化，抗战实力将大大增强。', discuss: '一个更强大的中国能否阻止日本侵华？' }
               ]
             }
           ]
         }
       },
       {
-        // 1: 赤壁之战曹操胜
         title: '如果赤壁之战曹操赢了会怎样？',
         desc: '假设东南风未起，黄盖火攻失败，曹操一举攻破孙刘联军……',
         discuss: '课堂讨论：曹操若统一天下，中国历史会缩短还是延长分裂期？',
@@ -593,12 +765,12 @@
           children: [
             {
               title: '曹操统一南方',
-              content: '孙吴政权灭亡，刘备势力被消灭。曹操完成全国统一，比历史提前了近半个世纪。',
-              discuss: '曹操能否有效统治南方士族？南北文化差异如何弥合？',
+              content: '孙吴政权灭亡，刘备势力被消灭。曹操完成全国统一。',
+              discuss: '曹操能否有效统治南方士族？',
               children: [
-                { title: '孙权投降或被灭', content: '江东士族在周瑜、鲁肃等主战派覆灭后，很可能选择投降。江东六郡并入曹魏版图。', discuss: '江东士族对曹操的态度如何？他们会真心归顺吗？' },
-                { title: '刘备势力消亡', content: '诸葛亮"隆中对"失去实现基础，刘备集团要么投降要么退往西南偏安。', discuss: '如果刘备退入蜀地，诸葛亮能否在西南建立割据政权？' },
-                { title: '江南开发推迟', content: '三国时期北方移民南迁的浪潮被阻断，江南经济崛起的时间线将大大延后。', discuss: '江南的开发是依靠移民还是本地发展？' }
+                { title: '孙权投降或被灭', content: '江东士族在主战派覆灭后很可能选择投降。', discuss: '江东士族对曹操的态度如何？' },
+                { title: '刘备势力消亡', content: '诸葛亮"隆中对"失去实现基础。', discuss: '如果刘备退入蜀地，能否建立割据政权？' },
+                { title: '江南开发推迟', content: '三国时期北方移民南迁的浪潮被阻断。', discuss: '江南的开发是依靠移民还是本地发展？' }
               ]
             },
             {
@@ -606,82 +778,80 @@
               content: '中国在公元3世纪初就完成了统一，比西晋统一早了近一个世纪。',
               discuss: '提前统一对中国历史是福是祸？',
               children: [
-                { title: '西晋不复存在', content: '司马氏失去篡位的历史条件。曹魏延续，八王之乱等事件不会发生。', discuss: '没有八王之乱，五胡乱华能否避免？' },
-                { title: '五胡时间线改变', content: '北方少数民族内迁的进程仍在继续，但中央强大使"乱华"的可能性大大降低。', discuss: '民族融合是否一定要通过暴力方式进行？' },
-                { title: '门阀士族更早衰落', content: '曹操唯才是举的政策延续，九品中正制可能不会全面推行。社会流动性保持。', discuss: '曹操的"唯才是举"能否真正打破门阀垄断？' }
+                { title: '西晋不复存在', content: '司马氏失去篡位的历史条件。曹魏延续。', discuss: '没有八王之乱，五胡乱华能否避免？' },
+                { title: '五胡时间线改变', content: '中央强大使"乱华"的可能性大大降低。', discuss: '民族融合是否一定要通过暴力方式进行？' },
+                { title: '门阀士族更早衰落', content: '曹操唯才是举的政策延续，社会流动性保持。', discuss: '曹操的"唯才是举"能否真正打破门阀垄断？' }
               ]
             }
           ]
         }
       },
       {
-        // 2: 鸦片战争中国胜
         title: '如果鸦片战争中国赢了会怎样？',
         desc: '假设林则徐在广东成功击退英军，英国在付出重大代价后选择谈判……',
         discuss: '课堂讨论：一场局部胜利能否改变中国近代化的整体命运？',
         root: {
           title: '鸦片战争·中国胜',
-          content: '清军在广东、浙江等地成功击退英军。英国因代价过大而选择外交谈判，未签订不平等条约。',
-          discuss: '以当时中英实力差距，中国真的有可能打赢吗？还是说这只是我们的美好愿望？',
+          content: '清军在广东、浙江等地成功击退英军。英国因代价过大而选择外交谈判。',
+          discuss: '以当时中英实力差距，中国真的有可能打赢吗？',
           children: [
             {
               title: '条约体系不同',
-              content: '中国未被迫开放五口通商，香港仍属中国，治外法权与协定关税未确立。',
+              content: '中国未被迫开放五口通商，香港仍属中国。',
               discuss: '如果不签《南京条约》，中国的主权能否得到更好的保护？',
               children: [
-                { title: '香港仍属中国', content: '英国未获得香港岛。珠江口战略要地仍在中国手中。', discuss: '如果香港没有割让，中国近代史的诸多事件会如何改写？' },
+                { title: '香港仍属中国', content: '英国未获得香港岛。珠江口战略要地仍在中国手中。', discuss: '如果香港没有割让，中国近代史会如何改写？' },
                 { title: '通商口岸未开放', content: '广州一口通商格局继续。但走私和鸦片贸易仍在暗中进行。', discuss: '闭关锁国 vs 对外开放：中国当时应该如何选择？' },
-                { title: '治外法权未建立', content: '外国人仍受中国法律管辖。中外司法纠纷的处理方式完全不同。', discuss: '治外法权对国家主权的伤害有多大？' }
+                { title: '治外法权未建立', content: '外国人仍受中国法律管辖。', discuss: '治外法权对国家主权的伤害有多大？' }
               ]
             },
             {
               title: '近代化路径改变',
-              content: '中国在"胜利"后可能产生过度自信，改革动力不足。但也有可能更加主动地学习西方。',
+              content: '中国在"胜利"后可能产生过度自信，改革动力不足。',
               discuss: '胜利比失败更危险——这种说法有道理吗？',
               children: [
-                { title: '洋务运动可能提前', content: '林则徐、魏源"师夷长技以制夷"的主张获得重视。造船制炮等军工项目提前启动。', discuss: '没有战败的刺痛，洋务运动会更有成效还是更加敷衍？' },
-                { title: '但改革动力不足', content: '"天朝上国"的幻觉被一场局部胜利强化。保守派可能以此否定改革的必要性。', discuss: '是不是非得到"最危险的时候"才会改革？' },
-                { title: '第二次鸦片战争仍难免', content: '列强不会放弃打开中国市场的企图。十年之内，更大规模的冲突大概率再次爆发。', discuss: '一场胜利能否推迟列强瓜分中国的进程？能推迟多久？' }
+                { title: '洋务运动可能提前', content: '林则徐、魏源"师夷长技以制夷"的主张获得重视。', discuss: '没有战败的刺痛，洋务运动会更有成效还是更加敷衍？' },
+                { title: '但改革动力不足', content: '"天朝上国"的幻觉被一场局部胜利强化。', discuss: '是不是非得到"最危险的时候"才会改革？' },
+                { title: '第二次鸦片战争仍难免', content: '列强不会放弃打开中国市场的企图。', discuss: '一场胜利能否推迟列强瓜分中国的进程？' }
               ]
             }
           ]
         }
       },
       {
-        // 3: 秦朝延续三百年
         title: '如果秦朝延续了三百年会怎样？',
         desc: '假设扶苏继位，实行仁政，秦朝成功度过了统治危机……',
         discuss: '课堂讨论：秦朝的速亡是必然还是偶然？郡县制的生命力到底有多强？',
         root: {
           title: '秦朝延续三百年',
-          content: '扶苏在蒙恬支持下顺利继位，纠正秦始皇晚年的严刑峻法。秦朝成功地从一个军事帝国转型为文治帝国。',
-          discuss: '秦朝的制度设计在当时是否过于超前？超越时代的东西是否注定无法长久？',
+          content: '扶苏在蒙恬支持下顺利继位，纠正秦始皇晚年的严刑峻法。秦朝成功转型为文治帝国。',
+          discuss: '秦朝的制度设计在当时是否过于超前？',
           children: [
             {
               title: '郡县制全面巩固',
-              content: '郡县制经过三百年的发展，成为不可动摇的治理基础。分封制再无复辟可能。',
-              discuss: '郡县制为什么最终战胜了分封制？这反映了怎样的历史趋势？',
+              content: '郡县制经过三百年发展，成为不可动摇的治理基础。',
+              discuss: '郡县制为什么最终战胜了分封制？',
               children: [
-                { title: '中央集权传统确立', content: '中国早于历史近千年确立成熟的中央集权体制。地方行政制度的演变路径完全不同。', discuss: '中央集权对中国文明的影响是正面为主还是负面为主？' },
-                { title: '贵族政治彻底消亡', content: '军功爵制与郡县制结合，世卿世禄制度再无生存空间。社会流动性空前提高。', discuss: '秦汉的"编户齐民"社会与欧洲的封建庄园社会，哪个在当时更有优势？' }
+                { title: '中央集权传统确立', content: '中国早于历史近千年确立成熟的中央集权体制。', discuss: '中央集权对中国文明的影响是正面为主还是负面为主？' },
+                { title: '贵族政治彻底消亡', content: '军功爵制与郡县制结合，世卿世禄制度再无生存空间。', discuss: '编户齐民社会与封建庄园社会，哪个更有优势？' }
               ]
             },
             {
               title: '儒家思想地位改变',
-              content: '法家思想长期占据主导地位。儒家可能像墨家一样逐渐边缘化，或被迫与法家融合。',
+              content: '法家思想长期占据主导地位。儒家可能逐渐边缘化。',
               discuss: '如果儒家没有成为官方意识形态，中国人的价值观会有什么不同？',
               children: [
-                { title: '法家思想延续主导', content: '以法治国、耕战政策持续推行。中国的政治文化走向完全不同的方向。', discuss: '法家的"法治"与现代"法治"是一回事吗？' },
-                { title: '儒家融入法家体系', content: '儒生被迫吸收法家思想，"外儒内法"的模式可能变成"外法内儒"甚至"纯法"。', discuss: '儒学能适应一个长期以法家为主流的社会吗？' }
+                { title: '法家思想延续主导', content: '以法治国、耕战政策持续推行。', discuss: '法家的"法治"与现代"法治"是一回事吗？' },
+                { title: '儒家融入法家体系', content: '"外儒内法"的模式可能变成"纯法"。', discuss: '儒学能适应一个长期以法家为主流的社会吗？' }
               ]
             },
             {
               title: '对世界格局的影响',
-              content: '一个强大的、延续三百年的秦帝国，将彻底改变东亚乃至世界的历史走向。',
+              content: '一个强大的秦帝国将彻底改变东亚乃至世界的历史走向。',
               discuss: '古代中国的强大对世界历史有何深远影响？',
               children: [
-                { title: '匈奴问题提前解决', content: '秦朝持续北击匈奴，可能提前几百年解决北方游牧民族威胁。长城防线不断北推。', discuss: '农耕文明与游牧文明的对峙，是否真的可以通过军事手段解决？' },
-                { title: '丝绸之路提前开通', content: '秦代就已经开始探索西域，中西交流比历史提前了近百年。科技文化传播加速。', discuss: '如果中国提前开放，世界文明的发展路径会有什么不同？' }
+                { title: '匈奴问题提前解决', content: '秦朝持续北击匈奴，可能提前几百年解决北方威胁。', discuss: '农耕文明与游牧文明的对峙能否通过军事手段解决？' },
+                { title: '丝绸之路提前开通', content: '秦代就开始探索西域，中西交流比历史提前了近百年。', discuss: '如果中国提前开放，世界文明的发展路径会有什么不同？' }
               ]
             }
           ]
@@ -689,93 +859,86 @@
       }
     ];
 
-    // ============================================================
-    //  Assign IDs
-    // ============================================================
-
+    // Assign IDs
     function assignIds(node) {
       node.id = makeId();
-      if (node.children) {
-        node.children.forEach(assignIds);
-      }
+      if (node.children) node.children.forEach(assignIds);
     }
     SCENARIOS.forEach(s => assignIds(s.root));
 
     // ============================================================
     //  State
     // ============================================================
-
     let currentScenario = 0;
-    let currentNode = null;
 
     // ============================================================
     //  DOM refs
     // ============================================================
-
     const treeContainer = document.getElementById('treeContainer');
     const detailPanel = document.getElementById('detailPanel');
+    const detailOverlay = document.getElementById('detailOverlay');
     const detailTitle = document.getElementById('detailTitle');
     const detailMeta = document.getElementById('detailMeta');
     const detailBody = document.getElementById('detailBody');
+    const detailDiscussText = document.getElementById('detailDiscussText');
     const detailDiscuss = document.getElementById('detailDiscuss');
     const customPanel = document.getElementById('customPanel');
     const customInput = document.getElementById('customInput');
     const tabs = document.querySelectorAll('.tab');
 
     // ============================================================
-    //  Tree rendering
+    //  Render
     // ============================================================
+    function renderNode(node, depth, idx) {
+      const col = document.createElement('div');
+      col.className = 'focus-col';
+      col.dataset.id = node.id;
 
-    function renderNode(node, depth) {
-      const branch = document.createElement('div');
-      branch.className = 'tree-branch';
-      branch.dataset.id = node.id;
-
-      const card = document.createElement('div');
-      card.className = 'tree-node';
-      card.dataset.id = node.id;
-      card.innerHTML = `
-        <div class="node-title">${node.title}</div>
-        <div class="node-click-hint">点击查看详情</div>
+      const focusNode = document.createElement('div');
+      focusNode.className = 'focus-node';
+      focusNode.dataset.id = node.id;
+      focusNode.innerHTML = `
+        <div class="node-inner">
+          <span class="node-icon">${getIcon(depth, idx)}</span>
+          <div class="node-title">${node.title}</div>
+          <div class="node-hint">> CLICK TO EXPAND</div>
+        </div>
       `;
-
-      card.addEventListener('click', (e) => {
+      focusNode.addEventListener('click', (e) => {
         e.stopPropagation();
         showDetail(node);
       });
-
-      branch.appendChild(card);
+      col.appendChild(focusNode);
 
       if (node.children && node.children.length > 0) {
         const childrenContainer = document.createElement('div');
-        childrenContainer.className = 'branch-children';
-        node.children.forEach(child => {
-          childrenContainer.appendChild(renderNode(child, depth + 1));
+        childrenContainer.className = 'focus-children';
+        node.children.forEach((child, ci) => {
+          childrenContainer.appendChild(renderNode(child, depth + 1, ci));
         });
-        branch.appendChild(childrenContainer);
+        col.appendChild(childrenContainer);
       }
 
-      // For root level, add a small "+" button
+      // Add button for first-level nodes
       if (depth === 1) {
         const addBtn = document.createElement('button');
-        addBtn.className = 'add-btn';
+        addBtn.className = 'add-focus-btn';
         addBtn.textContent = '+';
-        addBtn.title = '课堂讨论时添加分支';
+        addBtn.title = '添加分支';
         addBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          const title = prompt('输入新分支标题：');
+          const title = prompt('输入新国策标题：');
           if (title) {
             const desc = prompt('输入简要描述：');
             node.children = node.children || [];
-            const newNode = { id: makeId(), title, content: desc || '', discuss: '', children: [] };
-            node.children.push(newNode);
+            node.children.push({ id: makeId(), title, content: desc || '', discuss: '', children: [] });
             renderScenario(currentScenario);
           }
         });
-        branch.appendChild(addBtn);
+        col.appendChild(addBtn);
       }
 
-      return branch;
+      return col;
     }
 
     function renderScenario(index) {
@@ -784,99 +947,84 @@
 
       // Root
       const rootDiv = document.createElement('div');
-      rootDiv.className = 'tree-root';
+      rootDiv.className = 'focus-root';
       rootDiv.innerHTML = `
-        <div class="root-card">
-          <span class="q-mark">❓</span> ${scenario.root.title}
+        <div class="focus-root-card">
+          <span class="root-icon">⚖️</span>
+          <span class="root-text">${scenario.root.title}</span>
         </div>
       `;
-      rootDiv.querySelector('.root-card').addEventListener('click', () => {
-        showDetail(scenario.root);
-      });
+      rootDiv.querySelector('.focus-root-card').addEventListener('click', () => showDetail(scenario.root));
       treeContainer.appendChild(rootDiv);
 
-      // Vertical line after root
-      const lineDiv = document.createElement('div');
-      lineDiv.className = 'root-line';
-      treeContainer.appendChild(lineDiv);
+      // Connector
+      const connector = document.createElement('div');
+      connector.className = 'focus-connector';
+      connector.innerHTML = '<div class="v-line"></div>';
+      treeContainer.appendChild(connector);
 
-      // Row of first-level branches
+      // Columns
       if (scenario.root.children && scenario.root.children.length > 0) {
-        const row = document.createElement('div');
-        row.className = 'tree-row';
-        scenario.root.children.forEach(child => {
-          row.appendChild(renderNode(child, 1));
+        const columns = document.createElement('div');
+        columns.className = 'focus-columns';
+        scenario.root.children.forEach((child, i) => {
+          columns.appendChild(renderNode(child, 1, i));
         });
-        treeContainer.appendChild(row);
+        treeContainer.appendChild(columns);
       }
 
-      // Close detail if open
-      detailPanel.classList.remove('open');
-      currentNode = null;
+      // Close detail
+      closeDetail();
     }
 
     // ============================================================
     //  Detail panel
     // ============================================================
-
     function showDetail(node) {
-      currentNode = node;
       detailTitle.textContent = node.title;
-      detailMeta.textContent = '点击其他节点可切换查看';
-      detailBody.textContent = node.content || '暂无详细描述。';
-      detailDiscuss.innerHTML = node.discuss
-        ? `<strong>💬 课堂讨论：</strong>${node.discuss}`
-        : '';
+      detailMeta.textContent = 'NODE ID: ' + node.id + ' · CLICK ELSEWHERE TO CLOSE';
+      detailBody.innerHTML = '<p>' + (node.content || '暂无详细描述。') + '</p>';
+      if (node.discuss) {
+        detailDiscuss.style.display = 'block';
+        detailDiscussText.textContent = node.discuss;
+      } else {
+        detailDiscuss.style.display = 'none';
+      }
       detailPanel.classList.add('open');
+      detailOverlay.classList.add('open');
     }
-
-    document.getElementById('closeDetail').addEventListener('click', () => {
+    function closeDetail() {
       detailPanel.classList.remove('open');
-    });
+      detailOverlay.classList.remove('open');
+    }
+    document.getElementById('closeDetail').addEventListener('click', closeDetail);
+    detailOverlay.addEventListener('click', closeDetail);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
 
     // ============================================================
     //  Custom mode
     // ============================================================
-
     function parseCustomInput(text) {
       const lines = text.trim().split('\n').filter(l => l.trim());
       const root = { id: makeId(), title: '', content: '', discuss: '', children: [] };
       const stack = [{ node: root, depth: 0 }];
-
       lines.forEach(line => {
         const trimmed = line.trim();
         const levelMatch = trimmed.match(/^(#{1,4})\s*/);
         if (!levelMatch) return;
-
         const depth = levelMatch[1].length;
         const content = trimmed.replace(/^#{1,4}\s*/, '');
         const parts = content.split('|').map(s => s.trim());
-
-        const newNode = {
-          id: makeId(),
-          title: parts[0] || '未命名',
-          content: parts[1] || '',
-          discuss: parts[2] || '',
-          children: []
-        };
-
-        // Pop stack until we find the right parent
-        while (stack.length > 0 && stack[stack.length - 1].depth >= depth) {
-          stack.pop();
-        }
-
+        const newNode = { id: makeId(), title: parts[0] || '未命名', content: parts[1] || '', discuss: parts[2] || '', children: [] };
+        while (stack.length > 0 && stack[stack.length - 1].depth >= depth) stack.pop();
         if (stack.length > 0) {
           const parent = stack[stack.length - 1].node;
           parent.children = parent.children || [];
           parent.children.push(newNode);
         }
-
         stack.push({ node: newNode, depth });
       });
-
-      if (root.children.length > 0) {
-        return { title: root.children[0].title, desc: '', discuss: '', root: root.children[0] };
-      }
+      if (root.children.length > 0) return { title: root.children[0].title, desc: '', discuss: '', root: root.children[0] };
       return null;
     }
 
@@ -892,60 +1040,38 @@
 革命党势力减弱 | 立宪派占上风 | 还会有辛亥革命吗？
 军阀割据可能避免 | 中央权威得以保持`;
 
-    document.getElementById('customEg').addEventListener('click', () => {
-      customInput.value = customEgText;
-    });
-
+    document.getElementById('customEg').addEventListener('click', () => { customInput.value = customEgText; });
     document.getElementById('customGen').addEventListener('click', () => {
       const text = customInput.value.trim();
       if (!text) return;
       const scenario = parseCustomInput(text);
-      if (!scenario) {
-        alert('格式有误，请检查后重试。');
-        return;
-      }
+      if (!scenario) { alert('格式有误，请检查后重试。'); return; }
       assignIds(scenario.root);
       renderScenario(scenario);
       customPanel.classList.remove('open');
-      // Deactivate scenario tabs
       tabs.forEach(t => t.classList.remove('active'));
     });
 
     // ============================================================
     //  Tab switching
     // ============================================================
-
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
         if (tab.dataset.scenario === 'custom') {
           customPanel.classList.toggle('open');
           return;
         }
         customPanel.classList.remove('open');
-
-        const idx = parseInt(tab.dataset.scenario);
-        currentScenario = idx;
-        renderScenario(idx);
+        currentScenario = parseInt(tab.dataset.scenario);
+        renderScenario(currentScenario);
       });
-    });
-
-    // ============================================================
-    //  Keyboard: Escape closes detail
-    // ============================================================
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        detailPanel.classList.remove('open');
-      }
     });
 
     // ============================================================
     //  Init
     // ============================================================
-
     renderScenario(0);
   </script>
 </body>
