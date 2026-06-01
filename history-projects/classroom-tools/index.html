@@ -504,6 +504,7 @@
   <div class="tabs">
     <div class="tab active" data-tab="timer">⏱ 计时器</div>
     <div class="tab" data-tab="picker">🎯 随机点名</div>
+    <div class="tab" data-tab="vote">🗳 课堂投票</div>
     <div class="tab" data-tab="settings">⚙ 班级设置</div>
   </div>
 
@@ -564,6 +565,65 @@
         </div>
         <div class="h-list" id="historyList">
           <span style="color:var(--text-muted);font-size:0.75rem;">暂无记录</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  VOTE PANEL                                                   -->
+  <!-- ============================================================ -->
+  <div class="panel" id="panelVote">
+    <div class="settings-area" style="max-width:100%;">
+      <!-- Presets -->
+      <div class="section">
+        <h3>📋 快速预设</h3>
+        <div class="timer-presets" id="votePresets">
+          <button data-vp="agree">同意 / 不同意</button>
+          <button data-vp="abc">A / B / C / D</button>
+          <button data-vp="scale">非常同意…非常不同意</button>
+          <button data-vp="dynasty">秦 / 汉 / 唐 / 宋 / 明 / 清</button>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="section">
+        <h3>✏️ 投票问题</h3>
+        <input type="text" id="voteQuestion" value="你认为戊戌变法失败的最主要原因是什么？" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:0.88rem;" maxlength="80">
+      </div>
+
+      <!-- Options -->
+      <div class="section">
+        <h3>📝 选项</h3>
+        <div id="voteOptionsList" style="display:flex;flex-direction:column;gap:6px;"></div>
+        <button class="save-btn" id="addVoteOption" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--text-secondary);">+ 添加选项</button>
+      </div>
+
+      <!-- Vote buttons -->
+      <div class="section">
+        <h3>🗳 投票</h3>
+        <div id="voteBtnArea" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="section" style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="voteTotal" style="font-family:'Noto Serif SC',serif;font-size:1.6rem;font-weight:700;color:var(--gold-dark);">0</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);">总票数</div>
+        </div>
+        <div style="text-align:center;">
+          <div id="voteLeading" style="font-family:'Noto Serif SC',serif;font-size:1.1rem;font-weight:600;color:var(--gold-dark);">-</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);">领先</div>
+        </div>
+        <div style="text-align:center;">
+          <button class="save-btn" id="voteReset" style="background:var(--red);">重置投票</button>
+        </div>
+      </div>
+
+      <!-- Canvas chart -->
+      <div class="section" style="padding:12px;">
+        <div style="position:relative;min-height:240px;">
+          <canvas id="voteCanvas" style="width:100%;height:240px;display:block;"></canvas>
         </div>
       </div>
     </div>
@@ -992,11 +1052,161 @@
     });
 
     // ============================================================
+    //  Voting (Canvas)
+    // ============================================================
+
+    const VOTE_COLORS = ['#c4a35a', '#b84a4a', '#4a8b5c', '#5a7ab8', '#8b5ab8', '#b87a5a', '#5ab8a0', '#b85a8a'];
+    let voteOpts = [
+      { text: '保守势力过于强大', votes: 0 },
+      { text: '改革过于激进', votes: 0 },
+      { text: '缺乏军事力量', votes: 0 },
+      { text: '列强干涉', votes: 0 },
+    ];
+    let voteSelected = -1;
+    let voteAnimHeights = [];
+
+    const VOTE_PRESETS = {
+      agree: { q: '你是否同意这个观点？', opts: ['同意', '不同意'] },
+      abc: { q: '请选择你的答案：', opts: ['A', 'B', 'C', 'D'] },
+      scale: { q: '你对这个观点的认同程度？', opts: ['非常同意', '同意', '中立', '不同意', '非常不同意'] },
+      dynasty: { q: '你认为哪个朝代对中国历史影响最深远？', opts: ['秦', '汉', '唐', '宋', '明', '清'] },
+    };
+
+    function renderVoteOptions() {
+      const list = document.getElementById('voteOptionsList');
+      list.innerHTML = '';
+      voteOpts.forEach((opt, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;gap:6px;align-items:center;';
+        row.innerHTML = `
+          <span style="font-family:'Noto Serif SC',serif;font-size:0.75rem;color:var(--text-muted);width:20px;text-align:center;">${String.fromCharCode(65+i)}</span>
+          <input type="text" value="${opt.text}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:0.82rem;" data-vi="${i}">
+          <button style="width:24px;height:24px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;font-size:0.7rem;" data-vd="${i}">✕</button>
+        `;
+        list.appendChild(row);
+      });
+      list.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', e => { voteOpts[parseInt(e.target.dataset.vi)].text = e.target.value; renderVoteBtns(); drawVoteChart(); });
+      });
+      list.querySelectorAll('button[data-vd]').forEach(btn => {
+        btn.addEventListener('click', e => { const idx = parseInt(e.target.dataset.vd); if (voteOpts.length > 2) { voteOpts.splice(idx, 1); renderVoteOptions(); renderVoteBtns(); drawVoteChart(); } });
+      });
+    }
+
+    function renderVoteBtns() {
+      const area = document.getElementById('voteBtnArea');
+      area.innerHTML = '';
+      voteOpts.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.style.cssText = `padding:12px 8px;border:2px solid var(--border);background:${voteSelected===i ? 'rgba(74,139,92,0.1)' : '#fff'};color:${voteSelected===i ? 'var(--green)' : 'var(--text-secondary)'};font-size:0.85rem;cursor:pointer;transition:all 0.3s;text-align:center;border-radius:6px;`;
+        btn.innerHTML = `<div>${opt.text}</div><div style="font-size:0.65rem;color:var(--text-muted);margin-top:2px;">${opt.votes} 票</div>`;
+        btn.addEventListener('click', () => { voteSelected = i; voteOpts[i].votes++; renderVoteBtns(); updateVoteStats(); drawVoteChart(); });
+        area.appendChild(btn);
+      });
+    }
+
+    function updateVoteStats() {
+      const total = voteOpts.reduce((s,o) => s + o.votes, 0);
+      document.getElementById('voteTotal').textContent = total;
+      const max = Math.max(...voteOpts.map(o => o.votes));
+      const leader = voteOpts.find(o => o.votes === max);
+      document.getElementById('voteLeading').textContent = max > 0 ? leader.text.substring(0,6) : '-';
+    }
+
+    function drawVoteChart() {
+      const canvas = document.getElementById('voteCanvas');
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = 240;
+      const W = canvas.width, H = canvas.height;
+      const total = voteOpts.reduce((s,o) => s + o.votes, 0) || 1;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(216,208,192,0.5)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = 10 + (H - 50) * i / 4;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      const gap = 12;
+      const barW = Math.max(30, Math.min(80, (W - gap * (voteOpts.length + 1)) / voteOpts.length));
+      const startX = (W - (barW * voteOpts.length + gap * (voteOpts.length - 1))) / 2;
+
+      if (voteAnimHeights.length !== voteOpts.length) voteAnimHeights = voteOpts.map(() => 0);
+
+      voteOpts.forEach((opt, i) => {
+        const target = (opt.votes / total) * (H - 50);
+        voteAnimHeights[i] += (target - voteAnimHeights[i]) * 0.15;
+        const h = voteAnimHeights[i];
+        const x = startX + i * (barW + gap);
+        const y = H - 40 - h;
+        const color = VOTE_COLORS[i % VOTE_COLORS.length];
+        const pct = ((opt.votes / total) * 100).toFixed(1);
+
+        // Bar
+        const grad = ctx.createLinearGradient(x, y, x, H - 40);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, color + '80');
+        ctx.fillStyle = grad;
+        ctx.fillRect(x, y, barW, h);
+
+        // Top accent
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, barW, 3);
+
+        // Percentage
+        ctx.fillStyle = color;
+        ctx.font = '600 12px "Noto Serif SC"';
+        ctx.textAlign = 'center';
+        ctx.fillText(pct + '%', x + barW/2, y - 8);
+
+        // Label
+        ctx.fillStyle = '#7a7060';
+        ctx.font = '11px "Noto Sans SC"';
+        const label = opt.text.length > 6 ? opt.text.substring(0,6) + '…' : opt.text;
+        ctx.fillText(label, x + barW/2, H - 18);
+      });
+    }
+
+    document.getElementById('addVoteOption').addEventListener('click', () => {
+      if (voteOpts.length < 8) { voteOpts.push({ text: '', votes: 0 }); renderVoteOptions(); renderVoteBtns(); drawVoteChart(); }
+    });
+
+    document.getElementById('voteReset').addEventListener('click', () => {
+      if (confirm('确认重置所有投票？')) {
+        voteOpts.forEach(o => o.votes = 0);
+        voteSelected = -1;
+        voteAnimHeights = voteOpts.map(() => 0);
+        renderVoteBtns(); updateVoteStats(); drawVoteChart();
+      }
+    });
+
+    document.querySelectorAll('#votePresets button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = VOTE_PRESETS[btn.dataset.vp];
+        document.getElementById('voteQuestion').value = p.q;
+        voteOpts = p.opts.map(t => ({ text: t, votes: 0 }));
+        voteSelected = -1;
+        voteAnimHeights = voteOpts.map(() => 0);
+        renderVoteOptions(); renderVoteBtns(); updateVoteStats(); drawVoteChart();
+      });
+    });
+
+    // ============================================================
     //  Init
     // ============================================================
 
     progressRing.setAttribute('stroke-dasharray', CIRCUMFERENCE);
     loadFromStorage();
+    renderVoteOptions();
+    renderVoteBtns();
+    updateVoteStats();
+    drawVoteChart();
+    window.addEventListener('resize', drawVoteChart);
     updateTimerDisplay();
     timerLabel.textContent = activityInput.value || '课堂活动';
 
