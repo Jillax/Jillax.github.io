@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课堂投票器 · Canvas 实时可视化</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0a1a;
+      --bg-card: #1e1838;
+      --text: #d4c8ef;
+      --text-soft: #a896cc;
+      --text-muted: #6b5a8a;
+      --text-faint: #3d2f5c;
+      --purple: #9b59ff;
+      --purple-bright: #b47aff;
+      --purple-soft: rgba(155, 89, 255, 0.15);
+      --purple-glow: rgba(155, 89, 255, 0.4);
+      --neon-pink: #ff4da6;
+      --neon-cyan: #00e5ff;
+      --amber: #ffaa40;
+      --green: #4ade80;
+      --border: rgba(155, 89, 255, 0.15);
+      --border-glow: rgba(155, 89, 255, 0.3);
+    }
+
+    html { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 28px 20px 16px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--purple), transparent);
+    }
+    .header-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--neon-pink);
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow: 0 0 15px var(--purple-glow);
+    }
+    .header h1 span { color: var(--purple-bright); }
+
+    /* Main layout */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+
+    /* Mode toggle */
+    .mode-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .mode-btn {
+      padding: 6px 18px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .mode-btn:hover {
+      border-color: var(--purple);
+      color: var(--purple-bright);
+    }
+    .mode-btn.active {
+      background: var(--purple-soft);
+      color: var(--purple-bright);
+      border-color: var(--purple);
+    }
+    .mode-btn.danger { border-color: rgba(255, 77, 138, 0.3); }
+    .mode-btn.danger:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
+
+    /* Question editor */
+    .editor {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .editor.open { display: block; }
+    .editor-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--neon-cyan);
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+    .editor input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .editor input[type="text"]:focus { outline: none; border-color: var(--purple); }
+    .editor input[type="text"]::placeholder { color: var(--text-faint); }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .option-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .option-row .opt-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .option-row input {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.82rem;
+    }
+    .option-row input:focus { outline: none; border-color: var(--purple); }
+    .option-row input::placeholder { color: var(--text-faint); }
+    .opt-del {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-faint);
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .opt-del:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
+
+    .editor-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .act-btn {
+      padding: 8px 20px;
+      border: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .act-btn.primary {
+      background: var(--purple);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(155, 89, 255, 0.3);
+    }
+    .act-btn.primary:hover { background: var(--purple-bright); }
+    .act-btn.secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .act-btn.secondary:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+
+    /* Question display */
+    .question-display {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .question-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--purple), transparent);
+    }
+    .q-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--neon-pink);
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .q-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+
+    /* Vote buttons */
+    .vote-area {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .vote-btn {
+      padding: 16px 12px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      color: var(--text-soft);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .vote-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--purple);
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+    .vote-btn:hover {
+      border-color: var(--purple);
+      color: var(--purple-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(155, 89, 255, 0.2);
+    }
+    .vote-btn:hover::before { opacity: 1; }
+    .vote-btn.selected {
+      border-color: var(--green);
+      background: rgba(74, 222, 128, 0.08);
+      color: var(--green);
+      box-shadow: 0 0 15px rgba(74, 222, 128, 0.15);
+    }
+    .vote-btn.selected::before {
+      background: var(--green);
+      opacity: 1;
+    }
+    .vote-btn .vote-count {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-faint);
+      margin-top: 4px;
+    }
+
+    /* Canvas container */
+    .canvas-section {
+      flex: 1;
+      margin-bottom: 20px;
+      position: relative;
+      min-height: 300px;
+    }
+    .canvas-wrap {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 16px;
+      height: 100%;
+      min-height: 300px;
+      position: relative;
+    }
+    .canvas-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    /* Presets */
+    .presets {
+      margin-bottom: 16px;
+    }
+    .presets-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-faint);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .presets-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      padding: 5px 14px;
+      border: 1px dashed var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .preset-btn:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.4rem;
+      color: var(--purple-bright);
+      text-shadow: 0 0 10px var(--purple-glow);
+    }
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-faint);
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-faint);
+      letter-spacing: 2px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .vote-area { grid-template-columns: 1fr 1fr; }
+      .stats-bar { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-tag">CLASSROOM INTERACTIVE SYSTEM</div>
+    <h1>课堂<span>投票器</span></h1>
+  </header>
+
+  <div class="main">
+    <!-- Mode bar -->
+    <div class="mode-bar">
+      <button class="mode-btn" id="btnEdit">编辑题目</button>
+      <button class="mode-btn active" id="btnVote">投票模式</button>
+      <button class="mode-btn" id="btnReveal">展示结果</button>
+      <button class="mode-btn danger" id="btnReset">重置</button>
+    </div>
+
+    <!-- Presets -->
+    <div class="presets">
+      <div class="presets-label">// QUICK PRESETS</div>
+      <div class="presets-row">
+        <button class="preset-btn" data-preset="agree">同意 / 不同意</button>
+        <button class="preset-btn" data-preset="abc">A / B / C / D</button>
+        <button class="preset-btn" data-preset="scale">非常同意 / 同意 / 中立 / 不同意 / 非常不同意</button>
+        <button class="preset-btn" data-preset="dynasty">秦 / 汉 / 唐 / 宋 / 明 / 清</button>
+      </div>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor" id="editorPanel">
+      <div class="editor-label">> EDIT QUESTION</div>
+      <input type="text" id="questionInput" placeholder="输入投票问题…" maxlength="80">
+      <div class="options-list" id="optionsList"></div>
+      <div class="editor-actions">
+        <button class="act-btn secondary" id="addOption">+ 添加选项</button>
+        <button class="act-btn primary" id="applyEdit">确认发布</button>
+      </div>
+    </div>
+
+    <!-- Question display -->
+    <div class="question-display" id="questionDisplay">
+      <div class="q-label">VOTING QUESTION</div>
+      <div class="q-text" id="questionText">你认为戊戌变法失败的最主要原因是什么？</div>
+    </div>
+
+    <!-- Vote buttons -->
+    <div class="vote-area" id="voteArea"></div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value" id="totalVotes">0</div>
+        <div class="stat-label">TOTAL VOTES</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalOptions">0</div>
+        <div class="stat-label">OPTIONS</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="leadingOption">-</div>
+        <div class="stat-label">LEADING</div>
+      </div>
+    </div>
+
+    <!-- Canvas chart -->
+    <div class="canvas-section">
+      <div class="canvas-wrap">
+        <canvas id="voteChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">JILLAX · 课堂互动投票器 · Canvas 实时可视化</footer>
+
+  <script>
+    // ============================================================
+    //  State
+    // ============================================================
+    const COLORS = ['#9b59ff', '#ff4da6', '#00e5ff', '#ffaa40', '#4ade80', '#b47aff', '#ff6b8a', '#64d8ff'];
+    let question = '你认为戊戌变法失败的最主要原因是什么？';
+    let options = [
+      { text: '保守势力过于强大', votes: 0 },
+      { text: '改革过于激进', votes: 0 },
+      { text: '缺乏军事力量', votes: 0 },
+      { text: '列强干涉', votes: 0 },
+    ];
+    let selectedIdx = -1;
+    let animFrame = null;
+    let targetHeights = [];
+    let currentHeights = [];
+
+    // ============================================================
+    //  DOM refs
+    // ============================================================
+    const editorPanel = document.getElementById('editorPanel');
+    const questionInput = document.getElementById('questionInput');
+    const optionsList = document.getElementById('optionsList');
+    const questionText = document.getElementById('questionText');
+    const voteArea = document.getElementById('voteArea');
+    const canvas = document.getElementById('voteChart');
+    const ctx = canvas.getContext('2d');
+
+    // ============================================================
+    //  Render functions
+    // ============================================================
+    function renderVoteButtons() {
+      voteArea.innerHTML = '';
+      options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'vote-btn' + (selectedIdx === i ? ' selected' : '');
+        btn.innerHTML = `<div>${opt.text}</div><div class="vote-count">${opt.votes} 票</div>`;
+        btn.addEventListener('click', () => {
+          selectedIdx = i;
+          options[i].votes++;
+          renderVoteButtons();
+          updateStats();
+          drawChart();
+        });
+        voteArea.appendChild(btn);
+      });
+    }
+
+    function updateStats() {
+      const total = options.reduce((s, o) => s + o.votes, 0);
+      document.getElementById('totalVotes').textContent = total;
+      document.getElementById('totalOptions').textContent = options.length;
+      const max = Math.max(...options.map(o => o.votes));
+      const leader = options.find(o => o.votes === max);
+      document.getElementById('leadingOption').textContent = max > 0 ? leader.text.substring(0, 6) : '-';
+    }
+
+    // ============================================================
+    //  Canvas drawing with animation
+    // ============================================================
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width - 32;
+      canvas.height = rect.height - 32;
+    }
+
+    function drawChart() {
+      resizeCanvas();
+      const W = canvas.width;
+      const H = canvas.height;
+      const total = options.reduce((s, o) => s + o.votes, 0) || 1;
+
+      // Calculate target heights
+      targetHeights = options.map(o => (o.votes / total) * (H - 60));
+      if (currentHeights.length !== options.length) {
+        currentHeights = targetHeights.map(() => 0);
+      }
+
+      if (animFrame) cancelAnimationFrame(animFrame);
+      animateChart();
+    }
+
+    function animateChart() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const total = options.reduce((s, o) => s + o.votes, 0) || 1;
+      let needsAnim = false;
+
+      // Lerp heights
+      for (let i = 0; i < currentHeights.length; i++) {
+        const diff = targetHeights[i] - currentHeights[i];
+        if (Math.abs(diff) > 0.5) {
+          currentHeights[i] += diff * 0.12;
+          needsAnim = true;
+        } else {
+          currentHeights[i] = targetHeights[i];
+        }
+      }
+
+      // Clear
+      ctx.clearRect(0, 0, W, H);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(155, 89, 255, 0.06)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = 10 + (H - 60) * i / 4;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // Bars
+      const barCount = options.length;
+      const gap = 16;
+      const totalGap = gap * (barCount + 1);
+      const barWidth = Math.max(40, Math.min(120, (W - totalGap) / barCount));
+      const startX = (W - (barWidth * barCount + gap * (barCount - 1))) / 2;
+
+      options.forEach((opt, i) => {
+        const x = startX + i * (barWidth + gap);
+        const h = currentHeights[i] || 0;
+        const y = H - 50 - h;
+        const color = COLORS[i % COLORS.length];
+        const pct = ((opt.votes / total) * 100).toFixed(1);
+
+        // Bar glow
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 15;
+        ctx.fillStyle = color + '40';
+        ctx.fillRect(x - 2, y - 2, barWidth + 4, h + 4);
+        ctx.shadowBlur = 0;
+
+        // Bar fill with gradient
+        const grad = ctx.createLinearGradient(x, y, x, H - 50);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, color + '60');
+        ctx.fillStyle = grad;
+        ctx.fillRect(x, y, barWidth, h);
+
+        // Top accent line
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 8;
+        ctx.fillRect(x, y, barWidth, 3);
+        ctx.shadowBlur = 0;
+
+        // Percentage text
+        ctx.fillStyle = color;
+        ctx.font = '600 14px "Share Tech Mono"';
+        ctx.textAlign = 'center';
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 10;
+        ctx.fillText(pct + '%', x + barWidth / 2, y - 10);
+        ctx.shadowBlur = 0;
+
+        // Vote count
+        ctx.fillStyle = '#6b5a8a';
+        ctx.font = '11px "Share Tech Mono"';
+        ctx.fillText(opt.votes + ' votes', x + barWidth / 2, y - 26);
+
+        // Label
+        ctx.fillStyle = '#a896cc';
+        ctx.font = '12px "Noto Sans SC"';
+        const label = opt.text.length > 8 ? opt.text.substring(0, 8) + '…' : opt.text;
+        ctx.fillText(label, x + barWidth / 2, H - 28);
+      });
+
+      // Title
+      ctx.fillStyle = '#3d2f5c';
+      ctx.font = '10px "Share Tech Mono"';
+      ctx.textAlign = 'right';
+      ctx.fillText('TOTAL: ' + options.reduce((s, o) => s + o.votes, 0), W - 8, 18);
+
+      if (needsAnim) {
+        animFrame = requestAnimationFrame(animateChart);
+      }
+    }
+
+    // ============================================================
+    //  Editor
+    // ============================================================
+    function renderEditor() {
+      optionsList.innerHTML = '';
+      options.forEach((opt, i) => {
+        const row = document.createElement('div');
+        row.className = 'option-row';
+        row.innerHTML = `
+          <span class="opt-label">${String.fromCharCode(65 + i)}</span>
+          <input type="text" value="${opt.text}" placeholder="选项 ${String.fromCharCode(65 + i)}" data-idx="${i}">
+          <button class="opt-del" data-idx="${i}">✕</button>
+        `;
+        optionsList.appendChild(row);
+      });
+      // Events
+      optionsList.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', (e) => {
+          options[parseInt(e.target.dataset.idx)].text = e.target.value;
+        });
+      });
+      optionsList.querySelectorAll('.opt-del').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.idx);
+          if (options.length > 2) {
+            options.splice(idx, 1);
+            renderEditor();
+          }
+        });
+      });
+    }
+
+    document.getElementById('addOption').addEventListener('click', () => {
+      if (options.length < 8) {
+        options.push({ text: '', votes: 0 });
+        renderEditor();
+      }
+    });
+
+    document.getElementById('applyEdit').addEventListener('click', () => {
+      question = questionInput.value || question;
+      questionText.textContent = question;
+      selectedIdx = -1;
+      currentHeights = options.map(() => 0);
+      renderVoteButtons();
+      updateStats();
+      drawChart();
+      // Switch to vote mode
+      editorPanel.classList.remove('open');
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnVote').classList.add('active');
+    });
+
+    // ============================================================
+    //  Mode buttons
+    // ============================================================
+    document.getElementById('btnEdit').addEventListener('click', () => {
+      editorPanel.classList.toggle('open');
+      questionInput.value = question;
+      renderEditor();
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnEdit').classList.add('active');
+    });
+
+    document.getElementById('btnVote').addEventListener('click', () => {
+      editorPanel.classList.remove('open');
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnVote').classList.add('active');
+    });
+
+    document.getElementById('btnReveal').addEventListener('click', () => {
+      editorPanel.classList.remove('open');
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnReveal').classList.add('active');
+      drawChart();
+    });
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      if (confirm('确认重置所有投票数据？')) {
+        options.forEach(o => o.votes = 0);
+        selectedIdx = -1;
+        currentHeights = options.map(() => 0);
+        renderVoteButtons();
+        updateStats();
+        drawChart();
+      }
+    });
+
+    // ============================================================
+    //  Presets
+    // ============================================================
+    const PRESETS = {
+      agree: { q: '你是否同意这个观点？', opts: ['同意', '不同意'] },
+      abc: { q: '请选择你的答案：', opts: ['A', 'B', 'C', 'D'] },
+      scale: { q: '你对这个观点的认同程度？', opts: ['非常同意', '同意', '中立', '不同意', '非常不同意'] },
+      dynasty: { q: '你认为哪个朝代对中国历史影响最深远？', opts: ['秦', '汉', '唐', '宋', '明', '清'] },
+    };
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = PRESETS[btn.dataset.preset];
+        question = p.q;
+        options = p.opts.map(t => ({ text: t, votes: 0 }));
+        selectedIdx = -1;
+        currentHeights = options.map(() => 0);
+        questionText.textContent = question;
+        renderVoteButtons();
+        updateStats();
+        drawChart();
+      });
+    });
+
+    // ============================================================
+    //  Init
+    // ============================================================
+    renderVoteButtons();
+    updateStats();
+    drawChart();
+    window.addEventListener('resize', () => { drawChart(); });
+  </script>
+</body>
+</html>
