@@ -37,8 +37,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return labels[status] || status;
     }
 
-    function proxyCover(url) {
+    function getCover(item) {
+        // Prefer local cover if available
+        if (item._localCover) return item._localCover;
+        var url = item.cover;
         if (!url) return '';
+        // Fall back to weserv proxy for douban images
         if (url.includes('doubanio.com') || url.includes('douban.com')) {
             return 'https://images.weserv.nl/?url=' + encodeURIComponent(url) + '&w=120&h=170&fit=cover';
         }
@@ -241,7 +245,8 @@ document.addEventListener('DOMContentLoaded', function() {
         empty.style.display = 'none';
 
         grid.innerHTML = items.map(function(item) {
-            var hasCover = item.cover && item.cover.trim();
+            var coverUrl = getCover(item);
+            var hasCover = coverUrl && coverUrl.trim();
             var initial = item.title ? item.title.charAt(0) : '?';
             var statusText = getStatusText(cat, item.status);
             var stars = renderStars(item.rating);
@@ -250,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return '<div class="item-card">' +
                 '<div class="item-cover">' +
                 (hasCover
-                    ? '<img src="' + proxyCover(item.cover) + '" alt="' + item.title + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML=\'<span class=placeholder>' + initial + '</span>\'">'
+                    ? '<img src="' + coverUrl + '" alt="' + item.title + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML=\'<span class=placeholder>' + initial + '</span>\'">'
                     : '<span class="placeholder">' + initial + '</span>'
                 ) +
                 '</div>' +
