@@ -628,6 +628,27 @@
       .tab { font-size: 0.7rem; padding: 4px 12px; }
     }
 
+    /* === Canvas connection overlay === */
+    #connectionCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .focus-tree { position: relative; }
+    .focus-root, .focus-columns, .focus-col, .focus-children {
+      position: relative;
+      z-index: 1;
+    }
+    /* Hide CSS lines — Canvas draws them */
+    .focus-col::before,
+    .focus-children::before,
+    .focus-columns::before,
+    .focus-connector .v-line { display: none; }
+
     /* === Neon glow animation === */
     @keyframes neonPulse {
       0%, 100% { opacity: 0.6; }
@@ -675,7 +696,9 @@
 
   <!-- Tree area -->
   <div class="tree-area" id="treeArea">
-    <div class="focus-tree" id="treeContainer"></div>
+    <div class="focus-tree" id="treeContainer">
+      <canvas id="connectionCanvas"></canvas>
+    </div>
   </div>
 
   <!-- Detail overlay + panel -->
@@ -975,6 +998,101 @@
 
       // Close detail
       closeDetail();
+      // Draw connections after DOM updates
+      requestAnimationFrame(function() { requestAnimationFrame(drawConnections); });
+    }
+
+    // ============================================================
+    //  Canvas Connections
+    // ============================================================
+    function drawConnections() {
+      var canvas = document.getElementById('connectionCanvas');
+      if (!canvas) return;
+      var tree = document.getElementById('treeContainer');
+      var rect = tree.getBoundingClientRect();
+      canvas.width = tree.scrollWidth;
+      canvas.height = tree.scrollHeight;
+      canvas.style.width = tree.scrollWidth + 'px';
+      canvas.style.height = tree.scrollHeight + 'px';
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      var treeRect = tree.getBoundingClientRect();
+      // Find all parent-child pairs by traversing the DOM
+      var cols = tree.querySelectorAll('.focus-col');
+      cols.forEach(function(col) {
+        var node = col.querySelector(':scope > .focus-node');
+        if (!node) return;
+        var children = col.querySelector(':scope > .focus-children');
+        if (!children) return;
+        var childCols = children.querySelectorAll(':scope > .focus-col');
+        childCols.forEach(function(childCol) {
+          var childNode = childCol.querySelector(':scope > .focus-node');
+          if (!childNode) return;
+          var pRect = node.getBoundingClientRect();
+          var cRect = childNode.getBoundingClientRect();
+          var px = pRect.left + pRect.width/2 - treeRect.left;
+          var py = pRect.bottom - treeRect.top;
+          var cx = cRect.left + cRect.width/2 - treeRect.left;
+          var cy = cRect.top - treeRect.top;
+
+          // Animated glow line
+          var grad = ctx.createLinearGradient(px, py, cx, cy);
+          grad.addColorStop(0, 'rgba(155, 89, 255, 0.6)');
+          grad.addColorStop(0.5, 'rgba(155, 89, 255, 0.3)');
+          grad.addColorStop(1, 'rgba(155, 89, 255, 0.6)');
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2;
+          ctx.shadowColor = 'rgba(155, 89, 255, 0.4)';
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          // Bezier curve for organic feel
+          var midY = (py + cy) / 2;
+          ctx.moveTo(px, py);
+          ctx.bezierCurveTo(px, midY, cx, midY, cx, cy);
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+
+          // Small dot at connection point
+          ctx.fillStyle = 'rgba(155, 89, 255, 0.8)';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      });
+
+      // Root to first-level connections
+      var rootCard = tree.querySelector('.focus-root-card');
+      var firstCols = tree.querySelectorAll('.focus-columns > .focus-col');
+      if (rootCard && firstCols.length > 0) {
+        var rRect = rootCard.getBoundingClientRect();
+        var rx = rRect.left + rRect.width/2 - treeRect.left;
+        var ry = rRect.bottom - treeRect.top;
+        firstCols.forEach(function(col) {
+          var node = col.querySelector(':scope > .focus-node');
+          if (!node) return;
+          var nRect = node.getBoundingClientRect();
+          var nx = nRect.left + nRect.width/2 - treeRect.left;
+          var ny = nRect.top - treeRect.top;
+          var grad = ctx.createLinearGradient(rx, ry, nx, ny);
+          grad.addColorStop(0, 'rgba(180, 122, 255, 0.8)');
+          grad.addColorStop(1, 'rgba(155, 89, 255, 0.5)');
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2;
+          ctx.shadowColor = 'rgba(180, 122, 255, 0.5)';
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          var midY2 = (ry + ny) / 2;
+          ctx.moveTo(rx, ry);
+          ctx.bezierCurveTo(rx, midY2, nx, midY2, nx, ny);
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = 'rgba(180, 122, 255, 0.8)';
+          ctx.beginPath();
+          ctx.arc(nx, ny, 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
     }
 
     // ============================================================
@@ -1073,6 +1191,7 @@
     //  Init
     // ============================================================
     renderScenario(0);
+    window.addEventListener('resize', function() { drawConnections(); });
   </script>
 </body>
 </html>

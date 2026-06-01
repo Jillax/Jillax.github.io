@@ -86,89 +86,107 @@ document.addEventListener('DOMContentLoaded', function() {
         var parent = canvas.parentElement;
         canvas.width = parent.offsetWidth;
         canvas.height = parent.offsetHeight;
+        var W = canvas.width, H = canvas.height;
 
-        var labels = data.history.map(function(h) {
-            var d = new Date(h.date);
-            return d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
-        });
         var values = data.history.map(function(h) { return h.value; });
+        var isSingle = values.length === 1;
+        var pad = { top: 30, right: 30, bottom: 40, left: 70 };
+        var chartW = W - pad.left - pad.right;
+        var chartH = H - pad.top - pad.bottom;
 
-        var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, 'rgba(155, 89, 255, 0.25)');
-        gradient.addColorStop(1, 'rgba(155, 89, 255, 0.01)');
+        var minV = Math.min.apply(null, values) * 0.95;
+        var maxV = Math.max.apply(null, values) * 1.05;
+        if (isSingle) { minV = values[0] * 0.9; maxV = values[0] * 1.1; }
+        var range = maxV - minV || 1;
 
-        var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-        var textColor = isDark ? 'rgba(212, 200, 239, 0.5)' : 'rgba(168, 150, 204, 0.5)';
-        var gridColor = isDark ? 'rgba(155, 89, 255, 0.06)' : 'rgba(155, 89, 255, 0.1)';
+        function getX(i) { return pad.left + (isSingle ? chartW / 2 : (i / (values.length - 1)) * chartW); }
+        function getY(v) { return pad.top + chartH - ((v - minV) / range) * chartH; }
 
-        var isSingle = data.history.length === 1;
+        // Grid
+        ctx.strokeStyle = 'rgba(155, 89, 255, 0.08)';
+        ctx.lineWidth = 1;
+        for (var gi = 0; gi <= 4; gi++) {
+            var gy = pad.top + chartH * gi / 4;
+            ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
+            ctx.fillStyle = '#6b5a8a';
+            ctx.font = '10px "Share Tech Mono"';
+            ctx.textAlign = 'right';
+            ctx.fillText('¥' + Math.round(maxV - range * gi / 4).toLocaleString(), pad.left - 8, gy + 3);
+        }
 
-        new Chart(ctx, {
-            type: isSingle ? 'scatter' : 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: isSingle
-                        ? values.map(function(v, i) { return { x: i, y: v }; })
-                        : values,
-                    borderColor: '#9b59ff',
-                    backgroundColor: gradient,
-                    borderWidth: isSingle ? 0 : 1.5,
-                    pointBackgroundColor: '#9b59ff',
-                    pointBorderColor: isDark ? '#0d0a1a' : '#1a1530',
-                    pointBorderWidth: 1.5,
-                    pointRadius: isSingle ? 8 : 3,
-                    pointHoverRadius: isSingle ? 10 : 5,
-                    fill: !isSingle,
-                    tension: 0.3,
-                    showLine: !isSingle
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: 'rgba(13, 10, 26, 0.95)',
-                        titleFont: { family: 'Noto Sans SC, sans-serif', size: 12 },
-                        bodyFont: { family: 'Rajdhani, sans-serif', size: 13, weight: '600' },
-                        padding: 12,
-                        cornerRadius: 2,
-                        borderColor: 'rgba(155, 89, 255, 0.3)',
-                        borderWidth: 1,
-                        displayColors: false,
-                        callbacks: {
-                            title: function(items) {
-                                return data.history[items[0].dataIndex].date;
-                            },
-                            label: function(ctx) {
-                                return fmt(ctx.parsed.y !== undefined ? ctx.parsed.y : 0);
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: {
-                            color: textColor,
-                            font: { family: 'Share Tech Mono, monospace', size: 10 },
-                            maxTicksLimit: 8
-                        }
-                    },
-                    y: {
-                        grid: { color: gridColor, drawBorder: false },
-                        ticks: {
-                            color: textColor,
-                            font: { family: 'Share Tech Mono, monospace', size: 10 },
-                            callback: function(v) { return '¥' + Math.round(v).toLocaleString(); }
-                        }
-                    }
-                },
-                interaction: { intersect: false, mode: 'index' }
+        // Gradient fill
+        var grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + chartH);
+        grad.addColorStop(0, 'rgba(155, 89, 255, 0.2)');
+        grad.addColorStop(1, 'rgba(155, 89, 255, 0.01)');
+
+        if (!isSingle) {
+            ctx.beginPath();
+            ctx.moveTo(getX(0), getY(values[0]));
+            for (var li = 1; li < values.length; li++) {
+                var prevX = getX(li - 1), prevY = getY(values[li - 1]);
+                var curX = getX(li), curY = getY(values[li]);
+                var cpx = (prevX + curX) / 2;
+                ctx.bezierCurveTo(cpx, prevY, cpx, curY, curX, curY);
             }
-        });
+            ctx.lineTo(getX(values.length - 1), pad.top + chartH);
+            ctx.lineTo(getX(0), pad.top + chartH);
+            ctx.closePath();
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(getX(0), getY(values[0]));
+            for (var li2 = 1; li2 < values.length; li2++) {
+                var px2 = getX(li2 - 1), py2 = getY(values[li2 - 1]);
+                var cx2 = getX(li2), cy2 = getY(values[li2]);
+                var cpx2 = (px2 + cx2) / 2;
+                ctx.bezierCurveTo(cpx2, py2, cpx2, cy2, cx2, cy2);
+            }
+            ctx.strokeStyle = '#9b59ff';
+            ctx.lineWidth = 2;
+            ctx.shadowColor = 'rgba(155, 89, 255, 0.4)';
+            ctx.shadowBlur = 6;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+
+        // Points
+        for (var pi = 0; pi < values.length; pi++) {
+            var px3 = getX(pi), py3 = getY(values[pi]);
+            ctx.fillStyle = '#9b59ff';
+            ctx.shadowColor = 'rgba(155, 89, 255, 0.5)';
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.arc(px3, py3, isSingle ? 6 : 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#0d0a1a';
+            ctx.beginPath();
+            ctx.arc(px3, py3, isSingle ? 3 : 1.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // X label
+            if (!isSingle || pi === 0) {
+                var d = new Date(data.history[pi].date);
+                var lbl = (d.getMonth() + 1) + '/' + d.getDate();
+                ctx.fillStyle = '#6b5a8a';
+                ctx.font = '10px "Share Tech Mono"';
+                ctx.textAlign = 'center';
+                ctx.fillText(lbl, px3, pad.top + chartH + 20);
+            }
+        }
+
+        // Last value label
+        var lastV = values[values.length - 1];
+        var lx = getX(values.length - 1), ly = getY(lastV);
+        ctx.fillStyle = '#b47aff';
+        ctx.font = '600 12px "Share Tech Mono"';
+        ctx.textAlign = 'right';
+        ctx.shadowColor = 'rgba(155, 89, 255, 0.5)';
+        ctx.shadowBlur = 8;
+        ctx.fillText(fmt(lastV), lx, ly - 12);
+        ctx.shadowBlur = 0;
     }
 
     function renderChart(data) {
@@ -184,51 +202,63 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        var ctx = document.getElementById('allocationChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: values,
-                    backgroundColor: colors,
-                    borderWidth: 0,
-                    spacing: 2,
-                    hoverOffset: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                cutout: '60%',
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#d4c8ef',
-                            font: { family: 'Noto Sans SC', size: 11 },
-                            padding: 14,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(13, 10, 26, 0.95)',
-                        titleFont: { family: 'Noto Sans SC', size: 13 },
-                        bodyFont: { family: 'Rajdhani', size: 12 },
-                        padding: 14,
-                        cornerRadius: 2,
-                        borderColor: 'rgba(155, 89, 255, 0.3)',
-                        borderWidth: 1,
-                        callbacks: {
-                            label: function(ctx) {
-                                var total = values.reduce(function(a, b) { return a + b; }, 0);
-                                var pct = ((ctx.parsed / total) * 100).toFixed(1);
-                                return fmt(ctx.parsed) + '  (' + pct + '%)';
-                            }
-                        }
-                    }
-                }
-            }
+        var canvas = document.getElementById('allocationChart');
+        var ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+        var W = canvas.width, H = canvas.height;
+        var total = values.reduce(function(a, b) { return a + b; }, 0);
+        var cx = W / 2, cy = H / 2 - 20;
+        var R = Math.min(W, H) / 2 - 40;
+        var innerR = R * 0.6;
+
+        var startAngle = -Math.PI / 2;
+        values.forEach(function(v, i) {
+            var sliceAngle = (v / total) * Math.PI * 2;
+            var endAngle = startAngle + sliceAngle;
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, R, startAngle, endAngle);
+            ctx.arc(cx, cy, innerR, endAngle, startAngle, true);
+            ctx.closePath();
+            ctx.fillStyle = colors[i];
+            ctx.shadowColor = colors[i];
+            ctx.shadowBlur = 10;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Gap
+            ctx.strokeStyle = '#0d0a1a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            startAngle = endAngle;
+        });
+
+        // Center text
+        ctx.fillStyle = '#d4c8ef';
+        ctx.font = '600 14px "Share Tech Mono"';
+        ctx.textAlign = 'center';
+        ctx.fillText(fmt(total), cx, cy - 4);
+        ctx.fillStyle = '#6b5a8a';
+        ctx.font = '10px "Share Tech Mono"';
+        ctx.fillText('TOTAL', cx, cy + 14);
+
+        // Legend at bottom
+        var legendY = cy + R + 24;
+        var legendItemW = 100;
+        var startX = cx - (labels.length * legendItemW) / 2;
+        labels.forEach(function(label, i) {
+            var lx = startX + i * legendItemW + legendItemW / 2;
+            ctx.fillStyle = colors[i];
+            ctx.beginPath();
+            ctx.arc(lx - 20, legendY, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#a896cc';
+            ctx.font = '11px "Noto Sans SC"';
+            ctx.textAlign = 'left';
+            var shortLabel = label.length > 6 ? label.substring(0, 6) : label;
+            ctx.fillText(shortLabel, lx - 14, legendY + 4);
         });
     }
 
@@ -416,72 +446,89 @@ document.addEventListener('DOMContentLoaded', function() {
         var parent = canvas.parentElement;
         canvas.width = parent.offsetWidth;
         canvas.height = parent.offsetHeight;
+        var W = canvas.width, H = canvas.height;
+        var projLabels = ['现在', '1年', '2年', '3年', '4年', '5年'];
+        var pad2 = { top: 20, right: 20, bottom: 30, left: 60 };
+        var cw = W - pad2.left - pad2.right;
+        var ch = H - pad2.top - pad2.bottom;
+        var pMin = Math.min.apply(null, projTotals) * 0.95;
+        var pMax = Math.max.apply(null, projTotals) * 1.05;
+        var pRange = pMax - pMin || 1;
 
-        var labelColor = isDark ? 'rgba(212, 200, 239, 0.5)' : 'rgba(168, 150, 204, 0.5)';
-        var gridColor = isDark ? 'rgba(155, 89, 255, 0.06)' : 'rgba(155, 89, 255, 0.1)';
+        function pX(i) { return pad2.left + (i / 5) * cw; }
+        function pY(v) { return pad2.top + ch - ((v - pMin) / pRange) * ch; }
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['现在', '1年', '2年', '3年', '4年', '5年'],
-                datasets: [{
-                    data: projTotals,
-                    borderColor: '#ff4da6',
-                    backgroundColor: function(context) {
-                        var chart = context.chart;
-                        var c = chart.ctx;
-                        var ca = chart.chartArea;
-                        if (!ca) return null;
-                        var g = c.createLinearGradient(0, ca.top, 0, ca.bottom);
-                        g.addColorStop(0, 'rgba(255, 77, 166, 0.2)');
-                        g.addColorStop(1, 'rgba(255, 77, 166, 0.01)');
-                        return g;
-                    },
-                    borderWidth: 1.5,
-                    pointBackgroundColor: '#ff4da6',
-                    pointBorderColor: isDark ? '#0d0a1a' : '#1a1530',
-                    pointBorderWidth: 1.5,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: 'rgba(13, 10, 26, 0.95)',
-                        titleFont: { family: 'Noto Sans SC, sans-serif', size: 12 },
-                        bodyFont: { family: 'Rajdhani, sans-serif', size: 13, weight: '600' },
-                        padding: 12,
-                        cornerRadius: 2,
-                        borderColor: 'rgba(255, 77, 166, 0.3)',
-                        borderWidth: 1,
-                        displayColors: false,
-                        callbacks: {
-                            label: function(ctx) { return fmt(ctx.parsed.y); }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: labelColor, font: { family: 'Share Tech Mono, monospace', size: 10 } }
-                    },
-                    y: {
-                        grid: { color: gridColor, drawBorder: false },
-                        ticks: {
-                            color: labelColor,
-                            font: { family: 'Share Tech Mono, monospace', size: 10 },
-                            callback: function(v) { return '¥' + Math.round(v).toLocaleString(); }
-                        }
-                    }
-                },
-                interaction: { intersect: false, mode: 'index' }
-            }
-        });
+        // Grid
+        ctx.strokeStyle = 'rgba(155, 89, 255, 0.08)';
+        ctx.lineWidth = 1;
+        for (var gi2 = 0; gi2 <= 4; gi2++) {
+            var gy2 = pad2.top + ch * gi2 / 4;
+            ctx.beginPath(); ctx.moveTo(pad2.left, gy2); ctx.lineTo(W - pad2.right, gy2); ctx.stroke();
+            ctx.fillStyle = '#6b5a8a';
+            ctx.font = '10px "Share Tech Mono"';
+            ctx.textAlign = 'right';
+            ctx.fillText('¥' + Math.round(pMax - pRange * gi2 / 4).toLocaleString(), pad2.left - 6, gy2 + 3);
+        }
+
+        // Gradient fill
+        var grad2 = ctx.createLinearGradient(0, pad2.top, 0, pad2.top + ch);
+        grad2.addColorStop(0, 'rgba(255, 77, 166, 0.15)');
+        grad2.addColorStop(1, 'rgba(255, 77, 166, 0.01)');
+
+        ctx.beginPath();
+        ctx.moveTo(pX(0), pY(projTotals[0]));
+        for (var pi2 = 1; pi2 < 6; pi2++) {
+            var px4 = pX(pi2 - 1), py4 = pY(projTotals[pi2 - 1]);
+            var cx4 = pX(pi2), cy4 = pY(projTotals[pi2]);
+            var cpx4 = (px4 + cx4) / 2;
+            ctx.bezierCurveTo(cpx4, py4, cpx4, cy4, cx4, cy4);
+        }
+        ctx.lineTo(pX(5), pad2.top + ch);
+        ctx.lineTo(pX(0), pad2.top + ch);
+        ctx.closePath();
+        ctx.fillStyle = grad2;
+        ctx.fill();
+
+        // Line
+        ctx.beginPath();
+        ctx.moveTo(pX(0), pY(projTotals[0]));
+        for (var pi3 = 1; pi3 < 6; pi3++) {
+            var px5 = pX(pi3 - 1), py5 = pY(projTotals[pi3 - 1]);
+            var cx5 = pX(pi3), cy5 = pY(projTotals[pi3]);
+            var cpx5 = (px5 + cx5) / 2;
+            ctx.bezierCurveTo(cpx5, py5, cpx5, cy5, cx5, cy5);
+        }
+        ctx.strokeStyle = '#ff4da6';
+        ctx.lineWidth = 2;
+        ctx.shadowColor = 'rgba(255, 77, 166, 0.4)';
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Points + labels
+        for (var pi4 = 0; pi4 < 6; pi4++) {
+            var px6 = pX(pi4), py6 = pY(projTotals[pi4]);
+            ctx.fillStyle = '#ff4da6';
+            ctx.shadowColor = 'rgba(255, 77, 166, 0.5)';
+            ctx.shadowBlur = 6;
+            ctx.beginPath(); ctx.arc(px6, py6, 4, 0, Math.PI * 2); ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#0d0a1a';
+            ctx.beginPath(); ctx.arc(px6, py6, 2, 0, Math.PI * 2); ctx.fill();
+
+            ctx.fillStyle = '#6b5a8a';
+            ctx.font = '10px "Share Tech Mono"';
+            ctx.textAlign = 'center';
+            ctx.fillText(projLabels[pi4], px6, pad2.top + ch + 18);
+        }
+
+        // End value label
+        ctx.fillStyle = '#ff4da6';
+        ctx.font = '600 12px "Share Tech Mono"';
+        ctx.textAlign = 'left';
+        ctx.shadowColor = 'rgba(255, 77, 166, 0.5)';
+        ctx.shadowBlur = 8;
+        ctx.fillText(fmt(projTotals[5]), pX(5) + 8, pY(projTotals[5]) - 4);
+        ctx.shadowBlur = 0;
     }
 });
