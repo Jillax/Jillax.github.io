@@ -6,313 +6,625 @@
 <title>历史闪卡 · 间隔重复记忆系统</title>
 <link rel="icon" type="image/jpeg" href="../../favicon.jpg">
 <style>
-:root{--bg:#1a1714;--bg-soft:#201d19;--bg-surface:#27231e;--text:#ddd3c4;--text-soft:#bfb29f;--text-muted:#8f8271;--text-faint:#64594c;--gold:#c4a35a;--gold-soft:#d4b87a;--gold-dim:rgba(196,163,90,.13);--green:#6b8f71;--red:#b5706b;--blue:#5b8fa8;--border:rgba(255,255,255,.06);--radius:10px;--font:'Noto Serif SC',Georgia,'宋体',serif;--font-body:'Noto Sans SC','Microsoft YaHei',system-ui,sans-serif}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e6dfd4;--bg-soft:#ece5db;--bg-surface:#f0ebe2;--text:#2b221a;--text-soft:#5c5142;--text-muted:#8c7e6c;--text-faint:#b0a493;--gold:#b8963e;--gold-soft:#c4a35a;--gold-dim:rgba(184,150,62,.12);--green:#4a7a52;--red:#a05a55;--blue:#3a7a9a;--border:rgba(44,40,36,.08)}}
-[data-theme="light"]{--bg:#e6dfd4;--bg-soft:#ece5db;--bg-surface:#f0ebe2;--text:#2b221a;--text-soft:#5c5142;--text-muted:#8c7e6c;--text-faint:#b0a493;--gold:#b8963e;--gold-soft:#c4a35a;--gold-dim:rgba(184,150,62,.12);--green:#4a7a52;--red:#a05a55;--blue:#3a7a9a;--border:rgba(44,40,36,.08)}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
-.back-link{position:fixed;top:20px;left:20px;font-size:.78rem;color:var(--text-faint);text-decoration:none;z-index:10;transition:color .3s}
-.back-link:hover{color:var(--gold)}
-.app-header{text-align:center;padding:48px 20px 24px}
-.app-header h1{font-family:var(--font);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;letter-spacing:3px}
-.app-header h1 span{color:var(--gold);font-style:italic}
-.app-header .sub{font-size:.82rem;color:var(--text-muted);margin-top:6px;letter-spacing:2px}
-.nav-tabs{display:flex;justify-content:center;gap:4px;margin-bottom:28px;flex-wrap:wrap;padding:0 20px}
-.nav-tab{padding:10px 24px;font-size:.85rem;color:var(--text-muted);background:none;border:1px solid var(--border);cursor:pointer;transition:all .3s;letter-spacing:.5px}
-.nav-tab:hover{border-color:var(--gold-dim);color:var(--gold)}
-.nav-tab.active{background:var(--gold-dim);border-color:var(--gold-dim);color:var(--gold)}
-.review-section{max-width:600px;margin:0 auto;padding:0 20px;text-align:center}
-.review-empty{padding:60px 20px;color:var(--text-faint);font-size:.95rem}
-.review-empty .icon{font-size:2.5rem;margin-bottom:16px}
+:root{
+  --bg:#0d0a1a;--bg-card:#1e1838;--bg-surface:#130f24;
+  --text:#d4c8ef;--text-soft:#a896cc;--text-muted:#6b5a8a;--text-faint:#3d2f5c;
+  --purple:#9b59ff;--purple-bright:#b47aff;--purple-soft:rgba(155,89,255,.15);--purple-glow:rgba(155,89,255,.4);
+  --neon-pink:#ff4da6;--neon-cyan:#00e5ff;--amber:#ffaa40;--green:#4ade80;--red:#ff6b8a;
+  --border:rgba(155,89,255,.15);--border-glow:rgba(155,89,255,.3);
+}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+
+.back-link{position:fixed;top:16px;left:16px;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--text-faint);text-decoration:none;z-index:10;letter-spacing:1px;transition:color .3s}
+.back-link:hover{color:var(--purple)}
+
+.header{text-align:center;padding:40px 20px 20px;position:relative}
+.header::after{content:'';position:absolute;bottom:0;left:15%;right:15%;height:1px;background:linear-gradient(to right,transparent,var(--purple),transparent)}
+.header-tag{font-family:'Share Tech Mono',monospace;font-size:.55rem;color:var(--neon-pink);letter-spacing:4px;margin-bottom:8px}
+.header h1{font-family:'Orbitron',sans-serif;font-size:clamp(1.2rem,3vw,1.8rem);font-weight:700;letter-spacing:4px;text-transform:uppercase;text-shadow:0 0 15px var(--purple-glow)}
+.header h1 span{color:var(--purple-bright)}
+.header .sub{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--text-muted);letter-spacing:2px;margin-top:6px}
+
+.main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap}
+.tab{padding:8px 18px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.tab:hover{border-color:var(--purple);color:var(--purple-bright)}
+.tab.active{background:var(--purple-soft);color:var(--purple-bright);border-color:var(--purple)}
+
+/* Bank selector */
+.bank-section{margin-bottom:28px}
+.bank-section h3{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--neon-cyan);letter-spacing:3px;margin-bottom:12px}
+.bank-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.bank-card{border:1px solid var(--border);padding:16px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.bank-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--purple);opacity:.4;transition:opacity .3s}
+.bank-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 4px 16px rgba(155,89,255,.15)}
+.bank-card:hover::before{opacity:1}
+.bank-card.active{border-color:var(--purple-bright);background:var(--purple-soft);box-shadow:0 0 15px rgba(155,89,255,.2)}
+.bank-card.active::before{opacity:1}
+.bank-name{font-size:.9rem;font-weight:500;color:var(--text);margin-bottom:4px}
+.bank-meta{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--text-faint);letter-spacing:1px}
+.bank-count{position:absolute;top:12px;right:14px;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--text-faint)}
+
+/* Stats */
 .stats-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-.stats-row .sr{border:1px solid var(--border);padding:12px 16px;border-radius:var(--radius);text-align:center;min-width:90px}
-.stats-row .sr .num{font-family:var(--font);font-size:1.3rem;font-weight:600;color:var(--gold)}
-.stats-row .sr .lbl{font-size:.65rem;color:var(--text-faint);margin-top:2px;letter-spacing:1px;text-transform:uppercase}
-.streak{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--gold-dim);border-radius:20px;font-size:.82rem;color:var(--gold);margin-bottom:16px}
-.flashcard-wrap{perspective:1200px;margin-bottom:24px}
-.flashcard{width:100%;min-height:300px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.stat{border:1px solid var(--border);padding:12px 16px;text-align:center;min-width:80px;background:var(--bg-card)}
+.stat .num{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:700;color:var(--purple-bright);text-shadow:0 0 10px var(--purple-glow)}
+.stat .lbl{font-family:'Share Tech Mono',monospace;font-size:.55rem;color:var(--text-faint);letter-spacing:1px;margin-top:2px}
+
+/* Flashcard */
+.fc-wrap{perspective:1200px;margin-bottom:24px}
+.flashcard{width:100%;min-height:280px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1)}
 .flashcard.flipped{transform:rotateY(180deg)}
-.flashcard-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);border:1px solid var(--border);padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-surface)}
-.fc-era{font-size:.72rem;color:var(--text-faint);letter-spacing:2px;margin-bottom:10px}
-.fc-type{font-size:.68rem;padding:2px 10px;border:1px solid var(--border);border-radius:12px;color:var(--text-muted);margin-bottom:18px}
-.fc-q{font-family:var(--font);font-size:clamp(1.3rem,3vw,2rem);font-weight:600;text-align:center;line-height:1.4}
-.fc-hint{position:absolute;bottom:16px;font-size:.68rem;color:var(--text-faint);opacity:.5}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--border);padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg-card)}
+.fc-face::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--purple);opacity:.6}
+.fc-era{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--neon-pink);letter-spacing:3px;margin-bottom:10px}
+.fc-type{font-family:'Share Tech Mono',monospace;font-size:.55rem;padding:2px 10px;border:1px solid var(--border);color:var(--text-muted);letter-spacing:1px;margin-bottom:16px}
+.fc-q{font-size:clamp(1.2rem,3vw,1.8rem);font-weight:500;text-align:center;line-height:1.5;letter-spacing:.5px}
+.fc-hint{position:absolute;bottom:16px;font-family:'Share Tech Mono',monospace;font-size:.55rem;color:var(--text-faint);opacity:.5;letter-spacing:1px}
 .flashcard:hover .fc-hint{opacity:1}
-.flashcard-back{transform:rotateY(180deg);overflow-y:auto;align-items:flex-start;justify-content:flex-start;text-align:left}
-.back-title{font-family:var(--font);font-size:1.05rem;font-weight:600;color:var(--gold);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);width:100%}
-.back-era{font-size:.72rem;color:var(--text-faint);margin-bottom:14px}
-.back-body{font-size:.9rem;color:var(--text-soft);line-height:1.9;font-weight:300;flex:1;width:100%}
-.rating-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-.rate-btn{padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:none;cursor:pointer;font-size:.82rem;transition:all .3s;flex:1;min-width:65px;max-width:120px}
-.rate-btn.again{color:var(--red)}.rate-btn.again:hover{background:rgba(181,112,107,.1);border-color:var(--red)}
-.rate-btn.hard{color:var(--gold-soft)}.rate-btn.hard:hover{background:var(--gold-dim)}
-.rate-btn.good{color:var(--green)}.rate-btn.good:hover{background:rgba(107,143,113,.1);border-color:var(--green)}
-.rate-btn.easy{color:var(--blue)}.rate-btn.easy:hover{background:rgba(91,143,168,.1);border-color:var(--blue)}
-.rate-lbl{display:block;font-size:.6rem;margin-top:3px;opacity:.7}
-.review-done{padding:60px 20px;color:var(--text-soft)}
-.review-done .done-icon{font-size:3rem;margin-bottom:16px}
-.browse-section{max-width:1100px;margin:0 auto;padding:0 20px 40px}
-.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-.filter-pills{display:flex;gap:4px;flex-wrap:wrap;flex:1}
-.pill{padding:5px 14px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:.78rem;cursor:pointer;transition:all .3s;font-family:var(--font);letter-spacing:.5px;border-radius:16px}
-.pill:hover{border-color:var(--gold-dim);color:var(--gold)}
-.pill.active{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-dim)}
-.review-info{font-size:.78rem;color:var(--text-faint);margin-top:8px;letter-spacing:.5px}
-.s-input{padding:6px 14px;border:1px solid var(--border);border-radius:16px;background:var(--bg-surface);color:var(--text);font-size:.82rem;outline:none;width:160px;transition:all .3s}
-.s-input:focus{border-color:var(--gold-dim);width:200px}
-.s-input::placeholder{color:var(--text-faint)}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.grid-card{border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.grid-card:hover{border-color:var(--gold-dim);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.gc-era{font-size:.68rem;color:var(--text-faint);letter-spacing:1px}
-.gc-type{font-size:.62rem;padding:1px 8px;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);display:inline-block;margin-left:6px}
-.gc-title{font-family:var(--font);font-size:1.1rem;font-weight:600;margin:10px 0 8px}
-.gc-preview{font-size:.82rem;color:var(--text-muted);line-height:1.6;font-weight:300;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.gc-mastery{position:absolute;top:0;right:0;width:4px;height:100%}
-.m-new{background:var(--text-faint)}.m-learning{background:var(--red)}.m-review{background:var(--gold)}.m-mature{background:var(--green)}
-.dashboard{max-width:900px;margin:0 auto 32px;padding:0 20px}
-.prog-wrap{background:var(--bg-surface);border-radius:6px;height:8px;overflow:hidden;margin:12px 0}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));border-radius:6px;transition:width .8s}
-.prog-lbl{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-faint)}
-.achievements-section{max-width:900px;margin:0 auto;padding:0 20px 40px}
-.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.ach{border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;transition:all .3s}
-.ach.unlocked{border-color:var(--gold-dim);background:var(--gold-dim)}
-.ach.locked{opacity:.4}
-.ach-icon{font-size:1.8rem;margin-bottom:8px}
-.ach-name{font-family:var(--font);font-size:.88rem;font-weight:600;margin-bottom:4px}
-.ach-desc{font-size:.72rem;color:var(--text-faint)}
-@media(max-width:768px){.nav-tab{padding:8px 14px;font-size:.76rem}.flashcard{min-height:240px}.rate-btn{padding:10px 8px;font-size:.74rem;min-width:50px}.s-input{width:120px}.s-input:focus{width:150px}.card-grid{grid-template-columns:1fr}}
+.fc-back{transform:rotateY(180deg);overflow-y:auto;align-items:flex-start;justify-content:flex-start;text-align:left}
+.fc-back::before{background:var(--neon-cyan)}
+.fc-back-title{font-size:1rem;font-weight:500;color:var(--purple-bright);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);width:100%}
+.fc-back-era{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--text-faint);margin-bottom:14px;letter-spacing:1px}
+.fc-back-body{font-size:.88rem;color:var(--text-soft);line-height:1.9;font-weight:300;flex:1;width:100%}
+
+/* Rating */
+.rating-bar{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.rate-btn{padding:12px 10px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:.78rem;transition:all .3s;flex:1;min-width:60px;max-width:110px;font-family:'Noto Sans SC',sans-serif}
+.rate-btn.again{color:var(--red)}.rate-btn.again:hover{background:rgba(255,107,138,.1);border-color:var(--red)}
+.rate-btn.hard{color:var(--amber)}.rate-btn.hard:hover{background:rgba(255,170,64,.1);border-color:var(--amber)}
+.rate-btn.good{color:var(--green)}.rate-btn.good:hover{background:rgba(74,222,128,.1);border-color:var(--green)}
+.rate-btn.easy{color:var(--neon-cyan)}.rate-btn.easy:hover{background:rgba(0,229,255,.1);border-color:var(--neon-cyan)}
+.rate-lbl{display:block;font-size:.55rem;margin-top:3px;opacity:.7;font-family:'Share Tech Mono',monospace}
+
+/* Done state */
+.review-done{text-align:center;padding:60px 20px}
+.done-icon{font-size:3rem;margin-bottom:16px}
+.done-text{font-size:.95rem;color:var(--text-soft);margin-bottom:8px}
+.done-sub{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--text-faint);letter-spacing:1px}
+
+/* Browse */
+.browse-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.b-card{border:1px solid var(--border);padding:16px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;background:var(--bg-card)}
+.b-card:hover{border-color:var(--border-glow);transform:translateY(-2px);box-shadow:0 4px 16px rgba(155,89,255,.1)}
+.b-card-era{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--text-faint);letter-spacing:1px}
+.b-card-type{font-family:'Share Tech Mono',monospace;font-size:.5rem;padding:1px 8px;border:1px solid var(--border);color:var(--text-muted);display:inline-block;margin-left:6px}
+.b-card-title{font-size:.95rem;font-weight:500;margin:8px 0 6px;color:var(--text)}
+.b-card-preview{font-size:.78rem;color:var(--text-muted);line-height:1.5;font-weight:300;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.b-card-mastery{position:absolute;top:0;right:0;width:3px;height:100%}
+.m-new{background:var(--text-faint)}.m-learning{background:var(--red)}.m-review{background:var(--amber)}.m-mature{background:var(--green)}
+
+/* Custom bank modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,10,26,.8);z-index:100;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex;align-items:center;justify-content:center}
+.modal{background:var(--bg-card);border:1px solid var(--border-glow);padding:28px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 0 40px rgba(155,89,255,.15)}
+.modal h3{font-family:'Share Tech Mono',monospace;font-size:.85rem;color:var(--purple-bright);letter-spacing:2px;margin-bottom:16px}
+.modal label{display:block;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--text-faint);letter-spacing:2px;margin-bottom:6px;margin-top:12px}
+.modal input,.modal textarea{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:.85rem}
+.modal input:focus,.modal textarea:focus{outline:none;border-color:var(--purple)}
+.modal textarea{min-height:200px;font-family:'Share Tech Mono',monospace;font-size:.75rem;line-height:1.7;resize:vertical}
+.modal .hint{font-size:.65rem;color:var(--text-muted);line-height:1.6;margin-top:4px}
+.modal .hint code{background:var(--purple-soft);padding:1px 5px;color:var(--neon-cyan);font-size:.6rem}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.modal-btn{padding:8px 22px;border:none;font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.modal-btn.primary{background:var(--purple);color:#fff;box-shadow:0 0 12px rgba(155,89,255,.3)}
+.modal-btn.primary:hover{background:var(--purple-bright)}
+.modal-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text-muted)}
+.modal-btn.secondary:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
+
+.footer{text-align:center;padding:20px;font-family:'Share Tech Mono',monospace;font-size:.55rem;color:var(--text-faint);letter-spacing:2px;border-top:1px solid var(--border)}
+
+@media(max-width:600px){
+  .bank-grid{grid-template-columns:1fr}
+  .flashcard{min-height:220px}
+  .rate-btn{padding:10px 6px;font-size:.72rem;min-width:48px}
+  .browse-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-<noscript><div style="text-align:center;padding:60px 20px;font-family:serif;color:#ddd3c4;background:#1a1714"><h1>历史闪卡</h1><p>此应用需要 JavaScript 才能运行。</p></div></noscript>
-<a href="../../projects.html" class="back-link" aria-label="返回项目页面">&larr; 返回项目</a>
-<header class="app-header">
-<h1>历史<span>闪卡</span></h1>
-<p class="sub">SM-2 间隔重复 · 温故知新</p>
+<a href="../../projects.html" class="back-link">&larr; 返回项目</a>
+
+<header class="header">
+  <div class="header-tag">SPACED REPETITION SYSTEM</div>
+  <h1>历史<span>闪卡</span></h1>
+  <p class="sub">SM-2 间隔重复 · 自选题库 · 温故知新</p>
 </header>
-<nav class="nav-tabs" id="navTabs">
-<button class="nav-tab active" data-view="review">&#x1F4CB; 复习</button>
-<button class="nav-tab" data-view="browse">&#x1F4D6; 浏览</button>
-<button class="nav-tab" data-view="progress">&#x1F4CA; 进度</button>
-<button class="nav-tab" data-view="achievements">&#x1F3C6; 成就</button>
-</nav>
-<div id="viewReview" class="review-section"></div>
-<div id="viewBrowse" class="browse-section" style="display:none"></div>
-<div id="viewProgress" class="dashboard" style="display:none"></div>
-<div id="viewAchievements" class="achievements-section" style="display:none"></div>
+
+<div class="main">
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="review">复习</button>
+    <button class="tab" data-tab="browse">浏览</button>
+    <button class="tab" data-tab="manage">题库管理</button>
+  </div>
+
+  <!-- Review view -->
+  <div id="viewReview">
+    <!-- Bank selector -->
+    <div class="bank-section">
+      <h3>> SELECT QUESTION BANK</h3>
+      <div class="bank-grid" id="bankGrid"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat"><div class="num" id="stDue">0</div><div class="lbl">待复习</div></div>
+      <div class="stat"><div class="num" id="stLearn">0</div><div class="lbl">学习中</div></div>
+      <div class="stat"><div class="num" id="stMature">0</div><div class="lbl">已掌握</div></div>
+      <div class="stat"><div class="num" id="stTotal">0</div><div class="lbl">总卡片</div></div>
+    </div>
+
+    <!-- Card area -->
+    <div id="cardArea"></div>
+  </div>
+
+  <!-- Browse view -->
+  <div id="viewBrowse" style="display:none">
+    <div class="bank-section">
+      <h3>> SELECT BANK TO BROWSE</h3>
+      <div class="bank-grid" id="browseBankGrid"></div>
+    </div>
+    <div class="browse-grid" id="browseGrid"></div>
+  </div>
+
+  <!-- Manage view -->
+  <div id="viewManage" style="display:none">
+    <div style="margin-bottom:20px">
+      <button class="modal-btn primary" id="btnNewBank">+ 创建新题库</button>
+      <button class="modal-btn secondary" id="btnImport" style="margin-left:8px">导入题库</button>
+    </div>
+    <div id="manageList"></div>
+  </div>
+</div>
+
+<!-- New bank modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>> CREATE QUESTION BANK</h3>
+    <label>题库名称</label>
+    <input type="text" id="bankNameInput" placeholder="例：大二下学期期末考题库">
+    <label>描述（可选）</label>
+    <input type="text" id="bankDescInput" placeholder="例：中国古代史期末复习">
+    <label>卡片内容</label>
+    <div class="hint">每张卡片一行，格式：<code>问题 | 答案 | 时期标签（可选）</code><br>例：<code>戊戌变法发生在哪一年？ | 1898年 | 近代史</code></div>
+    <textarea id="bankCardsInput" spellcheck="false" placeholder="问题1 | 答案1 | 标签&#10;问题2 | 答案2 | 标签&#10;问题3 | 答案3"></textarea>
+    <div class="modal-actions">
+      <button class="modal-btn primary" id="btnSaveBank">保存题库</button>
+      <button class="modal-btn secondary" id="btnCancelModal">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import modal -->
+<div class="modal-overlay" id="importOverlay">
+  <div class="modal">
+    <h3>> IMPORT BANK</h3>
+    <label>粘贴 JSON 数据</label>
+    <textarea id="importInput" style="min-height:150px;font-family:'Share Tech Mono',monospace;font-size:.7rem" spellcheck="false" placeholder='[{"q":"问题","a":"答案","era":"标签"}]'></textarea>
+    <label>题库名称</label>
+    <input type="text" id="importNameInput" placeholder="导入的题库名称">
+    <div class="modal-actions">
+      <button class="modal-btn primary" id="btnDoImport">导入</button>
+      <button class="modal-btn secondary" id="btnCancelImport">取消</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">JILLAX · SPACED REPETITION · SM-2 ALGORITHM</footer>
+
 <script>
-const CARDS=[
-{id:1,era:"先秦",type:"概念",q:"分封制",a:"西周实行的政治制度。周天子将土地和人民分封给王族、功臣和先代贵族，建立诸侯国。诸侯对周天子有镇守疆土、随从作战、交纳贡赋等义务。"},
-{id:2,era:"先秦",type:"概念",q:"宗法制",a:"按照血缘宗族关系分配政治权力的制度。核心是嫡长子继承制，形成"周天子—诸侯—卿大夫—士"的等级结构。与分封制互为表里。"},
-{id:3,era:"先秦",type:"事件",q:"商鞅变法",a:"公元前356年秦孝公任用商鞅推行的改革。废井田开阡陌、奖励军功、推行县制、统一度量衡。使秦国迅速强大。"},
-{id:4,era:"先秦",type:"人物",q:"孔子",a:"儒家学派创始人。核心思想为"仁"和"礼"，主张"为政以德"。开创私学，有教无类。编订六经。"},
-{id:5,era:"先秦",type:"概念",q:"百家争鸣",a:"春秋战国时期学术思想繁荣的局面。儒家主张仁政、道家主张无为、法家主张法治、墨家主张兼爱非攻。"},
-{id:6,era:"秦汉",type:"概念",q:"皇帝制度",a:"秦始皇创立。皇帝总揽一切军政大权，拥有至高无上的地位。确立了皇位世袭制度，延续两千余年。"},
-{id:7,era:"秦汉",type:"概念",q:"郡县制",a:"秦朝全面推行的地方行政制度。郡下设县，长官由中央直接任免，不得世袭。加强了中央集权。"},
-{id:8,era:"秦汉",type:"事件",q:"焚书坑儒",a:"秦始皇为统一思想，焚烧民间收藏的诸子百家典籍，后又坑杀非议朝政的方士儒生。造成文化浩劫。"},
-{id:9,era:"秦汉",type:"人物",q:"汉武帝",a:"西汉最有作为的皇帝。政治上颁布推恩令削弱诸侯，思想上罢黜百家独尊儒术，经济上盐铁官营，军事上北击匈奴。"},
-{id:10,era:"秦汉",type:"概念",q:"推恩令",a:"汉武帝采纳主父偃建议颁布。规定诸侯王死后，其余子弟也可分割部分封地为列侯。名义上是施恩，实际上削弱了诸侯国势力。"},
-{id:11,era:"秦汉",type:"概念",q:"丝绸之路",a:"张骞出使西域后开辟的商贸路线。从长安出发经河西走廊、西域到达中亚、西亚乃至欧洲。促进了中外经济文化交流。"},
-{id:12,era:"秦汉",type:"概念",q:"察举制",a:"汉代选官制度。由地方长官在辖区内考察、选取人才并推荐给中央。主要科目为孝廉和茂才。"},
-{id:13,era:"魏晋南北朝",type:"概念",q:"九品中正制",a:"魏晋时期的选官制度。设置中正官评定人才为九品。后期被世家大族垄断，形成"上品无寒门，下品无世族"的局面。"},
-{id:14,era:"魏晋南北朝",type:"事件",q:"孝文帝改革",a:"北魏孝文帝推行的汉化改革。迁都洛阳，改汉姓、穿汉服、说汉语、与汉族通婚。促进了北方民族大融合。"},
-{id:15,era:"魏晋南北朝",type:"概念",q:"江南经济开发",a:"由于北方战乱，大量人口南迁，带去了先进的生产技术和劳动力。南方得到大规模开发，经济重心开始南移。"},
-{id:16,era:"隋唐",type:"概念",q:"科举制",a:"隋朝创立、唐朝完善的选官制度。通过分科考试选拔人才，打破了门阀士族对仕途的垄断。延续一千三百余年。"},
-{id:17,era:"隋唐",type:"概念",q:"三省六部制",a:"唐朝中央行政体制。中书省草拟诏令、门下省审核封驳、尚书省执行政令。尚书省下设吏户礼兵刑工六部。"},
-{id:18,era:"隋唐",type:"概念",q:"贞观之治",a:"唐太宗李世民在位时期（627-649年）。吸取隋亡教训，知人善任、虚怀纳谏。政治清明，经济发展，为大唐盛世奠定基础。"},
-{id:19,era:"隋唐",type:"事件",q:"安史之乱",a:"755-763年安禄山、史思明发动的叛乱。唐朝由盛转衰的转折点。此后藩镇割据、宦官专权不断。"},
-{id:20,era:"隋唐",type:"概念",q:"两税法",a:"唐德宗时杨炎推行的赋税改革。每户按资产交纳户税，按田亩交纳地税，分夏秋两季征收。改变了以人丁为主的征税标准。"},
-{id:21,era:"宋",type:"概念",q:"二府三司制",a:"宋代中央行政体制。中书门下为最高行政机构，枢密院掌军权，三司掌财权。分割了宰相权力，加强了皇权。"},
-{id:22,era:"宋",type:"概念",q:"程朱理学",a:"以程颢、程颐和朱熹为代表的新儒学。核心主张"存天理，灭人欲"，强调格物致知。成为后世官方正统哲学。"},
-{id:23,era:"宋",type:"概念",q:"重文轻武政策",a:"宋太祖确立的治国方针。大力抬高文人地位，扩大科举取士名额，抑制武将权力。扭转了藩镇割据局面，但也导致军事积弱。"},
-{id:24,era:"宋",type:"概念",q:"经济重心南移完成",a:"南宋时期经济重心完成南移。南方农业、手工业和商业全面超过北方。"},
-{id:25,era:"元",type:"概念",q:"行省制",a:"元朝地方行政制度。中央设中书省，地方设行中书省。行省长官由中央任命。是中国省制的开端，影响至今。"},
-{id:26,era:"明",type:"事件",q:"废丞相",a:"明太祖朱元璋借胡惟庸案废除丞相制度，将权力分归六部，六部直接对皇帝负责。皇权空前加强。"},
-{id:27,era:"明",type:"事件",q:"郑和下西洋",a:"1405-1433年郑和七次远航。船队规模庞大，最远到达非洲东海岸和红海沿岸。比欧洲大航海早了近一个世纪。"},
-{id:28,era:"明",type:"事件",q:"一条鞭法",a:"张居正推行的赋税改革。将田赋、徭役、杂税合并为一条，折银征收。简化了税制，促进了商品经济发展。"},
-{id:29,era:"清",type:"概念",q:"军机处",a:"雍正帝设立的中枢机构。军机大臣由皇帝钦定，只能跪奏笔录，完全秉承皇帝旨意办事。标志着君主专制达到顶峰。"},
-{id:30,era:"清",type:"事件",q:"康乾盛世",a:"清朝康熙、雍正、乾隆三朝的繁荣期。疆域辽阔、人口增长、经济繁荣。但后期出现闭关锁国、吏治腐败等问题。"},
-{id:31,era:"近代",type:"事件",q:"鸦片战争",a:"1840-1842年英国发动的侵华战争。清政府战败，签订《南京条约》。割让香港岛、赔款2100万银元。中国开始沦为半殖民地半封建社会。"},
-{id:32,era:"近代",type:"事件",q:"太平天国运动",a:"1851-1864年洪秀全领导的农民起义。定都天京（南京），颁布《天朝田亩制度》。沉重打击了清朝统治。"},
-{id:33,era:"近代",type:"事件",q:"洋务运动",a:"19世纪60-90年代，以"自强""求富"为口号。创办军事工业和民用工业，建立新式海陆军。是中国近代化的开端。"},
-{id:34,era:"近代",type:"事件",q:"甲午战争",a:"1894-1895年中日战争。北洋水师全军覆没。签订《马关条约》：割让台湾及澎湖列岛、赔款二亿两白银。"},
-{id:35,era:"近代",type:"事件",q:"戊戌变法",a:"1898年康有为、梁启超等推动的维新运动。光绪帝颁布变法诏令。慈禧太后发动政变，变法仅持续103天即失败。"},
-{id:36,era:"近代",type:"事件",q:"辛亥革命",a:"1911年爆发的资产阶级民主革命。推翻了清朝统治，结束了两千多年的君主专制制度。建立了中华民国。"},
-{id:37,era:"近代",type:"事件",q:"五四运动",a:"1919年因巴黎和会中国外交失败引发的爱国运动。口号"外争主权，内除国贼"。是新民主主义革命的开端。"},
-{id:38,era:"世界古代",type:"概念",q:"雅典民主政治",a:"古希腊雅典城邦实行的民主制度。伯里克利时期达到鼎盛，公民大会是最高权力机构。开创了民主政治的先河。"},
-{id:39,era:"世界古代",type:"概念",q:"罗马法",a:"从《十二铜表法》到《查士丁尼民法大全》的法律体系。确立了私有财产神圣不可侵犯等原则。对近代欧美法律产生了深远影响。"},
-{id:40,era:"世界近代",type:"事件",q:"英国资产阶级革命",a:"1640-1688年英国推翻封建专制的革命。通过《权利法案》确立了议会主权和君主立宪制。"},
-{id:41,era:"世界近代",type:"事件",q:"法国大革命",a:"1789年爆发。攻占巴士底狱，颁布《人权宣言》。摧毁了封建等级制度，传播了自由民主的进步思想。"},
-{id:42,era:"世界近代",type:"事件",q:"工业革命",a:"18世纪60年代始于英国的技术革命。以蒸汽机的改良为标志，机器生产取代手工劳动。极大提高了生产力。"},
-{id:43,era:"世界近代",type:"事件",q:"马克思主义诞生",a:"1848年《共产党宣言》发表。马克思和恩格斯创立了科学社会主义理论。"},
-{id:44,era:"世界现代",type:"事件",q:"十月革命",a:"1917年列宁领导的布尔什维克革命。推翻了资产阶级临时政府，建立了世界上第一个社会主义国家。"},
-{id:45,era:"世界现代",type:"事件",q:"罗斯福新政",a:"1933年罗斯福为应对大萧条推行的改革。加强国家对经济的干预和调节，推行以工代赈、建立社会保障体系。"},
-{id:46,era:"世界现代",type:"事件",q:"第二次世界大战",a:"1939-1945年。法西斯轴心国与同盟国之间的全球战争。最终以反法西斯同盟胜利告终。战后建立了联合国。"}
-];
-const ERAS=[...new Set(CARDS.map(c=>c.era))];
-const LS='flashcards-v1';
-const LS_STREAK='flashcards-streak';
-function load(){try{return JSON.parse(localStorage.getItem(LS))||{}}catch(e){return{}}}
-function save(d){localStorage.setItem(LS,JSON.stringify(d))}
-function getStreak(){try{return parseInt(localStorage.getItem(LS_STREAK))||0}catch(e){return 0}}
-function setStreak(n){localStorage.setItem(LS_STREAK,n)}
-function getSRS(id){var d=load();return d[id]||{ease:2.5,interval:0,reps:0,next:0,last:0,status:'new'}}
-function putSRS(id,s){var d=load();d[id]=s;save(d)}
-function review(id,rating){
-  var s=getSRS(id);var now=Date.now();
-  if(rating===0){s.reps=0;s.interval=1/60;s.ease=Math.max(1.3,s.ease-0.2);s.status='learning'}
-  else if(rating===1){s.interval=Math.max(1/60,s.interval*1.2);s.ease=Math.max(1.3,s.ease-0.15);s.reps++;s.status='learning'}
-  else if(rating===2){
-    if(s.reps===0)s.interval=1;
-    else if(s.reps===1)s.interval=6;
-    else s.interval=Math.round(s.interval*s.ease);
-    s.ease=Math.max(1.3,s.ease+0.0);s.reps++;s.status=s.interval>21?'mature':'review';
-  }else{
-    if(s.reps===0)s.interval=4;
-    else s.interval=Math.round(s.interval*s.ease*1.3);
-    s.ease=Math.max(1.3,s.ease+0.15);s.reps++;s.status=s.interval>21?'mature':'review';
+// ============================================================
+//  Built-in Banks
+// ============================================================
+var BUILT_IN_BANKS = [
+  {
+    id: 'builtin-china-ancient',
+    name: '中国古代史基础',
+    desc: '先秦至清末重要知识点',
+    builtIn: true,
+    cards: [
+      {q:'秦始皇统一六国是在哪一年？',a:'公元前221年。秦灭齐完成统一，建立中国历史上第一个大一统中央集权王朝。',era:'先秦'},
+      {q:'科举制正式创立于哪个朝代？',a:'隋朝。隋炀帝大业年间设进士科，标志着科举制正式确立。',era:'隋唐'},
+      {q:'王安石变法的主要目的是什么？',a:'富国强兵，改变北宋积贫积弱局面。主要措施包括青苗法、免役法、保甲法等。',era:'宋'},
+      {q:'郑和下西洋共几次？最远到达哪里？',a:'共7次（1405-1433），最远到达非洲东海岸和红海沿岸。',era:'明'},
+      {q:'清朝的"闭关锁国"政策主要指什么？',a:'限制对外贸易，仅保留广州一口通商（1757年起），由公行制度垄断对外贸易。',era:'清'},
+      {q:'什么是"编户齐民"？',a:'秦汉时期将百姓编入户籍，使农民直接向国家纳税服役的制度，削弱了贵族对人口的控制。',era:'秦汉'},
+      {q:'唐朝三省六部制中三省分别是什么？',a:'中书省（决策）、门下省（审议）、尚书省（执行）。尚书省下设吏、户、礼、兵、刑、工六部。',era:'隋唐'},
+      {q:'《资治通鉴》的作者和体例是什么？',a:'北宋司马光主编，编年体通史，记载从战国到五代共1362年历史。',era:'宋'},
+    ]
+  },
+  {
+    id: 'builtin-china-modern',
+    name: '中国近代史基础',
+    desc: '鸦片战争至新中国成立',
+    builtIn: true,
+    cards: [
+      {q:'鸦片战争（1840-1842）的结果和影响？',a:'清政府战败，签订《南京条约》。割让香港岛、开放五口通商、协定关税。中国开始沦为半殖民地半封建社会。',era:'晚清'},
+      {q:'太平天国运动的时间和领导人？',a:'1851-1864年，洪秀全领导。定都天京（南京），颁布《天朝田亩制度》。',era:'晚清'},
+      {q:'戊戌变法发生在哪一年？持续了多久？',a:'1898年，仅持续103天（百日维新），因慈禧太后发动政变而失败。',era:'晚清'},
+      {q:'辛亥革命的历史意义？',a:'推翻了清朝统治，结束了两千多年的封建帝制，建立了中华民国，使民主共和观念深入人心。',era:'民国'},
+      {q:'五四运动的导火线是什么？',a:'1919年巴黎和会上中国外交失败。列强将德国在山东的权益转让给日本，引发学生和工人抗议。',era:'民国'},
+      {q:'中国共产党成立于哪一年？',a:'1921年7月（一大在上海召开，后转移至嘉兴南湖）。',era:'民国'},
+      {q:'遵义会议的历史意义？',a:'1935年1月，确立了毛泽东在党和红军中的领导地位，挽救了党、红军和中国革命。是中共从幼稚走向成熟的标志。',era:'民国'},
+      {q:'抗日战争胜利的时间？',a:'1945年8月15日日本宣布无条件投降。9月2日签署投降书。',era:'民国'},
+    ]
+  },
+  {
+    id: 'builtin-world',
+    name: '世界史核心概念',
+    desc: '重要历史事件与概念',
+    builtIn: true,
+    cards: [
+      {q:'文艺复兴的核心思想是什么？',a:'人文主义。强调人的价值和尊严，提倡个性解放和世俗生活。14-16世纪起源于意大利。',era:'世界古代'},
+      {q:'法国大革命爆发的标志事件？',a:'1789年7月14日巴黎市民攻占巴士底狱。随后发表《人权宣言》。',era:'世界近代'},
+      {q:'工业革命为什么首先发生在英国？',a:'资本积累、劳动力充足（圈地运动）、市场需求、技术条件、政治制度（君主立宪）等多因素共同作用。',era:'世界近代'},
+      {q:'马歇尔计划的主要内容和目的？',a:'1948年美国对西欧的经济援助计划。旨在重建欧洲经济、遏制共产主义扩张、为美国商品开辟市场。',era:'世界现代'},
+      {q:'什么是"冷战"？起止标志？',a:'二战后美苏两大阵营的全面对峙（1947-1991）。开始标志：杜鲁门主义；结束标志：苏联解体。',era:'世界现代'},
+    ]
   }
-  s.last=now;s.next=now+s.interval*60*1000;putSRS(id,s);
-  if(rating===0){setStreak(0)}else{setStreak(getStreak()+1)}
+];
+
+// ============================================================
+//  State
+// ============================================================
+var banks = [];
+var currentBankId = null;
+var currentCardIdx = 0;
+var isFlipped = false;
+var progress = {}; // { bankId: { cardIdx: { interval, ease, reps, due } } }
+
+// ============================================================
+//  Storage
+// ============================================================
+function save() {
+  localStorage.setItem('fc_banks', JSON.stringify(banks));
+  localStorage.setItem('fc_progress', JSON.stringify(progress));
+  localStorage.setItem('fc_currentBank', currentBankId);
 }
-function dueCards(){var now=Date.now();return CARDS.filter(c=>{var s=getSRS(c.id);return!s.next||s.next<=now})}
-function mastery(id){var s=getSRS(id);return s.status||'new'}
-var view='review',filterEra='all',searchQ='',reviewIdx=0,reviewQ=[],cardFlipped=false;
-function escHtml(s){return String(s).replace(/&/g,'&'+'amp;').replace(/"/g,'&'+'quot;').replace(/</g,'&'+'lt;').replace(/>/g,'&'+'gt;')}
-function switchView(v){
-  view=v;document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
-  ['viewReview','viewBrowse','viewProgress','viewAchievements'].forEach(id=>{
-    document.getElementById(id).style.display='none';
+function load() {
+  try {
+    var sb = localStorage.getItem('fc_banks');
+    if (sb) {
+      banks = JSON.parse(sb);
+      // Merge built-in if missing
+      BUILT_IN_BANKS.forEach(function(bb) {
+        if (!banks.find(function(b) { return b.id === bb.id; })) banks.push(bb);
+      });
+    } else {
+      banks = JSON.parse(JSON.stringify(BUILT_IN_BANKS));
+    }
+    var sp = localStorage.getItem('fc_progress');
+    if (sp) progress = JSON.parse(sp);
+    currentBankId = localStorage.getItem('fc_currentBank') || (banks.length > 0 ? banks[0].id : null);
+  } catch(e) {
+    banks = JSON.parse(JSON.stringify(BUILT_IN_BANKS));
+    progress = {};
+    currentBankId = banks[0].id;
+  }
+}
+
+// ============================================================
+//  SM-2 Algorithm
+// ============================================================
+function sm2(card, quality) {
+  // quality: 0=again, 1=hard, 2=good, 3=easy
+  var p = card || { interval: 0, ease: 2.5, reps: 0, due: 0 };
+  if (quality < 1) {
+    p.reps = 0;
+    p.interval = 1;
+  } else {
+    if (p.reps === 0) p.interval = 1;
+    else if (p.reps === 1) p.interval = 6;
+    else p.interval = Math.round(p.interval * p.ease);
+    p.reps++;
+  }
+  var q = quality + 2; // map 0-3 to 2-5
+  p.ease = Math.max(1.3, p.ease + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02)));
+  var now = Date.now();
+  p.due = now + p.interval * 86400000;
+  return p;
+}
+
+function getCardProgress(bankId, idx) {
+  if (!progress[bankId]) progress[bankId] = {};
+  if (!progress[bankId][idx]) progress[bankId][idx] = { interval: 0, ease: 2.5, reps: 0, due: 0 };
+  return progress[bankId][idx];
+}
+
+// ============================================================
+//  Rendering
+// ============================================================
+function getBank() { return banks.find(function(b) { return b.id === currentBankId; }); }
+
+function renderBankGrid(targetId) {
+  var grid = document.getElementById(targetId);
+  grid.innerHTML = '';
+  banks.forEach(function(bank) {
+    var card = document.createElement('div');
+    card.className = 'bank-card' + (bank.id === currentBankId ? ' active' : '');
+    var count = bank.cards.length;
+    var dueCount = 0;
+    var now = Date.now();
+    bank.cards.forEach(function(c, i) {
+      var p = getCardProgress(bank.id, i);
+      if (p.due <= now || p.reps === 0) dueCount++;
+    });
+    card.innerHTML = '<div class="bank-name">' + bank.name + '</div>' +
+      '<div class="bank-meta">' + (bank.desc || '') + '</div>' +
+      '<div class="bank-count">' + dueCount + '/' + count + '</div>';
+    card.addEventListener('click', function() {
+      currentBankId = bank.id;
+      currentCardIdx = 0;
+      save();
+      renderBankGrid('bankGrid');
+      renderBankGrid('browseBankGrid');
+      renderStats();
+      renderCard();
+    });
+    grid.appendChild(card);
   });
-  if(v==='review')document.getElementById('viewReview').style.display='';
-  else if(v==='browse')document.getElementById('viewBrowse').style.display='';
-  else if(v==='progress')document.getElementById('viewProgress').style.display='';
-  else document.getElementById('viewAchievements').style.display='';
-  renderCurrentView();
 }
-function renderCurrentView(){
-  if(view==='review')renderReview();
-  else if(view==='browse')renderBrowse();
-  else if(view==='progress')renderProgress();
-  else renderAchievements();
+
+function renderStats() {
+  var bank = getBank();
+  if (!bank) return;
+  var now = Date.now();
+  var due = 0, learning = 0, mature = 0;
+  bank.cards.forEach(function(c, i) {
+    var p = getCardProgress(bank.id, i);
+    if (p.reps === 0) due++;
+    else if (p.due <= now) due++;
+    else if (p.interval >= 21) mature++;
+    else learning++;
+  });
+  document.getElementById('stDue').textContent = due;
+  document.getElementById('stLearn').textContent = learning;
+  document.getElementById('stMature').textContent = mature;
+  document.getElementById('stTotal').textContent = bank.cards.length;
 }
-function renderReview(){
-  var el=document.getElementById('viewReview');
-  var due=dueCards();
-  if(due.length===0){
-    var total=CARDS.length,reviewed=0;
-    CARDS.forEach(c=>{var s=getSRS(c.id);if(s.reps>0)reviewed++});
-    el.innerHTML='<div class="review-empty"><div class="icon">&#x2728;<\/div><p>今日复习已完成！<\/p><p style="margin-top:8px;font-size:.82rem">已掌握 '+reviewed+'/'+total+' 张卡片<\/p><button onclick="resetAll()" style="margin-top:20px;padding:8px 20px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;border-radius:8px;font-size:.82rem">重置所有进度<\/button><\/div>';
+
+function getNextCardIdx() {
+  var bank = getBank();
+  if (!bank) return -1;
+  var now = Date.now();
+  var dueCards = [];
+  bank.cards.forEach(function(c, i) {
+    var p = getCardProgress(bank.id, i);
+    if (p.reps === 0 || p.due <= now) dueCards.push(i);
+  });
+  if (dueCards.length === 0) return -1;
+  return dueCards[Math.floor(Math.random() * dueCards.length)];
+}
+
+function renderCard() {
+  var area = document.getElementById('cardArea');
+  var bank = getBank();
+  if (!bank) { area.innerHTML = '<div class="review-done"><div class="done-icon">📋</div><div class="done-text">请先选择题库</div></div>'; return; }
+
+  var idx = getNextCardIdx();
+  if (idx === -1) {
+    area.innerHTML = '<div class="review-done">' +
+      '<div class="done-icon">✦</div>' +
+      '<div class="done-text">今日复习已全部完成</div>' +
+      '<div class="done-sub">保持在场，明天继续。</div></div>';
     return;
   }
-  reviewQ=due.sort(()=>Math.random()-0.5);reviewIdx=0;cardFlipped=false;
-  renderReviewCard();
-}
-function renderReviewCard(){
-  var el=document.getElementById('viewReview');
-  if(reviewIdx>=reviewQ.length){renderReview();return;}
-  var c=reviewQ[reviewIdx];var s=getSRS(c.id);
-  var stats=calcStats();
-  el.innerHTML=
-    '<div class="stats-row">'+
-    '<div class="sr"><div class="num">'+stats.due+'<\/div><div class="lbl">待复习<\/div><\/div>'+
-    '<div class="sr"><div class="num">'+stats.learned+'<\/div><div class="lbl">已掌握<\/div><\/div>'+
-    '<div class="sr"><div class="num">'+stats.total+'<\/div><div class="lbl">总卡片<\/div><\/div>'+
-    '<\/div>'+
-    (stats.streak>0?'<div class="streak"><span>&#x1F525;<\/span> 连续答对 '+stats.streak+' 张<\/div>':'')+
-    '<div class="flashcard-wrap"><div class="flashcard'+(cardFlipped?' flipped':'')+'" onclick="flipCard()">'+
-    '<div class="flashcard-face flashcard-front">'+
-    '<div class="fc-era">'+c.era+'<\/div>'+
-    '<div class="fc-type">'+c.type+'<\/div>'+
-    '<div class="fc-q">'+c.q+'<\/div>'+
-    '<div class="fc-hint">点击翻转查看答案<\/div>'+
-    '<\/div>'+
-    '<div class="flashcard-face flashcard-back">'+
-    '<div class="back-title">'+c.q+'<\/div>'+
-    '<div class="back-era">'+c.era+' · '+c.type+'<\/div>'+
-    '<div class="back-body">'+c.a+'<\/div>'+
-    '<\/div><\/div><\/div>'+
-    (cardFlipped?
-      '<div class="rating-bar">'+
-      '<button class="rate-btn again" onclick="rateCard(0)">忘了<span class="rate-lbl">\x3c1分钟<\/span><\/button>'+
-      '<button class="rate-btn hard" onclick="rateCard(1)">模糊<span class="rate-lbl">'+fmtInterval(nextHard(s))+'<\/span><\/button>'+
-      '<button class="rate-btn good" onclick="rateCard(2)">记得<span class="rate-lbl">'+fmtInterval(nextGood(s))+'<\/span><\/button>'+
-      '<button class="rate-btn easy" onclick="rateCard(3)">简单<span class="rate-lbl">'+fmtInterval(nextEasy(s))+'<\/span><\/button>'+
-      '<\/div>':'<p class="review-info">第 '+(reviewIdx+1)+' / '+reviewQ.length+' 张<\/p>');
-}
-function flipCard(){cardFlipped=!cardFlipped;renderReviewCard()}
-function rateCard(r){var c=reviewQ[reviewIdx];review(c.id,r);reviewIdx++;cardFlipped=false;renderReviewCard()}
-function nextGood(s){if(s.reps===0)return 1;if(s.reps===1)return 6;return Math.round(s.interval*s.ease)}
-function nextEasy(s){if(s.reps===0)return 4;return Math.max(nextGood(s)+1,Math.round(s.interval*s.ease*1.3))}
-function nextHard(s){return Math.max(1/60,s.interval*1.2)}
-function fmtInterval(mins){
-  if(mins<1)return Math.round(mins*60)+'秒';
-  if(mins<60)return Math.round(mins)+'分钟';
-  if(mins<1440)return Math.round(mins/60)+'小时';
-  return Math.round(mins/1440)+'天';
-}
-function calcStats(){
-  var due=dueCards().length,learned=0,total=CARDS.length;
-  var d=load();
-  CARDS.forEach(c=>{if(d[c.id]&&d[c.id].reps>0)learned++});
-  return{due,learned,total,streak:getStreak()};
-}
-function renderBrowse(){
-  var el=document.getElementById('viewBrowse');
-  var pills='<button class="pill'+(filterEra==='all'?' active':'')+'" onclick="setEra(\'all\')">全部<\/button>';
-  ERAS.forEach(e=>{pills+='<button class="pill'+(filterEra===e?' active':'')+'" onclick="setEra(\''+e+'\')">'+e+'<\/button>'});
-  var filtered=CARDS.filter(c=>{
-    if(filterEra!=='all'&&c.era!==filterEra)return false;
-    if(searchQ){var q=searchQ.toLowerCase();return c.q.toLowerCase().includes(q)||c.a.toLowerCase().includes(q)||c.era.includes(q)}
-    return true;
+
+  var card = bank.cards[idx];
+  var p = getCardProgress(bank.id, idx);
+  isFlipped = false;
+
+  area.innerHTML = '<div class="fc-wrap">' +
+    '<div class="flashcard" id="flashcard">' +
+      '<div class="fc-face fc-front">' +
+        '<div class="fc-era">' + (card.era || bank.name) + '</div>' +
+        '<div class="fc-type">' + (p.reps === 0 ? 'NEW' : p.interval >= 21 ? 'MATURE' : 'REVIEW') + '</div>' +
+        '<div class="fc-q">' + card.q + '</div>' +
+        '<div class="fc-hint">> CLICK TO REVEAL</div>' +
+      '</div>' +
+      '<div class="fc-face fc-back">' +
+        '<div class="fc-back-title">' + card.q + '</div>' +
+        '<div class="fc-back-era">' + (card.era || '') + '</div>' +
+        '<div class="fc-back-body">' + card.a + '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>' +
+  '<div class="rating-bar" id="ratingBar" style="display:none">' +
+    '<button class="rate-btn again" data-q="0">重来<span class="rate-lbl"><1分</span></button>' +
+    '<button class="rate-btn hard" data-q="1">困难<span class="rate-lbl">' + Math.max(1, Math.round(p.interval * 0.5)) + '天</span></button>' +
+    '<button class="rate-btn good" data-q="2">良好<span class="rate-lbl">' + (p.reps === 0 ? '1天' : Math.round(p.interval * p.ease) + '天') + '</span></button>' +
+    '<button class="rate-btn easy" data-q="3">简单<span class="rate-lbl">' + Math.round((p.reps === 0 ? 4 : p.interval * p.ease * 1.3)) + '天</span></button>' +
+  '</div>';
+
+  var fc = document.getElementById('flashcard');
+  fc.addEventListener('click', function() {
+    if (!isFlipped) {
+      fc.classList.add('flipped');
+      isFlipped = true;
+      document.getElementById('ratingBar').style.display = 'flex';
+    }
   });
-  var grid=filtered.map(c=>{
-    var m=mastery(c.id);var mc=m==='new'?'m-new':m==='learning'?'m-learning':m==='review'?'m-review':'m-mature';
-    return'<div class="grid-card" onclick="startReviewSingle('+c.id+')"><div class="gc-mastery '+mc+'"><\/div><div><span class="gc-era">'+c.era+'<\/span><span class="gc-type">'+c.type+'<\/span><\/div><div class="gc-title">'+c.q+'<\/div><div class="gc-preview">'+c.a+'<\/div><\/div>';
+
+  document.querySelectorAll('#ratingBar .rate-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var quality = parseInt(this.dataset.q);
+      progress[bank.id][idx] = sm2(p, quality);
+      save();
+      renderStats();
+      renderCard();
+    });
+  });
+}
+
+// ============================================================
+//  Browse
+// ============================================================
+function renderBrowse() {
+  var grid = document.getElementById('browseGrid');
+  var bank = getBank();
+  if (!bank) { grid.innerHTML = '<div class="review-done"><div class="done-text">请先选择题库</div></div>'; return; }
+
+  grid.innerHTML = bank.cards.map(function(card, i) {
+    var p = getCardProgress(bank.id, i);
+    var mClass = p.reps === 0 ? 'm-new' : p.interval >= 21 ? 'm-mature' : p.interval >= 1 ? 'm-review' : 'm-learning';
+    return '<div class="b-card" data-idx="' + i + '">' +
+      '<div class="b-card-mastery ' + mClass + '"></div>' +
+      '<div class="b-card-era">' + (card.era || bank.name) + '<span class="b-card-type">' + (p.reps === 0 ? 'NEW' : p.interval + 'd') + '</span></div>' +
+      '<div class="b-card-title">' + card.q + '</div>' +
+      '<div class="b-card-preview">' + card.a + '</div>' +
+    '</div>';
   }).join('');
-  el.innerHTML='<div class="toolbar"><div class="filter-pills">'+pills+'<\/div><input class="s-input" placeholder="搜索卡片…" value="'+escHtml(searchQ)+'" oninput="searchQ=this.value;renderBrowse()"><\/div><div class="card-grid">'+grid+'<\/div>';
+
+  grid.querySelectorAll('.b-card').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var idx = parseInt(this.dataset.idx);
+      var card = bank.cards[idx];
+      alert(card.q + '\n\n' + card.a);
+    });
+  });
 }
-function setEra(e){filterEra=e;renderBrowse()}
-function startReviewSingle(id){
-  var c=CARDS.find(x=>x.id===id);if(!c)return;
-  reviewQ=[c];reviewIdx=0;cardFlipped=false;switchView('review');
+
+// ============================================================
+//  Manage
+// ============================================================
+function renderManage() {
+  var list = document.getElementById('manageList');
+  list.innerHTML = banks.map(function(bank) {
+    return '<div style="border:1px solid var(--border);padding:16px;margin-bottom:10px;background:var(--bg-card)">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center">' +
+        '<div><strong style="color:var(--text)">' + bank.name + '</strong>' +
+        '<div style="font-family:Share Tech Mono,monospace;font-size:.6rem;color:var(--text-faint);letter-spacing:1px;margin-top:2px">' + bank.cards.length + ' 张卡片 · ' + (bank.desc || '') + '</div></div>' +
+        (bank.builtIn ? '<span style="font-family:Share Tech Mono,monospace;font-size:.55rem;color:var(--neon-cyan);letter-spacing:1px">BUILT-IN</span>' :
+          '<button class="modal-btn secondary" data-del="' + bank.id + '" style="font-size:.6rem;padding:4px 12px;border-color:rgba(255,107,138,.3);color:var(--red)">删除</button>') +
+      '</div></div>';
+  }).join('');
+
+  list.querySelectorAll('[data-del]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.dataset.del;
+      if (confirm('确认删除此题库？')) {
+        banks = banks.filter(function(b) { return b.id !== id; });
+        delete progress[id];
+        if (currentBankId === id) currentBankId = banks.length > 0 ? banks[0].id : null;
+        save();
+        renderManage();
+        renderBankGrid('bankGrid');
+        renderBankGrid('browseBankGrid');
+      }
+    });
+  });
 }
-function renderProgress(){
-  var el=document.getElementById('viewProgress');var stats=calcStats();var pct=stats.total>0?Math.round(stats.learned/stats.total*100):0;
-  var byEra=ERAS.map(e=>{var total=CARDS.filter(c=>c.era===e).length;var learned=CARDS.filter(c=>{if(c.era!==e)return false;var s=getSRS(c.id);return s.reps>0}).length;return{era:e,total,learned}});
-  var eraHTML=byEra.map(e=>'<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px"><span>'+e.era+'<\/span><span style="color:var(--text-faint)">'+e.learned+'/'+e.total+'<\/span><\/div><div class="prog-wrap"><div class="prog-fill" style="width:'+(e.total>0?Math.round(e.learned/e.total*100):0)+'%"><\/div><\/div><\/div>').join('');
-  el.innerHTML='<div class="stats-row"><div class="sr"><div class="num">'+stats.total+'<\/div><div class="lbl">总卡片<\/div><\/div><div class="sr"><div class="num">'+stats.learned+'<\/div><div class="lbl">已掌握<\/div><\/div><div class="sr"><div class="num">'+stats.due+'<\/div><div class="lbl">待复习<\/div><\/div><div class="sr"><div class="num">'+pct+'%<\/div><div class="lbl">完成度<\/div><\/div><\/div><h3 style="font-family:var(--font);font-size:.88rem;color:var(--text-muted);margin-bottom:16px;letter-spacing:2px">按朝代统计<\/h3>'+eraHTML;
+
+// ============================================================
+//  Create bank
+// ============================================================
+function createBank(name, desc, cardsText) {
+  var cards = cardsText.trim().split('\n').filter(function(l) { return l.trim(); }).map(function(line) {
+    var parts = line.split('|').map(function(s) { return s.trim(); });
+    return { q: parts[0] || '未命名', a: parts[1] || '', era: parts[2] || '' };
+  });
+  if (cards.length === 0) return;
+  var id = 'custom-' + Date.now();
+  banks.push({ id: id, name: name, desc: desc, cards: cards });
+  currentBankId = id;
+  save();
+  renderBankGrid('bankGrid');
+  renderBankGrid('browseBankGrid');
+  renderManage();
+  renderStats();
+  renderCard();
 }
-var ACHS=[
-  {id:'first',icon:'&#x1F3AF;',name:'初次记忆',desc:'完成第一张卡片复习',check:function(){var d=load();return Object.values(d).some(s=>s.reps>0)}},
-  {id:'ten',icon:'&#x1F4AF;',name:'十步芳草',desc:'掌握10张卡片',check:function(){var d=load();return Object.values(d).filter(s=>s.reps>0).length>=10}},
-  {id:'twenty',icon:'&#x1F525;',name:'学富五车',desc:'掌握20张卡片',check:function(){var d=load();return Object.values(d).filter(s=>s.reps>0).length>=20}},
-  {id:'all',icon:'&#x1F451;',name:'博古通今',desc:'掌握全部卡片',check:function(){var d=load();return Object.values(d).filter(s=>s.reps>0).length>=CARDS.length}},
-  {id:'streak5',icon:'&#x26A1;',name:'过目不忘',desc:'连续答对5张不重置',check:function(){var stats=calcStats();return stats.streak>=5}},
-  {id:'streak10',icon:'&#x1F31F;',name:'记忆大师',desc:'连续答对10张不重置',check:function(){var stats=calcStats();return stats.streak>=10}},
-  {id:'world',icon:'&#x1F30D;',name:'放眼世界',desc:'掌握所有世界史卡片',check:function(){var d=load();return CARDS.filter(c=>c.era.includes('世界')).every(c=>d[c.id]&&d[c.id].reps>0)}},
-  {id:'ancient',icon:'&#x1F3DB;',name:'上古通神',desc:'掌握所有先秦和秦汉卡片',check:function(){var d=load();return CARDS.filter(c=>c.era==='先秦'||c.era==='秦汉').every(c=>d[c.id]&&d[c.id].reps>0)}}
-];
-function renderAchievements(){
-  var el=document.getElementById('viewAchievements');
-  var html=ACHS.map(a=>{var ok=a.check();return'<div class="ach '+(ok?'unlocked':'locked')+'"><div class="ach-icon">'+a.icon+'<\/div><div class="ach-name">'+a.name+'<\/div><div class="ach-desc">'+a.desc+'<\/div><\/div>'}).join('');
-  el.innerHTML='<h2 style="font-family:var(--font);font-size:1.2rem;margin-bottom:20px;letter-spacing:2px">成就墙<\/h2><div class="ach-grid">'+html+'<\/div>';
-}
-function resetAll(){if(confirm('确定要重置所有学习进度吗？')){localStorage.removeItem(LS);localStorage.removeItem(LS_STREAK);renderCurrentView()}}
-document.querySelectorAll('.nav-tab').forEach(t=>{t.addEventListener('click',function(){switchView(this.dataset.view)})});
-document.addEventListener('keydown',function(e){
-  if(view!=='review'||reviewQ.length===0)return;
-  if(e.key===' '||e.key==='Enter'){e.preventDefault();if(!cardFlipped)flipCard()}
-  if(cardFlipped){
-    if(e.key==='1')rateCard(0);
-    if(e.key==='2')rateCard(1);
-    if(e.key==='3')rateCard(2);
-    if(e.key==='4')rateCard(3);
+
+// ============================================================
+//  Events
+// ============================================================
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    this.classList.add('active');
+    var view = this.dataset.tab;
+    document.getElementById('viewReview').style.display = view === 'review' ? '' : 'none';
+    document.getElementById('viewBrowse').style.display = view === 'browse' ? '' : 'none';
+    document.getElementById('viewManage').style.display = view === 'manage' ? '' : 'none';
+    if (view === 'browse') renderBrowse();
+    if (view === 'manage') renderManage();
+  });
+});
+
+document.getElementById('btnNewBank').addEventListener('click', function() {
+  document.getElementById('modalOverlay').classList.add('open');
+});
+document.getElementById('btnCancelModal').addEventListener('click', function() {
+  document.getElementById('modalOverlay').classList.remove('open');
+});
+document.getElementById('btnSaveBank').addEventListener('click', function() {
+  var name = document.getElementById('bankNameInput').value.trim();
+  if (!name) { alert('请输入题库名称'); return; }
+  var desc = document.getElementById('bankDescInput').value.trim();
+  var cardsText = document.getElementById('bankCardsInput').value;
+  if (!cardsText.trim()) { alert('请输入至少一张卡片'); return; }
+  createBank(name, desc, cardsText);
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.getElementById('bankNameInput').value = '';
+  document.getElementById('bankDescInput').value = '';
+  document.getElementById('bankCardsInput').value = '';
+});
+
+document.getElementById('btnImport').addEventListener('click', function() {
+  document.getElementById('importOverlay').classList.add('open');
+});
+document.getElementById('btnCancelImport').addEventListener('click', function() {
+  document.getElementById('importOverlay').classList.remove('open');
+});
+document.getElementById('btnDoImport').addEventListener('click', function() {
+  try {
+    var data = JSON.parse(document.getElementById('importInput').value);
+    var name = document.getElementById('importNameInput').value.trim() || '导入的题库';
+    var cards = data.map(function(item) { return { q: item.q || item.question || '', a: item.a || item.answer || '', era: item.era || item.tag || '' }; });
+    var id = 'custom-' + Date.now();
+    banks.push({ id: id, name: name, desc: '导入题库', cards: cards });
+    currentBankId = id;
+    save();
+    renderBankGrid('bankGrid');
+    renderBankGrid('browseBankGrid');
+    renderManage();
+    renderStats();
+    renderCard();
+    document.getElementById('importOverlay').classList.remove('open');
+  } catch(e) {
+    alert('JSON 格式错误：' + e.message);
   }
 });
-renderReview();
+
+// Keyboard: Space to flip, 1-4 to rate
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  var fc = document.getElementById('flashcard');
+  if (!fc) return;
+  if (e.key === ' ' && !isFlipped) {
+    e.preventDefault();
+    fc.click();
+  }
+  if (isFlipped && e.key >= '1' && e.key <= '4') {
+    var btn = document.querySelector('#ratingBar .rate-btn[data-q="' + (parseInt(e.key) - 1) + '"]');
+    if (btn) btn.click();
+  }
+});
+
+// ============================================================
+//  Init
+// ============================================================
+load();
+renderBankGrid('bankGrid');
+renderBankGrid('browseBankGrid');
+renderStats();
+renderCard();
 </script>
 </body>
 </html>
