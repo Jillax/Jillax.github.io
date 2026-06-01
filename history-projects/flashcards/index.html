@@ -175,9 +175,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- Manage view -->
   <div id="viewManage" style="display:none">
-    <div style="margin-bottom:20px">
+    <div style="margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="modal-btn primary" id="btnNewBank">+ 创建新题库</button>
-      <button class="modal-btn secondary" id="btnImport" style="margin-left:8px">导入题库</button>
+      <button class="modal-btn secondary" id="btnImport">JSON 导入</button>
+      <label class="modal-btn secondary" style="display:inline-block;cursor:pointer;margin:0">
+        📂 文件导入
+        <input type="file" id="fileImport" multiple accept=".txt,.csv,.json,.md" style="display:none">
+      </label>
     </div>
     <div id="manageList"></div>
   </div>
@@ -582,6 +586,155 @@ document.getElementById('btnImport').addEventListener('click', function() {
 document.getElementById('btnCancelImport').addEventListener('click', function() {
   document.getElementById('importOverlay').classList.remove('open');
 });
+// ============================================================
+//  File Import
+// ============================================================
+document.getElementById('fileImport').addEventListener('change', function(e) {
+  var files = Array.from(e.target.files);
+  if (files.length === 0) return;
+
+  // Ask user: new bank or existing bank
+  var existingNames = banks.map(function(b, i) { return (i + 1) + '. ' + b.name + ' (' + b.cards.length + '张)'; }).join('\n');
+  var choice = prompt('选择目标题库：\n输入序号导入到现有题库，\n或输入新名称创建新题库：\n\n' + existingNames, files.length === 1 ? files[0].name.replace(/\.[^.]+$/, '') + '题库' : '');
+  if (!choice) return;
+
+  var bankName = choice;
+  var existingBank = null;
+  var choiceNum = parseInt(choice);
+  if (!isNaN(choiceNum) && choiceNum >= 1 && choiceNum <= banks.length) {
+    existingBank = banks[choiceNum - 1];
+  }
+
+  var allCards = [];
+  var pending = files.length;
+
+  files.forEach(function(file) {
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      var text = ev.target.result;
+      var parsed = parseFileToCards(text, file.name);
+      allCards = allCards.concat(parsed);
+      pending--;
+      if (pending === 0) {
+        if (allCards.length === 0) {
+          alert('未能从文件中解析出任何卡片。请检查文件格式。');
+          return;
+        }
+        if (existingBank) {
+          existingBank.cards = existingBank.cards.concat(allCards);
+          currentBankId = existingBank.id;
+        } else {
+          var id = 'custom-' + Date.now();
+          banks.push({ id: id, name: bankName, desc: '文件导入 · ' + files.length + '个文件', cards: allCards });
+          currentBankId = id;
+        }
+        save();
+        renderBankGrid('bankGrid');
+        renderBankGrid('browseBankGrid');
+        renderManage();
+        renderStats();
+        renderCard();
+        alert('成功导入 ' + allCards.length + ' 张卡片到题库「' + (existingBank ? existingBank.name : bankName) + '」');
+      }
+    };
+    reader.readAsText(file, 'utf-8');
+  });
+  e.target.value = '';
+});
+
+function parseFileToCards(text, filename) {
+  var cards = [];
+  var ext = filename.split('.').pop().toLowerCase();
+
+  // JSON format
+  if (ext === 'json') {
+    try {
+      var data = JSON.parse(text);
+      var arr = Array.isArray(data) ? data : (data.cards || data.items || data.data || []);
+      arr.forEach(function(item) {
+        var q = item.q || item.question || item.front || item.term || '';
+        var a = item.a || item.answer || item.back || item.definition || '';
+        var era = item.era || item.tag || item.category || item.label || '';
+        if (q && a) cards.push({ q: q, a: a, era: era });
+      });
+      return cards;
+    } catch(e) {}
+  }
+
+  // Markdown format: ## Q / A style
+  if (ext === 'md') {
+    var sections = text.split(/^##\s+/m).filter(function(s) { return s.trim(); });
+    sections.forEach(function(sec) {
+      var lines = sec.trim().split('\n');
+      var q = lines[0].trim();
+      var a = lines.slice(1).join('\n').trim();
+      if (q && a) cards.push({ q: q, a: a, era: '' });
+    });
+    if (cards.length > 0) return cards;
+  }
+
+  // CSV / TSV format
+  if (ext === 'csv' || text.indexOf('\t') > -1) {
+    var delimiter = text.indexOf('\t') > -1 ? '\t' : ',';
+    var lines = text.trim().split('\n');
+    lines.forEach(function(line) {
+      line = line.trim();
+      if (!line || line.startsWith('#')) return;
+      var parts = line.split(delimiter).map(function(s) { return s.trim().replace(/^"|"$/g, ''); });
+      if (parts.length >= 2 && parts[0] && parts[1]) {
+        cards.push({ q: parts[0], a: parts[1], era: parts[2] || '' });
+      }
+    });
+    if (cards.length > 0) return cards;
+  }
+
+  // Plain text: auto-detect format
+  // Try pipe-separated first
+  var pipeLines = text.trim().split('\n').filter(function(l) { return l.trim() && l.indexOf('|') > -1; });
+  if (pipeLines.length > 0) {
+    pipeLines.forEach(function(line) {
+      var parts = line.split('|').map(function(s) { return s.trim(); });
+      if (parts.length >= 2 && parts[0] && parts[1]) {
+        cards.push({ q: parts[0], a: parts[1], era: parts[2] || '' });
+      }
+    });
+    if (cards.length > 0) return cards;
+  }
+
+  // Try Q/A pattern
+  var qaBlocks = text.split(/(?=^[QqQ问]\s*[：:.:?？]|^[AaA答]\s*[：:.:?？]|^\d+[.、]\s)/m).filter(function(s) { return s.trim(); });
+  var qaCards = [];
+  var currentQ = '';
+  qaBlocks.forEach(function(block) {
+    block = block.trim();
+    var qMatch = block.match(/^[QqQ问]\s*[：:.:?？]\s*([\s\S]*)/);
+    var aMatch = block.match(/^[AaA答]\s*[：:.:?？]\s*([\s\S]*)/);
+    var numMatch = block.match(/^\d+[.、]\s*([\s\S]*)/);
+    if (qMatch) { currentQ = qMatch[1].trim(); }
+    else if (aMatch && currentQ) { qaCards.push({ q: currentQ, a: aMatch[1].trim(), era: '' }); currentQ = ''; }
+    else if (numMatch && !currentQ) { currentQ = numMatch[1].split('\n')[0].trim(); }
+  });
+  if (qaCards.length > 0) return qaCards;
+
+  // Try blank-line separated pairs
+  var pairs = text.split(/\n\s*\n/).filter(function(s) { return s.trim(); });
+  for (var i = 0; i < pairs.length - 1; i += 2) {
+    var q2 = pairs[i].trim();
+    var a2 = pairs[i + 1].trim();
+    if (q2 && a2 && q2.length < 500 && a2.length < 2000) {
+      cards.push({ q: q2, a: a2, era: '' });
+    }
+  }
+  if (cards.length > 0) return cards;
+
+  // Last resort: each line as Q, next line as A
+  var allLines = text.trim().split('\n').filter(function(l) { return l.trim(); });
+  for (var j = 0; j < allLines.length - 1; j += 2) {
+    cards.push({ q: allLines[j].trim(), a: allLines[j + 1].trim(), era: '' });
+  }
+  return cards;
+}
+
 document.getElementById('btnDoImport').addEventListener('click', function() {
   try {
     var data = JSON.parse(document.getElementById('importInput').value);
