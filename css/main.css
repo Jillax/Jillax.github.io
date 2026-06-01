@@ -446,11 +446,8 @@ footer::before {
 
 /* Hide native cursor on desktop */
 @media (min-width: 1024px) {
-    body {
-        cursor: none;
-    }
-    a, button, .btn, [role="button"], input, textarea, select {
-        cursor: none;
+    *, *::before, *::after {
+        cursor: none !important;
     }
 }
 
