@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-01T16:43:58Z",
+  "updated": "2026-06-02T14:58:15Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "36246934",
+      "title": "马特·莱夫：仅限粉丝 / Matt Rife: Only Fans",
+      "author": "2021-12-17(美国) / 马特·莱夫 / 美国 / 马特·莱夫 / 68分钟 / 马特·莱夫：仅限粉丝 / 喜剧 / 脱口秀 / 马特·莱夫 Matt Rife / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2893274103.jpg",
+      "url": "https://movie.douban.com/subject/36246934/",
+      "rating": 4,
+      "tags": [],
+      "comment": "结构节奏确实一般中后段有点垮了，但是真诚可以的",
+      "date": "2026-06-02",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "27132510",
       "title": "教宗的承继 / The Two Popes",
@@ -9522,7 +9535,7 @@
     {
       "id": "5045678",
       "title": "大鱼海棠",
-      "author": "2016-07-08(中国大陆) / 季冠霖 / 苏尚卿 / 许魏洲 / 金士杰 / 杨婷 / 潘淑兰 / 九儿 / 王德顺 / 张媛媛 / 薛立方 / 中国大陆 / www.xxbt.com / 梁旋 / 张春 / 105分钟 / 剧情 / 动画 / 奇幻 / 梁旋 Xuan Liang / 汉语普通话",
+      "author": "2016-07-08(中国大陆) / 2026-06(中国大陆重映) / 季冠霖 / 苏尚卿 / 许魏洲 / 金士杰 / 杨婷 / 潘淑兰 / 九儿 / 王德顺 / 张媛媛 / 薛立方 / 中国大陆 / www.xxbt.com / 梁旋 / 张春 / 105分钟 / 剧情 / 动画 / 奇幻 / 梁旋 Xuan Liang / 汉语普通话",
       "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2361744534.jpg",
       "url": "https://movie.douban.com/subject/5045678/",
       "rating": 3,
