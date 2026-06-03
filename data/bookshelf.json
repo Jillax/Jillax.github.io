@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-02T14:58:15Z",
+  "updated": "2026-06-03T15:49:33Z",
   "books": [
     {
       "id": "2996046",
@@ -22,7 +22,7 @@
       "url": "https://book.douban.com/subject/2026281/",
       "rating": 4,
       "tags": [],
-      "comment": "除了立场之外没什么，非常好的分析让人思考。书里的中美合作G2时代挺理想化的。",
+      "comment": "除了立场之外没什么，非常好的分析让人思考。书里的中美合作G2时代挺理想化的但也不是不可能，中美从不是对比，中美-北欧才是",
       "date": "2025-10-20",
       "status": "collect",
       "category": "book"
@@ -2032,6 +2032,19 @@
   ],
   "movies": [
     {
+      "id": "34937935",
+      "title": "杀马特我爱你",
+      "author": "2019-12(广东时代美术馆) / 罗福兴 / 中国大陆 / 李一凡 / 125分钟 / 纪录片 / 汉语普通话",
+      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2641960425.jpg",
+      "url": "https://movie.douban.com/subject/34937935/",
+      "rating": 5,
+      "tags": [],
+      "comment": "很久之前看的，特别好无论是选题还是内容",
+      "date": "2026-06-03",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
       "id": "36246934",
       "title": "马特·莱夫：仅限粉丝 / Matt Rife: Only Fans",
       "author": "2021-12-17(美国) / 马特·莱夫 / 美国 / 马特·莱夫 / 68分钟 / 马特·莱夫：仅限粉丝 / 喜剧 / 脱口秀 / 马特·莱夫 Matt Rife / 英语",
@@ -2039,7 +2052,7 @@
       "url": "https://movie.douban.com/subject/36246934/",
       "rating": 4,
       "tags": [],
-      "comment": "结构节奏确实一般中后段有点垮了，但是真诚可以的",
+      "comment": "结构节奏确实一般中后段有点垮了，但挺真诚的",
       "date": "2026-06-02",
       "status": "collect",
       "category": "movie"
@@ -2065,7 +2078,7 @@
       "url": "https://movie.douban.com/subject/34951007/",
       "rating": 5,
       "tags": [],
-      "comment": "哎，最后变得沉重又现实。年少风雅鲜衣怒马也不过一刹那，往事回味也不过弹指一挥，人生若只如初见。少了一块的Jimmy，兜兜转转最后选择不再逃避。自愿承担责任却潜意识总不愿回答时光机问题，也许就像忏悔录里不一定有忏悔，还可能是愿赌服输后的自洽坦然。",
+      "comment": "哎，最后变得沉重又现实。年少风雅鲜衣怒马不过一刹那，往事回味不过弹指一挥，人生若只如初见。missing piece的Jimmy，兜兜转转最后选择不再逃避。自愿承担责任却潜意识总不愿回答时光机问题，也许就像忏悔录里不一定有忏悔，还可能是愿赌服输后的自洽坦然。",
       "date": "2026-04-08",
       "status": "collect",
       "category": "movie"
@@ -2104,7 +2117,7 @@
       "url": "https://movie.douban.com/subject/27077785/",
       "rating": 5,
       "tags": [],
-      "comment": "soooo goooooooooooooood.literally me文学上的我。半真半假的感情，行至一半的发自内心无比真诚，恰恰是真实源自真心，所以自知其威力。但只能是行至一半。一部分是对真实性的恐惧，一部分是对真实性的嘲弄，一部分是享受那种预见掌控别人将有言行情感的感觉，Jimmy是源自儿时的silp和父亲的诚实好欺，我则是源自小学时为应付应试所做的那些既不得已为之又乐在其中的play。一切熟悉又享受。jimmy变成saul goodman几乎是必然，甚至从事法律也是必然，因为这就是他所热爱和享受的东西，这也许就是所谓的professional pride吧。这个人物真是浑然天成，一切都是如此自洽和完整又真实丰富，真正独一无二的文化产品，real cinema.",
+      "comment": "soooo goooooooooooooood.literally me文学上的我。半真半假的感情，行至一半的发自内心无比真诚，恰恰是真实源自真心，所以自知其威力。但只能是行至一半。一部分是对真实性的恐惧，一部分是对真实性的嘲弄，一部分是享受那种预见掌控别人将有言行情感的感觉，Jimmy是源自儿时的silp和父亲的诚实好欺，我大概源自小学时为应付应试所做的那些既不得已为之又乐在其中的play。一切熟悉又享受。jimmy变成saul goodman几乎是必然，甚至从事法律也是必然，因为这就是他所热爱和享受的东西，这也许就是所谓的professional pride吧。这个人物真是浑然天成，一切都是如此自洽和完整又真实丰富，真正独一无二的文化产品，real cinema.",
       "date": "2026-03-26",
       "status": "collect",
       "category": "movie"
@@ -6155,7 +6168,7 @@
     {
       "id": "11610893",
       "title": "村小的孩子",
-      "author": "蒋云洁 / 中国大陆 / 蒋能杰 / 95分钟 / 纪录片",
+      "author": "2014-03-22(中国大陆) / 蒋云洁 / 中国大陆 / 蒋能杰 / 95分钟 / 纪录片 / 湖南当地方言",
       "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2508905918.jpg",
       "url": "https://movie.douban.com/subject/11610893/",
       "rating": 4,
@@ -9535,8 +9548,8 @@
     {
       "id": "5045678",
       "title": "大鱼海棠",
-      "author": "2016-07-08(中国大陆) / 2026-06(中国大陆重映) / 季冠霖 / 苏尚卿 / 许魏洲 / 金士杰 / 杨婷 / 潘淑兰 / 九儿 / 王德顺 / 张媛媛 / 薛立方 / 中国大陆 / www.xxbt.com / 梁旋 / 张春 / 105分钟 / 剧情 / 动画 / 奇幻 / 梁旋 Xuan Liang / 汉语普通话",
-      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2361744534.jpg",
+      "author": "2016-07-08(中国大陆) / 2026-06-19(中国大陆重映) / 季冠霖 / 苏尚卿 / 许魏洲 / 金士杰 / 杨婷 / 潘淑兰 / 九儿 / 王德顺 / 张媛媛 / 薛立方 / 中国大陆 / www.xxbt.com / 梁旋 / 张春 / 105分钟 / 剧情 / 动画 / 奇幻 / 梁旋 Xuan Liang / 汉语普通话",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2932950307.jpg",
       "url": "https://movie.douban.com/subject/5045678/",
       "rating": 3,
       "tags": [],
