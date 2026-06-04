@@ -17,12 +17,19 @@
     border-right: 1px solid var(--border-light);
 }
 .stat-item:last-child { border-right: none; }
+.stat-item:hover {
+    background: rgba(155, 89, 255, 0.04);
+}
+.stat-item:hover .stat-num {
+    text-shadow: 0 0 16px var(--purple-glow), 0 0 40px rgba(155,89,255,0.08);
+}
 .stat-num {
     font-family: var(--font-display);
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text);
     font-variation-settings: 'SOFT' 60, 'WONK' 0;
+    text-shadow: 0 0 10px var(--purple-glow);
 }
 .stat-label {
     display: block;
@@ -48,11 +55,11 @@
     background: none; cursor: pointer;
     transition: all 0.3s ease; font-family: var(--font-body);
 }
-.filter-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
-.filter-tab.active { border-color: var(--gold-dim); background: var(--gold-dim); color: var(--gold); }
+.filter-tab:hover { border-color: var(--purple-soft); color: var(--purple); }
+.filter-tab.active { border-color: var(--purple); background: var(--purple-soft); color: var(--purple-bright); }
 .filter-tab .count { font-size: 0.6rem; color: var(--text-faint); margin-left: 3px; }
 .filter-tab.tag { font-size: 0.68rem; padding: 4px 12px; }
-.filter-tab.tag.active { background: transparent; border-color: var(--gold-soft); color: var(--gold-soft); }
+.filter-tab.tag.active { background: transparent; border-color: var(--purple-bright); color: var(--purple-bright); text-shadow: 0 0 6px var(--purple-glow); }
 
 .search-wrap { margin-bottom: 16px; position: relative; }
 .search-input {
@@ -61,7 +68,7 @@
     color: var(--text-soft); font-family: var(--font-body);
     outline: none; transition: border-color 0.3s ease; box-sizing: border-box;
 }
-.search-input:focus { border-color: var(--gold-dim); }
+.search-input:focus { border-color: var(--purple); box-shadow: 0 0 12px var(--purple-glow); }
 .search-input::placeholder { color: var(--text-faint); font-style: italic; }
 
 /* ===== Sort Bar ===== */
@@ -82,6 +89,24 @@
 .trans-card {
     display: flex; gap: 20px;
     padding: 20px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+.trans-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--purple);
+    opacity: 0.3;
+    transition: opacity 0.3s;
+}
+.trans-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 8px var(--purple-glow);
+}
+.trans-card:hover {
+    background: rgba(155,89,255,0.04);
 }
 .trans-card.hidden { display: none; }
 .trans-cover {
@@ -94,11 +119,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: border-color 0.3s;
+}
+.trans-card:hover .trans-cover {
+    border-color: var(--purple);
 }
 .trans-cover img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.trans-card:hover .trans-cover img {
+    transform: scale(1.06);
 }
 .trans-cover .placeholder {
     font-size: 1.5rem;
@@ -129,8 +162,12 @@
     color: var(--text-soft);
     letter-spacing: 0.5px;
 }
-.trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--olive, #7a8b6e); }
-.trans-status.ongoing { border-color: var(--gold-dim); color: var(--gold-soft); }
+.trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--neon-cyan); }
+.trans-status.ongoing { border-color: var(--amber); color: var(--amber); animation: ongoingGlow 2s ease-in-out infinite; }
+@keyframes ongoingGlow {
+    0%, 100% { box-shadow: 0 0 4px rgba(255,170,64,0.2); }
+    50% { box-shadow: 0 0 12px rgba(255,170,64,0.4); }
+}
 .trans-source {
     font-size: 0.7rem;
     color: var(--text-faint);
@@ -167,11 +204,11 @@
 }
 .trans-link {
     font-size: 0.75rem;
-    color: var(--gold-soft);
+    color: var(--purple-bright);
     transition: color 0.3s ease;
     display: inline-flex; align-items: center; gap: 4px;
 }
-.trans-link:hover { color: var(--gold); }
+.trans-link:hover { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink-glow); }
 .trans-date {
     font-size: 0.65rem;
     color: var(--text-faint);

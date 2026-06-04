@@ -80,17 +80,30 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
+    function animateNum(el, endVal) {
+        var duration = 1000;
+        var startTime = null;
+        function step(ts) {
+            if (!startTime) startTime = ts;
+            var p = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(endVal * eased);
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = fmtNum(endVal);
+        }
+        requestAnimationFrame(step);
+    }
+
     function renderStats(items) {
         var total = items.length;
         var published = items.filter(function(i) { return i.status === '已完成'; }).length;
         var totalPlays = items.filter(function(i) { return i.status === '已完成'; }).reduce(function(s, i) { return s + (i.play || 0); }, 0);
         var avgPlay = published > 0 ? Math.round(totalPlays / published) : 0;
 
-        document.getElementById('statTotal').textContent = total;
-        document.getElementById('statPlays').textContent = fmtNum(totalPlays);
-        document.getElementById('statAvg').textContent = fmtNum(avgPlay);
-        document.getElementById('statPublished').textContent = published;
-
+        animateNum(document.getElementById('statTotal'), total);
+        animateNum(document.getElementById('statPlays'), totalPlays);
+        animateNum(document.getElementById('statAvg'), avgPlay);
+        animateNum(document.getElementById('statPublished'), published);
     }
 
     function renderTags(items) {
