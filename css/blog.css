@@ -16,7 +16,7 @@
     transition: border-color 0.3s ease;
 }
 .blog-search::placeholder { color: var(--text-faint); }
-.blog-search:focus { border-color: var(--gold-dim); }
+.blog-search:focus { border-color: var(--purple); box-shadow: 0 0 12px var(--purple-glow); }
 
 /* ---- 标签页 ---- */
 .blog-tabs {
@@ -39,8 +39,9 @@
 }
 .blog-tab:hover { color: var(--text-soft); }
 .blog-tab.active {
-    color: var(--text);
-    border-bottom-color: var(--gold);
+    color: var(--purple-bright);
+    border-bottom-color: var(--purple);
+    text-shadow: 0 0 8px var(--purple-glow);
 }
 .blog-tab .count {
     font-size: 0.68rem;
@@ -114,7 +115,7 @@
     background: none;
     padding: 0;
 }
-.article-back:hover { color: var(--gold); }
+.article-back:hover { color: var(--purple); }
 
 .article-header {
     margin-bottom: 44px;
@@ -158,18 +159,18 @@
 .article-content strong { color: var(--text); font-weight: 500; }
 .article-content em { font-style: italic; }
 .article-content a {
-    color: var(--gold-soft);
-    border-bottom: 1px solid var(--gold-dim);
+    color: var(--purple-bright);
+    border-bottom: 1px solid var(--purple-soft);
     transition: color 0.3s ease;
 }
-.article-content a:hover { color: var(--gold); }
+.article-content a:hover { color: var(--neon-pink); }
 .article-content blockquote {
-    border-left: 2px solid var(--gold-dim);
+    border-left: 2px solid var(--purple);
     padding: 14px 20px;
     margin: 22px 0;
     color: var(--text-muted);
     font-style: italic;
-    background: var(--border-light);
+    background: var(--purple-soft);
 }
 .article-content blockquote p:last-child { margin-bottom: 0; }
 .article-content ul, .article-content ol {
@@ -187,10 +188,10 @@
     font-size: 0.82em;
     background: var(--border-light);
     padding: 2px 6px;
-    color: var(--gold-soft);
+    color: var(--purple-bright);
 }
 .article-content pre {
-    background: var(--border-light);
+    background: var(--bg-surface);
     padding: 20px;
     margin: 22px 0;
     overflow-x: auto;
@@ -262,8 +263,8 @@
     word-wrap: break-word;
 }
 .pin-content a {
-    color: var(--gold-soft);
-    border-bottom: 1px solid var(--gold-dim);
+    color: var(--purple-bright);
+    border-bottom: 1px solid var(--purple-soft);
 }
 .pin-images {
     display: grid;
@@ -420,7 +421,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--gold);
+    background: var(--purple);
     z-index: 9999;
     transition: width 0.1s linear;
     pointer-events: none;
@@ -438,8 +439,8 @@
 .excerpt-source-badge {
     display: inline-block;
     font-size: 0.75rem;
-    color: var(--gold-soft);
-    border: 1px solid var(--gold-dim);
+    color: var(--neon-cyan);
+    border: 1px solid var(--neon-cyan-soft);
     padding: 3px 10px;
     margin-bottom: 16px;
     font-family: var(--font-display);
