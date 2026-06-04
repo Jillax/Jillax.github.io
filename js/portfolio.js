@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(r) { return r.json(); })
         .then(function(data) {
             renderStats(data);
+            renderTicker(data);
             if (document.getElementById('lineChart')) renderLineChart(data);
             renderChart(data);
             renderPctBars(data);
@@ -35,6 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function fmt(n) { return '¥' + Math.round(n).toLocaleString(); }
     function fmtGain(n) { return (n >= 0 ? '+' : '') + '¥' + Math.round(Math.abs(n)).toLocaleString(); }
+
+    function renderTicker(data) {
+        var ticker = document.getElementById('pfTicker');
+        if (!ticker) return;
+        var items = [];
+        data.categories.forEach(function(cat) {
+            cat.items.forEach(function(item) {
+                var c = calcItem(item);
+                var gain = c.value - c.cost;
+                var pct = c.cost > 0 ? ((gain / c.cost) * 100).toFixed(2) : '0.00';
+                var isPos = gain >= 0;
+                items.push('<span class="pf-ticker-item">' +
+                    '<span class="pf-ticker-name">' + item.name + '</span>' +
+                    '<span class="pf-ticker-pct-' + (isPos ? 'pos' : 'neg') + '">' + (isPos ? '+' : '') + pct + '%</span>' +
+                    '</span>');
+            });
+        });
+        // Duplicate for seamless loop
+        var html = items.join('<span class="pf-ticker-dot">◆</span>');
+        ticker.innerHTML = '<div class="pf-ticker-inner">' + html + '<span class="pf-ticker-dot">◆</span>' + html + '</div>';
+    }
 
     function animateNumber(el, endVal, prefix, decimals) {
         prefix = prefix || '';

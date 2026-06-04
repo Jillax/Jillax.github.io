@@ -10,6 +10,50 @@
     --red-bg: rgba(255, 107, 138, 0.12);
 }
 
+/* ---- Ticker Bar ---- */
+.pf-ticker {
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    margin-bottom: 32px;
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+.pf-ticker-inner {
+    display: inline-flex;
+    gap: 40px;
+    animation: tickerScroll 25s linear infinite;
+}
+.pf-ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.pf-ticker-name {
+    color: var(--text-soft);
+}
+.pf-ticker-pct-pos {
+    color: var(--green);
+    text-shadow: 0 0 6px var(--green-bg);
+}
+.pf-ticker-pct-neg {
+    color: var(--red);
+    text-shadow: 0 0 6px var(--red-bg);
+}
+.pf-ticker-dot {
+    color: var(--text-faint);
+    font-size: 0.5rem;
+}
+@keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 /* ---- Hero Banner ---- */
 .pf-hero-banner {
     display: flex;
