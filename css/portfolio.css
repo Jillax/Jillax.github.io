@@ -109,6 +109,15 @@
     margin-bottom: 16px;
     position: relative;
 }
+.pf-hero-subtitle-fc {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
 /* Glitch effect */
 .pf-hero-title::before,
 .pf-hero-title::after {
