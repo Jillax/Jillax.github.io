@@ -297,7 +297,7 @@
 }
 .rating-fill {
     height: 100%;
-    background: var(--gold, #c4a35a);
+    background: var(--purple, #9b59ff);
     border-radius: 2px;
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
