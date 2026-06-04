@@ -16,7 +16,7 @@
         { href: 'projects.html',  label: '项目',   hide: '' },
         { href: 'portfolio.html', label: '投资',   hide: 'small' },
         { href: 'contact.html',   label: '联系',   hide: 'small' },
-        { href: 'share.html',     label: '分享',   hide: 'mobile' },
+        { href: 'share.html',     label: '画廊',   hide: 'mobile' },
         { href: 'translations.html', label: '译制', hide: 'mobile' },
         { href: 'bookshelf.html', label: '书影音', hide: 'mobile' },
         { href: 'blog.html',      label: '随笔',   hide: 'mobile' },
