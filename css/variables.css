@@ -1,0 +1,73 @@
+/* ============================================
+   Jillax.github.io — Design Tokens
+   Shared across all pages & history-projects
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+
+:root {
+    /* === VA-11 Hall-A Cyberpunk Theme === */
+    --bg: #0d0a1a;
+    --bg-soft: #130f24;
+    --bg-surface: #1a1530;
+    --bg-card: #1e1838;
+    --bg-nav: rgba(13, 10, 26, 0.88);
+
+    --text: #d4c8ef;
+    --text-soft: #a896cc;
+    --text-muted: #6b5a8a;
+    --text-faint: #3d2f5c;
+
+    /* Jill's signature purple palette */
+    --purple: #9b59ff;
+    --purple-bright: #b47aff;
+    --purple-soft: rgba(155, 89, 255, 0.15);
+    --purple-glow: rgba(155, 89, 255, 0.4);
+
+    /* Neon accent */
+    --neon-pink: #ff4da6;
+    --neon-pink-soft: rgba(255, 77, 166, 0.15);
+    --neon-pink-glow: rgba(255, 77, 166, 0.35);
+    --neon-cyan: #00e5ff;
+    --neon-cyan-soft: rgba(0, 229, 255, 0.12);
+
+    /* Warm accent */
+    --amber: #ffaa40;
+    --amber-soft: rgba(255, 170, 64, 0.12);
+    --green: #4ade80;
+    --red: #ff6b8a;
+
+    --border: rgba(155, 89, 255, 0.12);
+    --border-glow: rgba(155, 89, 255, 0.25);
+
+    --shadow: 0 4px 24px rgba(155, 89, 255, 0.08), 0 0 60px rgba(155, 89, 255, 0.04);
+    --shadow-neon: 0 0 20px rgba(155, 89, 255, 0.3), 0 0 60px rgba(155, 89, 255, 0.1);
+
+    --overlay-bg: #0d0a1a;
+
+    /* Typography */
+    --container: 1200px;
+    --container-text: 860px;
+    --font-display: 'Orbitron', 'Noto Sans SC', sans-serif;
+    --font-body: 'Rajdhani', 'Noto Sans SC', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-chinese: 'Noto Sans SC', sans-serif;
+    --font-serif: 'Noto Serif SC', Georgia, serif;
+    --base-scale: 1.15;
+}
+
+/* Light mode override */
+[data-theme="light"] {
+    --bg: #1a1530;
+    --bg-soft: #1e1838;
+    --bg-surface: #241e42;
+    --bg-card: #2a2350;
+    --bg-nav: rgba(26, 21, 48, 0.92);
+    --text: #ddd3f0;
+    --text-soft: #b8a6d8;
+    --text-muted: #7a68a0;
+    --text-faint: #4a3a6a;
+    --border: rgba(155, 89, 255, 0.15);
+    --border-glow: rgba(155, 89, 255, 0.3);
+    --overlay-bg: #1a1530;
+}
