@@ -225,36 +225,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var ctx = document.getElementById('allocationChart').getContext('2d');
         new Chart(ctx, {
-            type: 'radar',
+            type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
-                    data: values.map(function(v) { var t = values.reduce(function(a,b){return a+b;},0); return t > 0 ? (v/t*100) : 0; }),
-                    backgroundColor: 'rgba(155, 89, 255, 0.15)',
-                    borderColor: '#9b59ff',
-                    borderWidth: 2,
-                    pointBackgroundColor: colors,
-                    pointBorderColor: colors,
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 8,
-                    pointHoverBackgroundColor: '#fff',
-                    fill: true
+                    data: values,
+                    backgroundColor: colors,
+                    borderWidth: 0,
+                    spacing: 3,
+                    hoverOffset: 10
                 }]
             },
             options: {
                 responsive: true,
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(155, 89, 255, 0.1)', circular: true },
-                        angleLines: { color: 'rgba(155, 89, 255, 0.08)' },
-                        ticks: { display: false, backdropColor: 'transparent' },
-                        pointLabels: { color: '#d4c8ef', font: { family: 'Noto Sans SC', size: 10 }, padding: 8 }
-                    }
-                },
+                cutout: '62%',
                 plugins: {
-                    legend: { display: false },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#d4c8ef',
+                            font: { family: 'Noto Sans SC', size: 10 },
+                            padding: 12,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
                     tooltip: {
                         backgroundColor: 'rgba(13, 10, 26, 0.95)',
                         titleFont: { family: 'Noto Sans SC', size: 13 },
@@ -264,7 +259,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         borderColor: 'rgba(155, 89, 255, 0.3)',
                         borderWidth: 1,
                         callbacks: {
-                            label: function(ctx) { return labels[ctx.dataIndex] + ': ' + fmt(values[ctx.dataIndex]); }
+                            label: function(ctx) {
+                                var total = values.reduce(function(a, b) { return a + b; }, 0);
+                                var pct = ((ctx.parsed / total) * 100).toFixed(1);
+                                return fmt(ctx.parsed) + ' (' + pct + '%)';
+                            }
                         }
                     }
                 }
