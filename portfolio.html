@@ -18,6 +18,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body data-page="portfolio">
+    <!-- CRT Scanline overlay -->
+    <div style="position:fixed;inset:0;pointer-events:none;z-index:9998;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);mix-blend-mode:multiply" aria-hidden="true"></div>
     <noscript>
         <div style="text-align:center;padding:60px 20px;font-family:monospace;color:#b47aff;background:#0d0a1a">
             <h1>投资组合</h1>
@@ -37,7 +39,7 @@
         <div class="pf-hero-banner">
             <div class="pf-hero-left">
                 <div class="pf-hero-tag">GLITCH CITY SECURITIES</div>
-                <div class="pf-hero-title">JILLAX<br>FRONTIER CAPITAL</div>
+                <div class="pf-hero-title" data-text="JILLAX FRONTIER CAPITAL">JILLAX<br>FRONTIER CAPITAL</div>
                 <div class="pf-hero-belief">
                     <p>科技乐观主义投资者。</p>
                     <p>持续购入优质资产、保持在场，长期持有。</p>

@@ -36,6 +36,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function fmt(n) { return '¥' + Math.round(n).toLocaleString(); }
     function fmtGain(n) { return (n >= 0 ? '+' : '') + '¥' + Math.round(Math.abs(n)).toLocaleString(); }
 
+    function animateNumber(el, endVal, prefix, decimals) {
+        prefix = prefix || '';
+        decimals = decimals || 0;
+        var duration = 1200;
+        var startTime = null;
+        function step(ts) {
+            if (!startTime) startTime = ts;
+            var p = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            var v = endVal * eased;
+            el.textContent = prefix + (decimals > 0 ? v.toFixed(decimals) : Math.round(v).toLocaleString());
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = prefix + (decimals > 0 ? endVal.toFixed(decimals) : Math.round(endVal).toLocaleString());
+        }
+        requestAnimationFrame(step);
+    }
+
     function renderHoldDays(data) {
         if (!data.history || data.history.length === 0) return;
         var firstDate = new Date(data.history[0].date);
@@ -58,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var pct = totalCost > 0 ? ((gain / totalCost) * 100).toFixed(2) : '0.00';
         var isPos = gain >= 0;
 
-        document.getElementById('totalValue').textContent = fmt(totalValue);
+        animateNumber(document.getElementById('totalValue'), totalValue, '¥');
         var totalCostEl = document.getElementById('totalCost');
         if (totalCostEl) totalCostEl.textContent = fmt(totalCost);
 
         var gainEl = document.getElementById('totalGain');
         gainEl.className = 'pf-hero-stat-value ' + (isPos ? 'green' : 'red');
-        gainEl.textContent = fmtGain(gain);
+        animateNumber(gainEl, Math.abs(gain), (isPos ? '+¥' : '-¥'));
         document.getElementById('gainPct').textContent = (isPos ? '+' : '') + pct + '%';
     }
 

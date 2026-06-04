@@ -20,6 +20,18 @@
     margin-bottom: 48px;
     border-bottom: 1px solid var(--border);
     position: relative;
+    overflow: hidden;
+}
+/* HUD corner decorations */
+.pf-hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px; height: 40px;
+    border-top: 2px solid var(--neon-cyan);
+    border-left: 2px solid var(--neon-cyan);
+    opacity: 0.6;
+    box-shadow: -4px -4px 12px var(--neon-cyan-soft);
 }
 .pf-hero-banner::after {
     content: '';
@@ -27,9 +39,10 @@
     bottom: -1px;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(to right, var(--purple), var(--neon-pink), var(--neon-cyan));
-    opacity: 0.5;
+    height: 2px;
+    background: linear-gradient(to right, var(--neon-cyan), var(--purple), var(--neon-pink));
+    opacity: 0.6;
+    box-shadow: 0 0 12px var(--purple-glow);
 }
 .pf-hero-left {
     flex: 1;
@@ -50,6 +63,41 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 16px;
+    position: relative;
+}
+/* Glitch effect */
+.pf-hero-title::before,
+.pf-hero-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.pf-hero-title::before {
+    color: var(--neon-cyan);
+    z-index: -1;
+    animation: glitch1 3s infinite linear alternate-reverse;
+}
+.pf-hero-title::after {
+    color: var(--neon-pink);
+    z-index: -2;
+    animation: glitch2 2s infinite linear alternate-reverse;
+}
+@keyframes glitch1 {
+    0%, 90%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+    92% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 1px); }
+    94% { clip-path: inset(50% 0 20% 0); transform: translate(2px, -1px); }
+    96% { clip-path: inset(10% 0 80% 0); transform: translate(-2px, 0); }
+    98% { clip-path: inset(70% 0 10% 0); transform: translate(1px, 2px); }
+}
+@keyframes glitch2 {
+    0%, 88%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+    90% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+    93% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 2px); }
+    95% { clip-path: inset(80% 0 5% 0); transform: translate(1px, 0); }
+    97% { clip-path: inset(5% 0 90% 0); transform: translate(-1px, -2px); }
 }
 .pf-hero-belief {
     margin-bottom: 20px;
@@ -102,6 +150,15 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--text);
+    position: relative;
+}
+/* Number counter glow pulse */
+.pf-hero-stat-value[data-animating] {
+    animation: numPulse 0.08s ease-in-out;
+}
+@keyframes numPulse {
+    0%, 100% { text-shadow: none; }
+    50% { text-shadow: 0 0 12px var(--purple-glow); }
 }
 .pf-hero-stat-value.pf-mono {
     font-family: var(--font-mono);
@@ -111,8 +168,24 @@
     font-size: 0.75rem;
     color: var(--text-muted);
 }
-.pf-hero-stat-value.green { color: var(--green); text-shadow: 0 0 10px var(--green-bg); }
-.pf-hero-stat-value.red { color: var(--red); text-shadow: 0 0 10px var(--red-bg); }
+.pf-hero-stat-value.green {
+    color: var(--green);
+    text-shadow: 0 0 10px var(--green-bg);
+    animation: breatheGreen 3s ease-in-out infinite;
+}
+.pf-hero-stat-value.red {
+    color: var(--red);
+    text-shadow: 0 0 10px var(--red-bg);
+    animation: breatheRed 3s ease-in-out infinite;
+}
+@keyframes breatheGreen {
+    0%, 100% { text-shadow: 0 0 6px var(--green-bg); }
+    50% { text-shadow: 0 0 18px var(--green-bg), 0 0 40px rgba(74,222,128,0.08); }
+}
+@keyframes breatheRed {
+    0%, 100% { text-shadow: 0 0 6px var(--red-bg); }
+    50% { text-shadow: 0 0 18px var(--red-bg), 0 0 40px rgba(255,107,138,0.08); }
+}
 
 /* ---- Section Title ---- */
 .pf-section-title {
@@ -126,6 +199,18 @@
 
 /* ---- 区块 ---- */
 .section { margin-bottom: 56px; }
+.section-title-icon {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--neon-cyan);
+    margin-right: 8px;
+    box-shadow: 0 0 8px var(--neon-cyan-soft);
+    animation: titleBlink 2s ease-in-out infinite;
+}
+@keyframes titleBlink {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
 
 /* ---- 走势图 ---- */
 .line-chart-box {
@@ -234,6 +319,21 @@
     border-bottom: 1px solid var(--border);
     background: rgba(155, 89, 255, 0.03);
     letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+/* Scanning line effect */
+.terminal-header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(155,89,255,0.08), transparent);
+    animation: termScan 4s ease-in-out infinite;
+}
+@keyframes termScan {
+    0% { left: -60%; }
+    100% { left: 100%; }
 }
 .terminal-prompt {
     color: var(--neon-cyan);
@@ -282,7 +382,7 @@
 
 /* 可展开行 */
 .item-row { cursor: pointer; user-select: none; }
-.item-row:hover td { color: var(--text); background: rgba(155, 89, 255, 0.03); }
+.item-row:hover td { color: var(--text); background: rgba(155, 89, 255, 0.06); box-shadow: inset 0 0 20px rgba(155, 89, 255, 0.04); }
 .item-row .arrow {
     display: inline-block;
     width: 16px;
