@@ -1,23 +1,38 @@
-# 依赖
+# Dependencies
 node_modules/
 package-lock.json
 
-# 系统文件
+# System files
 .DS_Store
 Thumbs.db
 Desktop.ini
+*.tmp
 
-# 编辑器
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# 环境变量
+# Environment
 .env
 .env.local
+.env.*.local
 
-# Playwright 浏览器缓存
+# Python (dev scripts)
+__pycache__/
+*.pyc
+*.pyo
+bge_env/
+mineru_env/
+
+# Build/test artifacts
 playwright-report/
 test-results/
+
+# Local dev scripts (not needed for deploy)
+scripts/
+
+# Logs
+*.log
