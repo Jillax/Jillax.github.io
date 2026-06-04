@@ -114,9 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return {
             grid: isLight ? 'rgba(44,40,36,0.06)' : 'rgba(255,255,255,0.06)',
             text: isLight ? '#8c7e6c' : '#8f8271',
-            gold: '#c4a35a',
-            fillTop: 'rgba(196,163,90,0.06)',
-            fillBottom: 'rgba(196,163,90,0.005)'
+            gold: '#9b59ff',
+            fillTop: 'rgba(155,89,255,0.06)',
+            fillBottom: 'rgba(155,89,255,0.005)'
         };
     }
 
