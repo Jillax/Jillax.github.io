@@ -302,14 +302,14 @@
 /* 已屏蔽想法 */
 .pin-blocked {
     opacity: 0.6;
-    border-left: 2px solid var(--gold-dim);
+    border-left: 2px solid var(--amber);
     padding-left: 14px !important;
 }
 .pin-blocked .pin-header { opacity: 0.7; }
 .pin-blocked-badge {
     font-size: 0.58rem;
-    color: var(--gold-soft);
-    border: 1px solid var(--gold-dim);
+    color: var(--amber);
+    border: 1px solid var(--amber-soft);
     border-radius: 2px;
     padding: 0 6px;
     margin-left: auto;
@@ -325,8 +325,8 @@
     color: var(--text-faint);
 }
 .pin-source a {
-    color: var(--gold-soft);
-    border-bottom: 1px solid var(--gold-dim);
+    color: var(--purple-bright);
+    border-bottom: 1px solid var(--purple-soft);
 }
 
 /* ============================================
@@ -355,7 +355,7 @@
     color: var(--text);
     transition: color 0.3s ease;
 }
-.article-card-title a:hover { color: var(--gold-soft); }
+.article-card-title a:hover { color: var(--purple-bright); }
 .article-card-meta {
     display: flex;
     gap: 12px;
