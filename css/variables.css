@@ -7,6 +7,11 @@
 
 :root {
     /* === VA-11 Hall-A Cyberpunk Theme === */
+    /* CSS fallback values for older browsers */
+    background-color: #0d0a1a;
+    color: #d4c8ef;
+    font-family: 'Rajdhani', 'Noto Sans SC', sans-serif;
+
     --bg: #0d0a1a;
     --bg-soft: #130f24;
     --bg-surface: #1a1530;
