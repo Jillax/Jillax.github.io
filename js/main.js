@@ -144,6 +144,13 @@
     animateGlow();
 })();
 
+// ===== Service Worker =====
+(function() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(function() {});
+    }
+})();
+
 // ===== Custom Cursor =====
 (function() {
     if (window.innerWidth < 1024) return; // Disable on tablets/mobile
