@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(r) { return r.json(); })
         .then(function(data) {
             renderStats(data);
-            renderLineChart(data);
+            if (document.getElementById('lineChart')) renderLineChart(data);
             renderChart(data);
             renderPctBars(data);
             renderTable(data);

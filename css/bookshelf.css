@@ -269,6 +269,45 @@
     overflow: hidden;
 }
 
+/* ---- 评分分布 ---- */
+.rating-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+}
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.rating-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    width: 30px;
+    text-align: right;
+    flex-shrink: 0;
+}
+.rating-track {
+    flex: 1;
+    height: 10px;
+    background: var(--border, rgba(255,255,255,0.06));
+    border-radius: 2px;
+    overflow: hidden;
+}
+.rating-fill {
+    height: 100%;
+    background: var(--gold, #c4a35a);
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.rating-count {
+    font-size: 0.68rem;
+    color: var(--text-faint);
+    width: 28px;
+    flex-shrink: 0;
+}
+
 /* ---- 空状态 ---- */
 .empty-state {
     text-align: center;
