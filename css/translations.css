@@ -8,8 +8,23 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
     margin-bottom: 28px;
-    border-top: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    position: relative;
+    overflow: hidden;
+}
+/* Scan line over stats */
+.stats-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(155,89,255,0.06), transparent);
+    animation: statsScan 5s ease-in-out infinite;
+}
+@keyframes statsScan {
+    0% { left: -50%; }
+    100% { left: 100%; }
 }
 .stat-item {
     text-align: center;
@@ -144,6 +159,11 @@
     font-weight: 500;
     color: var(--text);
     margin-bottom: 2px;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+.trans-card:hover .trans-title {
+    color: var(--purple-bright);
+    text-shadow: 0 0 10px var(--purple-glow);
 }
 .trans-original {
     font-size: 0.8rem;
@@ -161,6 +181,8 @@
     border: 1px solid var(--border);
     color: var(--text-soft);
     letter-spacing: 0.5px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
 }
 .trans-status.done { border-color: rgba(122, 139, 110, 0.3); color: var(--neon-cyan); }
 .trans-status.ongoing { border-color: var(--amber); color: var(--amber); animation: ongoingGlow 2s ease-in-out infinite; }
@@ -181,6 +203,12 @@
     border: 1px solid var(--border);
     color: var(--text-faint);
     letter-spacing: 0.3px;
+    transition: all 0.3s;
+}
+.trans-tag:hover {
+    border-color: var(--purple-soft);
+    color: var(--purple-bright);
+    text-shadow: 0 0 6px var(--purple-glow);
 }
 .trans-stats {
     display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;
