@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-05T13:54:45Z",
+  "updated": "2026-06-06T12:09:38Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "26772763",
+      "title": "黄阿丽：小眼镜蛇 / Ali Wong: Baby Cobra",
+      "author": "2016-05-05(美国) / 黄阿丽 / 美国 / 杰伊·卡拉斯 / 60分钟 / 黄阿丽：小眼镜蛇 / 脱口秀 / 黄阿丽 Ali Wong / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2345580382.jpg",
+      "url": "https://movie.douban.com/subject/26772763/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-06",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "34937935",
       "title": "杀马特我爱你",
