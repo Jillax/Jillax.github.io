@@ -1,0 +1,531 @@
+{
+  "decks": [
+    {
+      "id": "deck-china-ancient",
+      "name": "中国古代史",
+      "description": "从远古到1840年的中国历史",
+      "icon": "🏯",
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "deck-china-modern",
+      "name": "中国近代史",
+      "description": "1840年到1949年的中国历史",
+      "icon": "📜",
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "deck-world-history",
+      "name": "世界历史",
+      "description": "重要世界历史事件",
+      "icon": "🌍",
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "cards": [
+    {
+      "id": "c001",
+      "deckId": "deck-china-ancient",
+      "front": "秦始皇统一六国是在哪一年？",
+      "back": "公元前221年。秦王嬴政先后灭韩、赵、魏、楚、燕、齐六国，建立了中国历史上第一个统一的多民族中央集权国家。",
+      "tags": [
+        "秦朝",
+        "统一"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c002",
+      "deckId": "deck-china-ancient",
+      "front": "汉武帝的主要历史功绩有哪些？",
+      "back": "1)颁布推恩令削弱诸侯势力;2)罢黜百家独尊儒术;3)派张骞出使西域开辟丝绸之路;4)北击匈奴;5)盐铁官营改革经济。",
+      "tags": [
+        "汉朝",
+        "汉武帝"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c003",
+      "deckId": "deck-china-ancient",
+      "front": "科举制度创立于何时？",
+      "back": "隋朝。隋炀帝大业年间(605年)正式设立进士科，标志着科举制度的创立。到清朝光绪三十一年(1905年)废除，延续约1300年。",
+      "tags": [
+        "隋朝",
+        "科举"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c004",
+      "deckId": "deck-china-ancient",
+      "front": "唐朝的贞观之治指的是哪位皇帝的统治时期？",
+      "back": "唐太宗李世民。贞观年间(627-649年)，政治清明、经济恢复发展、社会安定，被誉为封建社会的盛世。",
+      "tags": [
+        "唐朝",
+        "贞观之治"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c005",
+      "deckId": "deck-china-ancient",
+      "front": "王安石变法发生在哪个朝代？主要内容是什么？",
+      "back": "北宋宋神宗时期(1069-1085年)。主要措施包括：青苗法、免役法、方田均税法、农田水利法、市易法、均输法等，旨在富国强兵。",
+      "tags": [
+        "宋朝",
+        "变法"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c006",
+      "deckId": "deck-china-ancient",
+      "front": "四大发明分别是什么？",
+      "back": "造纸术(蔡伦改进，东汉)、印刷术(毕昇活字印刷，北宋)、火药(唐代炼丹术中发现)、指南针(宋代应用于航海)。",
+      "tags": [
+        "科技",
+        "四大发明"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c007",
+      "deckId": "deck-china-ancient",
+      "front": "郑和下西洋发生在哪个朝代？共几次？",
+      "back": "明朝永乐至宣德年间(1405-1433年)，共七次。最远到达非洲东海岸和红海沿岸，是当时世界规模最大的远洋航行。",
+      "tags": [
+        "明朝",
+        "郑和"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c008",
+      "deckId": "deck-china-ancient",
+      "front": "丝绸之路是谁开辟的？",
+      "back": "张骞。汉武帝建元二年(前139年)和元狩四年(前119年)，张骞两次出使西域，开辟了连接中国与中亚、西亚乃至欧洲的贸易通道。",
+      "tags": [
+        "汉朝",
+        "丝绸之路"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c009",
+      "deckId": "deck-china-ancient",
+      "front": "春秋五霸是哪五位？",
+      "back": "通常指：齐桓公、晋文公、楚庄王、吴王阖闾、越王勾践。(也有其他说法，如宋襄公、秦穆公替代其中两位)",
+      "tags": [
+        "春秋",
+        "五霸"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c010",
+      "deckId": "deck-china-ancient",
+      "front": "元曲四大家是谁？",
+      "back": "关汉卿、白朴、马致远、郑光祖。代表作分别是《窦娥冤》《梧桐雨》《汉宫秋》《倩女离魂》。",
+      "tags": [
+        "元朝",
+        "文学"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c011",
+      "deckId": "deck-china-modern",
+      "front": "鸦片战争发生在哪一年？对中国有什么影响？",
+      "back": "1840-1842年。英国以保护鸦片贸易为由发动侵华战争。战后签订《南京条约》，割让香港岛、开放五口通商、赔款2100万银元。中国开始沦为半殖民地半封建社会。",
+      "tags": [
+        "鸦片战争",
+        "近代史开端"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c012",
+      "deckId": "deck-china-modern",
+      "front": "太平天国运动的时间和领袖是谁？",
+      "back": "1851-1864年，领袖洪秀全。1851年金田起义，1853年定都天京(南京)，建立太平天国。1864年天京陷落，运动失败。是中国历史上规模最大的农民起义。",
+      "tags": [
+        "太平天国",
+        "农民起义"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c013",
+      "deckId": "deck-china-modern",
+      "front": "戊戌变法发生在哪一年？主要推动者是谁？",
+      "back": "1898年(农历戊戌年)，历时103天，故又称百日维新。主要推动者为康有为、梁启超，得到光绪帝支持。因慈禧太后发动政变而失败。",
+      "tags": [
+        "戊戌变法",
+        "维新"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c014",
+      "deckId": "deck-china-modern",
+      "front": "辛亥革命发生在哪一年？有什么历史意义？",
+      "back": "1911年10月10日武昌起义。推翻了清朝统治，结束了中国两千多年的封建帝制，建立了中华民国，使民主共和观念深入人心。",
+      "tags": [
+        "辛亥革命",
+        "民国"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c015",
+      "deckId": "deck-china-modern",
+      "front": "五四运动发生在哪一年？起因是什么？",
+      "back": "1919年5月4日。起因是巴黎和会上中国外交失败，列强将德国在山东的权益转让给日本。北京大学等高校学生发起游行示威，后发展为全国性的爱国运动。标志着新民主主义革命的开端。",
+      "tags": [
+        "五四运动",
+        "新民主主义"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c016",
+      "deckId": "deck-china-modern",
+      "front": "中国共产党成立于哪一年？第一次全国代表大会在哪里召开？",
+      "back": "1921年7月。中共一大在上海法租界召开(后转移到浙江嘉兴南湖的一艘游船上)，标志着中国共产党的正式成立。",
+      "tags": [
+        "建党",
+        "一大"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c017",
+      "deckId": "deck-china-modern",
+      "front": "长征的时间和意义是什么？",
+      "back": "1934年10月至1936年10月。中央红军从江西瑞金出发，历经两万五千里，到达陕北吴起镇。长征保存了党和红军的骨干力量，播撒了革命火种，铸就了伟大的长征精神。",
+      "tags": [
+        "长征",
+        "红军"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c018",
+      "deckId": "deck-china-modern",
+      "front": "抗日战争持续了多少年？",
+      "back": "1931年九一八事变至1945年日本投降，共14年。若从1937年七七事变全面抗战算起，则为8年。中国是二战东方主战场，为世界反法西斯战争做出巨大贡献。",
+      "tags": [
+        "抗日战争",
+        "二战"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c019",
+      "deckId": "deck-china-modern",
+      "front": "洋务运动的主要口号是什么？代表人物有哪些？",
+      "back": "中学为体，西学为用(中体西用)。代表人物：奕訢、曾国藩、李鸿章、左宗棠、张之洞。创办了江南制造总局、福州船政局等近代企业，建立北洋海军。",
+      "tags": [
+        "洋务运动",
+        "近代化"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c020",
+      "deckId": "deck-china-modern",
+      "front": "《南京条约》《马关条约》《辛丑条约》分别是在哪次战争后签订的？",
+      "back": "《南京条约》-第一次鸦片战争(1842年);《马关条约》-甲午中日战争(1895年);《辛丑条约》-八国联军侵华战争(1901年)。",
+      "tags": [
+        "不平等条约",
+        "近代史"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c021",
+      "deckId": "deck-world-history",
+      "front": "法国大革命发生在哪一年？标志事件是什么？",
+      "back": "1789年。标志事件是7月14日巴黎人民攻占巴士底狱。革命推翻了波旁王朝的封建专制统治，发表了《人权宣言》，传播了自由平等的启蒙思想。",
+      "tags": [
+        "法国大革命",
+        "启蒙运动"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c022",
+      "deckId": "deck-world-history",
+      "front": "工业革命首先发生在哪个国家？为什么？",
+      "back": "英国(18世纪60年代开始)。原因：1)资产阶级革命后政局稳定;2)圈地运动提供劳动力;3)殖民掠夺积累资本;4)手工工场发展提供技术基础;5)市场需求扩大。",
+      "tags": [
+        "工业革命",
+        "英国"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c023",
+      "deckId": "deck-world-history",
+      "front": "美国独立战争的时间和重要文献是什么？",
+      "back": "1775-1783年。1776年7月4日发表《独立宣言》(杰斐逊起草)，宣告北美十三个殖民地脱离英国独立。1783年英国正式承认美国独立。",
+      "tags": [
+        "美国独立",
+        "独立宣言"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c024",
+      "deckId": "deck-world-history",
+      "front": "第一次世界大战的时间和主要原因是什么？",
+      "back": "1914-1918年。根本原因是帝国主义国家政治经济发展不平衡，争夺殖民地和世界霸权。导火索是1914年6月28日萨拉热窝事件。最终以同盟国战败告终。",
+      "tags": [
+        "一战",
+        "萨拉热窝"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "c025",
+      "deckId": "deck-world-history",
+      "front": "文艺复兴起源于哪里？核心思想是什么？",
+      "back": "起源于14世纪的意大利(佛罗伦萨)。核心思想是人文主义，强调人的价值和尊严，反对中世纪的神权统治和禁欲主义。代表人物：但丁、达芬奇、米开朗基罗、莎士比亚。",
+      "tags": [
+        "文艺复兴",
+        "人文主义"
+      ],
+      "starred": false,
+      "interval": 0,
+      "ease": 2.5,
+      "repetitions": 0,
+      "lapses": 0,
+      "due": null,
+      "lastReview": null,
+      "lastQuality": null,
+      "created": "2024-01-01T00:00:00.000Z",
+      "updated": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "reviews": []
+}

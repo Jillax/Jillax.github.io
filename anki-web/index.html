@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anki-Web | 间隔重复记忆卡片</title>
+  <meta name="description" content="浏览器端间隔重复记忆卡片应用，基于 SM-2 算法">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading">
+  <div class="loading-spinner"></div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="container header-inner">
+    <div class="logo" onclick="App.renderHome()">🧠 <span>Anki-Web</span></div>
+    <nav>
+      <button class="nav-btn active" id="nav-home" onclick="App.renderHome()" title="首页">🏠</button>
+      <button class="nav-btn" id="nav-import" onclick="App.renderImport()" title="导入题库">📥</button>
+      <button class="nav-btn" id="nav-stats" onclick="App.renderStats()" title="统计">📊</button>
+      <button class="nav-btn" id="nav-settings" onclick="App.renderSettings()" title="设置">⚙️</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="container">
+
+  <!-- HOME VIEW -->
+  <div id="view-home" class="view active">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <span class="stat-value" id="stat-due">0</span>
+        <span class="stat-label">待复习</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-new">0</span>
+        <span class="stat-label">新卡片</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-learning">0</span>
+        <span class="stat-label">学习中</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-total">0</span>
+        <span class="stat-label">总计</span>
+      </div>
+    </div>
+    <div class="section-header">
+      <h2>我的牌组</h2>
+      <button class="btn btn-primary btn-sm" onclick="App.showCreateDeck()">➕ 新建</button>
+    </div>
+    <div id="deck-list"></div>
+  </div>
+
+  <!-- DECK DETAIL VIEW -->
+  <div id="view-deck-detail" class="view">
+    <div class="section-header">
+      <div>
+        <h2 id="deck-detail-title">牌组</h2>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:4px" id="deck-detail-count"></p>
+        <button class="btn btn-ghost btn-sm" onclick="App.showAllCards()" id="btn-show-all" style="display:none">▶ 查看全部</button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="App.showAddCard()">➕ 添加卡片</button>
+        <button class="btn btn-primary btn-sm" id="deck-detail-start">▶️ 开始学习</button>
+      </div>
+    </div>
+    <div id="card-list"></div>
+    <div style="margin-top:16px">
+      <button class="btn btn-ghost" onclick="App.renderHome()">← 返回首页</button>
+    </div>
+  </div>
+
+  <!-- REVIEW VIEW -->
+  <div id="view-review" class="view">
+    <div class="review-header">
+      <span class="review-deck" id="review-deck-name"></span>
+      <span class="review-status" id="review-status"></span>
+      <span class="review-progress" id="review-progress"></span>
+    </div>
+    <div class="review-progress-bar"><div id="review-progress-bar"></div></div>
+    <div class="flashcard-container">
+      <div class="flashcard" id="review-card" onclick="App.flipCard()">
+        <div class="flashcard-face flashcard-front">
+          <div id="review-front"></div>
+          <div class="flashcard-hint">点击或按空格翻转</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div id="review-back"></div>
+          <div class="flashcard-hint">选择记忆程度</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-actions" id="review-actions">
+      <button class="rate-btn again" onclick="App.rateCard(1)">忘了<span class="shortcut">1</span></button>
+      <button class="rate-btn hard" onclick="App.rateCard(2)">模糊<span class="shortcut">2</span></button>
+      <button class="rate-btn good" onclick="App.rateCard(3)">记住<span class="shortcut">3</span></button>
+      <button class="rate-btn easy" onclick="App.rateCard(4)">简单<span class="shortcut">4</span></button>
+    </div>
+    <div style="margin-top:24px;text-align:center">
+      <button class="btn btn-ghost" onclick="App.renderHome()">退出学习</button>
+    </div>
+  </div>
+
+  <!-- REVIEW COMPLETE VIEW -->
+  <div id="view-review-complete" class="view">
+    <div class="review-complete">
+      <h2>🎉 学习完成！</h2>
+      <p>今天的复习任务已完成</p>
+      <div class="complete-stats" id="review-complete-stats"></div>
+      <div class="complete-actions">
+        <button class="btn btn-primary" onclick="App.startReview(App.currentDeckId)">继续复习</button>
+        <button class="btn btn-secondary" onclick="App.renderHome()">返回首页</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORT VIEW -->
+  <div id="view-import" class="view">
+    <div class="section-header"><h2>📥 导入题库</h2></div>
+    <div id="import-step1" class="import-step active">
+      <div class="upload-zone" id="upload-zone">
+        <div class="upload-icon">📄</div>
+        <h3>拖拽文件到此处，或点击选择</h3>
+        <p>支持 PDF、DOCX、TXT 格式</p>
+        <input type="file" id="file-input" accept=".pdf,.docx,.txt,.md" multiple style="display:none">
+        <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">选择文件</button>
+      </div>
+    </div>
+    <div id="import-step2" class="import-step" style="display:none">
+      <div class="import-progress">
+        <div class="loading-spinner"></div>
+        <p id="import-status">正在提取文本...</p>
+        <div id="import-progress-bar-container" style="display:none;margin-top:16px;width:100%;max-width:300px;margin-left:auto;margin-right:auto">
+          <div style="background:var(--bg3);border-radius:4px;height:6px;overflow:hidden">
+            <div id="import-progress-fill" style="height:100%;background:var(--primary);border-radius:4px;width:0%;transition:width 0.5s ease"></div>
+          </div>
+          <p id="import-progress-text" style="font-size:0.75rem;color:var(--text3);margin-top:8px;text-align:center"></p>
+        </div>
+      </div>
+    </div>
+    <div id="import-step3" class="import-step" style="display:none">
+      <div class="import-parse-info">
+        <p id="import-text-preview" class="text-preview"></p>
+        <div class="import-mode-select">
+          <h3>选择解析模式</h3>
+          <button class="btn btn-primary" onclick="App.parseWithRegex()">🔍 基础识别（离线）</button>
+          <button class="btn btn-secondary" onclick="App.parseWithAI()" id="btn-ai-parse">🤖 AI 增强解析</button>
+        </div>
+      </div>
+    </div>
+    <div id="import-step4" class="import-step" style="display:none">
+      <div class="section-header">
+        <div><h2>识别结果</h2><p style="font-size:0.85rem;color:var(--text2);margin-top:4px" id="import-card-count"></p></div>
+        <div style="display:flex;gap:8px">
+          <select id="import-deck-select" class="form-input" style="width:auto"></select> <button class="btn btn-secondary btn-sm" onclick="App.showCreateDeckFromImport()" title="新建牌组">➕ 新建</button>
+          <button class="btn btn-primary" onclick="App.confirmImport()">✅ 导入选中</button>
+        </div>
+      </div>
+      <div id="import-card-list"></div>
+      <div style="margin-top:16px">
+        <button class="btn btn-ghost" onclick="App.resetImport()">← 重新导入</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS VIEW -->
+  <div id="view-stats" class="view">
+    <div class="section-header"><h2>📊 学习统计</h2></div>
+    <div class="stats-bar" style="margin-bottom:24px">
+      <div class="stat-card">
+        <span class="stat-value" id="stats-total-reviews">0</span>
+        <span class="stat-label">总复习次数</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stats-total-cards">0</span>
+        <span class="stat-label">总卡片数</span>
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:20px;margin-bottom:16px">
+      <h3 style="font-size:0.95rem;margin-bottom:8px">卡片状态分布</h3>
+      <div id="stats-status-chart"></div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:20px;margin-bottom:16px">
+      <h3 style="font-size:0.95rem;margin-bottom:8px">复习热力图（近12周）</h3>
+      <div id="stats-heatmap"></div>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn btn-ghost" onclick="App.renderHome()">← 返回首页</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS VIEW -->
+  <div id="view-settings" class="view">
+    <div class="section-header"><h2>⚙️ 设置</h2></div>
+    <div class="settings-group">
+      <h3>数据管理</h3>
+      <div class="settings-item" onclick="App.exportAllData()">
+        <div class="label"><span class="icon">📤</span> 导出所有数据</div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-item" onclick="App.importData()">
+        <div class="label"><span class="icon">📥</span> 导入数据</div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-item" onclick="App.loadSampleDecks()">
+        <div class="label"><span class="icon">📦</span> 加载示例牌组</div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-item" onclick="App.clearAllData()" style="border-color:rgba(225,112,85,0.3)">
+        <div class="label"><span class="icon">🗑️</span> <span style="color:var(--danger)">清除所有数据</span></div>
+        <span class="arrow">›</span>
+      </div>
+    </div>
+    <div class="settings-group">
+      <h3>AI 解析设置</h3>
+      <div class="api-settings">
+        <div class="form-group">
+          <label>API Key</label>
+          <input type="password" id="settings-api-key" class="form-input" placeholder="sk-xxx（支持 OpenAI 兼容接口）">
+        </div>
+        <div class="form-group">
+          <label>API Base URL（可选）</label>
+          <input type="text" id="settings-api-base" class="form-input" placeholder="https://api.openai.com/v1">
+        </div>
+        <div class="form-group">
+          <label>模型名称（可选）</label>
+          <input type="text" id="settings-api-model" class="form-input" placeholder="gpt-4o-mini">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="App.saveApiSettings()">保存设置</button>
+      </div>
+    </div>
+    <div class="settings-group">
+      <h3>快捷键</h3>
+      <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:16px;font-size:0.85rem;color:var(--text2);line-height:2">
+        <div><kbd style="background:var(--bg3);padding:2px 8px;border-radius:4px;font-size:0.8rem">Space</kbd> 翻转卡片</div>
+        <div><kbd style="background:var(--bg3);padding:2px 8px;border-radius:4px;font-size:0.8rem">1</kbd> 忘了</div>
+        <div><kbd style="background:var(--bg3);padding:2px 8px;border-radius:4px;font-size:0.8rem">2</kbd> 模糊</div>
+        <div><kbd style="background:var(--bg3);padding:2px 8px;border-radius:4px;font-size:0.8rem">3</kbd> 记住</div>
+        <div><kbd style="background:var(--bg3);padding:2px 8px;border-radius:4px;font-size:0.8rem">4</kbd> 简单</div>
+      </div>
+    </div>
+    <div class="settings-group">
+      <h3>关于</h3>
+      <div style="background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);padding:16px;font-size:0.85rem;color:var(--text2)">
+        <p><strong style="color:var(--text)">Anki-Web</strong> v1.0.0</p>
+        <p style="margin-top:4px">浏览器端间隔重复记忆卡片应用</p>
+        <p style="margin-top:4px">基于 SM-2 算法 · IndexedDB 存储 · 纯前端</p>
+        <p style="margin-top:8px">Built with ❤️ by <a href="https://github.com/Jillax" style="color:var(--primary);text-decoration:none">Jillax</a></p>
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn btn-ghost" onclick="App.renderHome()">← 返回首页</button>
+    </div>
+  </div>
+</main>
+
+<!-- DECK MODAL -->
+<div id="deck-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="deck-modal-title">创建牌组</h2>
+      <button class="modal-close" onclick="document.getElementById('deck-modal').classList.remove('active')">✕</button>
+    </div>
+    <input type="hidden" id="deck-id">
+    <div class="form-group">
+      <label>图标</label>
+      <input type="text" id="deck-icon" class="form-input" value="📚" maxlength="4" style="width:80px;font-size:1.5rem;text-align:center">
+    </div>
+    <div class="form-group">
+      <label>牌组名称</label>
+      <input type="text" id="deck-name" class="form-input" placeholder="例如：中国历史">
+    </div>
+    <div class="form-group">
+      <label>描述（可选）</label>
+      <input type="text" id="deck-description" class="form-input" placeholder="简短描述这个牌组">
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="document.getElementById('deck-modal').classList.remove('active')">取消</button>
+      <button class="btn btn-primary" onclick="App.saveDeck()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- CARD MODAL -->
+<div id="card-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="card-modal-title">添加卡片</h2>
+      <button class="modal-close" onclick="document.getElementById('card-modal').classList.remove('active')">✕</button>
+    </div>
+    <input type="hidden" id="card-id">
+    <input type="hidden" id="card-deck-id">
+    <div class="form-group">
+      <label>正面（问题）</label>
+      <textarea id="card-front" class="form-input" placeholder="输入问题..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>背面（答案）</label>
+      <textarea id="card-back" class="form-input" placeholder="输入答案..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>标签（可选，逗号分隔）</label>
+      <input type="text" id="card-tags" class="form-input" placeholder="例如：近代史, 中国">
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="document.getElementById('card-modal').classList.remove('active')">取消</button>
+      <button class="btn btn-primary" onclick="App.saveCard()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACTION SHEET -->
+<div id="action-sheet" class="action-sheet">
+  <div class="action-sheet-content"></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+
+<!-- Scripts -->
+<script src="js/sm2.js"></script>
+<script src="js/db.js"></script>
+<script src="js/parser.js"></script>
+<script src="js/importer.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
