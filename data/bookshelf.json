@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-10T14:26:41Z",
+  "updated": "2026-06-11T14:43:26Z",
   "books": [
     {
       "id": "2996046",
@@ -7286,7 +7286,7 @@
     {
       "id": "3011617",
       "title": "深空失忆 / Pandorum",
-      "author": "2009-10-01(德国) / 2009-10-02(英国) / 丹尼斯·奎德 / 本·福斯特 / 凯姆·吉甘戴 / 安婕·特拉乌 / 黎烈弓 / 诺曼·瑞杜斯 / 安德烈·赫尼克 / 沃坦·维尔克·默林 / 埃迪·鲁斯 / 弗雷德里克·坎普特 / 英国 / 德国 / 克里斯蒂安·阿瓦特 / 108分钟 / 深空失忆 / 动作 / 科幻 / 悬疑 / 惊悚 / 恐怖 / 克里斯蒂安·阿瓦特 Christian Alvart / 特拉维斯·米洛伊 Travis Milloy / 英语 / 越南语 / 德语",
+      "author": "2009-10-01(德国) / 2009-10-02(英国) / 丹尼斯·奎德 / 本·福斯特 / 凯姆·吉甘戴 / 安婕·特拉乌 / 黎烈弓 / 埃迪·鲁斯 / 诺曼·瑞杜斯 / 安德烈·赫尼克 / 弗雷德里克·坎普特 / 尼尔斯-布鲁诺·施密特 / 英国 / 德国 / 克里斯蒂安·阿瓦特 / 108分钟 / 深空失忆 / 动作 / 科幻 / 悬疑 / 惊悚 / 恐怖 / 特拉维斯·米洛伊 Travis Milloy / 克里斯蒂安·阿瓦特 Christian Alvart / 英语 / 越南语 / 德语",
       "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p453467740.jpg",
       "url": "https://movie.douban.com/subject/3011617/",
       "rating": 5,
@@ -8625,7 +8625,7 @@
     {
       "id": "27013111",
       "title": "抓人游戏 / Tag",
-      "author": "2018-06-15(美国) / 杰瑞米·雷纳 / 乔恩·哈姆 / 艾德·赫尔姆斯 / 安娜贝尔·沃利斯 / 艾拉·菲舍尔 / 拉什达·琼斯 / 莱丝莉·比伯 / 杰克·约翰逊 / 布莱恩·丹内利 / 汉尼拔·布勒斯 / 美国 / 杰夫·汤姆西奇 / 100分钟 / 抓人游戏 / 喜剧 / 罗布·麦基特里克 Rob McKittrick / 马克·施泰伦 Mark Steilen / 英语",
+      "author": "2018-06-15(美国) / 杰瑞米·雷纳 / 乔恩·哈姆 / 艾德·赫尔姆斯 / 安娜贝拉·沃丽丝 / 艾拉·菲舍尔 / 拉什达·琼斯 / 莱丝莉·比伯 / 杰克·约翰逊 / 布莱恩·丹内利 / 汉尼拔·布勒斯 / 美国 / 杰夫·汤姆西奇 / 100分钟 / 抓人游戏 / 喜剧 / 罗布·麦基特里克 Rob McKittrick / 马克·施泰伦 Mark Steilen / 英语",
       "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2520435820.jpg",
       "url": "https://movie.douban.com/subject/27013111/",
       "rating": 4,
@@ -12927,6 +12927,19 @@
     }
   ],
   "music": [
+    {
+      "id": "35725002",
+      "title": "Melt My Eyez, See Your Future",
+      "author": "Denzel Curry / 2022-03-25 / 专辑 / 数字(Digital) / 说唱",
+      "cover": "https://img3.doubanio.com/view/subject/l/public/s34154022.jpg",
+      "url": "https://music.douban.com/subject/35725002/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-11",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "4850387",
       "title": "東方風神錄 ～Mountain of Faith",
