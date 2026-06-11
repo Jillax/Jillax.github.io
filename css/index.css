@@ -185,6 +185,7 @@
 }
 .jill-dialog-header {
     display: flex;
+    position: relative;
     justify-content: space-between;
     align-items: center;
     padding: 8px 14px;
@@ -218,8 +219,9 @@
 }
 .jill-dialog-refresh {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
     width: 24px;
     height: 24px;
     background: none;

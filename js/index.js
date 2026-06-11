@@ -32,6 +32,8 @@
         var dialogEl = document.getElementById('jillDialog');
         var dialogQuotes = [];
         var dialogIndex = -1;
+        var cycleId = 0;
+        var cycleTimer = null;
 
         function getDialogQuotes() {
             dialogQuotes = [];
@@ -86,13 +88,19 @@
 
         function runDialogCycle() {
             if (!dialogText || !dialogEl) return;
+            cycleId++;
+            var myId = cycleId;
+            if (cycleTimer) { clearTimeout(cycleTimer); cycleTimer = null; }
             var text = getNextDialogQuote();
             dialogText.textContent = '';
             typeWriter(text, 0, function() {
-                setTimeout(function() {
+                if (myId !== cycleId) return;
+                cycleTimer = setTimeout(function() {
+                    if (myId !== cycleId) return;
                     if (dialogEl) dialogEl.style.transition = 'opacity 0.5s ease';
                     if (dialogEl) dialogEl.style.opacity = '0.3';
-                    setTimeout(function() {
+                    cycleTimer = setTimeout(function() {
+                        if (myId !== cycleId) return;
                         if (dialogText) dialogText.textContent = '';
                         if (dialogEl) dialogEl.style.opacity = '1';
                         runDialogCycle();
@@ -106,21 +114,11 @@
         if (refreshBtn) {
             refreshBtn.addEventListener('click', function() {
                 if (!dialogQuotes.length) return;
-                // Skip to next quote immediately
+                if (cycleTimer) { clearTimeout(cycleTimer); cycleTimer = null; }
+                cycleId++;
                 dialogText.textContent = '';
                 dialogEl.style.opacity = '1';
-                var text = getNextDialogQuote();
-                typeWriter(text, 0, function() {
-                    setTimeout(function() {
-                        dialogEl.style.transition = 'opacity 0.5s ease';
-                        dialogEl.style.opacity = '0.3';
-                        setTimeout(function() {
-                            dialogText.textContent = '';
-                            dialogEl.style.opacity = '1';
-                            runDialogCycle();
-                        }, 600);
-                    }, 6000);
-                });
+                runDialogCycle();
             });
         }
 
