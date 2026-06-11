@@ -206,6 +206,7 @@
 }
 .jill-dialog-body {
     padding: 14px;
+    position: relative;
     min-height: 48px;
 }
 .jill-dialog-text {
@@ -214,6 +215,30 @@
     color: var(--text-soft);
     line-height: 1.7;
     letter-spacing: 0.5px;
+}
+.jill-dialog-refresh {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    font-family: var(--font-mono);
+    line-height: 1;
+    padding: 0;
+}
+.jill-dialog-refresh:hover {
+    border-color: var(--purple);
+    color: var(--purple-bright);
+    text-shadow: 0 0 8px var(--purple-glow);
 }
 .jill-dialog-cursor {
     display: inline-block;

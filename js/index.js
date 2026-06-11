@@ -101,6 +101,29 @@
             });
         }
 
+        // Refresh button
+        var refreshBtn = document.getElementById('jillDialogRefresh');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                if (!dialogQuotes.length) return;
+                // Skip to next quote immediately
+                dialogText.textContent = '';
+                dialogEl.style.opacity = '1';
+                var text = getNextDialogQuote();
+                typeWriter(text, 0, function() {
+                    setTimeout(function() {
+                        dialogEl.style.transition = 'opacity 0.5s ease';
+                        dialogEl.style.opacity = '0.3';
+                        setTimeout(function() {
+                            dialogText.textContent = '';
+                            dialogEl.style.opacity = '1';
+                            runDialogCycle();
+                        }, 600);
+                    }, 6000);
+                });
+            });
+        }
+
         // Start dialog after initial animation delay
         getDialogQuotes();
         setTimeout(function() {}, 2500);
