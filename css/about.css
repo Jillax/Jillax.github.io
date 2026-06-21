@@ -640,53 +640,52 @@
 }
 
 /* ============================================
-   Hero & Education Section (New)
+   About Intro Section
    ============================================ */
-.about-hero {
-    text-align: center;
-    padding: 80px 0 60px;
+.about-intro {
+    padding: 48px 0 40px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 60px;
+    margin-bottom: 48px;
 }
 
-.hero-name {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 700;
-    color: var(--purple-bright);
-    letter-spacing: -0.02em;
-    margin-bottom: 32px;
-    text-shadow: 0 0 20px var(--purple-glow);
+.intro-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
 }
 
-.hero-traits {
+.intro-role {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+}
+
+.intro-values {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.hero-traits li {
-    font-size: 1.125rem;
-    color: var(--text-soft);
-    letter-spacing: 0.05em;
-    position: relative;
-    padding-left: 24px;
+.intro-values li {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
 }
 
-.hero-traits li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    background: var(--purple);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--purple-glow);
+.intro-values li:hover {
+    border-color: var(--border-glow);
+    color: var(--text-muted);
 }
 
 /* Education Card */
@@ -768,19 +767,15 @@
     border-color: var(--border-glow);
 }
 
-/* Responsive Adjustments for Hero */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .about-hero {
-        padding: 60px 0 40px;
-        margin-bottom: 40px;
+    .about-intro {
+        padding: 32px 0 28px;
+        margin-bottom: 32px;
     }
     
-    .hero-name {
-        font-size: 2.5rem;
-    }
-    
-    .hero-traits li {
-        font-size: 1rem;
+    .intro-name {
+        font-size: 1.25rem;
     }
     
     .edu-card {
@@ -797,43 +792,21 @@
 }
 
 @media (max-width: 480px) {
-    .about-hero {
-        padding: 40px 0 30px;
-        margin-bottom: 30px;
+    .about-intro {
+        padding: 24px 0 20px;
+        margin-bottom: 24px;
     }
     
-    .hero-traits {
-        gap: 12px;
+    .intro-values {
+        gap: 6px;
+    }
+    
+    .intro-values li {
+        font-size: 0.72rem;
+        padding: 3px 10px;
     }
     
     .edu-card {
         padding: 16px;
     }
 }
-
-/* Animation for Hero */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.about-hero .hero-name {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.about-hero .hero-traits li {
-    opacity: 0;
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.about-hero .hero-traits li:nth-child(1) { animation-delay: 0.1s; }
-.about-hero .hero-traits li:nth-child(2) { animation-delay: 0.2s; }
-.about-hero .hero-traits li:nth-child(3) { animation-delay: 0.3s; }
-.about-hero .hero-traits li:nth-child(4) { animation-delay: 0.4s; }
-.about-hero .hero-traits li:nth-child(5) { animation-delay: 0.5s; }

@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var hasCover = item.cover && item.cover.trim();
             var initial = item.title ? item.title.charAt(0) : '?';
             var stats = getItemStats(item, enriched);
-            var dateStr = item.date ? item.date.substring(0, 7) : '';
+            var dateStr = item.date || '';
 
             return '<div class="trans-card">' +
                 '<div class="trans-cover">' +
@@ -208,9 +208,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 '<div class="trans-body">' +
                 '<div class="trans-title">' + item.title + '</div>' +
                 '<div class="trans-meta">' +
-                '<span class="trans-status ' + sClass + '">' + item.status + '</span>' +
-                (stats.play > 0 ? '<span class="trans-source">' + fmtPlay(stats.play) + ' 播放</span>' : '') +
                 (dateStr ? '<span class="trans-date">' + dateStr + '</span>' : '') +
+                (stats.play > 0 ? '<span class="trans-source">' + fmtPlay(stats.play) + ' 播放</span>' : '') +
                 '</div>' +
                 (item.tags && item.tags.length > 0 ?
                     '<div class="trans-tags">' + item.tags.map(function(t) { return '<span class="trans-tag">#' + t + '</span>'; }).join('') + '</div>'
