@@ -25,7 +25,6 @@
             <p style="margin-top:20px;font-size:0.9rem;color:#6b5a8a">// 此网站需要 JavaScript 才能正常浏览。</p>
         </div>
     </noscript>
-
     <main>
     <!-- ===== Header ===== -->
     <div class="container">
@@ -35,35 +34,46 @@
         </div>
 
         <!-- ===== Intro ===== -->
-        <div class="about-content reveal">
-            <p><strong>Jillax</strong> · 历史学师范本科生</p>
-            <p>喜欢历史人文社科、女性主义、教育领域、科技相关内容。对教育实践和AI工具保持开放好奇，记录思考探索。</p>
+        <div class="about-hero reveal">
+            <h2 class="hero-name">Jillax</h2>
+            <ul class="hero-traits">
+                <li>历史学师范生</li>
+                <li>国际主义 & 多元主义</li>
+                <li>反资本主义</li>
+                <li>反性别主义</li>
+                <li>反优绩主义</li>
+            </ul>
         </div>
 
-        <!-- ===== Timeline ===== -->
-        <div class="section-block reveal" id="timeline">
-            <div class="section-label">时间线</div>
-            <div class="timeline-filter" id="tlFilters">
-                <button class="tl-filter-btn active" data-filter="all">全部 <span class="tl-filter-count" id="countAll">0</span></button>
-                <button class="tl-filter-btn" data-filter="education">教育经历 <span class="tl-filter-count" id="countEdu">0</span></button>
-                <button class="tl-filter-btn" data-filter="work">工作经历 <span class="tl-filter-count" id="countWork">0</span></button>
-                <button class="tl-filter-btn" data-filter="project">项目经历 <span class="tl-filter-count" id="countProj">0</span></button>
+        <!-- ===== Education ===== -->
+        <div class="section-block reveal" id="education">
+            <div class="section-label">教育经历</div>
+            <div class="edu-card">
+                <div class="edu-card-header">
+                    <div>
+                        <div class="edu-title">西南大学 · 历史学</div>
+                        <div class="edu-subtitle">国家公费师范生</div>
+                    </div>
+                    <span class="edu-date">2024年9月 — 至今</span>
+                </div>
+                <div class="edu-desc">攻读历史学师范专业，主修中国史、世界史、史学理论与教育课程。关注数字人文与AI工具在教育中的应用。</div>
+                <div class="edu-tags">
+                    <span class="edu-tag">历史学</span>
+                    <span class="edu-tag">教育学</span>
+                    <span class="edu-tag">师范技能</span>
+                </div>
             </div>
-            <div class="timeline" id="tlList"></div>
-            <div class="tl-empty" id="tlEmpty" style="display:none">没有匹配的条目</div>
         </div>
 
         <!-- ===== Profile / 画像 ===== -->
         <div class="section-block reveal" id="profile">
             <div class="section-label">画像 Profile</div>
-
             <!-- 8values Political Profile -->
             <div class="profile-card">
                 <div class="profile-card-header">
                     <span class="profile-card-title">8VALUES 政治画像</span>
                     <span class="profile-card-code">EGLP</span>
                 </div>
-
                 <div class="profile-ideology">
                     <div class="ideology-label">最接近的意识形态</div>
                     <div class="ideology-name">社会自由主义</div>
@@ -76,7 +86,6 @@
                         <span class="match-value">94.99%</span>
                     </div>
                 </div>
-
                 <div class="profile-axes">
                     <!-- 经济 -->
                     <div class="axis-row">
@@ -93,7 +102,6 @@
                             <span class="axis-val-right">Markets 32.1%</span>
                         </div>
                     </div>
-
                     <!-- 外交 -->
                     <div class="axis-row">
                         <div class="axis-header">
@@ -109,7 +117,6 @@
                             <span class="axis-val-right">Globe 61.7%</span>
                         </div>
                     </div>
-
                     <!-- 民事 -->
                     <div class="axis-row">
                         <div class="axis-header">
@@ -125,7 +132,6 @@
                             <span class="axis-val-right">Authority 34.4%</span>
                         </div>
                     </div>
-
                     <!-- 社会 -->
                     <div class="axis-row">
                         <div class="axis-header">
@@ -142,25 +148,21 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="profile-source">
                     <a href="https://8values.cc" target="_blank" rel="noopener">8values.github.io</a>
                 </div>
             </div>
-
             <!-- MBTI Personality -->
             <div class="profile-card">
                 <div class="profile-card-header">
                     <span class="profile-card-title">MBTI 人格画像</span>
                     <span class="profile-card-code">INTP</span>
                 </div>
-
                 <div class="profile-ideology">
                     <div class="ideology-label">16PERSONALITIES</div>
                     <div class="ideology-name">逻辑学家</div>
                     <div class="ideology-name-en">INTP — The Logician</div>
                 </div>
-
                 <div class="mbti-axes">
                     <!-- 能量 -->
                     <div class="mbti-row">
@@ -178,7 +180,6 @@
                             <span class="mbti-side-label">内向</span>
                         </div>
                     </div>
-
                     <!-- 心智 -->
                     <div class="mbti-row">
                         <div class="mbti-header">
@@ -195,7 +196,6 @@
                             <span class="mbti-side-label">求真务实</span>
                         </div>
                     </div>
-
                     <!-- 天性 -->
                     <div class="mbti-row">
                         <div class="mbti-header">
@@ -212,7 +212,6 @@
                             <span class="mbti-side-label">情感细腻</span>
                         </div>
                     </div>
-
                     <!-- 应对方式 -->
                     <div class="mbti-row">
                         <div class="mbti-header">
@@ -229,7 +228,6 @@
                             <span class="mbti-side-label">随机应变</span>
                         </div>
                     </div>
-
                     <!-- 身份特征 -->
                     <div class="mbti-row">
                         <div class="mbti-header">
@@ -247,19 +245,14 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="profile-source">
                     <a href="https://www.16personalities.com" target="_blank" rel="noopener">16personalities.com</a>
                 </div>
             </div>
         </div>
     </div>
-
     </main>
-
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/about.js"></script>
-
 </body>
 </html>
