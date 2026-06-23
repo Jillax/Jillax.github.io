@@ -26,7 +26,7 @@
             '<div class="auth-box">' +
             '<div class="auth-header">◆ JILLAX</div>' +
             '<div class="auth-label">// ACCESS REQUIRED</div>' +
-            '<input type="password" id="authInput" class="auth-input" placeholder="输入密码..." autocomplete="off">' +
+            '<input type="text" id="authInput" class="auth-input" placeholder="输入密码..." autocomplete="off" autocapitalize="off" spellcheck="false">' +
             '<div class="auth-error" id="authError"></div>' +
             '<button class="auth-btn" id="authBtn">进入</button>' +
             '</div>';
@@ -66,11 +66,13 @@
             '  padding: 12px 16px;' +
             '  background: transparent;' +
             '  border: 1px solid var(--border, #2a2040);' +
-            '  color: var(--text, #e8e0f0);' +
+            '  color: transparent;' +
             '  caret-color: var(--purple-bright, #b47aff);' +
+            '  text-shadow: 0 0 0 var(--text, #e8e0f0);' +
+            '  -webkit-text-security: disc;' +
             '  font-family: var(--font-mono, monospace);' +
             '  font-size: 0.85rem;' +
-            '  letter-spacing: 2px;' +
+            '  letter-spacing: 8px;' +
             '  text-align: center;' +
             '  outline: none;' +
             '  transition: border-color 0.3s;' +
