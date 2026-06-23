@@ -6,6 +6,11 @@
     var AUTH_KEY = 'jillax_auth';
     var PASSWORD = 'Jillax894';
 
+    function isBot() {
+        var ua = navigator.userAgent.toLowerCase();
+        return /bot|crawl|spider|slurp|bingpreview|googlebot|baiduspider|yandex|sogou|duckduckbot/i.test(ua);
+    }
+
     function isAuthenticated() {
         return sessionStorage.getItem(AUTH_KEY) === 'true';
     }
@@ -62,6 +67,7 @@
             '  background: transparent;' +
             '  border: 1px solid var(--border, #2a2040);' +
             '  color: var(--text, #e8e0f0);' +
+            '  caret-color: var(--purple-bright, #b47aff);' +
             '  font-family: var(--font-mono, monospace);' +
             '  font-size: 0.85rem;' +
             '  letter-spacing: 2px;' +
@@ -124,6 +130,10 @@
 
         document.body.style.overflow = 'hidden';
         setTimeout(function() { input.focus(); }, 100);
+    }
+
+    if (isBot()) {
+        return;
     }
 
     if (!isAuthenticated()) {
