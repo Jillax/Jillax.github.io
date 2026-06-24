@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-23T13:44:12Z",
+  "updated": "2026-06-24T13:25:35Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "1428230",
+      "title": "中国之抗战 / The Battle of China",
+      "author": "克莱尔·李·陈纳德 / 宋美龄 / 温斯顿·丘吉尔 / 安东尼·艾登 / 威廉·哈尔西 / 昭和天皇 / 沃尔特·休斯顿 / 道格拉斯·麦克阿瑟 / 路易斯·蒙巴顿 / 溥仪 / 美国 / 弗兰克·卡普拉 / 安纳托尔·李维克 / 65分钟 / 中国之抗战 / 历史 / 战争 / 纪录片 / 朱利叶斯·J·爱泼斯坦 Julius J. Epstein / 菲利普·G·爱泼斯坦 Philip G. Epstein / 英语",
+      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2931233158.jpg",
+      "url": "https://movie.douban.com/subject/1428230/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-24",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "27174539",
       "title": "黄阿丽：铁娘子 / Ali Wong: Hard Knock Wife",
@@ -11576,7 +11589,7 @@
     {
       "id": "1300868",
       "title": "异形 / Alien",
-      "author": "1979-05-25(美国) / 西格妮·韦弗 / 汤姆·斯凯里特 / 维罗尼卡·卡维特 / 哈利·迪恩·斯坦顿 / 约翰·赫特 / 伊安·霍姆 / 亚非特·科托 / 博拉吉·巴迪乔 / 海伦·霍顿 / 詹姆斯·霍纳 / 英国 / 美国 / 雷德利·斯科特 / 117分钟 / 116分钟(2004年导演剪辑版) / 异形 / 科幻 / 惊悚 / 恐怖 / 丹·欧班农 Dan O'Bannon / 罗纳德·舒塞特 Ronald Shusett / 英语",
+      "author": "1979-05-25(美国) / 西格妮·韦弗 / 汤姆·斯凯里特 / 维罗尼卡·卡维特 / 哈利·迪恩·斯坦顿 / 约翰·赫特 / 伊安·霍姆 / 亚非特·科托 / 博拉吉·巴迪乔 / 海伦·霍顿 / 詹姆斯·霍纳 / 英国 / 美国 / 雷德利·斯科特 / 117分钟 / 异形 / 科幻 / 惊悚 / 恐怖 / 丹·欧班农 Dan O'Bannon / 罗纳德·舒塞特 Ronald Shusett / 英语",
       "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1756402567.jpg",
       "url": "https://movie.douban.com/subject/1300868/",
       "rating": 5,
@@ -12953,6 +12966,32 @@
     }
   ],
   "music": [
+    {
+      "id": "36196698",
+      "title": "赐我",
+      "author": "一只白羊 / 2022-10-31 / EP / 数字(Digital) / 流行",
+      "cover": "https://img9.doubanio.com/view/subject/l/public/s34381814.jpg",
+      "url": "https://music.douban.com/subject/36196698/",
+      "rating": 3,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-24",
+      "status": "collect",
+      "category": "music"
+    },
+    {
+      "id": "35397481",
+      "title": "卜卦",
+      "author": "崔子格 / 2021-03-03 / 单曲 / 数字(Digital) / 流行",
+      "cover": "https://img1.doubanio.com/view/subject/l/public/s33850700.jpg",
+      "url": "https://music.douban.com/subject/35397481/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-24",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "35991547",
       "title": "2018 End of the Year Mix",
