@@ -26,7 +26,11 @@
             '<div class="auth-box">' +
             '<div class="auth-header">◆ JILLAX</div>' +
             '<div class="auth-label">// ACCESS REQUIRED</div>' +
-            '<input type="text" id="authInput" class="auth-input" placeholder="输入密码..." autocomplete="off" autocapitalize="off" spellcheck="false">' +
+            '<div class="auth-input-wrap">' +
+            '<span class="auth-dots" id="authDots"></span>' +
+            '<span class="auth-cursor" id="authCursor">|</span>' +
+            '</div>' +
+            '<input type="password" id="authInput" class="auth-hidden-input" autocomplete="off">' +
             '<div class="auth-error" id="authError"></div>' +
             '<button class="auth-btn" id="authBtn">进入</button>' +
             '</div>';
@@ -61,24 +65,38 @@
             '  letter-spacing: 2px;' +
             '  margin-bottom: 32px;' +
             '}' +
-            '.auth-input {' +
-            '  width: 100%;' +
+            '.auth-input-wrap {' +
+            '  display: flex;' +
+            '  align-items: center;' +
+            '  justify-content: center;' +
+            '  min-height: 48px;' +
             '  padding: 12px 16px;' +
-            '  background: transparent;' +
             '  border: 1px solid var(--border, #2a2040);' +
-            '  color: transparent;' +
-            '  caret-color: var(--purple-bright, #b47aff);' +
-            '  text-shadow: 0 0 0 var(--text, #e8e0f0);' +
-            '  -webkit-text-security: disc;' +
-            '  font-family: var(--font-mono, monospace);' +
-            '  font-size: 0.85rem;' +
-            '  letter-spacing: 8px;' +
-            '  text-align: center;' +
-            '  outline: none;' +
+            '  cursor: text;' +
             '  transition: border-color 0.3s;' +
             '}' +
-            '.auth-input:focus {' +
+            '.auth-input-wrap:focus-within {' +
             '  border-color: var(--purple, #9b59ff);' +
+            '}' +
+            '.auth-dots {' +
+            '  color: var(--text, #e8e0f0);' +
+            '  letter-spacing: 8px;' +
+            '  font-size: 1rem;' +
+            '}' +
+            '.auth-cursor {' +
+            '  color: var(--purple-bright, #b47aff);' +
+            '  font-size: 1rem;' +
+            '  animation: blink 1s step-end infinite;' +
+            '}' +
+            '@keyframes blink {' +
+            '  0%, 100% { opacity: 1; }' +
+            '  50% { opacity: 0; }' +
+            '}' +
+            '.auth-hidden-input {' +
+            '  position: absolute;' +
+            '  opacity: 0;' +
+            '  width: 0;' +
+            '  height: 0;' +
             '}' +
             '.auth-error {' +
             '  color: #ff6b6b;' +
@@ -106,8 +124,23 @@
         document.body.appendChild(overlay);
 
         var input = document.getElementById('authInput');
+        var dots = document.getElementById('authDots');
+        var cursor = document.getElementById('authCursor');
         var btn = document.getElementById('authBtn');
         var error = document.getElementById('authError');
+        var wrap = document.querySelector('.auth-input-wrap');
+
+        function updateDots() {
+            dots.textContent = '●'.repeat(input.value.length);
+        }
+
+        wrap.addEventListener('click', function() {
+            input.focus();
+        });
+
+        input.addEventListener('input', function() {
+            updateDots();
+        });
 
         function tryAuth() {
             if (input.value === PASSWORD) {
@@ -121,6 +154,7 @@
             } else {
                 error.textContent = '// ACCESS DENIED';
                 input.value = '';
+                updateDots();
                 input.focus();
             }
         }
