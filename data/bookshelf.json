@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-25T13:22:33Z",
+  "updated": "2026-06-26T13:14:43Z",
   "books": [
     {
       "id": "2996046",
@@ -10602,7 +10602,7 @@
       "id": "20514947",
       "title": "龙虾 / The Lobster",
       "author": "2015-05-15(戛纳电影节) / 2015-10-16(爱尔兰) / 科林·法瑞尔 / 蕾切尔·薇兹 / 约翰·C·赖利 / 蕾雅·赛杜 / 奥利维娅·科尔曼 / 本·卫肖 / 亚里安妮·拉贝德 / 罗杰·阿什顿-格里菲斯 / 迈克尔·史麦利 / 杰西卡·巴登 / 爱尔兰 / 英国 / 希腊 / 法国 / 荷兰 / 欧格斯·兰斯莫斯 / 118分钟 / 龙虾 / 剧情 / 喜剧 / 奇幻 / 欧格斯·兰斯莫斯 Giorgos Lanthimos / 艾锡米斯·费利珀 Efthymis Filippou / 英语 / 法语",
-      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2244254818.jpg",
+      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2932428078.jpg",
       "url": "https://movie.douban.com/subject/20514947/",
       "rating": 4,
       "tags": [],
@@ -12966,6 +12966,32 @@
     }
   ],
   "music": [
+    {
+      "id": "36587213",
+      "title": "Одна",
+      "author": "АДЛИН,Килджо / 2021-11-23 / 单曲 / CD / 电子",
+      "cover": "https://img1.doubanio.com/view/subject/l/public/s34660849.jpg",
+      "url": "https://music.douban.com/subject/36587213/",
+      "rating": 3,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-26",
+      "status": "collect",
+      "category": "music"
+    },
+    {
+      "id": "36119367",
+      "title": "Dead Inside",
+      "author": "АДЛИН / 2021-10-27 / 单曲 / 数字(Digital) / 电子",
+      "cover": "https://img1.doubanio.com/view/subject/l/public/s34327270.jpg",
+      "url": "https://music.douban.com/subject/36119367/",
+      "rating": 3,
+      "tags": [],
+      "comment": "",
+      "date": "2026-06-26",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "36196698",
       "title": "赐我",
