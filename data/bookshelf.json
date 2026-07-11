@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-10T13:15:10Z",
+  "updated": "2026-07-11T11:55:59Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "26108384",
+      "title": "中世纪兵法书 / Medieval Fight Book",
+      "author": "2010(美国) / 美国 / nationalgeographic.com / 45分钟 / 中世纪兵法书 / 纪录片 / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2205385172.jpg",
+      "url": "https://movie.douban.com/subject/26108384/",
+      "rating": 4,
+      "tags": [],
+      "comment": "神秘",
+      "date": "2026-07-11",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "11525673",
       "title": "布达佩斯大饭店 / The Grand Budapest Hotel",
