@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-13T13:27:12Z",
+  "updated": "2026-07-14T12:18:26Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "1293323",
+      "title": "大红灯笼高高挂",
+      "author": "1991-09-10(威尼斯电影节) / 1991-12-18(意大利) / 巩俐 / 马精武 / 何赛飞 / 曹翠芬 / 周琦 / 孔琳 / 金淑媛 / 丁惟敏 / 初晓 / 崔志刚 / 中国大陆 / 中国香港 / 中国台湾 / 张艺谋 / 125 分钟 / 剧情 / 倪震 Zhen Ni / 苏童 Tong  Su / 汉语普通话",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1254404823.jpg",
+      "url": "https://movie.douban.com/subject/1293323/",
+      "rating": 5,
+      "tags": [],
+      "comment": "过于标准的教科书般的电影。内容深度不一定是电影艺术形式的全部。",
+      "date": "2026-07-13",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "26108384",
       "title": "中世纪兵法书 / Medieval Fight Book",
@@ -9822,7 +9835,7 @@
       "id": "6536180",
       "title": "黑暗面 / La cara oculta",
       "author": "2011-09-16(西班牙) / 基姆·古铁雷斯 / 克拉拉·拉戈 / 玛蒂娜·加西亚 / 亚历山德拉·斯图尔特 / 玛利亚·罗德里格斯 / 玛瑟拉·玛 / 汉姆贝托·多拉多 / 胡安·巴普蒂斯塔 / 胡里奥·帕琼 / 哥伦比亚 / 西班牙 / www.lacaraoculta.es / 安德烈斯·拜斯 / 97分钟 / 黑暗面 / 剧情 / 悬疑 / 惊悚 / 安德雷斯·拜兹 Andrés Baiz / 哈特姆·科莱切 Hatem Khraiche / 西班牙语",
-      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2258872500.jpg",
+      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p1671800784.jpg",
       "url": "https://movie.douban.com/subject/6536180/",
       "rating": 4,
       "tags": [],
@@ -10511,7 +10524,7 @@
       "id": "1298041",
       "title": "黑洞表面 / Event Horizon",
       "author": "1997-08-15(美国) / 劳伦斯·菲什伯恩 / 山姆·尼尔 / 凯瑟琳·奎南 / 乔莉·理查德森 / 理查德·T·琼斯 / 杰克·诺斯沃迪 / 詹森·艾萨克 / 西恩·帕特维 / 诺亚·亨特雷 / 埃米莉·布思 / 英国 / 美国 / 保罗·安德森 / 96分钟 / 130分钟(粗剪版) / 黑洞表面 / 恐怖 / 悬疑 / 科幻 / 菲利普·艾斯纳 Philip Eisner / 英语 / 拉丁语",
-      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2932162723.jpg",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1444134477.jpg",
       "url": "https://movie.douban.com/subject/1298041/",
       "rating": 5,
       "tags": [],
