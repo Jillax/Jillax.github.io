@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14T12:18:26Z",
+  "updated": "2026-07-15T12:19:21Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,45 @@
     }
   ],
   "movies": [
+    {
+      "id": "1867742",
+      "title": "火车进站 / L'arrivée d'un train à La Ciotat",
+      "author": "1896-01-25(法国) / 法国 / 奥古斯特·卢米埃尔 / 路易斯·卢米埃尔 / 50秒 / 火车进站 / 短片 / 纪录片 / 无对白",
+      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2400197496.jpg",
+      "url": "https://movie.douban.com/subject/1867742/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-07-15",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
+      "id": "1867744",
+      "title": "水浇园丁 / L'arroseur arrosé",
+      "author": "1895-12-28(法国) / 法国 / 路易斯·卢米埃尔 / 44秒 / 水浇园丁 / 喜剧 / 短片 / 无对白",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2464081402.jpg",
+      "url": "https://movie.douban.com/subject/1867744/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-07-15",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
+      "id": "1303010",
+      "title": "蒙娜丽莎的微笑 / Mona Lisa Smile",
+      "author": "2003-12-19(美国) / 2004-02-12(中国大陆) / 朱莉娅·罗伯茨 / 克尔斯滕·邓斯特 / 朱丽娅·斯蒂尔斯 / 玛吉·吉伦哈尔 / 金妮弗·古德温 / 多米尼克·韦斯特 / 马西娅·盖伊·哈登 / 托弗·格雷斯 / Corey W. Allen / Jessica Leigh Johnson / 美国 / www.sonypictures.com/movies/monalisasmile / 迈克·内威尔 / 117分钟 / 蒙娜丽莎的微笑 / 剧情 / 爱情 / 劳伦斯·康纳尔 Lawrence Konner / 马克·罗森塔尔 Mark Rosenthal / 英语 / 意大利语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p701335253.jpg",
+      "url": "https://movie.douban.com/subject/1303010/",
+      "rating": 4,
+      "tags": [],
+      "comment": "讨论不深，拍得也没有很巧，对于拍摄年代和现在来说，就是平淡的女性主义相关校园电影吧。",
+      "date": "2026-07-14",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "1293323",
       "title": "大红灯笼高高挂",
@@ -6181,7 +6220,7 @@
     {
       "id": "1293515",
       "title": "极度深寒 / Deep Rising",
-      "author": "1998-01-30 / 特里特·威廉斯 / 法米克·詹森 / 安东尼·希尔德 / 凯文·J·奥康纳 / 韦斯·斯塔迪 / 伍娜·戴蒙 / 杰森·弗莱明 / 杰曼·翰苏 / 克利夫·柯蒂斯 / 美国 / 加拿大 / 斯蒂芬·索莫斯 / 106分钟 / 极度深寒 / 动作 / 科幻 / 恐怖 / Stephen Sommers / 英语 / 韩语",
+      "author": "1998-01-30 / 特里特·威廉斯 / 法米克·詹森 / 安东尼·希尔德 / 凯文·J·奥康纳 / 韦斯·斯塔迪 / 伍娜·戴蒙 / 杰森·弗莱明 / 杰曼·翰苏 / 克利夫·柯蒂斯 / 克里夫顿·鲍威尔 / 美国 / 加拿大 / 斯蒂芬·索莫斯 / 106分钟 / 极度深寒 / 动作 / 科幻 / 恐怖 / Stephen Sommers / 英语 / 韩语",
       "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1261755612.jpg",
       "url": "https://movie.douban.com/subject/1293515/",
       "rating": 4,
@@ -8080,7 +8119,7 @@
       "id": "1293234",
       "title": "第七封印 / Det sjunde inseglet",
       "author": "1957-02-16(瑞典) / 古纳尔·布约恩施特兰德 / 本特·埃切罗特 / 尼尔斯·波普 / 马克斯·冯·叙多夫 / 毕比·安德松 / 英加·吉尔 / 毛德·汉松 / 因加·朗格里 / 古内尔·林德布洛姆 / 贝蒂尔·安德贝里 / 瑞典 / 英格玛·伯格曼 / 96分钟 / 第七封印 / 剧情 / 奇幻 / 英格玛·伯格曼 Ingmar Bergman / 瑞典语 / 拉丁语",
-      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2928564616.jpg",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1530862943.jpg",
       "url": "https://movie.douban.com/subject/1293234/",
       "rating": 5,
       "tags": [],
