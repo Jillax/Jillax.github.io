@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-15T12:19:21Z",
+  "updated": "2026-07-16T12:23:24Z",
   "books": [
     {
       "id": "2996046",
@@ -2032,6 +2032,19 @@
   ],
   "movies": [
     {
+      "id": "26585014",
+      "title": "希特勒回来了 / Er ist wieder da",
+      "author": "2015-10-08(德国) / 奥利弗·马苏奇 / 法比安·布施 / 克里斯托夫·玛丽亚·赫布斯特 / 卡蒂娅·里曼 / 弗郎西斯卡·沃芙 / 拉尔斯·鲁道夫 / 米夏埃尔·克斯勒 / 罗伯托·布兰科 / 施特凡·格罗斯曼 / 妮娜·普罗尔 / 德国 / www.constantin-film.de/kino/er-ist-wieder-da/ / 大卫·韦恩特 / 116分钟 / 希特勒回来了 / 喜剧 / 大卫·韦恩特 David Wnendt / 米齐·迈尔 Mizzi Meyer / 德语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2329535697.jpg",
+      "url": "https://movie.douban.com/subject/26585014/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-07-15",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
       "id": "1867742",
       "title": "火车进站 / L'arrivée d'un train à La Ciotat",
       "author": "1896-01-25(法国) / 法国 / 奥古斯特·卢米埃尔 / 路易斯·卢米埃尔 / 50秒 / 火车进站 / 短片 / 纪录片 / 无对白",
@@ -2450,7 +2463,7 @@
     {
       "id": "26748847",
       "title": "风骚律师 第三季 / Better Call Saul Season 3",
-      "author": "2017-04-10(美国) / 鲍勃·奥登科克 / 乔纳森·班克斯 / 蕾亚·塞洪 / 帕特里克·法比安 / 迈克尔·麦基恩 / 布兰登·巴恩斯 / 吉安卡罗·埃斯波西托 / 马克·普罗克施 / 瑞克斯·林恩 / 雷特·林奇 / 美国 / 文斯·吉利根 / 约翰·施班 / 托马斯·施纳泽 / 丹尼尔·沙克海姆 / 基斯·戈登 / 亚当·伯恩斯坦 / 明基·斯皮罗 / 皮特·古尔德 / 风骚律师 / 45分钟 / 风骚律师 / 剧情 / 犯罪 / 文斯·吉里根 Vince Gilligan / 皮特·古尔德 Peter Gould / 詹妮弗·哈金森 Gennifer Hutchison / 安·彻基斯 Ann Cherkis / 希瑟·马里恩 Heather Marion / 托马斯·施纳泽 Thomas Schnauz / 戈登·史密斯 Gordon Smith / 乔纳森·格拉泽 Jonathan Glatzer / 英语",
+      "author": "2017-04-10(美国) / 鲍勃·奥登科克 / 乔纳森·班克斯 / 蕾亚·塞洪 / 帕特里克·法比安 / 迈克尔·麦基恩 / 布兰登·巴恩斯 / 吉安卡罗·埃斯波西托 / 马克·普罗克施 / 瑞克斯·林恩 / 弗里·J·史密斯 / 美国 / 文斯·吉利根 / 约翰·施班 / 托马斯·施纳泽 / 丹尼尔·沙克海姆 / 基斯·戈登 / 亚当·伯恩斯坦 / 明基·斯皮罗 / 皮特·古尔德 / 风骚律师 / 45分钟 / 风骚律师 / 剧情 / 犯罪 / 文斯·吉里根 Vince Gilligan / 皮特·古尔德 Peter Gould / 詹妮弗·哈金森 Gennifer Hutchison / 安·彻基斯 Ann Cherkis / 希瑟·马里恩 Heather Marion / 托马斯·施纳泽 Thomas Schnauz / 戈登·史密斯 Gordon Smith / 乔纳森·格拉泽 Jonathan Glatzer / 英语",
       "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2442801582.jpg",
       "url": "https://movie.douban.com/subject/26748847/",
       "rating": 5,
@@ -3127,7 +3140,7 @@
       "id": "4347889",
       "title": "植物的欲望 / The Botany of Desire",
       "author": "2009-10-28(美国) / 弗兰西斯·麦克多蒙德 / 迈克尔·波伦 / 美国 / Michael Schwarz / Edward Gray / 120分钟 / 植物的欲望 / 纪录片 / 英语",
-      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2900143382.jpg",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2873546703.jpg",
       "url": "https://movie.douban.com/subject/4347889/",
       "rating": 4,
       "tags": [],
@@ -4361,7 +4374,7 @@
     {
       "id": "1441801",
       "title": "局内人 / Inside Man",
-      "author": "2006-03-16(阿姆斯特丹首映) / 2006-03-24(美国) / 丹泽尔·华盛顿 / 克里夫·欧文 / 朱迪·福斯特 / 克里斯托弗·普卢默 / 威廉·达福 / 切瓦特·埃加福 / 金·迪莱克特 / 梁振邦 / 萨曼夏·艾弗斯 / 迈克尔·邓·戴克 / 美国 / 斯派克·李 / 129分钟 / 局内人 / 剧情 / 犯罪 / 悬疑 / 惊悚 / 罗赛·格维茨 Russell Gewirtz / 英语 / 阿尔巴尼亚语 / 西班牙语",
+      "author": "2006-03-16(阿姆斯特丹首映) / 2006-03-24(美国) / 丹泽尔·华盛顿 / 克里夫·欧文 / 朱迪·福斯特 / 克里斯托弗·普卢默 / 威廉·达福 / 切瓦特·埃加福 / 金·迪莱克特 / 梁振邦 / 萨曼夏·艾弗斯 / Carlos Andrés Gómez / 美国 / 斯派克·李 / 129分钟 / 局内人 / 剧情 / 犯罪 / 悬疑 / 惊悚 / 罗赛·格维茨 Russell Gewirtz / 英语 / 阿尔巴尼亚语 / 西班牙语",
       "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p528000230.jpg",
       "url": "https://movie.douban.com/subject/1441801/",
       "rating": 4,
@@ -6702,7 +6715,7 @@
       "id": "26584183",
       "title": "权力的游戏 第八季 / Game of Thrones Season 8",
       "author": "2019-04-14(美国) / 艾米莉亚·克拉克 / 基特·哈灵顿 / 彼特·丁拉基 / 苏菲·特纳 / 麦茜·威廉姆斯 / 琳娜·海蒂 / 伊萨克·亨普斯特德-怀特 / 尼古拉·科斯特-瓦尔道 / 约翰·布莱德利 / 阿尔菲·艾伦 / 美国 / 米格尔·萨普什尼克 / 大卫·努特尔 / 戴维·贝尼奥夫 / D·B·威斯 / 权力的游戏 / 60分钟(E1-E2) / 80分钟(E3-E6) / 权力的游戏 / 剧情 / 奇幻 / 冒险 / 戴维·贝尼奥夫 David Benioff / D·B·威斯 D.B. Weiss / 乔治·马丁 George R.R. Martin / 戴夫·希尔 Dave Hill / 布莱恩·考格曼 Bryan Cogman / 英语",
-      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2553679104.jpg",
+      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2552503815.jpg",
       "url": "https://movie.douban.com/subject/26584183/",
       "rating": 3,
       "tags": [],
@@ -8612,7 +8625,7 @@
     {
       "id": "6011806",
       "title": "厨子戏子痞子",
-      "author": "2013-03-29(中国大陆) / 刘烨 / 张涵予 / 黄渤 / 田中千绘 / 梁静 / 王迅 / 大冢匡将 / 张鲁一 / 高岛真一 / 日比野玲 / 中国大陆 / 管虎 / 108分钟 / 喜剧 / 动作 / 管虎 Hu Guan / 董润年 Runnian Dong / 汉语普通话",
+      "author": "2013-03-29(中国大陆) / 刘烨 / 张涵予 / 黄渤 / 田中千绘 / 梁静 / 王迅 / 大冢匡将 / 张鲁一 / 赵甦晨 / 木幡龙 / 中国大陆 / 管虎 / 108分钟 / 喜剧 / 动作 / 管虎 Hu Guan / 董润年 Runnian Dong / 汉语普通话",
       "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p1903751875.jpg",
       "url": "https://movie.douban.com/subject/6011806/",
       "rating": 3,
