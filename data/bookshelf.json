@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-16T12:23:24Z",
+  "updated": "2026-07-17T12:13:55Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,32 @@
     }
   ],
   "movies": [
+    {
+      "id": "6013489",
+      "title": "规则改变 / Game Change",
+      "author": "2012-03-10(美国) / 朱丽安·摩尔 / 伍迪·哈里森 / 艾德·哈里斯 / 莎拉·保罗森 / 朗·里维斯顿 / 彼特·麦尼科 / 斯宾塞·加雷特 / 杰米·谢尔丹 / 凯文·比格利 / 安德森·库珀 / 美国 / 杰伊·罗奇 / 118分钟 / 规则改变 / 剧情 / 历史 / 丹尼·斯特朗 Danny Strong / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1425470942.jpg",
+      "url": "https://movie.douban.com/subject/6013489/",
+      "rating": 4,
+      "tags": [],
+      "comment": "竟然是历史非虚构。算是改变美国政治气候的一年吧，后面奥巴马两届、茶党的出现、特朗普两届。不到20年的时间，也算风云变幻了。",
+      "date": "2026-07-17",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
+      "id": "26838164",
+      "title": "伦敦生活 第一季 / Fleabag Season 1",
+      "author": "2016-07-21(英国) / 菲比·沃勒-布里奇 / 比尔·帕特森 / 茜安·克利福德 / 本·奥德里基 / 奥利维娅·科尔曼 / 布伦特·吉尔曼 / 休·斯金纳 / 休·丹尼斯 / 凯文·麦克纳利 / 乔丹·朗 / 英国 / www.bbc.co.uk/programmes/p040tlqx / 哈利·布拉德比尔 / 蒂姆·柯比 / 伦敦生活 / 27分钟 / 伦敦生活 / 剧情 / 喜剧 / 菲比·沃勒-布里奇 Phoebe Waller-Bridge / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2381631493.jpg",
+      "url": "https://movie.douban.com/subject/26838164/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-07-16",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "26585014",
       "title": "希特勒回来了 / Er ist wieder da",
@@ -4478,7 +4504,7 @@
     {
       "id": "1292052",
       "title": "肖申克的救赎 / The Shawshank Redemption",
-      "author": "1994-09-10(多伦多电影节) / 1994-10-14(美国) / 蒂姆·罗宾斯 / 摩根·弗里曼 / 鲍勃·冈顿 / 威廉·赛德勒 / 克兰西·布朗 / 吉尔·贝罗斯 / 马克·罗斯顿 / 詹姆斯·惠特摩 / 杰弗里·德曼 / 拉里·布兰登伯格 / 美国 / 弗兰克·德拉邦特 / 142分钟 / 肖申克的救赎 / 犯罪 / 剧情 / 弗兰克·德拉邦特 Frank Darabont / 斯蒂芬·金 Stephen King / 英语",
+      "author": "1994-09-10(多伦多电影节) / 1994-10-14(美国) / 2026-08(中国大陆) / 蒂姆·罗宾斯 / 摩根·弗里曼 / 鲍勃·冈顿 / 威廉·赛德勒 / 克兰西·布朗 / 吉尔·贝罗斯 / 马克·罗斯顿 / 詹姆斯·惠特摩 / 杰弗里·德曼 / 拉里·布兰登伯格 / 美国 / 弗兰克·德拉邦特 / 142分钟 / 肖申克的救赎 / 犯罪 / 剧情 / 弗兰克·德拉邦特 Frank Darabont / 斯蒂芬·金 Stephen King / 英语",
       "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p480747492.jpg",
       "url": "https://movie.douban.com/subject/1292052/",
       "rating": 4,
@@ -12395,7 +12421,7 @@
     {
       "id": "1305068",
       "title": "美国派2 / American Pie 2",
-      "author": "2001-08-10(美国) / 贾森·比格斯 / 托马斯·伊恩·尼古拉斯 / 艾莉森·汉尼根 / 艾迪·凯伊·托马斯 / 西恩·威廉·斯科特 / 克里斯·克莱因 / Denise Faye / 莫莉·曲克 / 乔丽·卡特 / 卡西·阿弗莱克 / 美国 / 詹姆斯·B·罗杰斯 / 108分钟 / 105分钟(英国) / 美国派2 / 喜剧 / 爱情 / 亚当·赫兹 Adam Herz / 大卫·H·斯坦伯格 David H. Steinberg / 英语",
+      "author": "2001-08-10(美国) / 贾森·比格斯 / 托马斯·伊恩·尼古拉斯 / 艾莉森·汉尼根 / 艾迪·凯伊·托马斯 / 西恩·威廉·斯科特 / 克里斯·克莱因 / 丹尼斯·费耶 / 莫莉·曲克 / 乔丽·卡特 / 卡西·阿弗莱克 / 美国 / 詹姆斯·B·罗杰斯 / 108分钟 / 105分钟(英国) / 美国派2 / 喜剧 / 爱情 / 亚当·赫兹 Adam Herz / 大卫·H·斯坦伯格 David H. Steinberg / 英语",
       "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p1607359640.jpg",
       "url": "https://movie.douban.com/subject/1305068/",
       "rating": 4,
