@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-17T12:13:55Z",
+  "updated": "2026-07-18T11:56:15Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "26600941",
+      "title": "强迫症·心魔 / OCD: A Monster in My Mind",
+      "author": "2015-08-26 / 英国 / 60分钟 / 强迫症·心魔 / 纪录片 / Steve Crabtree / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2900291477.jpg",
+      "url": "https://movie.douban.com/subject/26600941/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-07-17",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "6013489",
       "title": "规则改变 / Game Change",
