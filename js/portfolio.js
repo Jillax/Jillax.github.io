@@ -7,13 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(r) { return r.json(); })
         .then(function(data) {
             renderStats(data);
-            renderTicker(data);
             if (document.getElementById('lineChart')) renderLineChart(data);
             renderChart(data);
             renderPctBars(data);
             renderTable(data);
             renderProjection(data);
-            renderHoldDays(data);
             var updateDateEl = document.getElementById('updateDate');
             if (updateDateEl) updateDateEl.textContent = data.updated;
             document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
@@ -24,39 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function calcItem(item) {
         if (item.subItems) {
-            var totalValue = 0, totalCost = 0;
+            var totalValue = 0;
             item.subItems.forEach(function(s) {
                 totalValue += s.value;
-                totalCost += s.cost;
             });
-            return { value: totalValue, cost: totalCost };
+            return totalValue;
         }
-        return { value: item.value || 0, cost: item.cost || 0 };
+        return item.value || 0;
     }
 
     function fmt(n) { return '¥' + Math.round(n).toLocaleString(); }
-    function fmtGain(n) { return (n >= 0 ? '+' : '') + '¥' + Math.round(Math.abs(n)).toLocaleString(); }
-
-    function renderTicker(data) {
-        var ticker = document.getElementById('pfTicker');
-        if (!ticker) return;
-        var items = [];
-        data.categories.forEach(function(cat) {
-            cat.items.forEach(function(item) {
-                var c = calcItem(item);
-                var gain = c.value - c.cost;
-                var pct = c.cost > 0 ? ((gain / c.cost) * 100).toFixed(2) : '0.00';
-                var isPos = gain >= 0;
-                items.push('<span class="pf-ticker-item">' +
-                    '<span class="pf-ticker-name">' + item.name + '</span>' +
-                    '<span class="pf-ticker-pct-' + (isPos ? 'pos' : 'neg') + '">' + (isPos ? '+' : '') + pct + '%</span>' +
-                    '</span>');
-            });
-        });
-        // Duplicate for seamless loop
-        var html = items.join('<span class="pf-ticker-dot">◆</span>');
-        ticker.innerHTML = '<div class="pf-ticker-inner">' + html + '<span class="pf-ticker-dot">◆</span>' + html + '</div>';
-    }
 
     function animateNumber(el, endVal, prefix, decimals) {
         prefix = prefix || '';
@@ -75,36 +50,14 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(step);
     }
 
-    function renderHoldDays(data) {
-        if (!data.history || data.history.length === 0) return;
-        var firstDate = new Date(data.history[0].date);
-        var now = new Date();
-        var days = Math.floor((now - firstDate) / (1000 * 60 * 60 * 24)) + 365;
-        var el = document.getElementById('holdDays');
-        if (el) el.textContent = days + ' 天';
-    }
-
     function renderStats(data) {
-        var totalValue = 0, totalCost = 0;
+        var totalValue = 0;
         data.categories.forEach(function(cat) {
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
-                totalValue += c.value;
-                totalCost += c.cost;
+                totalValue += calcItem(item);
             });
         });
-        var gain = totalValue - totalCost;
-        var pct = totalCost > 0 ? ((gain / totalCost) * 100).toFixed(2) : '0.00';
-        var isPos = gain >= 0;
-
         animateNumber(document.getElementById('totalValue'), totalValue, '¥');
-        var totalCostEl = document.getElementById('totalCost');
-        if (totalCostEl) totalCostEl.textContent = fmt(totalCost);
-
-        var gainEl = document.getElementById('totalGain');
-        gainEl.className = 'pf-hero-stat-value ' + (isPos ? 'green' : 'red');
-        animateNumber(gainEl, Math.abs(gain), (isPos ? '+¥' : '-¥'));
-        document.getElementById('gainPct').textContent = (isPos ? '+' : '') + pct + '%';
     }
 
     function renderLineChart(data) {
@@ -216,9 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var colors = [];
         data.categories.forEach(function(cat) {
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
                 labels.push(item.name);
-                values.push(c.value);
+                values.push(calcItem(item));
                 colors.push(item.color || cat.color);
             });
         });
@@ -276,8 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var cats = data.categories.map(function(cat) {
             var cv = 0;
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
-                cv += c.value;
+                cv += calcItem(item);
             });
             totalValue += cv;
             return { name: cat.name, value: cv, color: cat.color };
@@ -305,73 +256,44 @@ document.addEventListener('DOMContentLoaded', function() {
         var idx = 0;
 
         data.categories.forEach(function(cat) {
-            var catValue = 0, catCost = 0;
+            var catValue = 0;
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
-                catValue += c.value;
-                catCost += c.cost;
+                catValue += calcItem(item);
             });
-            var catGain = catValue - catCost;
-            var catCls = catGain >= 0 ? 'gain-pos' : 'gain-neg';
-            var catRet = catCost > 0 ? ((catGain / catCost) * 100).toFixed(2) + '%' : '-';
 
             html += '<tr class="cat-row">' +
                 '<td style="color:' + cat.color + ';font-family:var(--font-display);letter-spacing:1px">' + cat.name + '</td>' +
-                '<td>' + fmt(catCost) + '</td>' +
-                '<td>' + fmt(catValue) + '</td>' +
-                '<td class="' + catCls + '">' + fmtGain(catGain) + '</td>' +
-                '<td class="' + catCls + '">' + catRet + '</td></tr>';
+                '<td>' + fmt(catValue) + '</td></tr>';
 
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
-                var gain = c.value - c.cost;
-                var cls = gain >= 0 ? 'gain-pos' : 'gain-neg';
-                var ret = c.cost > 0 ? ((gain / c.cost) * 100).toFixed(2) + '%' : '-';
+                var v = calcItem(item);
                 var hasSub = item.subItems && item.subItems.length > 0;
                 var rowId = 'item-' + idx;
 
                 html += '<tr class="item-row" id="' + rowId + '" data-idx="' + idx + '">' +
                     '<td><span class="arrow">' + (hasSub ? '▶' : '') + '</span>' + item.name + '</td>' +
-                    '<td>' + fmt(c.cost) + '</td>' +
-                    '<td>' + fmt(c.value) + '</td>' +
-                    '<td class="' + cls + '">' + fmtGain(gain) + '</td>' +
-                    '<td class="' + cls + '">' + ret + '</td></tr>';
+                    '<td>' + fmt(v) + '</td></tr>';
 
                 if (hasSub) {
                     item.subItems.forEach(function(sub) {
-                        var sg = sub.value - sub.cost;
-                        var sCls = sg >= 0 ? 'gain-pos' : 'gain-neg';
-                        var sRet = sub.cost > 0 ? ((sg / sub.cost) * 100).toFixed(2) + '%' : '-';
                         html += '<tr class="sub-row" data-parent="' + idx + '">' +
-                            '<td style="padding-left:40px">' + sub.name +
-                            (sub.dca ? ' <span class="dca-badge">定投中</span>' : '') + '</td>' +
-                            '<td>' + fmt(sub.cost) + '</td>' +
-                            '<td>' + fmt(sub.value) + '</td>' +
-                            '<td class="' + sCls + '">' + fmtGain(sg) + '</td>' +
-                            '<td class="' + sCls + '">' + sRet + '</td></tr>';
+                            '<td style="padding-left:40px">' + sub.name + '</td>' +
+                            '<td>' + fmt(sub.value) + '</td></tr>';
                     });
                 }
                 idx++;
             });
         });
 
-        var tv = 0, tc = 0;
+        var tv = 0;
         data.categories.forEach(function(cat) {
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
-                tv += c.value;
-                tc += c.cost;
+                tv += calcItem(item);
             });
         });
-        var tg = tv - tc;
-        var tCls = tg >= 0 ? 'gain-pos' : 'gain-neg';
-        var tRet = tc > 0 ? ((tg / tc) * 100).toFixed(2) + '%' : '-';
         html += '<tr class="total-row">' +
             '<td>合计</td>' +
-            '<td>' + fmt(tc) + '</td>' +
-            '<td>' + fmt(tv) + '</td>' +
-            '<td class="' + tCls + '">' + fmtGain(tg) + '</td>' +
-            '<td class="' + tCls + '">' + tRet + '</td></tr>';
+            '<td>' + fmt(tv) + '</td></tr>';
 
         tbody.innerHTML = html;
 
@@ -404,10 +326,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var totalCurrent = 0;
         data.categories.forEach(function(cat) {
             cat.items.forEach(function(item) {
-                var c = calcItem(item);
+                var v = calcItem(item);
                 var rate = returnRates[item.name] || 0;
-                items.push({ name: item.name, value: c.value, rate: rate, color: item.color || cat.color });
-                totalCurrent += c.value;
+                items.push({ name: item.name, value: v, rate: rate, color: item.color || cat.color });
+                totalCurrent += v;
             });
         });
 

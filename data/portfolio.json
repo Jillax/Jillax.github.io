@@ -1,11 +1,6 @@
 {
   "updated": "2026-07-19",
   "currency": "CNY",
-  "history": [
-    { "date": "2026-05-17", "value": 56087.69 },
-    { "date": "2026-06-04", "value": 58300.73 },
-    { "date": "2026-07-19", "value": 66082 }
-  ],
   "categories": [
     {
       "name": "现金类",
@@ -14,19 +9,19 @@
         {
           "name": "定期存款",
           "subItems": [
-            { "name": "三年期（建行+招商）", "value": 20000, "cost": 20000 }
+            { "name": "三年期（建行+招商）", "value": 20000 }
           ]
         },
         {
           "name": "支付宝",
           "subItems": [
-            { "name": "支付宝余额", "value": 3713, "cost": 3713 }
+            { "name": "支付宝余额", "value": 3713 }
           ]
         },
         {
           "name": "微信",
           "subItems": [
-            { "name": "微信零钱", "value": 530, "cost": 530 }
+            { "name": "微信零钱", "value": 530 }
           ]
         }
       ]
@@ -39,47 +34,47 @@
           "name": "沪深300",
           "color": "#b47aff",
           "subItems": [
-            { "name": "易方达沪深300", "value": 7616, "cost": 7369.09 }
+            { "name": "易方达沪深300", "value": 7616 }
           ]
         },
         {
           "name": "标普500",
           "color": "#9b59ff",
           "subItems": [
-            { "name": "摩根标普500", "value": 16088, "cost": 14587.00, "dca": true }
+            { "name": "摩根标普500", "value": 16088 }
           ]
         },
         {
           "name": "纳斯达克100",
           "color": "#ff4da6",
           "subItems": [
-            { "name": "天弘纳斯达克100", "value": 2849, "cost": 2551.09, "dca": true },
-            { "name": "易方达纳斯达克100", "value": 767, "cost": 690.00 },
-            { "name": "万家纳斯达克100", "value": 1751, "cost": 380.00 },
-            { "name": "摩根纳斯达克100", "value": 4147, "cost": 3000.00, "dca": true },
-            { "name": "嘉实纳斯达克100", "value": 2380, "cost": 2010.25 },
-            { "name": "南方纳斯达克100", "value": 1107, "cost": 950.00 }
+            { "name": "天弘纳斯达克100", "value": 2849 },
+            { "name": "易方达纳斯达克100", "value": 767 },
+            { "name": "万家纳斯达克100", "value": 1751 },
+            { "name": "摩根纳斯达克100", "value": 4147 },
+            { "name": "嘉实纳斯达克100", "value": 2380 },
+            { "name": "南方纳斯达克100", "value": 1107 }
           ]
         },
         {
           "name": "恒生科技",
           "color": "#ffaa40",
           "subItems": [
-            { "name": "易方达恒生科技", "value": 1351, "cost": 1564.10 }
+            { "name": "易方达恒生科技", "value": 1351 }
           ]
         },
         {
           "name": "恒生指数",
           "color": "#e8923a",
           "subItems": [
-            { "name": "华夏恒生指数", "value": 783, "cost": 785.11 }
+            { "name": "华夏恒生指数", "value": 783 }
           ]
         },
         {
           "name": "短债",
           "color": "#ffd700",
           "subItems": [
-            { "name": "短债基金", "value": 3000, "cost": 3000 }
+            { "name": "短债基金", "value": 3000 }
           ]
         }
       ]
