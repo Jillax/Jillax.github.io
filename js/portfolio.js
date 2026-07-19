@@ -388,12 +388,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderProjection(data) {
         var returnRates = {
             '定期存款': 0.0125,
+            '支付宝': 0,
+            '微信': 0,
             '短债': 0.028,
             '沪深300': 0.06,
             '标普500': 0.10,
             '纳斯达克100': 0.12,
             '恒生科技': 0.06,
-            '恒生ETF': 0.04
+            '恒生指数': 0.04
         };
 
         var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
