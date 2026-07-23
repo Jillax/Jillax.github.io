@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-22T12:42:39Z",
+  "updated": "2026-07-23T12:26:09Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "36955570",
+      "title": "印度阿育吠陀药物 / india ayurveda medicine",
+      "author": "2016(法国) / 法国 / 52分钟 / 印度阿育吠陀药物 / 法语",
+      "cover": "https://img2.doubanio.com/view/photo/l_ratio_poster/public/p2910370411.jpg",
+      "url": "https://movie.douban.com/subject/36955570/",
+      "rating": 2,
+      "tags": [],
+      "comment": "印医tv",
+      "date": "2026-07-23",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "27053768",
       "title": "伦敦生活 第二季 / Fleabag Season 2",
@@ -6948,7 +6961,7 @@
     {
       "id": "1397546",
       "title": "追随 / Following",
-      "author": "1998-04-24(旧金山电影节) / 1999-11-05(英国) / 杰里米·西奥伯德 / 亚历克斯·霍 / 露西·拉塞尔 / 约翰·诺兰 / 迪克·布拉德塞尔 / 吉莉安·艾尔-卡迪 / 詹妮弗·安格 / 尼古拉斯·卡洛蒂 / 达伦·奥曼迪 / 盖·格林威 / 英国 / 克里斯托弗·诺兰 / 69分钟 / 追随 / 犯罪 / 悬疑 / 惊悚 / 克里斯托弗·诺兰 Christopher Nolan / 英语",
+      "author": "1998-04-24(旧金山电影节) / 1999-11-05(英国) / 杰里米·西奥伯德 / 亚历克斯·霍 / 露西·拉塞尔 / 约翰·诺兰 / 迪克·布拉德塞尔 / 吉莉安·艾尔-卡迪 / 詹妮弗·安格 / 尼古拉斯·卡洛蒂 / 达伦·奥曼迪 / 盖·格林威 / 英国 / 美国 / 克里斯托弗·诺兰 / 69分钟 / 追随 / 犯罪 / 悬疑 / 惊悚 / 克里斯托弗·诺兰 Christopher Nolan / 英语",
       "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1150103462.jpg",
       "url": "https://movie.douban.com/subject/1397546/",
       "rating": 4,
