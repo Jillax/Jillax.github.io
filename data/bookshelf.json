@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-21T11:30:59Z",
+  "updated": "2026-08-22T11:24:49Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "1306911",
+      "title": "战栗空间 / Panic Room",
+      "author": "2002-03-29(美国) / 朱迪·福斯特 / 克里斯汀·斯图尔特 / 福里斯特·惠特克 / 德怀特·尤科姆 / 杰瑞德·莱托 / 帕特里克·波查 / 妮可·基德曼 / 安德鲁·凯文·沃克 / 梅尔·罗德里格斯 / 安·麦格纽森 / 美国 / 大卫·芬奇 / 112 分钟 / 113 分钟(西班牙) / 战栗空间 / 剧情 / 犯罪 / 惊悚 / David Koepp / 英语",
+      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2448793889.jpg",
+      "url": "https://movie.douban.com/subject/1306911/",
+      "rating": 4,
+      "tags": [],
+      "comment": "没看出构思在哪，挺套路的吧。casting和密室题材能加一分",
+      "date": "2026-08-22",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "35618442",
       "title": "戴夫·查普尔：胜利最终章 / Dave Chappelle: The Closer",
@@ -7174,7 +7187,7 @@
       "url": "https://movie.douban.com/subject/1295647/",
       "rating": 4,
       "tags": [],
-      "comment": "对世界观的讨论。是科学神教还是神学宗教，抑或浪漫爱意识形态？",
+      "comment": "对世界观的讨论。是科学神教还是神学宗教，抑或浪漫爱意识形态？其实很有魅力",
       "date": "2024-02-21",
       "status": "collect",
       "category": "movie"
@@ -16439,6 +16452,19 @@
     }
   ],
   "games": [
+    {
+      "id": "36087620",
+      "title": "回合决斗 Rounds",
+      "author": "",
+      "cover": "https://img9.doubanio.com/lpic/s35020284.jpg",
+      "url": "https://www.douban.com/game/36087620/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-08-22",
+      "status": "collect",
+      "category": "game"
+    },
     {
       "id": "35703329",
       "title": "牛奶袋外面有一袋牛奶袋外面有一袋牛奶 Milk outside a bag of milk outside a bag of milk",
