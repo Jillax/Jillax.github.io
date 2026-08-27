@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-26T11:34:01Z",
+  "updated": "2026-08-27T20:56:39Z",
   "books": [
     {
       "id": "2996046",
@@ -7430,7 +7430,7 @@
       "id": "1757937",
       "title": "银色星球 / Na srebrnym globie",
       "author": "1988-05-12 / 安德烈·瑟韦林 / 杰吉·特雷拉 / 格拉齐娜·迪拉格 / 瓦尔德马·科夫纳茨基 / 伊沃娜·别尔斯卡 / 耶日·格拉莱克 / 埃尔兹别塔·卡尔科什卡 / 克里斯提娜·杨达 / 马切伊·古拉伊 / 亨里克·塔拉尔 / 波兰 / 安杰伊·茹瓦夫斯基 / 166 分钟 / 银色星球 / 科幻 / 冒险 / Andrzej Zulawski / 波兰语",
-      "cover": "https://img1.doubanio.com/view/photo/l_ratio_poster/public/p2154974499.jpg",
+      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2913677316.jpg",
       "url": "https://movie.douban.com/subject/1757937/",
       "rating": 4,
       "tags": [],
@@ -11095,7 +11095,7 @@
     {
       "id": "1292215",
       "title": "天使爱美丽 / Le Fabuleux destin d'Amélie Poulain",
-      "author": "2001-04-25(法国) / 2001-08-16(德国) / 奥黛丽·塔图 / 马修·卡索维茨 / 吕菲斯 / 洛莱拉·克拉沃塔 / 塞尔·梅林 / 贾梅尔·杜布兹 / 克洛蒂尔德·莫莱特 / 克莱尔·莫里耶 / 伊莎贝尔·南蒂 / 多米尼克·皮侬 / 法国 / 德国 / 让-皮埃尔·热内 / 122分钟 / 天使爱美丽 / 剧情 / 喜剧 / 爱情 / 纪尧姆·洛朗 Guillaume Laurant / 让-皮埃尔·热内 Jean-Pierre Jeunet / 法语 / 俄语",
+      "author": "2001-04-25(法国) / 2001-08-16(德国) / 2026(中国大陆) / 奥黛丽·塔图 / 马修·卡索维茨 / 吕菲斯 / 洛莱拉·克拉沃塔 / 塞尔·梅林 / 贾梅尔·杜布兹 / 克洛蒂尔德·莫莱特 / 克莱尔·莫里耶 / 伊莎贝尔·南蒂 / 多米尼克·皮侬 / 法国 / 德国 / 让-皮埃尔·热内 / 122分钟 / 天使爱美丽 / 剧情 / 喜剧 / 爱情 / 纪尧姆·洛朗 Guillaume Laurant / 让-皮埃尔·热内 Jean-Pierre Jeunet / 法语 / 俄语",
       "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2447590313.jpg",
       "url": "https://movie.douban.com/subject/1292215/",
       "rating": 2,
@@ -13161,6 +13161,19 @@
     }
   ],
   "music": [
+    {
+      "id": "1394751",
+      "title": "Loveless",
+      "author": "My Bloody Valentine / 1991-11-04 / 专辑 / Audio CD / 摇滚",
+      "cover": "https://img1.doubanio.com/view/subject/l/public/s1445800.jpg",
+      "url": "https://music.douban.com/subject/1394751/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-08-26",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "28353565",
       "title": "Little Dark Age",
@@ -15270,7 +15283,7 @@
     {
       "id": "1417731",
       "title": "未来的主人翁",
-      "author": "罗大佑 / 1983 / 国语专辑 / CD / 摇滚",
+      "author": "罗大佑 / 1983 / 专辑 / CD / 摇滚",
       "cover": "https://img9.doubanio.com/view/subject/l/public/s1429954.jpg",
       "url": "https://music.douban.com/subject/1417731/",
       "rating": 5,
