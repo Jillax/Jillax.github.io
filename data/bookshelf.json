@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-27T20:56:39Z",
+  "updated": "2026-08-28T21:19:47Z",
   "books": [
     {
       "id": "2996046",
@@ -14152,7 +14152,7 @@
     {
       "id": "26753594",
       "title": "醜奴兒",
-      "author": "草東沒有派對 / 2016-04-30 / 专辑 / CD / 摇滚",
+      "author": "草東沒有派對 / 2016-02-19 / 专辑 / CD / 摇滚",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s28541447.jpg",
       "url": "https://music.douban.com/subject/26753594/",
       "rating": 4,
@@ -16465,6 +16465,19 @@
     }
   ],
   "games": [
+    {
+      "id": "38616819",
+      "title": "渔力全开 How to Fish",
+      "author": "",
+      "cover": "https://img1.doubanio.com/lpic/s35604230.jpg",
+      "url": "https://www.douban.com/game/38616819/",
+      "rating": 5,
+      "tags": [],
+      "comment": "很久没见过gameplay这么纯粹的游戏了，作者真的很懂。游戏一定要好玩有意思。",
+      "date": "2026-08-28",
+      "status": "collect",
+      "category": "game"
+    },
     {
       "id": "36087620",
       "title": "回合决斗 Rounds",
