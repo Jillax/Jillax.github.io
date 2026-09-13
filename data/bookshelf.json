@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-12T13:55:58Z",
+  "updated": "2026-09-13T14:51:43Z",
   "books": [
     {
       "id": "2996046",
@@ -13161,6 +13161,19 @@
     }
   ],
   "music": [
+    {
+      "id": "30448268",
+      "title": "Money Talks",
+      "author": "Gang of Four / Import / CD",
+      "cover": "https://img9.doubanio.com/view/subject/l/public/s29993674.jpg",
+      "url": "https://music.douban.com/subject/30448268/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-09-13",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "1394751",
       "title": "Loveless",
