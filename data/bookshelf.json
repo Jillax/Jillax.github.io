@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-28T18:32:34Z",
+  "updated": "2026-09-29T16:50:29Z",
   "books": [
     {
       "id": "2996046",
@@ -2403,7 +2403,7 @@
       "url": "https://movie.douban.com/subject/35010610/",
       "rating": 4,
       "tags": [],
-      "comment": "商业桥段多了点，但内容挺好的，科幻作品不一定非要拍成政经大片。",
+      "comment": "商业桥段多了点，但内容选择挺好的，科幻作品不一定非要拍成政经大片。",
       "date": "2026-03-27",
       "status": "collect",
       "category": "movie"
@@ -12959,7 +12959,7 @@
       "url": "https://movie.douban.com/subject/3742360/",
       "rating": 5,
       "tags": [],
-      "comment": "",
+      "comment": "我部分的电影启蒙",
       "date": "2021-02-21",
       "status": "collect",
       "category": "movie"
@@ -16530,6 +16530,19 @@
     }
   ],
   "games": [
+    {
+      "id": "25704197",
+      "title": "请出示证件 Papers, Please",
+      "author": "",
+      "cover": "https://img3.doubanio.com/lpic/s33444680.jpg",
+      "url": "https://www.douban.com/game/25704197/",
+      "rating": 4,
+      "tags": [],
+      "comment": "",
+      "date": "2026-09-29",
+      "status": "collect",
+      "category": "game"
+    },
     {
       "id": "38616819",
       "title": "渔力全开 How to Fish",
