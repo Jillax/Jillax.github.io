@@ -36,3 +36,9 @@ scripts/
 
 # Logs
 *.log
+
+# AI 工作区（本地记忆与临时文件，不入库）
+.workbuddy/
+
+# 教材原文：受版权保护，不随 Pages 公开发布（本地保留）
+history-projects/history-textbook-visuals/source-texts/
