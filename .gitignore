@@ -31,9 +31,6 @@ mineru_env/
 playwright-report/
 test-results/
 
-# Local dev scripts (not needed for deploy)
-scripts/
-
 # Logs
 *.log
 
@@ -42,3 +39,8 @@ scripts/
 
 # 教材原文：受版权保护，不随 Pages 公开发布（本地保留）
 history-projects/history-textbook-visuals/source-texts/
+
+# 画廊原图：已转 WebP，原始 PNG/JPG 仅本地留存
+assets/Image-Share/*.png
+assets/Image-Share/*.jpg
+assets/Image-Share/*.jpeg

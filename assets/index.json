@@ -1,6 +1,9 @@
 {
+  "updated": "2026-10-08",
   "files": [
-    { "name": "Image-Share", "type": "dir" }
-  ],
-  "updated": "2026-05-19"
+    {
+      "name": "Image-Share",
+      "type": "dir"
+    }
+  ]
 }

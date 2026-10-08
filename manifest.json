@@ -1,27 +1,28 @@
 {
-  "name": "Lexy — AI & Rust Developer",
-  "short_name": "Lexy",
-  "description": "Full-stack AI engineer & Rust developer. Neurodivergent (AuDHD) trans woman in tech.",
+  "name": "Jillax · 个人主页",
+  "short_name": "Jillax",
+  "description": "历史学师范生的数字空间：书影音清单、随笔博客、译制作品与 AI 实验。",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0a0a0f",
-  "theme_color": "#0a0a0f",
+  "background_color": "#1a1714",
+  "theme_color": "#1a1714",
   "orientation": "any",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "/assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "/assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["portfolio", "technology"],
-  "lang": "en",
+  "categories": ["personal", "education", "blog"],
+  "lang": "zh-CN",
   "dir": "ltr"
 }

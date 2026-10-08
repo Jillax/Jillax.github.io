@@ -14,10 +14,12 @@
 | `about.html` | 关于：个人简介、技能树、时间线、项目展示 |
 | `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细） |
 | `contact.html` | 联系方式：GitHub / Bilibili / 豆瓣 / 知乎 / 邮箱 |
-| `share.html` | 文件分享：GitHub API 文件列表浏览与下载 |
+| `share.html` | 画廊：AI 生成图像与数字创作，清单由 `assets/Image-Share/index.json` 驱动 |
+| `projects.html` | 项目清单：各类个人项目展示 |
 | `translations.html` | 译制作品清单：Bilibili 视频译制作品管理与展示 |
 | `bookshelf.html` | 书影音游清单：豆瓣数据自动同步，含累计趋势折线图 |
-| `blog.html` | 随笔博客：四合一内容聚合页 |
+| `anki-web/` | Anki Web：基于 IndexedDB 的浏览器端记忆卡复习（含中国历史卡组） |
+| `history-projects/` | 教学工具子应用：时间线生成、战役推演、随堂投票等 |
 
 ### 博客页面（blog.html）
 
@@ -88,6 +90,18 @@
 - 统计面板：总作品数、已发布数、总播放量、平均播放
 - 搜索、排序（按时间/播放量）
 - 标签筛选（已完成/译制中）
+
+## 画廊（share.html）
+
+展示 AI 生成图像与数字创作。**图片一律以 WebP 发布，原始 PNG/JPG 只保留在本地**，
+不进版本控制（见 `.gitignore`）。
+
+新增图片后重建索引即可，无需改动页面代码：
+
+```bash
+python scripts/build_gallery_index.py            # 仅重建 index.json
+python scripts/build_gallery_index.py --convert  # 先把 PNG/JPG 转 WebP（需 Pillow），再重建
+```
 
 ## 设计
 
