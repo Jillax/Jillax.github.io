@@ -136,7 +136,8 @@
   .bar.R { background: var(--rep); }
   .bar.D { background: var(--dem); }
   .bar.I { background: var(--ind); }
-  .bar.floor { background: repeating-linear-gradient(135deg, var(--dem) 0 6px, #6e8eb3 6px 8px); }
+  .bar.floor.D { background: repeating-linear-gradient(135deg, var(--dem) 0 6px, #6e8eb3 6px 8px); }
+  .bar.floor.R { background: repeating-linear-gradient(135deg, var(--rep) 0 6px, #c47a7a 6px 8px); }
   .num {
     font-family: "IBM Plex Mono", monospace;
     font-size: 13px;
@@ -209,13 +210,13 @@
   <header>
     <div class="kicker">
       <a href="https://jillax.github.io/">← Jillax</a>
-      <span>国会财务披露 · 2026</span>
+      <span>国会、总统与州长 · 2026</span>
       <span>区间，不是审计净资产</span>
     </div>
     <h1>申报上的美国</h1>
-    <p class="deck">两党领导层、几位全国政治人物，以及民主社会主义者和桑德斯的公开持仓。数字来自 <strong>Quiver Quantitative</strong> 对年度申报的解析；罗·卡纳和迈克·约翰逊在 Quiver 上不可用，改核众议院书记官处原文。</p>
+    <p class="deck">国会人物仍来自 <strong>Quiver</strong> 对年度申报的解析。新增的几位总统走政府伦理办公室的 278 表，州长走各州自己的申报。这三套表不能当成同一种净资产。</p>
   </header>
-  <p class="method">议员只申报金额区间。Quiver 取区间中点当作持仓金额，再把上市股票按市价更新，得到“盯市估算”。主要住宅通常不出现在表上，负债也大多不在这套汇总里。最高一档往往没有上限，中点会把“更大”压成一个固定数字。下面所有比较都受这个口径限制。</p>
+  <p class="method">国会申报大多是金额区间，Quiver 取中点，再把上市股票按市价更新。总统表的最高一档是 Over $50,000,000，没有上限，加不出净资产。佛罗里达州给州长一个精确净资产，密歇根州只要求投资清单，伊利诺伊州的普利兹克把资产放在盲目信托里。柱子右侧的标签标明每一根用的是哪种口径。主要住宅通常不在表上。</p>
   <section class="stats" id="stats"></section>
   <section class="stories" id="stories"></section>
   <div class="toolbar" id="filters"></div>
@@ -229,7 +230,7 @@
   <h2 id="detail-title">单个人的持仓</h2>
   <section class="detail" id="detail"></section>
   <footer>
-    <p>整理日期 2026年10月10日。Quiver 页面会注明解析错误，并且不把最近的交易全部回写进年度持仓。万斯已离任国会，这里是他 2023 历年的参议院申报。总统个人财务走政府伦理办公室，不在这张国会表里。</p>
+    <p>整理日期 2026年10月10日。国会数字仍可能有 Quiver 的解析误差。万斯用的是 2023 历年参议院申报。总统和州长的来源写在每个人的卡片底部。格雷格·阿博特的得州个人报表、霍赫尔和夏皮罗的州申报，这次没有找到可以和其他人放在同一根柱子上的资产合计，就没有放进来。</p>
     <p>来源：<a href="https://www.quiverquant.com/congress-live-net-worth/">Quiver Congress Live Net Worth</a>；<a href="https://www.rokhanna.money/">rokhanna.money</a>；<a href="https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2025/10081199.pdf">约翰逊 2025 年申报 PDF</a>。</p>
   </footer>
 </div>
@@ -286,40 +287,48 @@ function median(nums) {
 function kindLabel(p) {
   if (p.headlineKind === "live") return "盯市";
   if (p.headlineKind === "floor") return "下限";
+  if (p.headlineKind === "exact") return "精确";
+  if (p.headlineKind === "range") return "区间中点";
   if (p.headlineKind === "disclosure") return (p.year || "") + "申报";
   return "未列资产";
 }
+function isCongress(p) { return !p.office || p.office === "congress"; }
 function visible() {
   const q = query.trim().toLowerCase();
   return PEOPLE.filter(p => {
-    const partyOk = filter === "all" || p.party === filter || (p.tags || []).includes(filter);
-    if (!partyOk) return false;
+    let ok = true;
+    if (filter === "国会") ok = isCongress(p);
+    else if (filter === "总统") ok = p.office === "president";
+    else if (filter === "州长") ok = p.office === "governor";
+    else if (filter !== "all") ok = p.party === filter || (p.tags || []).includes(filter);
+    if (!ok) return false;
     if (!q) return true;
-    return (p.name + p.zh + p.role + p.state).toLowerCase().includes(q);
-  });
+    return (p.name + p.zh + p.role + p.state + (p.chamber || "")).toLowerCase().includes(q);
+  }).sort((a, b) => (b.headline || -1) - (a.headline || -1));
 }
 function person(id) { return PEOPLE.find(p => p.id === id); }
 
 function renderStats() {
-  const valued = PEOPLE.filter(p => typeof p.headline === "number" && p.headlineKind !== "floor");
-  const hi = PEOPLE.reduce((a, b) => ((b.headline || 0) > (a.headline || 0) ? b : a));
+  const congress = PEOPLE.filter(isCongress);
+  const valued = congress.filter(p => typeof p.headline === "number" && p.headlineKind !== "floor");
+  const hi = valued.reduce((a, b) => (b.headline > a.headline ? b : a));
   const lo = valued.reduce((a, b) => (b.headline < a.headline ? b : a));
-  const medR = median(PEOPLE.filter(p => p.party === "R" && p.headlineKind !== "floor").map(p => p.headline));
-  const medD = median(PEOPLE.filter(p => p.party === "D" && p.headlineKind !== "floor").map(p => p.headline));
+  const medR = median(congress.filter(p => p.party === "R" && p.headlineKind !== "floor").map(p => p.headline));
+  const medD = median(congress.filter(p => p.party === "D" && p.headlineKind !== "floor").map(p => p.headline));
   document.getElementById("stats").innerHTML = [
-    ["极差", money(hi.headline) + " / " + money(lo.headline), hi.zh + " 对 " + lo.zh],
-    ["共和党中位", money(medR), "14 人，不含约翰逊"],
-    ["民主党中位", money(medD), "16 人，不含卡纳下限"],
-    ["党派人数", "15 · 17 · 1", "共和党 · 民主党 · 独立"]
+    ["国会极差", money(hi.headline) + " / " + money(lo.headline), hi.zh + " 对 " + lo.zh + "，不含总统和州长"],
+    ["共和党中位", money(medR), "只算国会，不含约翰逊"],
+    ["民主党中位", money(medD), "只算国会，不含卡纳下限"],
+    ["新增", "3 · 4", "总统 · 州长。点上面的筛选，口径和国会不同"]
   ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
 }
 
 function renderStories() {
   const items = [
-    ["J000312", "最大的一张表", "贾斯蒂斯的中位来自非上市股权，不是股票账户。"],
-    ["P000197", "科技股", "佩洛西盯市仓位的前五只，是英伟达、苹果、亚马逊、谷歌、微软。"],
-    ["O000172", "几乎没有股票", "AOC 的 2025 年中位是 5.7 万美元储蓄和一份小 401(k)。"],
-    ["C001098", "单一个股", "克鲁兹盯市股票大约 88% 是高盛。"]
+    ["POTUS-TRUMP", "证券账户下限", "不是净资产。俱乐部、媒体股票和加密钱包还在没有上限的那一档里。"],
+    ["GOV-DESANTIS", "精确净资产", "佛罗里达州直接报一个数字，2025 年底是 207 万美元。"],
+    ["GOV-PRITZKER", "盲目信托", "申报看不到持仓。2024 年报税收入 1070 万美元，福布斯估算没有画进柱子。"],
+    ["POTUS-BIDEN", "十一页申报", "资产大约 100 万到 260 万美元，外加一笔住房贷款。"]
   ];
   document.getElementById("stories").innerHTML = items.map(([id, t, d]) => {
     const p = person(id);
@@ -330,6 +339,9 @@ function renderStories() {
 function renderFilters() {
   const chips = [
     ["all", "全部"],
+    ["国会", "国会"],
+    ["总统", "总统"],
+    ["州长", "州长"],
     ["R", "共和党"],
     ["D", "民主党"],
     ["I", "独立"],
@@ -351,13 +363,14 @@ function renderChart() {
     ? `横条是对数刻度，否则 ${biggest.zh} 会把 ${money(min)} 挤没。当前 ${rows.length} 人。点一行看持仓。`
     : `当前 ${rows.length} 人。`;
   document.getElementById("chart").innerHTML = rows.map(p => {
-    const label = `<span class="who"><b>${esc(p.zh)}</b><small>${esc(PARTY[p.party])} · ${esc(p.state)}</small></span>`;
+    const place = p.office === "president" ? "总统" : p.office === "governor" ? "州长 · " + p.state : PARTY[p.party] + " · " + p.state;
+    const label = `<span class="who"><b>${esc(p.zh)}</b><small>${esc(place)}</small></span>`;
     if (typeof p.headline !== "number") {
-      return `<button class="row" data-id="${p.id}" ${p.id === selected ? 'aria-current="true"' : ""}>${label}<span class="empty-bar">2025 年资产栏为 None disclosed</span><span class="num"><i>书记官处</i>—</span></button>`;
+      return `<button class="row" data-id="${p.id}" ${p.id === selected ? 'aria-current="true"' : ""}>${label}<span class="empty-bar">${esc(p.emptyLabel || "没有可以比较的合计")}</span><span class="num"><i>${esc(p.emptyKind || "申报")}</i>—</span></button>`;
     }
     const span = Math.log10(max) - Math.log10(min);
     const w = span === 0 ? 100 : ((Math.log10(p.headline) - Math.log10(min)) / span) * 100;
-    const cls = p.headlineKind === "floor" ? "floor" : p.party;
+    const cls = (p.headlineKind === "floor" ? "floor " : "") + p.party;
     const width = Math.max(4, Math.min(100, w));
     return `<button class="row" data-id="${p.id}" ${p.id === selected ? 'aria-current="true"' : ""}>${label}<span class="track"><i class="bar ${cls}" style="width:${width}%"></i></span><span class="num"><i>${esc(kindLabel(p))}</i>${esc(money(p.headline))}</span></button>`;
   }).join("") || `<p class="note">没有符合筛选的人。</p>`;
@@ -395,7 +408,7 @@ function spark(nw) {
 function renderDetail() {
   const p = person(selected) || visible()[0] || PEOPLE[0];
   selected = p.id;
-  const sources = [{ t: "Quiver 人物页", u: p.quiver }].concat(p.extraSources || []);
+  const sources = (p.quiver ? [{ t: "Quiver 人物页", u: p.quiver }] : []).concat(p.extraSources || []);
   const alloc = (p.amounts || []).map(a => {
     const total = p.amounts.reduce((s, x) => s + x.v, 0) || 1;
     return `<tr><td>${esc(a.k)}</td><td class="r">${esc(money(a.v))}</td><td class="r">${((a.v / total) * 100).toFixed(0)}%</td></tr>`;
@@ -405,8 +418,8 @@ function renderDetail() {
   const trusts = (p.trusts || []).map(t => `<tr><td>${esc(t.n)}</td><td>${esc(t.range)}</td><td class="r">${t.nAssets}</td></tr>`).join("");
   const debts = (p.liabilities || []).map(d => `<tr><td>${esc(d.n)}</td><td>${esc(d.range)}</td><td>${esc(d.since)}</td></tr>`).join("");
   const headline = p.headlineKind === "none"
-    ? `<p class="big">资产栏空白</p><p class="note">2025 年年度报告没有申报资产。下面是负债。</p>`
-    : `<p class="big">${esc(money(p.headline))}</p><p class="note">${esc(kindLabel(p))} · ${esc(moneyFull(p.headline))}${p.range ? `。2025 年区间 ${esc(money(p.range[0]))} 至 ${esc(money(p.range[1]))} 以上` : ""}</p>`;
+    ? `<p class="big">${esc(p.emptyLabel || "没有合计")}</p>${p.emptyNote ? `<p class="note">${esc(p.emptyNote)}</p>` : ""}`
+    : `<p class="big">${esc(money(p.headline))}</p><p class="note">${esc(kindLabel(p))} · ${esc(moneyFull(p.headline))}${p.rangeNote ? "。" + esc(p.rangeNote) : ""}</p>`;
   document.getElementById("detail").innerHTML = `
     <div class="idcard">
       <img class="avatar" alt="" src="${esc(p.image)}" data-fallback="${esc(p.imageFallback)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.remove()}">
@@ -419,7 +432,7 @@ function renderDetail() {
     </div>
     <div>
       <p class="blurb">${esc(p.blurb)}</p>
-      ${p.nw && p.nw.length > 1 ? `<h3 style="font-family:Noto Serif SC,serif;margin:16px 0 4px">年度中位</h3>${spark(p.nw)}` : ""}
+      ${p.nw && p.nw.length > 1 ? `<h3 style="font-family:Noto Serif SC,serif;margin:16px 0 4px">${esc(p.seriesTitle || "历年申报")}</h3>${spark(p.nw)}` : ""}
       <div class="split">
         <div>
           <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">资产类别</h3>
