@@ -117,7 +117,7 @@
   .row {
     width: 100%;
     display: grid;
-    grid-template-columns: 196px 1fr 128px;
+    grid-template-columns: 232px 1fr 128px;
     gap: 10px;
     align-items: center;
     padding: 7px 0;
@@ -128,9 +128,14 @@
     cursor: pointer;
   }
   .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
-  .who { display: flex; flex-direction: column; min-width: 0; }
+  .who { display: flex; flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+  .who .meta { display: flex; flex-direction: column; min-width: 0; }
   .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .who small { color: var(--muted); font-size: 12px; }
+  .mini {
+    width: 36px; height: 36px; object-fit: cover; object-position: center 18%;
+    background: #e5d9c6; flex: none; border: 1px solid var(--line);
+  }
   .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
   .bar { height: 100%; display: block; min-width: 2px; }
   .bar.R { background: var(--rep); }
@@ -230,7 +235,7 @@
   <h2 id="detail-title">单个人的持仓</h2>
   <section class="detail" id="detail"></section>
   <footer>
-    <p>整理日期 2026年10月10日。国会数字仍可能有 Quiver 的解析误差。万斯用的是 2023 历年参议院申报。总统和州长的来源写在每个人的卡片底部。格雷格·阿博特的得州个人报表、霍赫尔和夏皮罗的州申报，这次没有找到可以和其他人放在同一根柱子上的资产合计，就没有放进来。</p>
+    <p>整理日期 2026年10月10日。国会数字仍可能有 Quiver 的解析误差。万斯用的是 2023 历年参议院申报。总统和州长的来源写在每个人的卡片底部。头像用的是维基共享资源上的官方或公开肖像。格雷格·阿博特的得州个人报表不在网上公开，仍然没有放进来。</p>
     <p>来源：<a href="https://www.quiverquant.com/congress-live-net-worth/">Quiver Congress Live Net Worth</a>；<a href="https://www.rokhanna.money/">rokhanna.money</a>；<a href="https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2025/10081199.pdf">约翰逊 2025 年申报 PDF</a>。</p>
   </footer>
 </div>
@@ -319,7 +324,7 @@ function renderStats() {
     ["国会极差", money(hi.headline) + " / " + money(lo.headline), hi.zh + " 对 " + lo.zh + "，不含总统和州长"],
     ["共和党中位", money(medR), "只算国会，不含约翰逊"],
     ["民主党中位", money(medD), "只算国会，不含卡纳下限"],
-    ["新增", "3 · 4", "总统 · 州长。点上面的筛选，口径和国会不同"]
+    ["新增", "3 · 8", "总统 · 州长。点上面的筛选，口径和国会不同"]
   ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
 }
 
@@ -364,7 +369,8 @@ function renderChart() {
     : `当前 ${rows.length} 人。`;
   document.getElementById("chart").innerHTML = rows.map(p => {
     const place = p.office === "president" ? "总统" : p.office === "governor" ? "州长 · " + p.state : PARTY[p.party] + " · " + p.state;
-    const label = `<span class="who"><b>${esc(p.zh)}</b><small>${esc(place)}</small></span>`;
+    const img = p.image ? `<img class="mini" alt="" src="${esc(p.image)}" onerror="this.remove()">` : "";
+    const label = `<span class="who">${img}<span class="meta"><b>${esc(p.zh)}</b><small>${esc(place)}</small></span></span>`;
     if (typeof p.headline !== "number") {
       return `<button class="row" data-id="${p.id}" ${p.id === selected ? 'aria-current="true"' : ""}>${label}<span class="empty-bar">${esc(p.emptyLabel || "没有可以比较的合计")}</span><span class="num"><i>${esc(p.emptyKind || "申报")}</i>—</span></button>`;
     }
