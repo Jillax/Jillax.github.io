@@ -1,6 +1,6 @@
 window.SWF = {
   updated: "2026-10-10",
-  note: "规模和持仓分开。官方数字优先。没有官方规模时，用 2026 年 5 月 Visual Capitalist 引用的 Global SWF 估算，并在柱子上标成估算。13F 都是 2026 年 6 月 30 日的美国上市证券，不是全球组合。",
+  note: "主图是各基金自己公布的持仓构成。规模能用官网或年报的，不用第三方估算。13F 只是美国上市股票里被点名的一块，不拿来代表整本账。",
   funds: [
     {
       id: "nbim",
@@ -22,11 +22,12 @@ window.SWF = {
       nPositions: 1617,
       disclosure: "full",
       tags: ["石油"],
+      mixKind: "actual",
       amounts: [
-        { k: "上市股票", v: 72.1 },
-        { k: "债券", v: 25.8 },
-        { k: "未上市房地产", v: 1.6 },
-        { k: "可再生能源基建", v: 0.5 }
+        { k: "上市股票", v: 72.1, tone: "eq" },
+        { k: "债券", v: 25.8, tone: "fi" },
+        { k: "未上市房地产", v: 1.6, tone: "real" },
+        { k: "可再生能源基建", v: 0.5, tone: "real" }
       ],
       amountsNote: "占 2026 年 6 月 30 日投资组合 22,695 亿克朗。股票当年上半年回报 13.0%，债券 0.9%。最大的三只政府债券发行人是美国、日本和德国。",
       seriesTitle: "基金价值，亿克朗",
@@ -39,26 +40,31 @@ window.SWF = {
         { y: "2026H1", v: 226830 }
       ],
       top: [
-        { t: "NVDA", g: "NVDA", n: "英伟达", v: 65220000000, w: 6.5, sh: "3.260 亿股" },
-        { t: "AAPL", g: "AAPL", n: "苹果", v: 55190000000, w: 5.5, sh: "1.907 亿股" },
-        { t: "MSFT", g: "MSFT", n: "微软", v: 38320000000, w: 3.82, sh: "1.027 亿股" },
-        { t: "AMZN", g: "AMZN", n: "亚马逊", v: 33500000000, w: 3.34, sh: "1.406 亿股" },
-        { t: "GOOGL", g: "GOOGL", n: "字母表 A", v: 28920000000, w: 2.88, sh: "8093 万股" },
-        { t: "GOOG", g: "GOOGL", n: "字母表 C", v: 26430000000, w: 2.63, sh: "7479 万股" },
-        { t: "AVGO", g: "AVGO", n: "博通", v: 24920000000, w: 2.48, sh: "6597 万股" },
-        { t: "META", g: "META", n: "Meta", v: 18430000000, w: 1.84, sh: "3273 万股" },
-        { t: "MU", g: "MU", n: "美光", v: 17520000000, w: 1.75, sh: "1518 万股" },
-        { t: "TSLA", g: "TSLA", n: "特斯拉", v: 16320000000, w: 1.63, sh: "3881 万股" },
-        { t: "LLY", g: "LLY", n: "礼来", v: 13760000000, w: 1.37, sh: "1147 万股" },
-        { t: "AMD", g: "AMD", n: "超威", v: 13570000000, w: 1.35, sh: "2336 万股" }
+        { n: "美国国债", v: 209985074689, kind: "bond", place: "美国" },
+        { n: "英伟达", v: 61847326779, kind: "equity", place: "美国", own: "1.28%" },
+        { n: "苹果", v: 52718798466, kind: "equity", place: "美国", own: "1.24%" },
+        { n: "字母表", v: 50466058081, kind: "equity", place: "美国", own: "1.17%" },
+        { n: "微软", v: 35113298063, kind: "equity", place: "美国", own: "1.27%" },
+        { n: "台积电", v: 33525417924, kind: "equity", place: "台湾", own: "1.70%" },
+        { n: "亚马逊", v: 31867316197, kind: "equity", place: "美国", own: "1.24%" },
+        { n: "日本国债", v: 25499399054, kind: "bond", place: "日本" },
+        { n: "博通", v: 23402660001, kind: "equity", place: "美国", own: "1.30%" },
+        { n: "三星电子", v: 22511513484, kind: "equity", place: "韩国", own: "1.88%" },
+        { n: "英国国债", v: 19677079635, kind: "bond", place: "英国" },
+        { n: "阿斯麦", v: 17686252280, kind: "equity", place: "荷兰", own: "2.32%" },
+        { n: "SK 海力士", v: 17592727909, kind: "equity", place: "韩国", own: "1.44%" },
+        { n: "Meta", v: 17047898622, kind: "equity", place: "美国", own: "1.19%" },
+        { n: "德国国债", v: 16427777915, kind: "bond", place: "德国" },
+        { n: "美光", v: 16241304702, kind: "equity", place: "美国", own: "1.25%" },
+        { n: "特斯拉", v: 15720016270, kind: "equity", place: "美国", own: "1.00%" },
+        { n: "礼来", v: 13118943141, kind: "equity", place: "美国", own: "1.16%" }
       ],
-      topNote: "权重是占这张 13F，不是占整个基金。前十大约占美国股票账的 32%。",
-      blurb: "这是唯一一份大到可以和海湾基金相比、又把全球持仓公开的账。美国 13F 只是其中美国上市的那一块，大约是基金价值的四成，和它大约七成的股票仓位、再加上美股在全球股市里的权重，对得上。半年报的基金回报是 9.4%，比基准高 0.22 个百分点。",
+      topNote: "NBIM 自己公布的 2026 年 6 月 30 日持仓，按市值排序。股票和政府债放在一起。字母表的 A 类和 C 类已经合并。后面还有七千多家公司，这里只列最大的 18 笔。",
+      blurb: "最大的一笔不是股票，是美国国债，约 2100 亿美元。股票里英伟达、苹果、字母表、微软之后，是台积电和三星。官网把全部持仓挂出来，半年报的基金回报是 9.4%。",
       sources: [
         { t: "NBIM 2026 半年报", u: "https://www.nbim.no/en/news-and-insights/reports/2026/half-year-report-2026/" },
         { t: "基金价值", u: "https://www.nbim.no/en/investments/the-funds-value/" },
-        { t: "全部投资", u: "https://www.nbim.no/en/investments/all-investments/" },
-        { t: "13F，2026-06-30", u: "https://www.sec.gov/Archives/edgar/data/1374170/000137417026000069/0001374170-26-000069-index.html" }
+        { t: "全部投资，2026-06-30", u: "https://www.nbim.no/en/investments/all-investments/" }
       ]
     },
     {
@@ -103,11 +109,12 @@ window.SWF = {
       bookNote: "年报给的是境外组合的资产类别比例，不给公司名单。",
       disclosure: "allocation",
       tags: [],
+      mixKind: "overseas",
       amounts: [
-        { k: "另类", v: 48.5 },
-        { k: "上市股票", v: 34.6 },
-        { k: "固收", v: 15.5 },
-        { k: "现金", v: 1.3 }
+        { k: "另类", v: 48.5, tone: "alt" },
+        { k: "上市股票", v: 34.6, tone: "eq" },
+        { k: "固收", v: 15.5, tone: "fi" },
+        { k: "现金", v: 1.3, tone: "cash" }
       ],
       amountsNote: "2024 年底境外投资组合的比例，加总 99.9%。不是整个 1.57 万亿总资产的切法。10 年年化净回报 6.92%（美元）。",
       blurb: "中投公布规模和境外组合的大类比例，也说明 62.5% 的管理资产交给外部管理人。外部管理人自己的 13F 不会写上中投的名字，所以从美国证监会的表格里还原不出这本账。",
@@ -166,17 +173,30 @@ window.SWF = {
       region: "海湾",
       founded: 1971,
       mandate: "沙特的主权发展基金。国内项目和海外证券放在同一家机构下面。",
-      aum: 1152000000000,
+      aum: 905600000000,
       aumKind: "official",
-      aumAsOf: "2024-12-31",
-      aumNote: "2024 年底官方总资产 4.32 万亿里亚尔。按 3.75 的联系汇率折合 1.152 万亿美元。这是总资产，不是净资产，也还不是 2026 年的数字。Global SWF 排名里的 1.151 万亿和它几乎一样。",
-      native: "4.32 万亿里亚尔",
+      aumAsOf: "2025-12-31",
+      aumNote: "2025 年年报的管理规模是 3.396 万亿里亚尔。按 3.75 的联系汇率约 9056 亿美元。这不是总资产。早前把 2024 年底总资产 4.32 万亿里亚尔折成 1.15 万亿美元，那是另一本账，这页改用管理规模。",
+      native: "3.396 万亿里亚尔",
       book: 37908748000,
       bookKind: "13F",
       bookNote: "2026 年 6 月 30 日 13F，8 月 14 日提交，只有 5 行，合计 379 亿美元。国内巨型项目和沙特上市公司不在这张表里。",
       nPositions: 5,
       disclosure: "13f",
       tags: ["石油"],
+      mixKind: "actual",
+      amounts: [
+        { k: "沙特公司股权", v: 33, tone: "home" },
+        { k: "培育产业", v: 29, tone: "home" },
+        { k: "国际战略投资", v: 10, tone: "foreign" },
+        { k: "沙特地产与基建", v: 7, tone: "real" },
+        { k: "巨型项目", v: 7, tone: "home" },
+        { k: "国际多元组合", v: 6, tone: "foreign" },
+        { k: "国库", v: 4, tone: "cash" },
+        { k: "全球公开市场", v: 3, tone: "eq" },
+        { k: "应收", v: 1, tone: "other" }
+      ],
+      amountsNote: "2025 年年报八个投资池的比例，加总 99%，差额约 1% 是应收。另有一个更粗的切法：国内 76%，国际 20%，国库 4%。美国 13F 只落在「全球公开市场」和一部分国际池里。",
       seriesTitle: "美国 13F 规模",
       series: [
         { y: "24Q3", v: 19460000000 },
@@ -189,17 +209,20 @@ window.SWF = {
         { y: "26Q2", v: 37910000000 }
       ],
       top: [
-        { t: "SPCX", g: "SPCX", n: "SpaceX", v: 26340000000, w: 69.48, sh: "1.541 亿股" },
-        { t: "UBER", g: "UBER", n: "优步", v: 5260000000, w: 13.87, sh: "7284 万股" },
-        { t: "EA", g: "EA", n: "艺电", v: 5090000000, w: 13.42, sh: "2481 万股" },
-        { t: "LCID", g: "LCID", n: "Lucid", v: 1180000000, w: 3.13, sh: "1.771 亿股" },
-        { t: "CTEV", g: "CTEV", n: "Claritev", v: 43700000, w: 0.12, sh: "128 万股" }
+        { n: "沙特公司股权", v: 295466666667, kind: "pool", place: "沙特", own: "33%" },
+        { n: "培育产业", v: 262933333333, kind: "pool", place: "沙特", own: "29%" },
+        { n: "国际战略投资", v: 90666666667, kind: "pool", place: "海外", own: "10%" },
+        { n: "沙特地产与基建", v: 66400000000, kind: "pool", place: "沙特", own: "7%" },
+        { n: "巨型项目", v: 60533333333, kind: "pool", place: "沙特", own: "7%" },
+        { n: "国际多元组合", v: 58666666667, kind: "pool", place: "海外", own: "6%" },
+        { n: "国库", v: 35466666667, kind: "pool", place: "沙特", own: "4%" },
+        { n: "全球公开市场", v: 27733333333, kind: "pool", place: "海外", own: "3%" }
       ],
-      topNote: "五行都在。SpaceX 是这一季新进的，上一季这张表只有 120 亿美元。个股金额按公开转写四舍五入，申报合计是 37,908,748,000 美元。",
-      blurb: "总资产和美国股票申报差了两个数量级。379 亿美元的 13F 里，69% 是 SpaceX。优步、艺电、Lucid 和 Claritev 的股数与上一季相同。沙特国内的持仓要看基金自己的组合页，那些项目没有出现在美国证监会的表上。",
+      topNote: "2025 年年报公布的是这八个投资池，不是单一公司的市值。金额由里亚尔按 3.75 折成美元。年报没有给沙特阿美、沙特电信这些个股单独标价。",
+      blurb: "年报把账分成八个池，最大的是沙特公司股权，约 2950 亿美元，然后是培育产业。国际三块加在一起大约 1770 亿美元。个股名单要去交易所的大股东披露里看，年报本身不给每一家的市值。",
       sources: [
-        { t: "13F 索引，2026-06-30", u: "https://www.sec.gov/Archives/edgar/data/1767640/000101143826000537/0001011438-26-000537-index.html" },
-        { t: "PIF 组合", u: "https://www.pif.gov.sa/en/our-investments/our-portfolio/" }
+        { t: "PIF 年报", u: "https://www.pif.gov.sa/en/investors/annual-reports/" },
+        { t: "13F 索引，2026-06-30", u: "https://www.sec.gov/Archives/edgar/data/1767640/000101143826000537/0001011438-26-000537-index.html" }
       ]
     },
     {
@@ -244,7 +267,14 @@ window.SWF = {
       bookNote: "不交 13F 全名单。CIK 0000936828 交的是个别公司越过申报线之后的 13D/G。",
       disclosure: "allocation",
       tags: [],
-      blurb: "2025/26 年报把组合收成股票、固收和实物资产三类，并写明截至 2026 年 3 月 31 日股票占比上升、固收下降、实物资产大致稳定，但没有给出新的百分比。20 年年化名义美元回报 5.6%，扣掉全球通胀是 3.4%。个股要从一份份 13D/G 里单挑，拼不成一张组合。",
+      mixKind: "actual",
+      amounts: [
+        { k: "股票", v: 56, tone: "eq" },
+        { k: "固收", v: 22, tone: "fi" },
+        { k: "实物资产", v: 22, tone: "real" }
+      ],
+      amountsNote: "2026 年 3 月 31 日官方资产组合。股票这一档同时包括上市和未上市，不能和挪威的「上市股票」对减。一年前是 51%、26%、23%。20 年年化名义美元回报 5.6%，扣掉全球通胀是 3.4%。",
+      blurb: "GIC 不公布管理规模，也不公布个股，但 2025/26 年报给出了三档构成：股票 56%、固收 22%、实物资产 22%。美国仍是它最大的投资市场。个股只有越过申报线的 13D/G，拼不成一张组合。",
       sources: [
         { t: "GIC 2025/26 年报", u: "https://www.gic.com.sg/newsroom/reports/report-on-the-management-of-the-governments-portfolio-for-the-year-2025-26/" },
         { t: "EDGAR，GIC Private Ltd", u: "https://www.sec.gov/edgar/browse/?CIK=0000936828" }
@@ -284,27 +314,37 @@ window.SWF = {
       founded: 2017,
       mandate: "阿布扎比的投资公司，持有控制和少数股权。2018 年与阿布扎比投资委员会合并后的实体仍用这个名字。",
       aum: 385000000000,
-      aumKind: "estimate",
-      aumAsOf: "2026",
-      aumNote: "穆巴达拉的集团规模这里用 Global SWF 的 3850 亿美元估算，经 Visual Capitalist 在 2026 年 5 月引用。它不是下面那张 13F 的合计。",
+      aumKind: "official",
+      aumAsOf: "2025",
+      aumNote: "穆巴达拉自己公布的 2025 年管理规模是 3850 亿美元。下面的构成也来自这份披露，不是 13F。",
       book: 34770000000,
       bookKind: "13F",
       bookNote: "2026 年 6 月 30 日 13F，8 月 14 日提交，72 只证券，348 亿美元。其中 94.7% 是格芯。",
       nPositions: 72,
       disclosure: "13f",
       tags: ["石油"],
-      top: [
-        { t: "GFS", g: "GFS", n: "格芯", v: 32930000000, w: 94.7, sh: "4.000 亿股" },
-        { t: "IBIT", g: "IBIT", n: "iShares 比特币信托", v: 490100000, w: 1.41, sh: "1472 万份" },
-        { t: "ARM", g: "ARM", n: "Arm", v: 319800000, w: 0.92, sh: "90 万股" },
-        { t: "OTF", g: "OTF", n: "Blue Owl 科技金融", v: 308300000, w: 0.9, sh: "2979 万股" },
-        { t: "MU", g: "MU", n: "美光", v: 52500000, w: 0.15, sh: "4.5 万股" }
+      mixKind: "actual",
+      amounts: [
+        { k: "私人市场", v: 42, tone: "alt" },
+        { k: "公开市场", v: 20, tone: "eq" },
+        { k: "房地产与基建", v: 17, tone: "real" },
+        { k: "另类", v: 16, tone: "alt" },
+        { k: "信用", v: 5, tone: "fi" }
       ],
-      topNote: "只列核得清的前几行。72 行里其余大多是几千万美元以下的仓位。",
-      blurb: "这张 13F 看起来像一只 348 亿美元的股票基金，其实 94.7% 是它控股的格芯。上一季这张表是 205 亿美元，这一季升到 348 亿，主要仍是格芯的市值。比特币信托有 4.90 亿美元。集团其余的未上市和海外资产不在表里，所以第三方估算的 3850 亿和这张表不是同一个口径。",
+      amountsNote: "2025 年披露的资产类别。地区是北美 44%、阿联酋 24%、欧洲 15%、亚太 13%、拉美 1%，五项加总 97%。",
+      geo: [
+        { k: "北美", min: 44, max: 44 },
+        { k: "阿联酋", min: 24, max: 24 },
+        { k: "欧洲", min: 15, max: 15 },
+        { k: "亚太", min: 13, max: 13 },
+        { k: "拉美", min: 1, max: 1 }
+      ],
+      top: [],
+      topNote: "2025 年披露给的是资产类别和地区，没有按金额排序的公司名单。",
+      blurb: "它自己公布的是类别，不是个股：私人市场 42%，公开市场 20%，房地产与基建 17%，另类 16%，信用 5%。地区上北美 44%，阿联酋 24%。所以这页的持仓排序里没有它的公司名字。",
       sources: [
-        { t: "13F 转写，Frenzy，2026-06-30", u: "https://www.frenzycap.com/hedge-funds/1704268" },
-        { t: "SEC CIK 0001704268", u: "https://www.sec.gov/edgar/browse/?CIK=0001704268" }
+        { t: "2025 年规模与构成的转述", u: "https://www.caproasia.com/2026/04/16/uae-abu-dhabi-sovereign-wealth-fund-mubadala-investment-company-reports-385-billion-aum-in-2025-portfolio-return-10-7-5-year-irr-10-3-10-year-irr-portfolio-allocation-private-market-42-publi/" },
+        { t: "13F 转写，2026-06-30", u: "https://www.frenzycap.com/hedge-funds/1704268" }
       ]
     },
     {
@@ -327,12 +367,14 @@ window.SWF = {
       nPositions: 196,
       disclosure: "13f",
       tags: [],
+      mixKind: "actual",
       amounts: [
-        { k: "新加坡关联公司", v: 43 },
-        { k: "全球直接投资", v: 38 },
-        { k: "合伙与资管", v: 19 }
+        { k: "新加坡", v: 27, tone: "home" },
+        { k: "美洲", v: 26, tone: "foreign" },
+        { k: "中国", v: 17, tone: "foreign" },
+        { k: "欧洲、中东与其他亚太", v: 30, tone: "other" }
       ],
-      amountsNote: "2026 年 3 月 31 日净值的经营分部，不是股票债券的切法。一年股东总回报 10.5%（新元），十年 7.1%。",
+      amountsNote: "2026 年 3 月 31 日的地区敞口。新加坡 27%、美洲 26%、中国 17% 来自对 Temasek Review 的报道。其余 30% 是余额，报道没有再拆成欧洲、中东和印度。另外，上市与未上市各一半；经营分部是新加坡关联公司 43%、全球直接投资 38%、合伙与资管 19%。行业里交通运输与工业 24%，电信媒体与科技 23%，金融服务 20%，消费与房地产 11%，其余行业这篇转述没有逐项给出。",
       seriesTitle: "净值，官方按市值重述",
       series: [
         { y: "2017", v: 209000000000 },
@@ -347,24 +389,26 @@ window.SWF = {
         { y: "2026", v: 401000000000 }
       ],
       top: [
-        { t: "BLK", g: "BLK", n: "贝莱德", v: 5000000000, w: 13.41, sh: "520 万股" },
-        { t: "GOOGL", g: "GOOGL", n: "字母表 A", v: 2530000000, w: 6.79, sh: "708 万股" },
-        { t: "V", g: "V", n: "Visa", v: 2260000000, w: 6.08, sh: "660 万股" },
-        { t: "NVDA", g: "NVDA", n: "英伟达", v: 1680000000, w: 4.51, sh: "840 万股" },
-        { t: "SPCX", g: "SPCX", n: "SpaceX", v: 1680000000, w: 4.51, sh: "983 万股" },
-        { t: "MA", g: "MA", n: "万事达", v: 1670000000, w: 4.49, sh: "325 万股" },
-        { t: "AVGO", g: "AVGO", n: "博通", v: 1410000000, w: 3.79, sh: "374 万股" },
-        { t: "AMZN", g: "AMZN", n: "亚马逊", v: 1090000000, w: 2.92, sh: "457 万股" },
-        { t: "MSFT", g: "MSFT", n: "微软", v: 985700000, w: 2.65, sh: "264 万股" },
-        { t: "IBN", g: "IBN", n: "ICICI 银行", v: 847600000, w: 2.28, sh: "2920 万股" },
-        { t: "GOOG", g: "GOOGL", n: "字母表 C", v: 706700000, w: 1.9, sh: "200 万股" }
+        { n: "星展集团", v: 35071042471, kind: "equity", place: "新加坡", own: "28%" },
+        { n: "新加坡电信", v: 32726718147, kind: "equity", place: "新加坡", own: "52%" },
+        { n: "PSA 国际", v: 20050000000, kind: "company", place: "新加坡", own: "占组合 5%" },
+        { n: "新科工程", v: 13344787645, kind: "equity", place: "新加坡", own: "51%" },
+        { n: "渣打", v: 8249034749, kind: "equity", place: "英国", own: "18%" },
+        { n: "新加坡航空", v: 8050965251, kind: "equity", place: "新加坡", own: "50%" },
+        { n: "贝莱德", v: 4726100386, kind: "equity", place: "美国", own: "3%" },
+        { n: "胜科工业", v: 4567374517, kind: "equity", place: "新加坡", own: "50%" },
+        { n: "吉宝", v: 3428181467, kind: "equity", place: "新加坡", own: "21%" },
+        { n: "友邦保险", v: 2274432432, kind: "equity", place: "香港", own: "2%" },
+        { n: "Seatrium", v: 2229498069, kind: "equity", place: "新加坡", own: "36%" },
+        { n: "ICICI 银行", v: 1820733591, kind: "equity", place: "印度", own: "2%" },
+        { n: "新翔", v: 1610432432, kind: "equity", place: "新加坡", own: "40%" },
+        { n: "Adyen", v: 1536862934, kind: "equity", place: "荷兰", own: "5%" }
       ],
-      topNote: "196 行里金额最高的 11 行。字母表 A 和 C 分开申报。",
-      blurb: "官方净值是 4010 亿美元，美国 13F 只有 373 亿。13F 里最大的一笔是贝莱德，不是英伟达。淡马锡自己把人工智能相关敞口写成净值的 6%，并打算到 2031 年提高到至多 15%。新加坡关联公司、未上市和基金才是这本账的主体。",
+      topNote: "2026 年 3 月 31 日。上市的按披露的持股比例乘市值，再用公司自己的 5180 亿新元对 4010 亿美元折算。PSA 未上市，用年报写明的「占组合 5%」。持股不到 1% 的，表上只有市值没有精确股比，没有折进来。年报点名最大的三笔是星展 9%、新电信 8%、PSA 5%。",
+      blurb: "它自己点名的最大三笔是星展、新加坡电信和 PSA。按持股乘上市市值，星展约 351 亿美元，新电信约 327 亿。地区上新加坡 27%、美洲 26%、中国 17%。",
       sources: [
-        { t: "淡马锡 2026 净值", u: "https://www.temasek.com.sg/en/news-and-resources/news-room/news/2026/temasek-net-portfolio-value-grows-to-518b-up-49b-from-last-year" },
-        { t: "13F 转写，2026-06-30", u: "https://www.frenzycap.com/hedge-funds/1021944" },
-        { t: "SEC CIK 0001021944", u: "https://www.sec.gov/edgar/browse/?CIK=0001021944" }
+        { t: "Temasek Review 2026 主要投资", u: "https://www.temasekreview.com.sg/performance-and-portfolio.html" },
+        { t: "淡马锡 2026 净值", u: "https://www.temasek.com.sg/en/news-and-resources/news-room/news/2026/temasek-net-portfolio-value-grows-to-518b-up-49b-from-last-year" }
       ]
     },
     {
@@ -377,18 +421,27 @@ window.SWF = {
       founded: 2005,
       mandate: "受托管理一部分外汇储备和政府基金，目标是提高境外投资回报。",
       aum: 232000000000,
-      aumKind: "estimate",
-      aumAsOf: "2026",
-      aumNote: "2320 亿美元来自 Global SWF 的 2026 年排名，Visual Capitalist 在 5 月引用，ICEX 的 2026 年报告也用了同一量级。本页没有核对到一份写着这个整数的韩国官方新闻稿。",
+      aumKind: "official",
+      aumAsOf: "2025-12-31",
+      aumNote: "韩国投资公社 2025 年年报：年底管理规模 2320 亿美元。按 2025 年 12 月 31 日 1 美元兑 1434.9 韩元，约 333 万亿韩元。",
+      native: "333 万亿韩元",
       book: null,
       bookKind: "none",
-      bookNote: "年报公布业绩和大类资产，不公布可逐行核对的全球股票名单。",
+      bookNote: "年报给资产类别，不给可以逐行核对的公司名单。",
       disclosure: "allocation",
       tags: [],
-      blurb: "它比上面几家小一档，披露方式也更接近中投：有规模量级和年报，没有挪威那种持仓数据库。这一版只把第三方排名放上柱子，不编一组持仓。",
+      mixKind: "actual",
+      amounts: [
+        { k: "股票", v: 41.6, tone: "eq" },
+        { k: "固收", v: 32.8, tone: "fi" },
+        { k: "另类", v: 21.9, tone: "alt" },
+        { k: "其他", v: 3.7, tone: "other" }
+      ],
+      amountsNote: "2025 年底。传统资产（股票加固收）78.1%，另类 21.9%。当年组合回报 13.91%。",
+      blurb: "规模和构成都写在自己的年报里。股票 41.6%，固收 32.8%，另类 21.9%。它不公布每一家公司，所以这页没有个股表。",
       sources: [
-        { t: "Visual Capitalist 引 Global SWF", u: "https://www.visualcapitalist.com/the-worlds-largest-sovereign-wealth-funds/" },
-        { t: "KIC", u: "https://www.kic.go.kr/" }
+        { t: "KIC 2025 年报关键数字", u: "https://kic.kr/annual-report/2025/en/sub0101.html" },
+        { t: "组合概况", u: "https://kic.kr/en/investment/portfolio/management-status" }
       ]
     },
     {
@@ -407,10 +460,23 @@ window.SWF = {
       native: "2,897 亿澳元",
       book: null,
       bookKind: "none",
-      bookNote: "基金公布上市持仓更新。这一版只收了规模，没有把持仓表逐行抄进来。",
+      bookNote: "基金每半年公布一次上市持仓明细。这一版抄的是资产类别，没有把个股逐行抄进来。",
       disclosure: "partial",
       tags: [],
-      blurb: "截至 2026 年 6 月 30 日的一年回报 14.8%，十年年化 9.0%，高于 7.1% 的任务目标。自成立以来投资回报累计增加 2,292 亿澳元。它属于会公布持仓、但这页还没抄名单的那一类，所以下面的「被点名的书」里没有它。",
+      mixKind: "actual",
+      amounts: [
+        { k: "发达市场股票", v: 29.1, tone: "eq" },
+        { k: "另类", v: 14.9, tone: "alt" },
+        { k: "私募", v: 12.1, tone: "alt" },
+        { k: "基建与林木", v: 11.5, tone: "real" },
+        { k: "澳大利亚股票", v: 10.5, tone: "home" },
+        { k: "信用", v: 8.1, tone: "fi" },
+        { k: "现金", v: 5.4, tone: "cash" },
+        { k: "新兴市场股票", v: 4.6, tone: "eq" },
+        { k: "房地产", v: 3.8, tone: "real" }
+      ],
+      amountsNote: "2026 年 6 月 30 日组合更新。各类金额加总等于官方的 2,897 亿澳元。发达市场股票 844 亿澳元，是最大的一块。",
+      blurb: "它公布的是资产类别，不是一张 13F。最大的一块是发达市场股票，29.1%。澳大利亚股票另有 10.5%。另类、私募、基建加在一起超过三成。一年回报 14.8%。",
       sources: [
         { t: "Future Fund", u: "https://www.futurefund.gov.au/" }
       ]
@@ -430,10 +496,22 @@ window.SWF = {
       aumNote: "阿拉斯加永久基金公司 2026 年年报：6 月 30 日基金总值 919 亿美元。",
       book: null,
       bookKind: "none",
-      bookNote: "年报和月度财务报表里有持仓。这一版没有逐行抄。",
+      bookNote: "年报和月度财务报表里有持仓明细。这页画的是 2027 财年目标配置，不是 6 月 30 日的市值。",
       disclosure: "partial",
       tags: ["石油"],
-      blurb: "它是这页上唯一的美国基金，规模只有挪威的一个零头，但官方数字是现成的。早期组合几乎全是美国国债，后来按谨慎投资人规则放开。分红使它经常被拿来和基本收入作比较，那是支出规则，不是持仓。",
+      mixKind: "target",
+      amounts: [
+        { k: "上市股票", v: 34, tone: "eq" },
+        { k: "固收", v: 20, tone: "fi" },
+        { k: "私募", v: 17, tone: "alt" },
+        { k: "房地产", v: 10, tone: "real" },
+        { k: "私人收益", v: 9, tone: "fi" },
+        { k: "绝对收益", v: 8, tone: "alt" },
+        { k: "战术机会", v: 1, tone: "other" },
+        { k: "现金", v: 1, tone: "cash" }
+      ],
+      amountsNote: "2026 年 7 月 1 日起的目标，不是那天的实际持仓。实际的上市股票在 2026 年 6 月 30 日是 332 亿美元，约占 919 亿的 36%，比 34% 的目标略高。",
+      blurb: "条上的比例是受托人通过的目标配置，不是一张已经实现的持仓表。上市股票目标从 32% 提到 34%，私募从 18% 降到 17%。实际上市股票已经有 332 亿美元。",
       sources: [
         { t: "2026 年年报", u: "https://apfc.org/reports/2026-annual-report/" }
       ]
@@ -454,10 +532,16 @@ window.SWF = {
       native: "944 亿新西兰元",
       book: null,
       bookKind: "none",
-      bookNote: "全球股票和本地股票的完整名单挂在官网上，最近一份页面标题是 2025 年 12 月 31 日。这一版没有把电子表格抄进来，所以不把它画进 13F 那张图。",
+      bookNote: "全球股票和本地股票的完整名单每半年挂在官网。最近一份页面标题是 2025 年 12 月 31 日。这页没有把电子表格抄进来。",
       disclosure: "full",
       tags: [],
-      blurb: "规模不大，披露方式却和挪威一类：上市股权每半年一张全表，另外公布外部委托和直接投资。参考组合是 80% 全球股票、20% 固收，实际组合还包括林木、房地产和私募，所以那 80/20 不是它的真实配置。财年里基金增加了 93 亿新西兰元。",
+      mixKind: "reference",
+      amounts: [
+        { k: "全球股票", v: 80, tone: "eq" },
+        { k: "全球固收", v: 20, tone: "fi" }
+      ],
+      amountsNote: "这是参考组合，用来衡量主动投资有没有跑赢，不是 2026 年 6 月 30 日的实际持仓。实际组合还包括林木、房地产和私募。2025 年 6 月 30 日的实际敞口在官网，这一版没有逐项抄。",
+      blurb: "条上的 80/20 是参考组合，不是它那天真正持有的比例。大约一半资金按指数被动管理，另一半是主动的。个股全名单在官网，每半年更新。",
       sources: [
         { t: "2026 财年业绩", u: "https://nzsuperfund.nz/news-and-media/strong-all-round-performance-sees-super-fund-grow-by-9-3-billion/" },
         { t: "持仓披露", u: "https://nzsuperfund.nz/publications/disclosures/annual-equity-listings/" }

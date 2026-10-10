@@ -212,51 +212,51 @@
       <a href="https://jillax.github.io/">← Jillax</a>
       <a href="../congress-portfolios/">申报上的美国</a>
       <span>主权基金 · 2026</span>
-      <span>披露，不是估计的全部家底</span>
+      <span>按披露金额从大到小</span>
     </div>
     <h1>披露上的国家资本</h1>
-    <p class="deck">和国会那一页同一套办法：只画<strong>公开披露</strong>，并标明每一根柱子是哪种口径。挪威把全球持仓挂在网上。沙特、淡马锡、穆巴达拉至少向美国证监会交一张美国股票的 13F。外管局投资公司、阿布扎比投资局、GIC 和科威特投资局不给个股名单。</p>
+    <p class="deck">下面这张表是各家<strong>自己披露、而且标了金额</strong>的持仓，按金额从大到小排。挪威用官网的全球持仓，最大的一笔是美国国债，然后是英伟达、台积电、三星。淡马锡用年报里的主要投资。沙特年报给的是投资池，不是单一公司。</p>
   </header>
-  <p class="method">13F 只包括美国上市的多头证券，季度结束后 45 天内提交，不含债券、现金、空头、外国上市股票，也不含交给外部管理人、因而出现在别人表格里的仓位。没有 13F，不等于没有美国股票。斜线柱是第三方估算的规模，实心柱是官方数字。官方数字的日期并不相同：挪威是 2026 年 6 月 30 日，中投和沙特的官方总数还停在 2024 年底。点一行看这本账实际公布了什么。</p>
+  <p class="method">没有标金额的不进这张表。GIC、中投、韩国投资公社、澳大利亚未来基金和阿拉斯加公布的是资产类别，穆巴达拉也是。阿布扎比只有区间。外管局投资公司、科威特和卡塔尔没有这样的名单。类别比例仍留在每只基金的卡片里，不拿来和单一公司比大小。</p>
   <section class="stats" id="stats"></section>
   <section class="stories" id="stories"></section>
   <div class="toolbar" id="filters"></div>
   <h2>谁的账更大</h2>
   <p class="note" id="chart-note"></p>
   <div class="chart" id="chart"></div>
-  <h2>被逐项点名的那一本书</h2>
-  <p class="note" id="book-note"></p>
-  <div class="chart" id="books"></div>
-  <h2>公布出来的切法</h2>
-  <p class="note">只有加起来大约是 100% 的官方比例才画成条。挪威是资产类别。中投是境外组合，不是含汇金的总资产。淡马锡是三条经营分部，不是股票和债券。阿布扎比给的是互不配平的区间，放在下面的卡片里，不画成一根假的百分条。</p>
+  <h2>按金额排序的披露持仓</h2>
+  <p class="note" id="hold-note"></p>
+  <div class="toolbar" id="hold-filters"></div>
+  <div class="chart" id="holds"></div>
+  <h2>公布出来的持仓构成</h2>
+  <p class="note">这是类别，不是上面的单笔持仓。每根条拉成 100%。没有条的基金，官网没有给出可以加总的构成。</p>
   <div class="legend" id="legend"></div>
   <div class="mix" id="mix"></div>
-  <h2>同一只证券，出现在谁的 13F 里</h2>
-  <p class="note" id="overlap-note"></p>
-  <div id="overlap"></div>
   <h2 id="detail-title">单只基金</h2>
   <section class="detail" id="detail"></section>
   <footer>
-    <p>整理日期 2026 年 10 月 10 日。13F 的报告期是 2026 年 6 月 30 日，市值不是今天的市值。个股金额来自申报和公开转写，大数做了四舍五入。估算规模一律标明出处。新西兰和澳大利亚的完整持仓表还没有逐行抄进这页。</p>
+    <p>整理日期 2026 年 10 月 10 日。持仓日期跟着各家披露走：挪威是 2026 年 6 月 30 日，淡马锡是 2026 年 3 月 31 日，沙特是 2025 年年报。估算规模一律标明出处。</p>
     <p>来源写在每张卡片底部。规模排名的第三方数字来自 <a href="https://www.visualcapitalist.com/the-worlds-largest-sovereign-wealth-funds/">Visual Capitalist 对 Global SWF 的引用</a>。</p>
   </footer>
 </div>
 <script src="data.js"></script>
 <script>
-const COLORS = {
-  "上市股票": "#1d4e89",
-  "债券": "#8a5a12",
-  "固收": "#8a5a12",
-  "未上市房地产": "#3f6b4a",
-  "可再生能源基建": "#1f6b4a",
-  "另类": "#6b4c7a",
-  "现金": "#8d8376",
-  "新加坡关联公司": "#8a5a12",
-  "全球直接投资": "#1d4e89",
-  "合伙与资管": "#5c5348"
+const TONE = {
+  eq: ["#1d4e89", "股票"],
+  fi: ["#8a5a12", "债券与信用"],
+  real: ["#3f6b4a", "房地产与基建"],
+  alt: ["#6b4c7a", "私募与另类"],
+  cash: ["#8d8376", "现金与国库"],
+  home: ["#9d2c2c", "本国"],
+  foreign: ["#6e8eb3", "海外"],
+  other: ["#c3b49f", "其他"]
 };
+const MIX = { actual: "公布", overseas: "境外组合", target: "目标", reference: "参考组合" };
 const FUNDS = window.SWF.funds;
+const KIND = { equity: "股票", bond: "债券", pool: "投资池", company: "公司" };
+const KIND_COLOR = { equity: "#1d4e89", bond: "#8a5a12", pool: "#1f6b4a", company: "#9d2c2c" };
 let filter = "all";
+let holdFilter = "all";
 let query = "";
 let selected = "nbim";
 
@@ -319,23 +319,22 @@ function logWidth(value, min, max) {
 function renderStats() {
   const official = FUNDS.filter(f => f.aumKind === "official");
   const hi = official.reduce((a, b) => (b.aum > a.aum ? b : a));
-  const books = FUNDS.filter(f => f.book);
-  const bookSum = books.reduce((s, f) => s + f.book, 0);
-  const norwayBook = fund("nbim").book;
+  const named = FUNDS.flatMap(f => (f.top || []).map(h => ({ ...h, fund: f }))).sort((a, b) => b.v - a.v);
+  const top = named[0];
   document.getElementById("stats").innerHTML = [
     ["官方规模最大", money(hi.aum), hi.short + " · " + hi.aumAsOf],
-    ["估算里排在前面的空账", money(fund("safe").aum), "外管局投资公司不公布持仓"],
-    ["四张 13F 合计", money(bookSum), "其中挪威占 " + Math.round(norwayBook / bookSum * 100) + "%"],
-    ["点过名的基金", String(FUNDS.length), "不是全球每一只主权基金"]
+    ["最大的一笔", money(top.v), top.n + " · " + top.fund.short],
+    ["标了金额的条目", String(named.length), "来自 " + new Set(named.map(h => h.fund.id)).size + " 只基金"],
+    ["第二大", money(named[1].v), named[1].n + " · " + named[1].fund.short]
   ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
 }
 
 function renderStories() {
   const items = [
-    ["nbim", "全名单", "全球持仓挂在网上。美国 13F 只是其中约 1 万亿美元的那一块。"],
-    ["pif", "五行申报", "1.152 万亿美元总资产旁边，美国股票表只有 379 亿，七成是 SpaceX。"],
-    ["adia", "只有区间", "不报规模，也不报个股。发达市场股票落在 32% 到 42%。"],
-    ["mubadala", "一张表的 95%", "348 亿美元 13F 里，94.7% 是它控股的格芯。"]
+    ["nbim", "最大一笔是国债", "官网持仓里，美国国债排在英伟达前面。台积电和三星也在前十。"],
+    ["temasek", "星展第一", "年报点名最大三笔：星展、新加坡电信、PSA。"],
+    ["pif", "池，不是个股", "年报最大的一筐是沙特公司股权，没有单独给沙特阿美标价。"],
+    ["gic", "没有公司名单", "只公布股票 56%、固收 22%、实物资产 22%。"]
   ];
   document.getElementById("stories").innerHTML = items.map(([id, t, d]) => {
     const f = fund(id);
@@ -376,60 +375,44 @@ function renderChart() {
   }).join("") || `<p class="note">没有符合筛选的基金。</p>`;
 }
 
-function renderBooks() {
-  const rows = visible();
-  const withBook = rows.filter(f => f.book);
-  const valued = withBook.map(f => f.book);
+function positions() {
+  const ids = new Set(visible().map(f => f.id));
+  return FUNDS.flatMap(f => (f.top || []).map(h => ({ ...h, fund: f })))
+    .filter(h => ids.has(h.fund.id))
+    .filter(h => holdFilter === "all" || h.kind === holdFilter || (holdFilter === "equity" && h.kind === "company"))
+    .sort((a, b) => b.v - a.v);
+}
+function renderHolds() {
+  const chips = [["all", "全部"], ["equity", "股票与公司"], ["bond", "债券"], ["pool", "投资池"]];
+  document.getElementById("hold-filters").innerHTML = chips.map(([id, label]) =>
+    `<button class="chip" data-hold="${id}" aria-pressed="${holdFilter === id}">${label}</button>`).join("");
+  const rows = positions();
+  const valued = rows.map(h => h.v).filter(n => n > 0);
   const min = valued.length ? Math.min(...valued) : 1;
   const max = valued.length ? Math.max(...valued) : 1;
-  document.getElementById("book-note").textContent = withBook.length
-    ? "这里只画已经逐项点名、而且能加总的美国 13F。没有柱子的基金，要么不公布，要么名单还在官网、没有抄进这页。不能把这些柱子和上面的规模比成同一种覆盖率。"
-    : "当前筛选里没有抄进这页的 13F。";
-  document.getElementById("books").innerHTML = rows.map(f => {
-    const label = `<span class="who"><b>${esc(f.zh)}</b><small>${esc(discLabel(f))}${f.nPositions ? " · " + f.nPositions + " 行" : ""}</small></span>`;
-    if (!f.book) {
-      return `<button class="row" data-id="${f.id}" ${f.id === selected ? 'aria-current="true"' : ""}>${label}<span class="empty-bar">${esc(f.bookNote)}</span><span class="num"><i>${esc(discLabel(f))}</i>—</span></button>`;
-    }
-    const width = logWidth(f.book, min, max);
-    return `<button class="row" data-id="${f.id}" ${f.id === selected ? 'aria-current="true"' : ""}>${label}<span class="track"><i class="bar ${f.region}" style="width:${width}%"></i></span><span class="num"><i>13F · 2026-06-30</i>${esc(money(f.book))}</span></button>`;
-  }).join("") || `<p class="note">没有符合筛选的基金。</p>`;
+  document.getElementById("hold-note").textContent = rows.length
+    ? `当前 ${rows.length} 笔，按金额从大到小。横条是对数刻度。点一行看那只基金。`
+    : "当前筛选里没有标了金额的持仓。";
+  document.getElementById("holds").innerHTML = rows.map(h => {
+    const width = logWidth(h.v, min, max);
+    const extra = h.own ? h.own : "";
+    return `<button class="row" data-id="${h.fund.id}"><span class="who"><b>${esc(h.n)}</b><small>${esc(h.fund.zh)} · ${esc(KIND[h.kind] || "")}${h.place ? " · " + esc(h.place) : ""}</small></span><span class="track"><i class="bar" style="width:${width}%;background:${KIND_COLOR[h.kind] || "#5c5348"}"></i></span><span class="num"><i>${esc(extra)}</i>${esc(money(h.v))}</span></button>`;
+  }).join("") || `<p class="note">没有符合筛选的持仓。</p>`;
 }
 
+function toneColor(tone) { return (TONE[tone] || TONE.other)[0]; }
 function renderMix() {
-  const keys = [];
-  visible().forEach(f => (f.amounts || []).forEach(a => { if (!keys.includes(a.k)) keys.push(a.k); }));
-  document.getElementById("legend").innerHTML = keys.map(k => `<span><i style="background:${COLORS[k] || "#c3b49f"}"></i>${esc(k)}</span>`).join("");
-  const rows = visible().filter(f => (f.amounts || []).length);
+  document.getElementById("legend").innerHTML = Object.values(TONE).map(([color, name]) => `<span><i style="background:${color}"></i>${esc(name)}</span>`).join("");
+  const rows = visible();
   document.getElementById("mix").innerHTML = rows.map(f => {
-    const segs = f.amounts.map(a => `<span title="${esc(a.k)} ${a.v}%" style="width:${a.v}%;background:${COLORS[a.k] || "#c3b49f"}"></span>`).join("");
-    return `<div class="mix-row"><b>${esc(f.short)}</b><div class="stack">${segs}</div></div>`;
-  }).join("") || `<p class="note">当前筛选里没有可画的官方比例。</p>`;
-}
-
-function overlaps() {
-  const map = new Map();
-  FUNDS.forEach(f => (f.top || []).forEach(h => {
-    const key = h.g || h.t;
-    if (!map.has(key)) map.set(key, { name: h.n.replace(/ [AC]$/, ""), rows: [] });
-    map.get(key).rows.push({ f, h });
-  }));
-  return [...map.entries()]
-    .map(([k, v]) => ({ k, name: v.name, rows: v.rows, total: v.rows.reduce((s, r) => s + r.h.v, 0) }))
-    .filter(x => new Set(x.rows.map(r => r.f.id)).size > 1)
-    .sort((a, b) => b.total - a.total);
-}
-
-function renderOverlap() {
-  const rows = overlaps();
-  document.getElementById("overlap-note").textContent = rows.length
-    ? "只比较这页抄进来的 13F 行。字母表的 A 类和 C 类并成一行。挪威的仓位大到会盖住另外三家，所以表里同时写金额和它在各家 13F 里的权重。"
-    : "这页抄进的 13F 之间没有重叠的代码。";
-  document.getElementById("overlap").innerHTML = rows.length ? `<table><thead><tr><th>证券</th><th>出现在</th><th class="r">合计</th></tr></thead><tbody>${
-    rows.map(o => {
-      const who = o.rows.map(r => `${esc(r.f.short)} ${esc(money(r.h.v))}`).join(" · ");
-      return `<tr><td>${esc(o.k)} <span style="color:#6f6458">${esc(o.name)}</span></td><td>${who}</td><td class="r">${esc(money(o.total))}</td></tr>`;
-    }).join("")
-  }</tbody></table>` : "";
+    if (!(f.amounts || []).length) {
+      const why = (f.ranges || []).length ? "只有上下限，没有一个点估计" : "没有公布可加总的构成";
+      return `<div class="mix-row"><b>${esc(f.short)}</b><span class="empty-bar">${esc(why)}</span></div>`;
+    }
+    const segs = f.amounts.map(a => `<span title="${esc(a.k)} ${a.v}%" style="width:${a.v}%;background:${toneColor(a.tone)}"></span>`).join("");
+    const tag = MIX[f.mixKind] || "";
+    return `<div class="mix-row"><b>${esc(f.short)} <span style="color:#6f6458;font-weight:400">${esc(tag)}</span></b><div class="stack">${segs}</div></div>`;
+  }).join("") || `<p class="note">当前筛选里没有基金。</p>`;
 }
 
 function spark(series, unit) {
@@ -459,8 +442,11 @@ function renderDetail() {
   selected = f.id;
   const alloc = (f.amounts || []).map(a => `<tr><td>${esc(a.k)}</td><td class="r">${a.v}%</td></tr>`).join("");
   const ranges = (f.ranges || []).map(a => `<tr><td>${esc(a.k)}</td><td class="r">${a.min}–${a.max}%</td></tr>`).join("");
-  const geo = (f.geo || []).map(a => `<tr><td>${esc(a.k)}</td><td class="r">${a.min}–${a.max}%</td></tr>`).join("");
-  const holds = (f.top || []).map(h => `<tr><td>${esc(h.t)} <span style="color:#6f6458">${esc(h.n)}</span></td><td class="r">${esc(money(h.v))}</td><td class="r">${h.w}%</td><td class="r">${esc(h.sh)}</td></tr>`).join("");
+  const geo = (f.geo || []).map(a => {
+    const cell = a.min === a.max ? a.min + "%" : a.min + "–" + a.max + "%";
+    return `<tr><td>${esc(a.k)}</td><td class="r">${cell}</td></tr>`;
+  }).join("");
+  const holds = (f.top || []).slice().sort((a, b) => b.v - a.v).map(h => `<tr><td>${esc(h.n)}</td><td>${esc(KIND[h.kind] || "")}${h.place ? " · " + esc(h.place) : ""}</td><td class="r">${h.own ? esc(h.own) : "—"}</td><td class="r">${esc(money(h.v))}</td></tr>`).join("");
   document.getElementById("detail").innerHTML = `
     <div class="idcard">
       <div class="party ${f.region}">${esc(f.region)}</div>
@@ -485,12 +471,12 @@ function renderDetail() {
           ${!alloc && !ranges ? `<p class="note">没有公布可以加总成 100% 的资产类别。</p>` : ""}
         </div>
         <div>
-          <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">逐项披露</h3>
-          <p class="big" style="font-size:28px">${f.book ? esc(money(f.book)) : "没有合计"}</p>
-          <p class="note">${esc(f.bookNote)}</p>
+          <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">最大的一笔</h3>
+          <p class="big" style="font-size:28px">${(f.top || []).length ? esc(f.top.slice().sort((a, b) => b.v - a.v)[0].n) : "没有单笔"}</p>
+          <p class="note">${(f.top || []).length ? esc(money(f.top.slice().sort((a, b) => b.v - a.v)[0].v)) : esc(f.topNote || "没有标金额的持仓。")}</p>
         </div>
       </div>
-      ${holds ? `<h3 style="font-family:Noto Serif SC,serif">13F 里金额最高的几行</h3><p class="note">${esc(f.topNote || "")}</p><table><thead><tr><th>证券</th><th class="r">市值</th><th class="r">占 13F</th><th class="r">数量</th></tr></thead><tbody>${holds}</tbody></table>` : ""}
+      ${holds ? `<h3 style="font-family:Noto Serif SC,serif">披露持仓，按金额排序</h3><p class="note">${esc(f.topNote || "")}</p><table><thead><tr><th>持仓</th><th>类型</th><th class="r">说明</th><th class="r">金额</th></tr></thead><tbody>${holds}</tbody></table>` : `<p class="note">${esc(f.topNote || "没有标金额的单笔持仓。")}</p>`}
       <div class="links">${(f.sources || []).map(s => `<a href="${esc(s.u)}" target="_blank" rel="noreferrer">${esc(s.t)}</a>`).join("")}</div>
     </div>`;
   if (location.hash !== "#" + f.id) history.replaceState(null, "", "#" + f.id);
@@ -499,13 +485,18 @@ function renderDetail() {
 function render() {
   renderFilters();
   renderChart();
-  renderBooks();
+  renderHolds();
   renderMix();
-  renderOverlap();
   renderDetail();
 }
 
 document.body.addEventListener("click", (event) => {
+  const holdBtn = event.target.closest("[data-hold]");
+  if (holdBtn) {
+    holdFilter = holdBtn.dataset.hold;
+    renderHolds();
+    return;
+  }
   const filterBtn = event.target.closest("[data-filter]");
   if (filterBtn) {
     filter = filterBtn.dataset.filter;
@@ -523,7 +514,7 @@ document.body.addEventListener("input", (event) => {
   if (event.target.id === "q") {
     query = event.target.value;
     renderChart();
-    renderBooks();
+    renderHolds();
     renderMix();
   }
 });
