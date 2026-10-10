@@ -219,7 +219,7 @@
       <span>区间，不是审计净资产</span>
     </div>
     <h1>申报上的美国</h1>
-    <p class="deck">国会人物仍来自 <strong>Quiver</strong> 对年度申报的解析。新增的几位总统走政府伦理办公室的 278 表，州长走各州自己的申报。这三套表不能当成同一种净资产。</p>
+    <p class="deck">国会人物仍来自 <strong>Quiver</strong> 对年度申报的解析。总统从 1978 年《政府伦理法》之后的公开申报算起，第一份是卡特 1979 年交的表。州长走各州自己的申报。这三套表不能当成同一种净资产。</p>
   </header>
   <p class="method">国会申报大多是金额区间，Quiver 取中点，再把上市股票按市价更新。总统表的最高一档是 Over $50,000,000，没有上限，加不出净资产。佛罗里达州给州长一个精确净资产，密歇根州只要求投资清单，伊利诺伊州的普利兹克把资产放在盲目信托里。柱子右侧的标签标明每一根用的是哪种口径。主要住宅通常不在表上。</p>
   <section class="stats" id="stats"></section>
@@ -320,11 +320,13 @@ function renderStats() {
   const lo = valued.reduce((a, b) => (b.headline < a.headline ? b : a));
   const medR = median(congress.filter(p => p.party === "R" && p.headlineKind !== "floor").map(p => p.headline));
   const medD = median(congress.filter(p => p.party === "D" && p.headlineKind !== "floor").map(p => p.headline));
+  const nPres = PEOPLE.filter(p => p.office === "president").length;
+  const nGov = PEOPLE.filter(p => p.office === "governor").length;
   document.getElementById("stats").innerHTML = [
     ["国会极差", money(hi.headline) + " / " + money(lo.headline), hi.zh + " 对 " + lo.zh + "，不含总统和州长"],
     ["共和党中位", money(medR), "只算国会，不含约翰逊"],
     ["民主党中位", money(medD), "只算国会，不含卡纳下限"],
-    ["新增", "3 · 8", "总统 · 州长。点上面的筛选，口径和国会不同"]
+    ["总统 · 州长", nPres + " · " + nGov, "总统从卡特 1979 年的第一份申报算起"]
   ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
 }
 
@@ -333,7 +335,7 @@ function renderStories() {
     ["POTUS-TRUMP", "证券账户下限", "不是净资产。俱乐部、媒体股票和加密钱包还在没有上限的那一档里。"],
     ["GOV-DESANTIS", "精确净资产", "佛罗里达州直接报一个数字，2025 年底是 207 万美元。"],
     ["GOV-PRITZKER", "盲目信托", "申报看不到持仓。2024 年报税收入 1070 万美元，福布斯估算没有画进柱子。"],
-    ["POTUS-BIDEN", "十一页申报", "资产大约 100 万到 260 万美元，外加一笔住房贷款。"]
+    ["POTUS-CARTER", "第一份总统申报", "1979 年交的表覆盖 1978 年。扣除负债后大约 80 万美元，平原的住宅没有算进去。"],
   ];
   document.getElementById("stories").innerHTML = items.map(([id, t, d]) => {
     const p = person(id);
