@@ -27,10 +27,10 @@
 
 | 标签 | 内容 | 说明 |
 |------|------|------|
-| 文章 | 本地 Markdown 博客 | 从 `data/posts/` 读取，marked.js 渲染，支持全文阅读 |
-| 知乎想法 | 同步的知乎想法 | 自动抓取展示，含时间/图片/互动数据 |
-| 知乎文章 | 同步的知乎文章 | 自动抓取展示，含内联全文阅读器 |
-| AI 文本 | 深度分析文档 | 从 `thesis/` 读取的 AI 生成分析报告 |
+| 知乎想法 | 同步的知乎想法 | 官方 CLI 抓取，含时间、图片、互动数据 |
+| 知乎文章 | 同步的知乎文章 | 官方 CLI 抓取，页内阅读全文 |
+| AI 文本 | 深度分析文档 | 从 `thesis/` 读取，本地 Markdown |
+| AI 摘录 | 对话摘录 | 从 `data/excerpts.json` 读取，本地 Markdown |
 
 **特色功能：**
 - 🔍 **全文搜索**：跨所有标签页实时搜索内容
@@ -66,21 +66,35 @@
 
 ## 知乎同步
 
-通过 Playwright + Chromium 自动抓取知乎想法和文章。
+文本页的「知乎想法」「知乎文章」由知乎官方 CLI 同步。AI 文本和 AI 摘录仍是仓库里的本地 Markdown，不从知乎抓取。
 
 ### 同步内容
 
-- **想法（Pins）**：最多 500 条，含正文、发布时间、图片、点赞/评论数
-- **文章（Articles）**：自动抓取文章列表及完整正文
+- **想法（Pins）**：`me contents --type pin`，正文、发布时间、图片、点赞和评论数
+- **文章（Articles）**：`me contents --type article`，列表摘要加上 `me content` 补到的全文
+
+已有全文会保留。只有本次拉到完整列表、且条数没有骤降时，才会把接口里消失的想法标成「已屏蔽」。空结果不会覆盖存档。
+
+### 配置知乎 CLI
+
+1. 打开 [知乎开放平台个人中心](https://developer.zhihu.com/profile)，登录后申请 Access Secret
+2. 本地安装官方 CLI 后执行：
+
+```bash
+ZHIHU_ACCESS_SECRET="你的 Access Secret" node scripts/fetch-zhihu.mjs
+```
+
+3. GitHub Actions 使用仓库 Secret `ZHIHU_ACCESS_SECRET`。Actions 没有系统密钥链，Secret 只通过环境变量注入，不写入仓库
+
+每次运行最多补拉 30 条缺失全文（`ZHIHU_DETAIL_BUDGET` 可改）。全文计入开放平台「创作能力」额度。
 
 ### 工作流程
 
 1. GitHub Actions 每天 UTC 6:00（北京时间 14:00）运行
-2. 使用 Playwright 无头浏览器加载知乎页面
-3. DOM 提取想法数据（含时间从卡片文字中解析）
-4. 知乎 API 获取文章列表
-5. 逐篇通过专栏 API 获取完整正文
-6. 数据保存到 `data/zhihu.json`（每次完全替换，不累积旧数据）
+2. 从官方发布清单安装 `zhihu-cli`
+3. 分页读取当前 Access Secret 所属账号的想法和文章
+4. 按链接或发布时间对齐 `data/zhihu.json`，缺全文的条目再补拉
+5. 有变化时提交 `data/zhihu.json`
 
 ## 译制作品（translations.html）
 
@@ -130,7 +144,7 @@ python scripts/build_gallery_index.py --convert  # 先把 PNG/JPG 转 WebP（需
 - **自动化**：GitHub Actions 定时任务（支持 Token 远程触发）
 - **博客渲染**：`marked.js` Markdown 渲染
 - **图表可视化**：`Chart.js`（投资组合、累计趋势）
-- **浏览器自动化**：`Playwright`（知乎内容抓取）
+- **知乎同步**：官方 `zhihu-cli`（想法与文章）
 - **数据抓取**：`Python` + `requests` + `BeautifulSoup`（豆瓣）
 - **统计**：不蒜子访问统计
 - **双主题**：深色暖黑与亮色米白双主题切换（`localStorage` 持久化）
@@ -140,7 +154,7 @@ python scripts/build_gallery_index.py --convert  # 先把 PNG/JPG 转 WebP（需
 | 工作流 | 触发方式 | 说明 |
 |--------|---------|------|
 | 同步豆瓣书影音数据 | 定时 (UTC 11:00) / 手动 | 抓取豆瓣书籍/电影/音乐/游戏收藏 |
-| 同步知乎想法 | 定时 (UTC 6:00) / 手动 | 抓取知乎想法（含正文+图片+时间+互动数据）和文章（含正文） |
+| 同步知乎想法 | 定时 (UTC 6:00) / 手动 | 用知乎官方 CLI 抓取想法和文章 |
 | 同步译制作品数据 | 手动 | 更新 Bilibili 译制作品列表 |
 
 ## AI 文本（thesis/）
@@ -163,7 +177,7 @@ git clone https://github.com/Jillax/Jillax.github.io.git
 open index.html
 ```
 
-> 注意：豆瓣数据同步需要 Python 环境（requests + beautifulsoup4），知乎同步需要 Node.js + Playwright。数据抓取脚本仅在 GitHub Actions 中自动运行。
+> 注意：豆瓣数据同步需要 Python 环境（requests + beautifulsoup4）。知乎同步需要 Node.js 和官方 `zhihu-cli`，凭证用 `ZHIHU_ACCESS_SECRET`。数据抓取脚本在 GitHub Actions 中自动运行。
 
 ## 部署
 
