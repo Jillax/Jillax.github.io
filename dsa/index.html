@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>帐篷里的派系 · 美国民主社会主义者</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eadb;
+    --sheet: #faf6ee;
+    --ink: #221c16;
+    --muted: #6f6458;
+    --line: #d9cbb6;
+    --rose: #9c2b3a;
+    --gold: #8a5a12;
+    --shadow: 0 1px 0 rgba(34,28,22,.06);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--rose) 0 62%, var(--ink) 62% 100%) top / 100% 8px no-repeat,
+      var(--paper);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  button, input { font: inherit; color: inherit; }
+  a { color: var(--rose); }
+  .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+  header { padding: 42px 0 10px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    letter-spacing: .14em; text-transform: uppercase;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: .95;
+    margin: 14px 0 10px;
+    letter-spacing: -0.03em;
+  }
+  .deck { max-width: 68ch; font-size: 18px; margin: 0 0 8px; }
+  .deck strong { font-weight: 700; }
+  .method {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .stat { background: var(--sheet); padding: 14px 16px 16px; }
+  .stat b {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .stat span { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .stories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .story {
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 12px 12px 14px;
+    cursor: pointer;
+    min-height: 132px;
+  }
+  .story:hover, .story:focus-visible { background: var(--sheet); outline: 2px solid var(--ink); outline-offset: 2px; }
+  .story em { font-style: normal; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--gold); }
+  .story strong { display: block; font-family: "Noto Serif SC", serif; font-size: 18px; line-height: 1.25; margin: 6px 0; }
+  .story p { margin: 0; color: var(--muted); font-size: 13px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 14px; }
+  .toolbar input {
+    margin-left: auto;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    min-width: min(240px, 100%);
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  h2 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    margin: 28px 0 6px;
+  }
+  .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .chart { border-top: 1px solid var(--ink); }
+  .row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 220px 1fr 148px;
+    gap: 10px;
+    align-items: center;
+    padding: 7px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+  .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .who { display: flex; flex-direction: column; min-width: 0; }
+  .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who small { color: var(--muted); font-size: 12px; }
+  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .bar { height: 100%; display: block; min-width: 2px; }
+  .num {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .num i { font-style: normal; color: var(--muted); margin-right: 6px; font-size: 11px; }
+  .empty-bar { color: var(--muted); font-size: 13px; }
+  .mix { display: grid; gap: 8px; }
+  .mix-row { display: grid; grid-template-columns: 168px 1fr; gap: 10px; align-items: center; }
+  .stack { display: flex; height: 16px; width: 100%; background: rgba(34,28,22,.06); }
+  .stack button {
+    display: block; height: 100%; padding: 0; border: 0; min-width: 2px; cursor: pointer;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+  .detail {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 28px;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin: 18px 0 36px;
+  }
+  .party {
+    display: inline-block;
+    margin-top: 12px;
+    border: 1.5px solid currentColor;
+    padding: 2px 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+  .idcard h3 { font-family: "Noto Serif SC", serif; font-size: 32px; margin: 8px 0 0; line-height: 1.05; }
+  .idcard .en { color: var(--muted); margin: 0 0 8px; }
+  .big {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 8px 0 0;
+    letter-spacing: -0.04em;
+  }
+  .blurb { font-size: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 6px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  td.r, th.r { text-align: right; font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; font-size: 13px; }
+  footer { border-top: 1px solid var(--ink); padding: 18px 0 40px; color: var(--muted); font-size: 13px; }
+  @media (max-width: 860px) {
+    .stats, .stories, .detail, .split { grid-template-columns: 1fr; }
+    .toolbar input { margin-left: 0; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .num { text-align: left; }
+    .mix-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <a href="https://jillax.github.io/">← Jillax</a>
+      <a href="../congress-portfolios/">申报上的美国</a>
+      <a href="../sovereign-funds/">主权基金</a>
+      <span>DSA · 2025–2027</span>
+      <span>派系不是章程机关</span>
+    </div>
+    <h1>帐篷里的派系</h1>
+    <p class="deck">这页把 <strong>章程上的机关</strong> 和 <strong>机关里的派系</strong> 分开。全国大会、政治委员会、支部是组织结构。面包与玫瑰、社会主义多数、红星是会员自己结成的团体。席位是 2025 年芝加哥大会的结果，再加上 2026 年青年联合主席改选。</p>
+  </header>
+  <p class="method">1982 年 3 月 20 日，迈克尔·哈灵顿的民主社会主义组织委员会和新美国运动在底特律合并，当时约 6000 人，路线是把民主党改造成社会民主主义政党。2015 年仍约 6000 人。2016 年以后它变成美国最大的社会主义组织。派系没有全国公布的花名册，柱子用的是委员会座位，不是会员人数。第一偏好是会内统计，不是大会官方唱票。会内口语里的左右，表示更愿意用民主党选票线，还是更强调断线、纪律和红线。这页按策略分类。Mountain、Caracol、Winter 这类更小的名单不单列。已经解散的建设派和集体力量网络也不进柱子。</p>
+
+  <h2>章程上的全国架构</h2>
+  <p class="note">机关之间是隶属和授权，不是可以互相比较的数量，所以这里不排柱子。点一张卡片，下面的详情换成这个机关。</p>
+  <section class="stories" id="organs"></section>
+  <div class="chart" id="orgchart"></div>
+
+  <section class="stats" id="stats"></section>
+  <section class="stories" id="stories"></section>
+  <div class="toolbar" id="filters"></div>
+  <h2>谁在委员会里占的座位更多</h2>
+  <p class="note" id="chart-note"></p>
+  <div class="chart" id="chart"></div>
+  <h2>27 个座位怎么分成派系</h2>
+  <p class="note">前两根拉成 27 人。第三根是 2025 年 NPC 选举的第一偏好，会内统计，加总 100%，康乃馨没有被单列。点色块看这一派。</p>
+  <div class="legend" id="legend"></div>
+  <div class="mix" id="mix"></div>
+  <h2 id="detail-title">这一派，或这一层</h2>
+  <section class="detail" id="detail"></section>
+  <footer>
+    <p>整理日期 2026 年 10 月 10 日。大会选出的 25 人按 2025 年 8 月芝加哥大会的派系归属。青年联合主席按官网领导页的现任名单，派系按全国政治委员会条目的现任表。官网星号和章程里的「6+1」指导委员会不是同一个口径，详情里分开写。</p>
+    <p>来源：<a href="https://www.dsausa.org/about-us/constitution/">DSA 章程与附则</a>；<a href="https://www.dsausa.org/about-us/structure/">领导与结构</a>；<a href="https://convention2025.dsausa.org/">2025 年大会</a>；<a href="https://www.cityandstateny.com/politics/2026/01/get-know-dsas-internal-caucuses/410951/">City & State，2026-01-26</a>；<a href="https://www.dsausa.org/news/feb2026_npc_newsletter/">2026 年 2 月 NPC 通讯</a>。</p>
+  </footer>
+</div>
+<script src="data.js"></script>
+<script>
+const DATA = window.DSA;
+const COLORS = DATA.colors;
+const CAUCUSES = DATA.caucuses;
+const ORGANS = DATA.organs;
+let filter = "all";
+let query = "";
+let selected = "bread";
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function caucus(id) { return CAUCUSES.find(c => c.id === id); }
+function organ(id) { return ORGANS.find(o => o.id === id); }
+function color(id) { return COLORS[id] || COLORS.other; }
+function visible() {
+  const q = query.trim().toLowerCase();
+  return CAUCUSES.filter(c => {
+    let ok = true;
+    if (filter === "有席位") ok = c.seats > 0;
+    else if (filter === "无席位") ok = c.seats === 0;
+    else if (filter !== "all") ok = c.shelf === filter;
+    if (!ok) return false;
+    if (!q) return true;
+    const blob = [c.zh, c.en, c.short, c.shelf, c.blurb, ...(c.members || []).flat()].join(" ").toLowerCase();
+    return blob.includes(q);
+  }).sort((a, b) => (b.seats - a.seats) || (b.vote || 0) - (a.vote || 0) || a.zh.localeCompare(b.zh, "zh"));
+}
+
+function renderStats() {
+  const seated = CAUCUSES.filter(c => c.seats > 0).length;
+  document.getElementById("stats").innerHTML = [
+    ["12万+", "会员 · 2026 年 7 月口径，2 月通讯已过 10 万"],
+    ["27 人", "全国政治委员会 · 25 名大会选出 + 2 名青年主席"],
+    [seated + " 派", "现任委员会里有座位的派系"],
+    ["1982", "成立 · 两个组织在底特律合并"]
+  ].map(([v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(s)}</span></div>`).join("");
+}
+
+function renderOrgans() {
+  document.getElementById("organs").innerHTML = ORGANS.filter(o => o.story).map(o =>
+    `<button class="story" data-id="${o.id}"><em>${esc(o.em)}</em><strong>${esc(o.zh)}</strong><p>${esc(o.storyText)}</p></button>`
+  ).join("");
+  document.getElementById("orgchart").innerHTML = ORGANS.map(o => {
+    const mark = o.id === selected ? 'aria-current="true"' : "";
+    return `<button class="row" data-id="${o.id}" ${mark}><span class="who"><b>${esc(o.zh)}</b><small>${esc(o.en)}</small></span><span class="empty-bar">${esc(o.bigNote)}</span><span class="num">${esc(o.big)}</span></button>`;
+  }).join("");
+}
+
+function renderStories() {
+  const items = [
+    ["bread", "5 / 27", "大会当时 3 席。2026 年两位青年联合主席也属这一派。"],
+    ["gw", "5 / 27", "大众政治里席位最多的一派，全国联合主席之一。"],
+    ["smc", "纽约大于全国", "纽约市支部的最大派。全国委员会 4 席。"],
+    ["redstar", "另一位主席", "马克思主义列宁主义。联合主席 Megan Romer。"]
+  ];
+  document.getElementById("stories").innerHTML = items.map(([id, t, d]) => {
+    const c = caucus(id);
+    return `<button class="story" data-id="${id}"><em>${esc(t)}</em><strong>${esc(c.zh)}</strong><p>${esc(d)}</p></button>`;
+  }).join("");
+}
+
+function renderFilters() {
+  const chips = [
+    ["all", "全部"],
+    ["大众政治", "大众政治"],
+    ["工会中间", "工会中间"],
+    ["纲领建党", "纲领建党"],
+    ["红线与集中", "红线与集中"],
+    ["其他", "其他"],
+    ["有席位", "有全国席位"],
+    ["无席位", "没有全国席位"]
+  ];
+  document.getElementById("filters").innerHTML =
+    chips.map(([id, label]) => `<button class="chip" data-filter="${id}" aria-pressed="${filter === id}">${label}</button>`).join("") +
+    `<input id="q" type="search" placeholder="搜派系或人名" value="${esc(query)}" aria-label="搜索">`;
+}
+
+function renderChart() {
+  const rows = visible();
+  document.getElementById("chart-note").textContent = rows.length
+    ? `柱子是现任席位，最长的一格是 5 席。当前 ${rows.length} 派。点一行看立场和人名。`
+    : "没有符合筛选的派系。";
+  document.getElementById("chart").innerHTML = rows.map(c => {
+    const label = `<span class="who"><b>${esc(c.zh)}</b><small>${esc(c.shelf)} · ${esc(c.founded)}</small></span>`;
+    const mark = c.id === selected ? 'aria-current="true"' : "";
+    if (!c.seats) {
+      return `<button class="row" data-id="${c.id}" ${mark}>${label}<span class="empty-bar">没有全国席位</span><span class="num"><i>${esc(c.short)}</i>0</span></button>`;
+    }
+    const width = (c.seats / 5) * 100;
+    const extra = c.seats !== c.seatsThen ? `大会时 ${c.seatsThen}` : c.short;
+    return `<button class="row" data-id="${c.id}" ${mark}>${label}<span class="track"><i class="bar" style="width:${width}%;background:${color(c.id)}"></i></span><span class="num"><i>${esc(extra)}</i>${c.seats} / 27</span></button>`;
+  }).join("") || `<p class="note">没有符合筛选的派系。</p>`;
+}
+
+function renderMix() {
+  const names = {};
+  CAUCUSES.forEach(c => { names[c.id] = c.short; });
+  names.none = "无派系";
+  names.other = "其他";
+  const used = [];
+  DATA.stacks.forEach(s => s.parts.forEach(([id]) => { if (!used.includes(id)) used.push(id); }));
+  document.getElementById("legend").innerHTML = used.map(id =>
+    `<span><i style="background:${color(id)}"></i>${esc(names[id] || id)}</span>`
+  ).join("");
+  document.getElementById("mix").innerHTML = DATA.stacks.map(s => {
+    const segs = s.parts.map(([id, n]) => {
+      const width = (n / s.total) * 100;
+      const unit = s.unit || "席";
+      const title = `${names[id] || id} ${n}${unit}`;
+      const clickable = caucus(id) ? ` data-id="${id}"` : "";
+      return `<button${clickable} title="${esc(title)}" style="width:${width}%;background:${color(id)}" aria-label="${esc(title)}"></button>`;
+    }).join("");
+    return `<div class="mix-row"><b>${esc(s.label)}</b><div class="stack">${segs}</div></div>`;
+  }).join("");
+}
+
+function table(rows, head, empty) {
+  if (!rows.length) return `<p class="note">${esc(empty || "没有单列的人名。")}</p>`;
+  const body = rows.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("");
+  return `<table><thead><tr><th>${esc(head[0])}</th><th>${esc(head[1])}</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function links(sources) {
+  return `<div class="links">${(sources || []).map(s => `<a href="${esc(s[1])}" target="_blank" rel="noreferrer">${esc(s[0])}</a>`).join("")}</div>`;
+}
+
+function renderDetail() {
+  const c = caucus(selected);
+  const o = organ(selected);
+  const node = c || o || caucus("bread");
+  selected = node.id;
+  if (o && !c) {
+    document.getElementById("detail").innerHTML = `
+      <div class="idcard">
+        <div class="party" style="color:var(--ink)">机关</div>
+        <h3>${esc(o.zh)}</h3>
+        <p class="en">${esc(o.en)}</p>
+        <p class="big">${esc(o.big)}</p>
+        <p class="note">${esc(o.bigNote)}</p>
+      </div>
+      <div>
+        <p class="blurb">${esc(o.blurb)}</p>
+        <div class="split">
+          <div>
+            <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">章程里怎么写</h3>
+            ${table(o.points, ["事项", "规定"], "章程要点见正文。")}
+          </div>
+          <div>
+            <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">现在对得上的人</h3>
+            ${table(o.people, ["姓名", "职务"], "这一层不单列人名，席位在下面的派系里。")}
+          </div>
+        </div>
+        ${links(o.sources)}
+      </div>`;
+  } else {
+    const seatLine = node.seats ? `${node.seats} / 27` : "0 席";
+    const people = (node.members || []).map(m => [m[0], `${m[1]} · ${m[2]}`]);
+    document.getElementById("detail").innerHTML = `
+      <div class="idcard">
+        <div class="party" style="color:${color(node.id)}">${esc(node.shelf)}</div>
+        <h3>${esc(node.zh)}</h3>
+        <p class="en">${esc(node.en)}</p>
+        <p>${esc(node.founded)} 年 · ${esc(node.short)}</p>
+        <p class="big">${esc(seatLine)}</p>
+        <p class="note">${node.seats ? "现任全国政治委员会" : "现任委员会里没有这一派"}</p>
+      </div>
+      <div>
+        <p class="blurb">${esc(node.blurb)}</p>
+        <div class="split">
+          <div>
+            <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">立场</h3>
+            ${table(node.points, ["问题", "这一派"], "立场见正文。")}
+          </div>
+          <div>
+            <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">席位里的人</h3>
+            ${table(people, ["姓名", "支部与职务"], "现任委员会里没有这一派的座位。")}
+          </div>
+        </div>
+        ${links(node.sources)}
+      </div>`;
+  }
+  if (location.hash !== "#" + node.id) history.replaceState(null, "", "#" + node.id);
+}
+
+function render() {
+  renderFilters();
+  renderOrgans();
+  renderChart();
+  renderMix();
+  renderDetail();
+}
+
+document.body.addEventListener("click", (event) => {
+  const filterBtn = event.target.closest("[data-filter]");
+  if (filterBtn) {
+    filter = filterBtn.dataset.filter;
+    render();
+    return;
+  }
+  const idBtn = event.target.closest("[data-id]");
+  if (idBtn && (caucus(idBtn.dataset.id) || organ(idBtn.dataset.id))) {
+    selected = idBtn.dataset.id;
+    render();
+    document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+document.body.addEventListener("input", (event) => {
+  if (event.target.id === "q") {
+    query = event.target.value;
+    renderChart();
+  }
+});
+
+const hash = location.hash.slice(1);
+if (caucus(hash) || organ(hash)) selected = hash;
+renderStats();
+renderOrgans();
+renderStories();
+render();
+</script>
+</body>
+</html>
