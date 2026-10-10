@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-19",
+  "updated": "2026-09-30",
   "currency": "CNY",
   "categories": [
     {
@@ -11,6 +11,31 @@
           "subItems": [
             { "name": "三年期（建行+招商）", "value": 20000 }
           ]
+        },
+        {
+          "name": "货币基金",
+          "color": "#5ee7ff",
+          "subItems": [
+            { "name": "易方达现金增利货币B", "value": 4174.67 },
+            { "name": "南方薪金宝货币A", "value": 1037.83 },
+            { "name": "兴全货币E", "value": 310.74 },
+            { "name": "建信嘉薪宝货币A", "value": 181.57 },
+            { "name": "摩根天添盈E", "value": 0.54 },
+            { "name": "华夏现金宝货币", "value": 0.11 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "债券类",
+      "color": "#ffd700",
+      "items": [
+        {
+          "name": "债券",
+          "color": "#ffd700",
+          "subItems": [
+            { "name": "中欧优享债券E", "value": 963.06 }
+          ]
         }
       ]
     },
@@ -19,50 +44,28 @@
       "color": "#9b59ff",
       "items": [
         {
-          "name": "沪深300",
-          "color": "#b47aff",
-          "subItems": [
-            { "name": "易方达沪深300", "value": 7616 }
-          ]
-        },
-        {
           "name": "标普500",
           "color": "#9b59ff",
           "subItems": [
-            { "name": "摩根标普500", "value": 16088 }
+            { "name": "摩根标普500人民币A", "value": 16676.53 }
           ]
         },
         {
           "name": "纳斯达克100",
           "color": "#ff4da6",
           "subItems": [
-            { "name": "天弘纳斯达克100", "value": 2849 },
-            { "name": "易方达纳斯达克100", "value": 767 },
-            { "name": "万家纳斯达克100", "value": 1751 },
-            { "name": "摩根纳斯达克100", "value": 4147 },
-            { "name": "嘉实纳斯达克100", "value": 2380 },
-            { "name": "南方纳斯达克100", "value": 1107 }
+            { "name": "摩根纳斯达克100人民币A", "value": 4983.08 },
+            { "name": "天弘纳斯达克100指数发起(QDII)A", "value": 2949.29 },
+            { "name": "万家纳斯达克100指数发起式(QDII)A", "value": 2099.13 },
+            { "name": "南方纳斯达克100指数发起(QDII)A", "value": 1147.40 },
+            { "name": "易方达纳斯达克100ETF联接(LOF)A人民币", "value": 796.19 }
           ]
         },
         {
           "name": "恒生科技",
           "color": "#ffaa40",
           "subItems": [
-            { "name": "易方达恒生科技", "value": 1351 }
-          ]
-        },
-        {
-          "name": "恒生指数",
-          "color": "#e8923a",
-          "subItems": [
-            { "name": "华夏恒生指数", "value": 783 }
-          ]
-        },
-        {
-          "name": "短债",
-          "color": "#ffd700",
-          "subItems": [
-            { "name": "短债基金", "value": 3000 }
+            { "name": "易方达恒生科技ETF联接(QDII)A", "value": 1239.59 }
           ]
         }
       ]
