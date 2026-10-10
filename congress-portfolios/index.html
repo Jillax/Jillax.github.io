@@ -159,7 +159,7 @@
   .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
   .detail {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: minmax(280px, 360px) 1fr;
     gap: 28px;
     background: var(--sheet);
     border: 1px solid var(--line);
@@ -180,6 +180,9 @@
     font-size: 12px;
     letter-spacing: .08em;
   }
+  .party.J { color: #5c5348; }
+  .idcard .intro { font-size: 14.5px; line-height: 1.7; margin: 10px 0 0; }
+  .idcard .duty { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
   .party.R { color: var(--rep); }
   .party.D { color: var(--dem); }
   .party.I { color: var(--ind); }
@@ -215,13 +218,17 @@
   <header>
     <div class="kicker">
       <a href="https://jillax.github.io/">← Jillax</a>
+      <a href="../sovereign-funds/">主权基金</a>
       <span>国会、总统与州长 · 2026</span>
       <span>区间，不是审计净资产</span>
     </div>
     <h1>申报上的美国</h1>
     <p class="deck">国会人物仍来自 <strong>Quiver</strong> 对年度申报的解析。总统从 1978 年《政府伦理法》之后的公开申报算起，第一份是卡特 1979 年交的表。州长走各州自己的申报。这三套表不能当成同一种净资产。</p>
   </header>
-  <p class="method">国会申报大多是金额区间，Quiver 取中点，再把上市股票按市价更新。总统表的最高一档是 Over $50,000,000，没有上限，加不出净资产。佛罗里达州给州长一个精确净资产，密歇根州只要求投资清单，伊利诺伊州的普利兹克把资产放在盲目信托里。柱子右侧的标签标明每一根用的是哪种口径。主要住宅通常不在表上。</p>
+  <p class="method">国会申报大多是金额区间，Quiver 取中点，再把上市股票按市价更新。总统和内阁走《政府伦理法》的 278 表。最高法院和联邦法官交的是司法会议的年度财务披露，不是 278 表。州长则看各州法律。柱子右侧的标签标明每一根用的是哪种口径。</p>
+  <h2>谁必须公开财产</h2>
+  <p class="note">联邦《政府伦理法》覆盖的是职务。行政分支大约有 2.6 万名公开申报人：总统、副总统、总统和副总统候选人、需参议院确认的部长和副部长（薪酬第一、二级，大约 67 个职位，含内阁）、资深行政官、行政法官，以及白宫里持有总统任命状的文职。邮政总局局长也在其中。国会这边是两院议员、国会候选人，还有工资超过门槛的国会助理。最高法院和联邦法官走司法会议的另一套表。州长不在联邦法里，各州自己规定。内阁和 2.6 万人的逐份 278 表在政府伦理办公室网站，本页没有全部抄进来。</p>
+  <div class="stories" id="regimes"></div>
   <section class="stats" id="stats"></section>
   <section class="stories" id="stories"></section>
   <div class="toolbar" id="filters"></div>
@@ -305,6 +312,7 @@ function visible() {
     if (filter === "国会") ok = isCongress(p);
     else if (filter === "总统") ok = p.office === "president";
     else if (filter === "州长") ok = p.office === "governor";
+    else if (filter === "最高法院") ok = p.office === "justice";
     else if (filter !== "all") ok = p.party === filter || (p.tags || []).includes(filter);
     if (!ok) return false;
     if (!q) return true;
@@ -330,6 +338,17 @@ function renderStats() {
   ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
 }
 
+function renderRegimes() {
+  const items = [
+    ["国会", "国会", "议员和候选人。高薪助理也要申报，这里没有逐人收录。"],
+    ["总统", "总统与副总统", "现任、前任，以及正副总统候选人，交 278 表。"],
+    ["州长", "州长", "各州法律不同。这里只收对得上公开文本的人。"],
+    ["最高法院", "最高法院", "九位大法官交司法会议的年度表，不是 278。"]
+  ];
+  document.getElementById("regimes").innerHTML = items.map(([id, t, d]) =>
+    `<button class="story" data-filter="${id}"><em>${esc(t)}</em><strong>${esc(id === "总统" ? "278 表" : id === "最高法院" ? "司法申报" : "点此筛选")}</strong><p>${esc(d)}</p></button>`
+  ).join("");
+}
 function renderStories() {
   const items = [
     ["POTUS-TRUMP", "证券账户下限", "不是净资产。俱乐部、媒体股票和加密钱包还在没有上限的那一档里。"],
@@ -349,6 +368,7 @@ function renderFilters() {
     ["国会", "国会"],
     ["总统", "总统"],
     ["州长", "州长"],
+    ["最高法院", "最高法院"],
     ["R", "共和党"],
     ["D", "民主党"],
     ["I", "独立"],
@@ -370,7 +390,7 @@ function renderChart() {
     ? `横条是对数刻度，否则 ${biggest.zh} 会把 ${money(min)} 挤没。当前 ${rows.length} 人。点一行看持仓。`
     : `当前 ${rows.length} 人。`;
   document.getElementById("chart").innerHTML = rows.map(p => {
-    const place = p.office === "president" ? "总统" : p.office === "governor" ? "州长 · " + p.state : PARTY[p.party] + " · " + p.state;
+    const place = p.office === "president" ? "总统" : p.office === "governor" ? "州长 · " + p.state : p.office === "justice" ? "最高法院" : PARTY[p.party] + " · " + p.state;
     const img = p.image ? `<img class="mini" alt="" src="${esc(p.image)}" onerror="this.remove()">` : "";
     const label = `<span class="who">${img}<span class="meta"><b>${esc(p.zh)}</b><small>${esc(place)}</small></span></span>`;
     if (typeof p.headline !== "number") {
@@ -431,10 +451,11 @@ function renderDetail() {
   document.getElementById("detail").innerHTML = `
     <div class="idcard">
       <img class="avatar" alt="" src="${esc(p.image)}" data-fallback="${esc(p.imageFallback)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.remove()}">
-      <div class="party ${p.party}">${esc(PARTY[p.party])}</div>
+      <div class="party ${p.party}">${esc(p.stamp || PARTY[p.party] || "")}</div>
       <h3>${esc(p.zh)}</h3>
       <p class="en">${esc(p.name)} · ${esc(p.state)} · ${esc(p.chamber)}</p>
-      <p>${esc(p.role)}</p>
+      <p class="intro">${esc(p.intro || p.role)}</p>
+      ${p.duty ? `<p class="duty">${esc(p.duty)}</p>` : ""}
       ${headline}
       ${p.caveat ? `<p class="note">${esc(p.caveat)}</p>` : ""}
     </div>
@@ -487,6 +508,7 @@ document.body.addEventListener("input", (event) => {
 });
 
 renderStats();
+renderRegimes();
 renderStories();
 render();
 if (location.hash) {

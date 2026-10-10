@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>披露上的国家资本 · 主权基金公开持仓</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eadb;
+    --sheet: #faf6ee;
+    --ink: #221c16;
+    --muted: #6f6458;
+    --line: #d9cbb6;
+    --eu: #1d4e89;
+    --asia: #8a5a12;
+    --gulf: #1f6b4a;
+    --other: #5c5348;
+    --gold: #8a5a12;
+    --shadow: 0 1px 0 rgba(34,28,22,.06);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--ink) 0 62%, var(--gold) 62% 100%) top / 100% 8px no-repeat,
+      var(--paper);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  button, input { font: inherit; color: inherit; }
+  a { color: var(--eu); }
+  .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+  header { padding: 42px 0 10px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    letter-spacing: .14em; text-transform: uppercase;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: .95;
+    margin: 14px 0 10px;
+    letter-spacing: -0.03em;
+  }
+  .deck { max-width: 68ch; font-size: 18px; margin: 0 0 8px; }
+  .deck strong { font-weight: 700; }
+  .method {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .stat { background: var(--sheet); padding: 14px 16px 16px; }
+  .stat b {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .stat span { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .stories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .story {
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 12px 12px 14px;
+    cursor: pointer;
+    min-height: 132px;
+  }
+  .story:hover, .story:focus-visible { background: var(--sheet); outline: 2px solid var(--ink); outline-offset: 2px; }
+  .story em { font-style: normal; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--gold); }
+  .story strong { display: block; font-family: "Noto Serif SC", serif; font-size: 18px; line-height: 1.25; margin: 6px 0; }
+  .story p { margin: 0; color: var(--muted); font-size: 13px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 14px; }
+  .toolbar input {
+    margin-left: auto;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    min-width: min(240px, 100%);
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  h2 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    margin: 28px 0 6px;
+  }
+  .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .chart { border-top: 1px solid var(--ink); }
+  .row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 220px 1fr 148px;
+    gap: 10px;
+    align-items: center;
+    padding: 7px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+  .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .who { display: flex; flex-direction: column; min-width: 0; }
+  .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who small { color: var(--muted); font-size: 12px; }
+  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .bar { height: 100%; display: block; min-width: 2px; }
+  .bar.欧洲 { background: var(--eu); }
+  .bar.东亚 { background: var(--asia); }
+  .bar.海湾 { background: var(--gulf); }
+  .bar.其他 { background: var(--other); }
+  .bar.est.欧洲 { background: repeating-linear-gradient(135deg, var(--eu) 0 6px, #6e8eb3 6px 8px); }
+  .bar.est.东亚 { background: repeating-linear-gradient(135deg, var(--asia) 0 6px, #c4a574 6px 8px); }
+  .bar.est.海湾 { background: repeating-linear-gradient(135deg, var(--gulf) 0 6px, #7eae96 6px 8px); }
+  .bar.est.其他 { background: repeating-linear-gradient(135deg, var(--other) 0 6px, #a89b8e 6px 8px); }
+  .num {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .num i { font-style: normal; color: var(--muted); margin-right: 6px; font-size: 11px; }
+  .empty-bar { color: var(--muted); font-size: 13px; }
+  .mix { display: grid; gap: 8px; }
+  .mix-row { display: grid; grid-template-columns: 168px 1fr; gap: 10px; align-items: center; }
+  .stack { display: flex; height: 16px; width: 100%; background: rgba(34,28,22,.06); }
+  .stack span { display: block; height: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+  .detail {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 28px;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin: 18px 0 36px;
+  }
+  .party {
+    display: inline-block;
+    margin-top: 12px;
+    border: 1.5px solid currentColor;
+    padding: 2px 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+  .party.欧洲 { color: var(--eu); }
+  .party.东亚 { color: var(--asia); }
+  .party.海湾 { color: var(--gulf); }
+  .party.其他 { color: var(--other); }
+  .idcard h3 { font-family: "Noto Serif SC", serif; font-size: 32px; margin: 8px 0 0; line-height: 1.05; }
+  .idcard .en { color: var(--muted); margin: 0 0 8px; }
+  .big {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 8px 0 0;
+    letter-spacing: -0.04em;
+  }
+  .blurb { font-size: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 6px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  td.r, th.r { text-align: right; font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+  .spark { width: 100%; height: 92px; }
+  .spark text { fill: var(--muted); font-size: 11px; font-family: "IBM Plex Mono", monospace; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; font-size: 13px; }
+  footer { border-top: 1px solid var(--ink); padding: 18px 0 40px; color: var(--muted); font-size: 13px; }
+  @media (max-width: 860px) {
+    .stats, .stories, .detail, .split { grid-template-columns: 1fr; }
+    .toolbar input { margin-left: 0; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .num { text-align: left; }
+    .mix-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <a href="https://jillax.github.io/">← Jillax</a>
+      <a href="../congress-portfolios/">申报上的美国</a>
+      <span>主权基金 · 2026</span>
+      <span>披露，不是估计的全部家底</span>
+    </div>
+    <h1>披露上的国家资本</h1>
+    <p class="deck">和国会那一页同一套办法：只画<strong>公开披露</strong>，并标明每一根柱子是哪种口径。挪威把全球持仓挂在网上。沙特、淡马锡、穆巴达拉至少向美国证监会交一张美国股票的 13F。外管局投资公司、阿布扎比投资局、GIC 和科威特投资局不给个股名单。</p>
+  </header>
+  <p class="method">13F 只包括美国上市的多头证券，季度结束后 45 天内提交，不含债券、现金、空头、外国上市股票，也不含交给外部管理人、因而出现在别人表格里的仓位。没有 13F，不等于没有美国股票。斜线柱是第三方估算的规模，实心柱是官方数字。官方数字的日期并不相同：挪威是 2026 年 6 月 30 日，中投和沙特的官方总数还停在 2024 年底。点一行看这本账实际公布了什么。</p>
+  <section class="stats" id="stats"></section>
+  <section class="stories" id="stories"></section>
+  <div class="toolbar" id="filters"></div>
+  <h2>谁的账更大</h2>
+  <p class="note" id="chart-note"></p>
+  <div class="chart" id="chart"></div>
+  <h2>被逐项点名的那一本书</h2>
+  <p class="note" id="book-note"></p>
+  <div class="chart" id="books"></div>
+  <h2>公布出来的切法</h2>
+  <p class="note">只有加起来大约是 100% 的官方比例才画成条。挪威是资产类别。中投是境外组合，不是含汇金的总资产。淡马锡是三条经营分部，不是股票和债券。阿布扎比给的是互不配平的区间，放在下面的卡片里，不画成一根假的百分条。</p>
+  <div class="legend" id="legend"></div>
+  <div class="mix" id="mix"></div>
+  <h2>同一只证券，出现在谁的 13F 里</h2>
+  <p class="note" id="overlap-note"></p>
+  <div id="overlap"></div>
+  <h2 id="detail-title">单只基金</h2>
+  <section class="detail" id="detail"></section>
+  <footer>
+    <p>整理日期 2026 年 10 月 10 日。13F 的报告期是 2026 年 6 月 30 日，市值不是今天的市值。个股金额来自申报和公开转写，大数做了四舍五入。估算规模一律标明出处。新西兰和澳大利亚的完整持仓表还没有逐行抄进这页。</p>
+    <p>来源写在每张卡片底部。规模排名的第三方数字来自 <a href="https://www.visualcapitalist.com/the-worlds-largest-sovereign-wealth-funds/">Visual Capitalist 对 Global SWF 的引用</a>。</p>
+  </footer>
+</div>
+<script src="data.js"></script>
+<script>
+const COLORS = {
+  "上市股票": "#1d4e89",
+  "债券": "#8a5a12",
+  "固收": "#8a5a12",
+  "未上市房地产": "#3f6b4a",
+  "可再生能源基建": "#1f6b4a",
+  "另类": "#6b4c7a",
+  "现金": "#8d8376",
+  "新加坡关联公司": "#8a5a12",
+  "全球直接投资": "#1d4e89",
+  "合伙与资管": "#5c5348"
+};
+const FUNDS = window.SWF.funds;
+let filter = "all";
+let query = "";
+let selected = "nbim";
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function trim(x) {
+  const n = Number(x);
+  if (n >= 100) return n.toFixed(0);
+  if (n >= 10) return n.toFixed(1).replace(/\.0$/, "");
+  return n.toFixed(2).replace(/0$/, "").replace(/\.$/, "");
+}
+function money(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  const a = Math.abs(n);
+  if (a >= 1e12) {
+    const v = a / 1e12;
+    const text = v >= 10 ? v.toFixed(2) : v.toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
+    return "$" + text + "万亿";
+  }
+  if (a >= 1e8) return "$" + trim(a / 1e8) + "亿";
+  if (a >= 1e4) return "$" + trim(a / 1e4) + "万";
+  return "$" + Math.round(a).toLocaleString("en-US");
+}
+function moneyFull(n) {
+  if (n == null) return "—";
+  return "$" + Math.round(n).toLocaleString("en-US");
+}
+function kindLabel(f) {
+  return f.aumKind === "official" ? "官方" : "估算";
+}
+function discLabel(f) {
+  if (f.disclosure === "full") return "有全名单";
+  if (f.disclosure === "13f") return "美国 13F";
+  if (f.disclosure === "partial") return "名单未抄入";
+  if (f.disclosure === "allocation") return "只报配置";
+  return "不公布持仓";
+}
+function fund(id) { return FUNDS.find(f => f.id === id); }
+function visible() {
+  const q = query.trim().toLowerCase();
+  return FUNDS.filter(f => {
+    let ok = true;
+    if (filter === "有逐项") ok = (f.top || []).length > 0;
+    else if (filter === "全名单") ok = f.disclosure === "full";
+    else if (filter === "不公布") ok = f.disclosure === "none";
+    else if (filter === "估算") ok = f.aumKind === "estimate";
+    else if (filter !== "all") ok = f.region === filter;
+    if (!ok) return false;
+    if (!q) return true;
+    return (f.zh + f.name + f.short + f.country).toLowerCase().includes(q);
+  }).sort((a, b) => (b.aum || 0) - (a.aum || 0));
+}
+function logWidth(value, min, max) {
+  const span = Math.log10(max) - Math.log10(min);
+  const w = span === 0 ? 100 : ((Math.log10(value) - Math.log10(min)) / span) * 100;
+  return Math.max(4, Math.min(100, w));
+}
+
+function renderStats() {
+  const official = FUNDS.filter(f => f.aumKind === "official");
+  const hi = official.reduce((a, b) => (b.aum > a.aum ? b : a));
+  const books = FUNDS.filter(f => f.book);
+  const bookSum = books.reduce((s, f) => s + f.book, 0);
+  const norwayBook = fund("nbim").book;
+  document.getElementById("stats").innerHTML = [
+    ["官方规模最大", money(hi.aum), hi.short + " · " + hi.aumAsOf],
+    ["估算里排在前面的空账", money(fund("safe").aum), "外管局投资公司不公布持仓"],
+    ["四张 13F 合计", money(bookSum), "其中挪威占 " + Math.round(norwayBook / bookSum * 100) + "%"],
+    ["点过名的基金", String(FUNDS.length), "不是全球每一只主权基金"]
+  ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
+}
+
+function renderStories() {
+  const items = [
+    ["nbim", "全名单", "全球持仓挂在网上。美国 13F 只是其中约 1 万亿美元的那一块。"],
+    ["pif", "五行申报", "1.152 万亿美元总资产旁边，美国股票表只有 379 亿，七成是 SpaceX。"],
+    ["adia", "只有区间", "不报规模，也不报个股。发达市场股票落在 32% 到 42%。"],
+    ["mubadala", "一张表的 95%", "348 亿美元 13F 里，94.7% 是它控股的格芯。"]
+  ];
+  document.getElementById("stories").innerHTML = items.map(([id, t, d]) => {
+    const f = fund(id);
+    return `<button class="story" data-id="${id}"><em>${esc(t)}</em><strong>${esc(f.zh)}</strong><p>${esc(d)}</p></button>`;
+  }).join("");
+}
+
+function renderFilters() {
+  const chips = [
+    ["all", "全部"],
+    ["欧洲", "欧洲"],
+    ["东亚", "东亚"],
+    ["海湾", "海湾"],
+    ["其他", "其他"],
+    ["有逐项", "这页有个股"],
+    ["全名单", "官网有全名单"],
+    ["不公布", "不公布持仓"],
+    ["估算", "规模是估算"]
+  ];
+  document.getElementById("filters").innerHTML =
+    chips.map(([id, label]) => `<button class="chip" data-filter="${id}" aria-pressed="${filter === id}">${label}</button>`).join("") +
+    `<input id="q" type="search" placeholder="搜基金或国家" value="${esc(query)}" aria-label="搜索">`;
+}
+
+function renderChart() {
+  const rows = visible();
+  const valued = rows.map(f => f.aum).filter(n => n > 0);
+  const min = valued.length ? Math.min(...valued) : 1;
+  const max = valued.length ? Math.max(...valued) : 1;
+  document.getElementById("chart-note").textContent = rows.length
+    ? `横条是对数刻度，否则挪威会把新西兰挤没。实心是官方数字，斜线是估算。当前 ${rows.length} 只。点一行看披露。`
+    : "没有符合筛选的基金。";
+  document.getElementById("chart").innerHTML = rows.map(f => {
+    const label = `<span class="who"><b>${esc(f.zh)}</b><small>${esc(f.country)} · ${esc(f.short)}</small></span>`;
+    const width = logWidth(f.aum, min, max);
+    const cls = (f.aumKind === "estimate" ? "est " : "") + f.region;
+    return `<button class="row" data-id="${f.id}" ${f.id === selected ? 'aria-current="true"' : ""}>${label}<span class="track"><i class="bar ${cls}" style="width:${width}%"></i></span><span class="num"><i>${esc(kindLabel(f))} · ${esc(f.aumAsOf)}</i>${esc(money(f.aum))}</span></button>`;
+  }).join("") || `<p class="note">没有符合筛选的基金。</p>`;
+}
+
+function renderBooks() {
+  const rows = visible();
+  const withBook = rows.filter(f => f.book);
+  const valued = withBook.map(f => f.book);
+  const min = valued.length ? Math.min(...valued) : 1;
+  const max = valued.length ? Math.max(...valued) : 1;
+  document.getElementById("book-note").textContent = withBook.length
+    ? "这里只画已经逐项点名、而且能加总的美国 13F。没有柱子的基金，要么不公布，要么名单还在官网、没有抄进这页。不能把这些柱子和上面的规模比成同一种覆盖率。"
+    : "当前筛选里没有抄进这页的 13F。";
+  document.getElementById("books").innerHTML = rows.map(f => {
+    const label = `<span class="who"><b>${esc(f.zh)}</b><small>${esc(discLabel(f))}${f.nPositions ? " · " + f.nPositions + " 行" : ""}</small></span>`;
+    if (!f.book) {
+      return `<button class="row" data-id="${f.id}" ${f.id === selected ? 'aria-current="true"' : ""}>${label}<span class="empty-bar">${esc(f.bookNote)}</span><span class="num"><i>${esc(discLabel(f))}</i>—</span></button>`;
+    }
+    const width = logWidth(f.book, min, max);
+    return `<button class="row" data-id="${f.id}" ${f.id === selected ? 'aria-current="true"' : ""}>${label}<span class="track"><i class="bar ${f.region}" style="width:${width}%"></i></span><span class="num"><i>13F · 2026-06-30</i>${esc(money(f.book))}</span></button>`;
+  }).join("") || `<p class="note">没有符合筛选的基金。</p>`;
+}
+
+function renderMix() {
+  const keys = [];
+  visible().forEach(f => (f.amounts || []).forEach(a => { if (!keys.includes(a.k)) keys.push(a.k); }));
+  document.getElementById("legend").innerHTML = keys.map(k => `<span><i style="background:${COLORS[k] || "#c3b49f"}"></i>${esc(k)}</span>`).join("");
+  const rows = visible().filter(f => (f.amounts || []).length);
+  document.getElementById("mix").innerHTML = rows.map(f => {
+    const segs = f.amounts.map(a => `<span title="${esc(a.k)} ${a.v}%" style="width:${a.v}%;background:${COLORS[a.k] || "#c3b49f"}"></span>`).join("");
+    return `<div class="mix-row"><b>${esc(f.short)}</b><div class="stack">${segs}</div></div>`;
+  }).join("") || `<p class="note">当前筛选里没有可画的官方比例。</p>`;
+}
+
+function overlaps() {
+  const map = new Map();
+  FUNDS.forEach(f => (f.top || []).forEach(h => {
+    const key = h.g || h.t;
+    if (!map.has(key)) map.set(key, { name: h.n.replace(/ [AC]$/, ""), rows: [] });
+    map.get(key).rows.push({ f, h });
+  }));
+  return [...map.entries()]
+    .map(([k, v]) => ({ k, name: v.name, rows: v.rows, total: v.rows.reduce((s, r) => s + r.h.v, 0) }))
+    .filter(x => new Set(x.rows.map(r => r.f.id)).size > 1)
+    .sort((a, b) => b.total - a.total);
+}
+
+function renderOverlap() {
+  const rows = overlaps();
+  document.getElementById("overlap-note").textContent = rows.length
+    ? "只比较这页抄进来的 13F 行。字母表的 A 类和 C 类并成一行。挪威的仓位大到会盖住另外三家，所以表里同时写金额和它在各家 13F 里的权重。"
+    : "这页抄进的 13F 之间没有重叠的代码。";
+  document.getElementById("overlap").innerHTML = rows.length ? `<table><thead><tr><th>证券</th><th>出现在</th><th class="r">合计</th></tr></thead><tbody>${
+    rows.map(o => {
+      const who = o.rows.map(r => `${esc(r.f.short)} ${esc(money(r.h.v))}`).join(" · ");
+      return `<tr><td>${esc(o.k)} <span style="color:#6f6458">${esc(o.name)}</span></td><td>${who}</td><td class="r">${esc(money(o.total))}</td></tr>`;
+    }).join("")
+  }</tbody></table>` : "";
+}
+
+function spark(series, unit) {
+  if (!series || series.length < 2) return "";
+  const w = 520, h = 92, pad = 8;
+  const plotTop = 10, plotBottom = 64;
+  const vs = series.map(d => d.v);
+  const min = Math.min(...vs), max = Math.max(...vs);
+  const pts = series.map((d, i) => {
+    const x = pad + (i / (series.length - 1)) * (w - pad * 2);
+    const y = plotBottom - ((d.v - min) / ((max - min) || 1)) * (plotBottom - plotTop);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const first = series[0], last = series[series.length - 1];
+  const label = unit === "亿克朗"
+    ? (n => trim(n / 10000) + "万亿克朗")
+    : money;
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="序列">
+    <polyline fill="none" stroke="#221c16" stroke-width="1.6" points="${pts}"></polyline>
+    <text x="8" y="${h - 6}">${first.y} ${esc(label(first.v))}</text>
+    <text x="${w - 8}" y="${h - 6}" text-anchor="end">${last.y} ${esc(label(last.v))}</text>
+  </svg>`;
+}
+
+function renderDetail() {
+  const f = fund(selected) || visible()[0] || FUNDS[0];
+  selected = f.id;
+  const alloc = (f.amounts || []).map(a => `<tr><td>${esc(a.k)}</td><td class="r">${a.v}%</td></tr>`).join("");
+  const ranges = (f.ranges || []).map(a => `<tr><td>${esc(a.k)}</td><td class="r">${a.min}–${a.max}%</td></tr>`).join("");
+  const geo = (f.geo || []).map(a => `<tr><td>${esc(a.k)}</td><td class="r">${a.min}–${a.max}%</td></tr>`).join("");
+  const holds = (f.top || []).map(h => `<tr><td>${esc(h.t)} <span style="color:#6f6458">${esc(h.n)}</span></td><td class="r">${esc(money(h.v))}</td><td class="r">${h.w}%</td><td class="r">${esc(h.sh)}</td></tr>`).join("");
+  document.getElementById("detail").innerHTML = `
+    <div class="idcard">
+      <div class="party ${f.region}">${esc(f.region)}</div>
+      <h3>${esc(f.zh)}</h3>
+      <p class="en">${esc(f.name)}</p>
+      <p>${esc(f.country)} · ${esc(f.founded)} 年 · ${esc(discLabel(f))}</p>
+      <p class="big">${esc(money(f.aum))}</p>
+      <p class="note">${esc(kindLabel(f))} · ${esc(f.aumAsOf)}${f.native ? " · " + esc(f.native) : ""}</p>
+      <p class="note">${esc(f.aumNote)}</p>
+    </div>
+    <div>
+      <p class="blurb">${esc(f.blurb)}</p>
+      <p class="note">${esc(f.mandate)}</p>
+      ${f.series && f.series.length > 1 ? `<h3 style="font-family:Noto Serif SC,serif;margin:16px 0 4px">${esc(f.seriesTitle || "序列")}</h3>${spark(f.series, f.seriesUnit)}` : ""}
+      <div class="split">
+        <div>
+          <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">公布的结构</h3>
+          ${alloc ? `<table><thead><tr><th>类别</th><th class="r">占比</th></tr></thead><tbody>${alloc}</tbody></table>` : ""}
+          ${ranges ? `<table><thead><tr><th>长期区间</th><th class="r">下限到上限</th></tr></thead><tbody>${ranges}</tbody></table>` : ""}
+          ${geo ? `<h3 style="font-family:Noto Serif SC,serif">地区区间</h3><table><tbody>${geo}</tbody></table>` : ""}
+          ${f.amountsNote ? `<p class="note">${esc(f.amountsNote)}</p>` : ""}
+          ${!alloc && !ranges ? `<p class="note">没有公布可以加总成 100% 的资产类别。</p>` : ""}
+        </div>
+        <div>
+          <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">逐项披露</h3>
+          <p class="big" style="font-size:28px">${f.book ? esc(money(f.book)) : "没有合计"}</p>
+          <p class="note">${esc(f.bookNote)}</p>
+        </div>
+      </div>
+      ${holds ? `<h3 style="font-family:Noto Serif SC,serif">13F 里金额最高的几行</h3><p class="note">${esc(f.topNote || "")}</p><table><thead><tr><th>证券</th><th class="r">市值</th><th class="r">占 13F</th><th class="r">数量</th></tr></thead><tbody>${holds}</tbody></table>` : ""}
+      <div class="links">${(f.sources || []).map(s => `<a href="${esc(s.u)}" target="_blank" rel="noreferrer">${esc(s.t)}</a>`).join("")}</div>
+    </div>`;
+  if (location.hash !== "#" + f.id) history.replaceState(null, "", "#" + f.id);
+}
+
+function render() {
+  renderFilters();
+  renderChart();
+  renderBooks();
+  renderMix();
+  renderOverlap();
+  renderDetail();
+}
+
+document.body.addEventListener("click", (event) => {
+  const filterBtn = event.target.closest("[data-filter]");
+  if (filterBtn) {
+    filter = filterBtn.dataset.filter;
+    render();
+    return;
+  }
+  const idBtn = event.target.closest("[data-id]");
+  if (idBtn) {
+    selected = idBtn.dataset.id;
+    render();
+    document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+document.body.addEventListener("input", (event) => {
+  if (event.target.id === "q") {
+    query = event.target.value;
+    renderChart();
+    renderBooks();
+    renderMix();
+  }
+});
+
+if (location.hash && fund(location.hash.slice(1))) selected = location.hash.slice(1);
+renderStats();
+renderStories();
+render();
+</script>
+</body>
+</html>
