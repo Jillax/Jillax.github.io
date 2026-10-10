@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>申报上的美国 · 国会人物公开持仓</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eadb;
+    --sheet: #faf6ee;
+    --ink: #221c16;
+    --muted: #6f6458;
+    --line: #d9cbb6;
+    --rep: #9d2c2c;
+    --dem: #1d4e89;
+    --ind: #1f6b4a;
+    --gold: #8a5a12;
+    --shadow: 0 1px 0 rgba(34,28,22,.06);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--rep) 0 50%, var(--dem) 50% 100%) top / 100% 8px no-repeat,
+      var(--paper);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  button, input { font: inherit; color: inherit; }
+  a { color: var(--dem); }
+  .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+  header { padding: 42px 0 10px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    letter-spacing: .14em; text-transform: uppercase;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: .95;
+    margin: 14px 0 10px;
+    letter-spacing: -0.03em;
+  }
+  .deck { max-width: 68ch; font-size: 18px; margin: 0 0 8px; }
+  .deck strong { font-weight: 700; }
+  .method {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .stat { background: var(--sheet); padding: 14px 16px 16px; }
+  .stat b {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .stat span { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .stories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .story {
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 12px 12px 14px;
+    cursor: pointer;
+    min-height: 132px;
+  }
+  .story:hover, .story:focus-visible { background: var(--sheet); outline: 2px solid var(--ink); outline-offset: 2px; }
+  .story em { font-style: normal; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--gold); }
+  .story strong { display: block; font-family: "Noto Serif SC", serif; font-size: 18px; line-height: 1.25; margin: 6px 0; }
+  .story p { margin: 0; color: var(--muted); font-size: 13px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 14px; }
+  .toolbar input {
+    margin-left: auto;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    min-width: min(240px, 100%);
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  h2 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    margin: 28px 0 6px;
+  }
+  .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .chart { border-top: 1px solid var(--ink); }
+  .row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 196px 1fr 128px;
+    gap: 10px;
+    align-items: center;
+    padding: 7px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+  .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .who { display: flex; flex-direction: column; min-width: 0; }
+  .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who small { color: var(--muted); font-size: 12px; }
+  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .bar { height: 100%; display: block; min-width: 2px; }
+  .bar.R { background: var(--rep); }
+  .bar.D { background: var(--dem); }
+  .bar.I { background: var(--ind); }
+  .bar.floor { background: repeating-linear-gradient(135deg, var(--dem) 0 6px, #6e8eb3 6px 8px); }
+  .num {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .num i { font-style: normal; color: var(--muted); margin-right: 6px; font-size: 11px; }
+  .empty-bar { color: var(--muted); font-size: 13px; }
+  .mix { display: grid; gap: 8px; }
+  .mix-row { display: grid; grid-template-columns: 148px 1fr; gap: 10px; align-items: center; }
+  .stack { display: flex; height: 16px; width: 100%; background: rgba(34,28,22,.06); }
+  .stack span { display: block; height: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+  .detail {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 28px;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin: 18px 0 36px;
+  }
+  .idcard .avatar {
+    width: 96px; height: 96px; object-fit: cover; object-position: center top;
+    background: #e5d9c6; display: block;
+    border: 1px solid var(--line);
+  }
+  .party {
+    display: inline-block;
+    margin-top: 12px;
+    border: 1.5px solid currentColor;
+    padding: 2px 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+  .party.R { color: var(--rep); }
+  .party.D { color: var(--dem); }
+  .party.I { color: var(--ind); }
+  .idcard h3 { font-family: "Noto Serif SC", serif; font-size: 32px; margin: 8px 0 0; line-height: 1.05; }
+  .idcard .en { color: var(--muted); margin: 0 0 8px; }
+  .big {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 8px 0 0;
+    letter-spacing: -0.04em;
+  }
+  .blurb { font-size: 16px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 6px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  td.r, th.r { text-align: right; font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+  .spark { width: 100%; height: 72px; }
+  .spark text { fill: var(--muted); font-size: 11px; font-family: "IBM Plex Mono", monospace; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; font-size: 13px; }
+  footer { border-top: 1px solid var(--ink); padding: 18px 0 40px; color: var(--muted); font-size: 13px; }
+  @media (max-width: 860px) {
+    .stats, .stories, .detail, .split { grid-template-columns: 1fr; }
+    .toolbar input { margin-left: 0; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .num { text-align: left; }
+    .mix-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <a href="https://jillax.github.io/">← Jillax</a>
+      <span>国会财务披露 · 2026</span>
+      <span>区间，不是审计净资产</span>
+    </div>
+    <h1>申报上的美国</h1>
+    <p class="deck">两党领导层、几位全国政治人物，以及民主社会主义者和桑德斯的公开持仓。数字来自 <strong>Quiver Quantitative</strong> 对年度申报的解析；罗·卡纳和迈克·约翰逊在 Quiver 上不可用，改核众议院书记官处原文。</p>
+  </header>
+  <p class="method">议员只申报金额区间。Quiver 取区间中点当作持仓金额，再把上市股票按市价更新，得到“盯市估算”。主要住宅通常不出现在表上，负债也大多不在这套汇总里。最高一档往往没有上限，中点会把“更大”压成一个固定数字。下面所有比较都受这个口径限制。</p>
+  <section class="stats" id="stats"></section>
+  <section class="stories" id="stories"></section>
+  <div class="toolbar" id="filters"></div>
+  <h2>谁的申报更大</h2>
+  <p class="note" id="chart-note"></p>
+  <div class="chart" id="chart"></div>
+  <h2>钱放在哪一类资产里</h2>
+  <p class="note">每根条拉成 100%。除卡纳外，色块是最近一年各类资产的区间中位。卡纳用的是 2025 年各类下限，因为他的表格没有被 Quiver 解析，也不能和别人的中位点对点相减。</p>
+  <div class="legend" id="legend"></div>
+  <div class="mix" id="mix"></div>
+  <h2 id="detail-title">单个人的持仓</h2>
+  <section class="detail" id="detail"></section>
+  <footer>
+    <p>整理日期 2026年10月10日。Quiver 页面会注明解析错误，并且不把最近的交易全部回写进年度持仓。万斯已离任国会，这里是他 2023 历年的参议院申报。总统个人财务走政府伦理办公室，不在这张国会表里。</p>
+    <p>来源：<a href="https://www.quiverquant.com/congress-live-net-worth/">Quiver Congress Live Net Worth</a>；<a href="https://www.rokhanna.money/">rokhanna.money</a>；<a href="https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2025/10081199.pdf">约翰逊 2025 年申报 PDF</a>。</p>
+  </footer>
+</div>
+<script src="data.js"></script>
+<script>
+const COLORS = {
+  "个股": "#1d4e89",
+  "基金与ETF": "#6e8eb3",
+  "期权": "#6b4c7a",
+  "存款": "#8d8376",
+  "政府债券": "#8a5a12",
+  "企业股权与私募": "#9d2c2c",
+  "房地产与农场": "#3f6b4a",
+  "加密货币": "#b87333",
+  "养老金与年金": "#5c5348",
+  "其他": "#c3b49f"
+};
+const PARTY = { R: "共和党", D: "民主党", I: "独立" };
+const PEOPLE = window.PORTFOLIOS.people;
+let filter = "all";
+let query = "";
+let selected = "P000197";
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function trim(x) {
+  const n = Number(x);
+  if (n >= 100) return n.toFixed(0);
+  if (n >= 10) return n.toFixed(1).replace(/\.0$/, "");
+  return n.toFixed(2).replace(/0$/, "").replace(/\.$/, "");
+}
+function money(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  const a = Math.abs(n);
+  if (a >= 1e8) return "$" + trim(a / 1e8) + "亿";
+  if (a >= 1e4) {
+    const wan = a / 1e4;
+    if (wan >= 100) return "$" + Math.round(wan).toLocaleString("en-US") + "万";
+    return "$" + trim(wan) + "万";
+  }
+  return "$" + Math.round(a).toLocaleString("en-US");
+}
+function moneyFull(n) {
+  if (n == null) return "—";
+  return "$" + Math.round(n).toLocaleString("en-US");
+}
+function median(nums) {
+  const a = nums.filter(n => typeof n === "number").sort((x, y) => x - y);
+  if (!a.length) return null;
+  const m = Math.floor(a.length / 2);
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+function kindLabel(p) {
+  if (p.headlineKind === "live") return "盯市";
+  if (p.headlineKind === "floor") return "下限";
+  if (p.headlineKind === "disclosure") return (p.year || "") + "申报";
+  return "未列资产";
+}
+function visible() {
+  const q = query.trim().toLowerCase();
+  return PEOPLE.filter(p => {
+    const partyOk = filter === "all" || p.party === filter || (p.tags || []).includes(filter);
+    if (!partyOk) return false;
+    if (!q) return true;
+    return (p.name + p.zh + p.role + p.state).toLowerCase().includes(q);
+  });
+}
+function person(id) { return PEOPLE.find(p => p.id === id); }
+
+function renderStats() {
+  const valued = PEOPLE.filter(p => typeof p.headline === "number" && p.headlineKind !== "floor");
+  const hi = PEOPLE.reduce((a, b) => ((b.headline || 0) > (a.headline || 0) ? b : a));
+  const lo = valued.reduce((a, b) => (b.headline < a.headline ? b : a));
+  const medR = median(PEOPLE.filter(p => p.party === "R" && p.headlineKind !== "floor").map(p => p.headline));
+  const medD = median(PEOPLE.filter(p => p.party === "D" && p.headlineKind !== "floor").map(p => p.headline));
+  document.getElementById("stats").innerHTML = [
+    ["极差", money(hi.headline) + " / " + money(lo.headline), hi.zh + " 对 " + lo.zh],
+    ["共和党中位", money(medR), "14 人，不含约翰逊"],
+    ["民主党中位", money(medD), "16 人，不含卡纳下限"],
+    ["党派人数", "15 · 17 · 1", "共和党 · 民主党 · 独立"]
+  ].map(([k, v, s]) => `<div class="stat"><b>${esc(v)}</b><span>${esc(k)} · ${esc(s)}</span></div>`).join("");
+}
+
+function renderStories() {
+  const items = [
+    ["J000312", "最大的一张表", "贾斯蒂斯的中位来自非上市股权，不是股票账户。"],
+    ["P000197", "科技股", "佩洛西盯市仓位的前五只，是英伟达、苹果、亚马逊、谷歌、微软。"],
+    ["O000172", "几乎没有股票", "AOC 的 2025 年中位是 5.7 万美元储蓄和一份小 401(k)。"],
+    ["C001098", "单一个股", "克鲁兹盯市股票大约 88% 是高盛。"]
+  ];
+  document.getElementById("stories").innerHTML = items.map(([id, t, d]) => {
+    const p = person(id);
+    return `<button class="story" data-id="${id}"><em>${esc(t)}</em><strong>${esc(p.zh)}</strong><p>${esc(money(p.headline))} · ${esc(d)}</p></button>`;
+  }).join("");
+}
+
+function renderFilters() {
+  const chips = [
+    ["all", "全部"],
+    ["R", "共和党"],
+    ["D", "民主党"],
+    ["I", "独立"],
+    ["领导层", "领导层"],
+    ["进步派", "进步派与 DSA"]
+  ];
+  document.getElementById("filters").innerHTML =
+    chips.map(([id, label]) => `<button class="chip" data-filter="${id}" aria-pressed="${filter === id}">${label}</button>`).join("") +
+    `<input id="q" type="search" placeholder="搜姓名或职务" value="${esc(query)}" aria-label="搜索">`;
+}
+
+function renderChart() {
+  const rows = visible();
+  const valued = rows.map(p => p.headline).filter(n => typeof n === "number" && n > 0);
+  const min = valued.length ? Math.min(...valued) : 1;
+  const max = valued.length ? Math.max(...valued) : 1;
+  const biggest = rows.filter(p => typeof p.headline === "number").sort((a, b) => b.headline - a.headline)[0];
+  document.getElementById("chart-note").textContent = biggest
+    ? `横条是对数刻度，否则 ${biggest.zh} 会把 ${money(min)} 挤没。当前 ${rows.length} 人。点一行看持仓。`
+    : `当前 ${rows.length} 人。`;
+  document.getElementById("chart").innerHTML = rows.map(p => {
+    const label = `<span class="who"><b>${esc(p.zh)}</b><small>${esc(PARTY[p.party])} · ${esc(p.state)}</small></span>`;
+    if (typeof p.headline !== "number") {
+      return `<button class="row" data-id="${p.id}" ${p.id === selected ? 'aria-current="true"' : ""}>${label}<span class="empty-bar">2025 年资产栏为 None disclosed</span><span class="num"><i>书记官处</i>—</span></button>`;
+    }
+    const span = Math.log10(max) - Math.log10(min);
+    const w = span === 0 ? 100 : ((Math.log10(p.headline) - Math.log10(min)) / span) * 100;
+    const cls = p.headlineKind === "floor" ? "floor" : p.party;
+    const width = Math.max(4, Math.min(100, w));
+    return `<button class="row" data-id="${p.id}" ${p.id === selected ? 'aria-current="true"' : ""}>${label}<span class="track"><i class="bar ${cls}" style="width:${width}%"></i></span><span class="num"><i>${esc(kindLabel(p))}</i>${esc(money(p.headline))}</span></button>`;
+  }).join("") || `<p class="note">没有符合筛选的人。</p>`;
+}
+
+function renderMix() {
+  const keys = Object.keys(COLORS);
+  document.getElementById("legend").innerHTML = keys.map(k => `<span><i style="background:${COLORS[k]}"></i>${esc(k)}</span>`).join("");
+  const rows = visible().filter(p => (p.amounts || []).length).slice(0, 12);
+  document.getElementById("mix").innerHTML = rows.map(p => {
+    const total = p.amounts.reduce((s, a) => s + a.v, 0) || 1;
+    const segs = p.amounts.map(a => `<span title="${esc(a.k)} ${esc(money(a.v))}" style="width:${(a.v / total) * 100}%;background:${COLORS[a.k] || COLORS["其他"]}"></span>`).join("");
+    return `<div class="mix-row"><b>${esc(p.zh)}</b><div class="stack">${segs}</div></div>`;
+  }).join("");
+}
+
+function spark(nw) {
+  if (!nw || nw.length < 2) return `<p class="note">年度序列不足，画不成曲线。</p>`;
+  const w = 520, h = 78, pad = 8;
+  const vs = nw.map(d => d.v);
+  const min = Math.min(...vs), max = Math.max(...vs);
+  const pts = nw.map((d, i) => {
+    const x = pad + (i / (nw.length - 1)) * (w - pad * 2);
+    const y = h - 18 - ((d.v - min) / ((max - min) || 1)) * (h - 28);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const first = nw[0], last = nw[nw.length - 1];
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="申报中位走势">
+    <polyline fill="none" stroke="#221c16" stroke-width="1.6" points="${pts}"></polyline>
+    <text x="8" y="${h - 2}">${first.y} ${esc(money(first.v))}</text>
+    <text x="${w - 8}" y="${h - 2}" text-anchor="end">${last.y} ${esc(money(last.v))}</text>
+  </svg>`;
+}
+
+function renderDetail() {
+  const p = person(selected) || visible()[0] || PEOPLE[0];
+  selected = p.id;
+  const sources = [{ t: "Quiver 人物页", u: p.quiver }].concat(p.extraSources || []);
+  const alloc = (p.amounts || []).map(a => {
+    const total = p.amounts.reduce((s, x) => s + x.v, 0) || 1;
+    return `<tr><td>${esc(a.k)}</td><td class="r">${esc(money(a.v))}</td><td class="r">${((a.v / total) * 100).toFixed(0)}%</td></tr>`;
+  }).join("");
+  const holds = (p.top || []).map(h => `<tr><td>${esc(h.n)}${h.t ? ` <span style="color:#6f6458">${esc(h.t)}</span>` : ""}</td><td>${esc(h.owner)}</td><td>${esc(h.range)}</td><td class="r">${h.v ? esc(money(h.v)) : "—"}</td></tr>`).join("");
+  const live = (p.live || []).map(h => `<tr><td>${esc(h.t)}</td><td class="r">${esc(moneyFull(h.v))}</td><td class="r">${h.w}%</td></tr>`).join("");
+  const trusts = (p.trusts || []).map(t => `<tr><td>${esc(t.n)}</td><td>${esc(t.range)}</td><td class="r">${t.nAssets}</td></tr>`).join("");
+  const debts = (p.liabilities || []).map(d => `<tr><td>${esc(d.n)}</td><td>${esc(d.range)}</td><td>${esc(d.since)}</td></tr>`).join("");
+  const headline = p.headlineKind === "none"
+    ? `<p class="big">资产栏空白</p><p class="note">2025 年年度报告没有申报资产。下面是负债。</p>`
+    : `<p class="big">${esc(money(p.headline))}</p><p class="note">${esc(kindLabel(p))} · ${esc(moneyFull(p.headline))}${p.range ? `。2025 年区间 ${esc(money(p.range[0]))} 至 ${esc(money(p.range[1]))} 以上` : ""}</p>`;
+  document.getElementById("detail").innerHTML = `
+    <div class="idcard">
+      <img class="avatar" alt="" src="${esc(p.image)}" data-fallback="${esc(p.imageFallback)}" onerror="if(this.dataset.fallback){this.src=this.dataset.fallback;this.dataset.fallback='';}else{this.remove()}">
+      <div class="party ${p.party}">${esc(PARTY[p.party])}</div>
+      <h3>${esc(p.zh)}</h3>
+      <p class="en">${esc(p.name)} · ${esc(p.state)} · ${esc(p.chamber)}</p>
+      <p>${esc(p.role)}</p>
+      ${headline}
+      ${p.caveat ? `<p class="note">${esc(p.caveat)}</p>` : ""}
+    </div>
+    <div>
+      <p class="blurb">${esc(p.blurb)}</p>
+      ${p.nw && p.nw.length > 1 ? `<h3 style="font-family:Noto Serif SC,serif;margin:16px 0 4px">年度中位</h3>${spark(p.nw)}` : ""}
+      <div class="split">
+        <div>
+          <h3 style="font-family:Noto Serif SC,serif;margin:8px 0">资产类别</h3>
+          ${alloc ? `<table><thead><tr><th>类别</th><th class="r">金额</th><th class="r">占比</th></tr></thead><tbody>${alloc}</tbody></table>` : `<p class="note">没有可分类的资产。</p>`}
+          ${debts ? `<h3 style="font-family:Noto Serif SC,serif">负债</h3><table><thead><tr><th>项目</th><th>区间</th><th>发生</th></tr></thead><tbody>${debts}</tbody></table>` : ""}
+          ${trusts ? `<h3 style="font-family:Noto Serif SC,serif">家族信托</h3><table><thead><tr><th>信托</th><th>区间</th><th class="r">条目</th></tr></thead><tbody>${trusts}</tbody></table>` : ""}
+        </div>
+        <div>
+          ${live ? `<h3 style="font-family:Noto Serif SC,serif;margin:8px 0">盯市股票</h3><table><thead><tr><th>代码</th><th class="r">市值</th><th class="r">权重</th></tr></thead><tbody>${live}</tbody></table>` : `<p class="note">没有被估成公开股票组合。</p>`}
+        </div>
+      </div>
+      ${holds ? `<h3 style="font-family:Noto Serif SC,serif">申报持仓里金额最高的项目</h3><p class="note">${p.year ? esc(String(p.year)) + " 年" : ""}共 ${p.nHold} 项${p.nHold > (p.top || []).length ? "，这里只列金额最高的 " + (p.top || []).length + " 项" : ""}${p.headlineKind === "floor" ? "。开放区间只保留下限。" : "。"}</p><table><thead><tr><th>资产</th><th>归属</th><th>申报区间</th><th class="r">中位</th></tr></thead><tbody>${holds}</tbody></table>` : ""}
+      <div class="links">${sources.map(s => `<a href="${esc(s.u)}" target="_blank" rel="noreferrer">${esc(s.t)}</a>`).join("")}</div>
+    </div>`;
+}
+
+function render() {
+  renderFilters();
+  renderChart();
+  renderMix();
+  renderDetail();
+}
+
+document.body.addEventListener("click", (event) => {
+  const filterBtn = event.target.closest("[data-filter]");
+  if (filterBtn) {
+    filter = filterBtn.dataset.filter;
+    render();
+    return;
+  }
+  const idBtn = event.target.closest("[data-id]");
+  if (idBtn) {
+    selected = idBtn.dataset.id;
+    render();
+    document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+document.body.addEventListener("input", (event) => {
+  if (event.target.id === "q") {
+    query = event.target.value;
+    renderChart();
+    renderMix();
+  }
+});
+
+renderStats();
+renderStories();
+render();
+if (location.hash) {
+  const id = location.hash.slice(1);
+  if (person(id)) { selected = id; render(); }
+}
+</script>
+</body>
+</html>
