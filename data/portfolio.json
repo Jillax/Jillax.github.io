@@ -11,18 +11,6 @@
           "subItems": [
             { "name": "三年期（建行+招商）", "value": 20000 }
           ]
-        },
-        {
-          "name": "支付宝",
-          "subItems": [
-            { "name": "支付宝余额", "value": 3713 }
-          ]
-        },
-        {
-          "name": "微信",
-          "subItems": [
-            { "name": "微信零钱", "value": 530 }
-          ]
         }
       ]
     },
