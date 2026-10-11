@@ -5,53 +5,62 @@
     "chamber_focus": "U.S. House of Representatives (Senate factions noted separately when relevant)",
     "unit": "members",
     "caveats": [
+      "CURATED MAJOR SET — not an exhaustive Clerk/CHA roster of every registered House caucus (there are hundreds of issue CMOs).",
       "Members may join multiple caucuses; party shares must NOT be summed to 100%.",
       "House Freedom Caucus and (in 119th) RSC often do not publish complete official public rosters; counts are best estimates with sources.",
       "Counts drift during a Congress (resignations, special elections, joins/leaves).",
-      "Informal labels (e.g. Squad) are not the same as formal House caucus membership.",
+      "Informal labels (e.g. Squad) and outside PACs (e.g. Justice Democrats, No Labels) are not the same as formal House caucus membership.",
       "Historical / defunct groups show peak or year-range figures, not current 119th counts.",
-      "Identity caucuses (CBC, CHC, CAPAC, Women's, Equality) cut across ideology; a member can sit in both an ideological and an identity caucus.",
-      "House Republican Conference / House Democratic Caucus are the party conferences (all R or D members), not ideological caucuses—do not confuse Conference with RSC or CPC."
+      "Identity caucuses (CBC, CHC, CAPAC, Women's, Equality, Labor-adjacent) cut across ideology; a member can sit in both an ideological and an identity/issue caucus.",
+      "House Republican Conference / House Democratic Caucus are the party conferences (all R or D members), not ideological caucuses—do not confuse Conference with RSC or CPC.",
+      "Wednesday Group (1960s-era moderate Republican club, later more Senate-associated) is historically distinct from the House Tuesday Group / Republican Governance Group."
     ],
     "house_party_baseline_approx": {
       "democrats_voting": 214,
       "republicans_voting": 219,
       "note": "Approximate 119th House party split from Wikipedia caucus tables; vacancies may shift totals."
-    }
+    },
+    "scope_note_zh": "本页是精选的「主要」众院意识形态党团、身份党团、跨党中心派与若干历史/非正式派系，不是众议院行政委员会（CHA）Congressional Member Organization（CMO）名册的穷尽清单。Clerk/CHA 每届登记的议题党团有数百个（从棒球、特定国家关系到单一疾病），绝大多数不进入本图。入选标准：媒体与国会研究中反复出现的「五大家族」式意识形态集团、Tri-Caucus 等身份党团、有公开体量的跨党中心派，以及塑造当代叙事的历史遗产（茶党等）。"
   },
   "intro_zh": {
-    "deck": "第 119 届众议院（2025–2027）里，民主党与共和党各有正式的意识形态党团，还有按身份认同组织的跨党或单党党团、媒体非正式标签，以及已解散或沉寂的历史派系。柱子是各党团/派系的规模（或历史峰值），不是该党众议员的加总。",
+    "deck": "第 119 届众议院（2025–2027）里，民主党与共和党各有正式的意识形态党团，还有按身份/劳工议题组织的党团、跨党中心派、媒体非正式标签，以及已解散或沉寂的历史派系。柱子是各党团/派系的规模（或历史峰值），不是该党众议员的加总。本页是精选主要集合，不是 Clerk 登记的全部 CMO。",
     "sections": [
       {
         "title": "这页在做什么",
-        "body": "「众院里的派系」把众议院里常见的意识形态党团、身份党团、跨党组织，以及若干历史/非正式派系放在同一张可读的纸上。它不是选票预测，也不是把议员塞进互斥格子；目的是让你一眼看到：同一届国会里，正式 caucus、媒体标签、历史遗产各自有多大、怎么重叠、该怎么读数字。"
+        "body": "「众院里的派系」把众议院里常见的意识形态党团、身份党团、跨党组织，以及若干历史/非正式派系放在同一张可读的纸上。它不是选票预测，也不是把议员塞进互斥格子；目的是让你一眼看到：同一届国会里，正式 caucus、媒体标签、历史遗产各自有多大、怎么重叠、该怎么读数字。点任意一行，详情区会展开该派系的中文沿革、宗旨、正式程度与成员读法。"
+      },
+      {
+        "title": "范围说明：精选，不是穷尽",
+        "body": "众议院行政委员会每届公布的 CMO 名册长达数百条——从气候、劳工到棒球、特定国家关系、单一疾病。本页只收录在新闻、党团领导权争夺与投票联盟叙事里反复出现的「主要」意识形态集团（NDC/CPC/蓝狗、RSC/自由核心小组/主街/治理小组等）、Tri-Caucus 与妇女/平等等身份党团、问题解决者与气候解决方案等跨党中心派，以及茶党等历史遗产。未收录的绝大多数议题党团并不等于「不重要」，只是超出本页的派系地图目标。勿把本页当成 Clerk 全名册。"
       },
       {
         "title": "为什么以第 119 届为窗口",
         "body": "人数、主席、名单都会随国会换届漂移。本页以 119 届众议院为「当前切片」，并单独标出历史或已沉寂组织（例如 Tea Party Caucus），用年份区间与峰值说明它们曾经有多强，而不是假装它们今天仍有精确席位数。参议院党团若出现，只作脚注，主图仍是众院。"
       },
       {
-        "title": "正式党团、身份党团、非正式标签、历史派系",
-        "body": "正式 House caucus / Congressional Member Organization（CMO）在众议院行政委员会登记，有主席与（常常）公开名单：例如新民主党人联盟（NDC）、国会进步派党团（CPC）、蓝狗、共和党研究委员会（RSC）、自由核心小组、主街、治理小组、问题解决者，以及 CBC / CHC / CAPAC、两党妇女党团等。身份党团按种族、族裔、性别、性取向等组织，横切意识形态。媒体非正式标签（如「小队」）没有 Clerk 登记的完整名单。历史派系（茶党党团等）已停摆或徒有其名，只保留峰值与年代。另：众议院共和党会议（House Republican Conference）与民主党党团（House Democratic Caucus）是全党议员的会议组织，不等于 RSC 或 CPC 这类意识形态小团体。"
+        "title": "正式党团、身份党团、非正式标签、历史派系、院外组织",
+        "body": "正式 House caucus / CMO 在众议院行政委员会登记，有主席与（常常）公开名单。身份党团按种族、族裔、性别、性取向等组织，横切意识形态；劳工党团按议题组织，成员高度偏民主党。媒体非正式标签（如「小队」）没有 Clerk 登记的完整名单。Justice Democrats、No Labels、FreedomWorks 等是院外 PAC/倡导组织，不是众院党团——本页若收录，会标成非正式/院外关联，人数不可与正式 CMO 同读。历史派系（茶党党团等）已停摆或徒有其名，只保留峰值与年代。另：众议院共和党会议（House Republican Conference）与民主党党团（House Democratic Caucus）是全党议员的会议组织，不等于 RSC 或 CPC。「周三小组」（Wednesday Group）是更早的温和共和党俱乐部传统，与众院「周二小组」/共和党治理小组（RGG）不是同一组织。"
       },
       {
         "title": "为什么数字不能加总",
-        "body": "同一名众议员可以同时加入多个党团——约 30 人同时在 NDC 与 CPC；自由核心小组成员也常挂在 RSC。身份党团与意识形态党团同样重叠。因此各柱人数相加不等于民主党或共和党众议员总数，也不应解读为占该党的百分比之和。图例与红色提示框会反复强调这一点。"
+        "body": "同一名众议员可以同时加入多个党团——约 30 人同时在 NDC 与 CPC；自由核心小组成员也常挂在 RSC。身份党团、劳工党团与意识形态党团同样重叠。因此各柱人数相加不等于民主党或共和党众议员总数，也不应解读为占该党的百分比之和。"
       },
       {
-        "title": "怎么读图",
-        "body": "深蓝/软蓝：民主党正式或非正式；深红：共和党；橄榄绿：跨党。深色段是点估计，浅色延伸是区间上限（名单不完整时用）。历史行不画「当前席位」假数，而显示年份区间、峰值与「已停摆/历史」标签。点任意一行可看光谱、成立年、主席、置信度与来源链接。"
+        "title": "怎么读图与详情",
+        "body": "深蓝/软蓝：民主党正式或非正式；深红：共和党；橄榄绿：跨党。深色段是点估计，浅色延伸是区间上限（名单不完整时用）。历史行不画「当前席位」假数，而显示年份区间、峰值与「已停摆/历史」标签。点任意一行可看中文长介绍、光谱、成立年、主席、置信度与来源链接；下方卡片列表可快速扫读。"
       }
     ]
   },
-  "methodology_zh": "以 119 届国会为窗口；正式党团优先 Wikipedia 表头、官方站与 CMO 公开信息。RSC、自由核心小组因名单不完全公开，标了置信度与区间。身份党团（CBC/CHC/CAPAC/妇女/平等）与意识形态党团分开展示但仍可点开对照。历史派系只报峰值与年代，不伪造当前人数。非正式标签（小队）与正式 caucus 分色。FreedomWorks 等院外组织仅作关联说明，不当作众院党团计入柱图。",
+  "methodology_zh": "以 119 届国会为窗口；正式党团优先 Wikipedia 表头、官方站与 CMO 公开信息。RSC、自由核心小组因名单不完全公开，标了置信度与区间。身份党团与劳工/议题党团与意识形态党团分开展示但仍可点开对照。历史派系只报峰值与年代，不伪造当前人数。非正式标签与院外 PAC 与正式 caucus 分色。本页为精选主要集合：未覆盖 CHA 名册上数百个议题 CMO。",
   "viz_notes_zh": [
+    "精选主要派系，不是 Clerk/CHA 全部 CMO 名册。",
     "主图按系列分组：民主党意识形态、身份与议题、共和党意识形态、跨党、历史/已停摆。",
     "成员可重叠，勿把各党团人数加总当成该党众议员总数或 100%。",
     "HFC 与 RSC 用约数或误差条；CPC 可对照投票众议员 99 / 含参院与代表共 101。",
     "历史组（茶党党团等）显示峰值与年份，不显示假的 119 届人数。",
-    "正式 caucus、身份党团、媒体非正式派系、历史派系在 UI 上用 kind/status 区分。",
-    "众议院共和党会议 / 民主党党团是全党会议，不是本页柱图里的意识形态党团。"
+    "正式 caucus、身份/议题党团、媒体非正式派系、院外 PAC、历史派系在 UI 上用 kind/status 区分。",
+    "众议院共和党会议 / 民主党党团是全党会议，不是本页柱图里的意识形态党团。",
+    "周三小组 ≠ 周二小组/RGG；No Labels ≠ 问题解决者党团（后者是众院 CMO，前者是院外组织）。"
   ],
   "caucuses": [
     {
@@ -83,7 +92,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "high"
+      "confidence": "high",
+      "detail_zh": {
+        "blurb": "民主党最大的正式意识形态党团：中间偏左、亲增长、愿意谈贸易与财政纪律的「务实自由派」。",
+        "history": "1997 年由一批自认「新民主党人」的众议员组建，思想上承接 1990 年代克林顿—新民主党委员会（DLC）传统：市场友好、开放贸易、强调增长与中产，而不是与进步派在再分配上竞速。组织上它成为民主党会议里长期最大的正式意识形态党团之一，自称「把事办成」的务实自由派。第 119 届约 112 名投票众议员（另有报道含无投票代表约 116），主席为 Brad Schneider。与 CPC 有显著双挂（约 30 人），与蓝狗也有少量交叉——因此柱图人数绝不能加总成「民主党份额」。读本页时请把它当作中间偏左的制度化平台，而不是全党民主党会议（House Democratic Caucus）。",
+        "ideology_or_purpose": "亲增长自由主义：竞争降成本、定向改革、基建与创新、开放贸易与较强国防；相对 CPC 更少强调「对抗企业权力」作为首要叙事。自称「把事办成」的党团。",
+        "formality": "正式众院 CMO / 意识形态党团。有官网与公开成员生态；勿与全党「House Democratic Caucus」混淆。",
+        "membership_notes": "约 112 名投票众议员（高置信）。人数随国会漂移；双挂 CPC/蓝狗者计入多柱，不可加总。"
+      }
     },
     {
       "id": "cpc",
@@ -120,7 +136,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "high"
+      "confidence": "high",
+      "detail_zh": {
+        "blurb": "民主党正式进步派党团：扩大福利国家、约束企业权力、民权与更少军事干预倾向的左翼制度化平台。",
+        "history": "1991 年成立，是民主党侧最老的正式意识形态党团之一，长期作为进步派在众院的制度化平台。2010 年代后，随 Occupy、Bernie Sanders 竞选、「小队」与 Medicare for All 等浪潮，公开体量与媒体能见度上升。第 119 届 Wikipedia 口径约 101 人（99 投票众议员 + 1 无投票代表 + 1 参议员 Bernie Sanders）；本页柱图默认用 99，以免把参院混进众院规模比较。现任主席 Greg Casar。与 NDC 约 30 人重叠，与全民医保党团、劳工党团、小队高度交叉——它是「进步派大伞」，不是互斥小圈。",
+        "ideology_or_purpose": "进步左翼：扩大联邦社会项目、劳工与民权、气候与再分配；外交上相对更怀疑大规模军事干预。与 Justice Democrats / 小队高度重叠但组织上更大、更制度化。",
+        "formality": "正式众院 CMO。有官网与成员页。含个别参院/代表时，读数需看口径。",
+        "membership_notes": "柱图 99＝仅投票众议员；共 101 含参院与代表。与 NDC 约 30 人重叠；与全民医保党团高度重叠。"
+      }
     },
     {
       "id": "blue_dog",
@@ -146,7 +169,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "high"
+      "confidence": "high",
+      "detail_zh": {
+        "blurb": "民主党财政保守/温和保守翼：1995 年后南方与摇摆区民主党人的「蓝狗」传统，当今体量已很小。",
+        "history": "1995 年共和党重夺众院后组建，强调福利改革、赤字纪律与国防，曾是民主党会议里重要的中间—右翼平衡力量。随南方民主党席位萎缩，人数从高峰大幅回落；第 119 届公开名单约 10 人。名称来自「黄狗民主党」变体：被掐得「脸都青了」的财政保守民主党人。",
+        "ideology_or_purpose": "社会议题上多为民主党主流，财政与监管上更保守：控制赤字、怀疑大规模新开支、重视国防与跨党交易空间。",
+        "formality": "正式众院 CMO（联盟/Coalition 名称）。有共同主席结构。",
+        "membership_notes": "约 10 人（高置信）。与 NDC 有少量重叠；勿因历史上曾很大而臆造当前人数。"
+      }
     },
     {
       "id": "blue_collar",
@@ -173,7 +203,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium_high"
+      "confidence": "medium_high",
+      "detail_zh": {
+        "blurb": "民主党劳工/蓝领议题党团：面向制造业、工会与「工作阶层」叙事，体量中等、峰值更高。",
+        "history": "约 2016 年前后成形，把「蓝领」身份与产业政策、贸易与劳工保护绑在一起，区别于纯进步派文化议题叙事。115 届曾报峰值约 49；近年名单约 29–30。与劳工党团、CPC 有议题重叠但组织不同。",
+        "ideology_or_purpose": "劳工取向：制造业、工会权利、贸易与外包敏感、工作阶层经济安全。光谱偏劳工左翼，但不等于 CPC。",
+        "formality": "正式/登记型众院党团（CMO 生态中常见）；公开官网不稳定，人数依赖二次名录。",
+        "membership_notes": "约 29（中高置信）；峰值约 49（115 届）。勿与「Congressional Labor Caucus」混为一谈。"
+      }
     },
     {
       "id": "medicare_for_all",
@@ -201,7 +238,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "民主党单一支付/全民医保议题党团：与 CPC 高度重叠的立法推动平台，不是独立意识形态「家族」。",
+        "history": "2018 年前后随 Medicare for All 法案与进步派浪潮成立，作为推动单一支付医保的议员集合。成员几乎都在 CPC 光谱内；人数随议案联署与名单更新波动，常见报道约 50 余。",
+        "ideology_or_purpose": "立法目标明确：推动 Medicare for All / 单一支付方向的联邦医保扩张。意识形态上属进步左翼议题党团。",
+        "formality": "正式议题型 CMO/党团；不是与 NDC/CPC 同级的「光谱家族」，但因政治辨识度高而收入本页。",
+        "membership_notes": "约 58（中置信）；与 CPC 高度重叠——加总无意义。"
+      }
     },
     {
       "id": "squad",
@@ -228,7 +272,61 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "媒体非正式标签：以 Ocasio-Cortez 等为核心的极进步派小圈子，几乎都在 CPC 内，不是 Clerk 登记党团。",
+        "history": "2018 年 AOC、Omar、Pressley、Tlaib 当选后被媒体称为「小队」；后扩至 Bowman、Bush 等，2024 初选后 Bowman、Bush 败选，119 届常计约 7 人。与 Justice Democrats 支持网络高度相关，成员亦多属 CPC。",
+        "ideology_or_purpose": "更左进步派：Medicare for All、Green New Deal、警察改革、反建制初选挑战等。外交与以色列—巴勒斯坦等议题上常成舆论焦点。",
+        "formality": "非正式媒体标签，不是众院 CMO。无官方登记名单；人数随记者约定而变。",
+        "membership_notes": "约 7（中置信，媒体口径）。勿当作正式党团席位份额。"
+      }
+    },
+    {
+      "id": "justice_democrats",
+      "name_en": "Justice Democrats",
+      "name_zh": "正义民主党人（院外 PAC）",
+      "party": "D",
+      "kind": "informal",
+      "status": "active",
+      "series": "democratic_ideological",
+      "spectrum": "far_left_progressive",
+      "founded": 2017,
+      "chair": null,
+      "member_count": 9,
+      "count_detail": {
+        "declared_house_approx": 9,
+        "as_of_note": "Outside PAC / endorsement network—NOT a Clerk-registered House caucus. Wikipedia lists ~9 declared House Justice Democrats in 119th. Overlaps Squad and CPC."
+      },
+      "parent_or_related": [
+        "cpc",
+        "squad"
+      ],
+      "related_outside": [
+        {
+          "name": "Justice Democrats PAC",
+          "note": "This row IS the outside PAC ecosystem counted as affiliated Members—not a House CMO."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Wikipedia Justice Democrats",
+          "url": "https://en.wikipedia.org/wiki/Justice_Democrats",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Ballotpedia Justice Democrats",
+          "url": "https://ballotpedia.org/Justice_Democrats",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "院外进步派 PAC：招募与背书「挑战建制民主党」的候选人；不是众院正式党团，但塑造了小队等议席。",
+        "history": "2017 年前后由 Cenk Uygur 等网络进步派力量推动成立，目标是用初选挑战「亲华尔街」民主党人。2018 起成功输送 AOC 等；Congressional Data Coalition 等数据集有时把它与 Blue Dog/CPC/NDC 并列，但法律与组织形态是 PAC，不是 House CMO。119 届宣称相关众议员约 9 人。",
+        "ideology_or_purpose": "社会民主/民主社会主义倾向：再分配、绿色新政、限制企业政治影响、反建制初选。",
+        "formality": "院外 PAC / 非正式国会派系标签——非 Clerk 登记众院党团。本页收录是为对照「小队」与 CPC，不是承认它为 CMO。",
+        "membership_notes": "约 9 名相关众议员（中置信，组织自称/百科口径）。不可与正式 caucus 人数加总比较。"
+      }
     },
     {
       "id": "cbc",
@@ -260,7 +358,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium_high"
+      "confidence": "medium_high",
+      "detail_zh": {
+        "blurb": "国会黑人党团：非裔议员身份党团，几乎全为民主党，横切从蓝狗到 CPC 的光谱。",
+        "history": "1971 年成立，是最有制度厚度的身份党团之一。与 CHC、CAPAC 合称 Tri-Caucus。119 届 CBC 宣称创纪录约 62 名国会议员（含参院）；众院投票席约 58。黑人共和党人通常不加入 CBC。",
+        "ideology_or_purpose": "以非裔社区民权、经济机会、刑事司法、教育与健康差距等为共同议程；内部意识形态多元。",
+        "formality": "正式众院 CMO / 身份党团。有官网与新闻稿口径。",
+        "membership_notes": "众院约 58；国会共约 62（含参院）。身份党团 ≠ 意识形态柱，可与 CPC/NDC 双挂。"
+      }
     },
     {
       "id": "chc",
@@ -289,7 +394,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "high"
+      "confidence": "high",
+      "detail_zh": {
+        "blurb": "国会西裔党团（民主党）：拉丁裔身份党团；1990 年代末后共和党人另立 Hispanic Conference。",
+        "history": "1976 年成立。晚期因党派撕裂，共和党西裔议员另组 Congressional Hispanic Conference（2003）。119 届众院投票约 40，另有代表与数名参议员。与 CBC、CAPAC 组成 Tri-Caucus。",
+        "ideology_or_purpose": "移民、劳工、教育、西裔社区经济与民权等；意识形态从进步到温和都有。",
+        "formality": "正式众院 CMO。勿与共和党「西裔会议」混淆。",
+        "membership_notes": "众院投票约 40（高置信）。民主党侧；共和党对应见 hispanic_conference。"
+      }
     },
     {
       "id": "capac",
@@ -329,7 +441,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "国会亚太裔美国人党团：AANHPI 身份与议题党团，含大量「关心议题」的盟友成员，体量可以很大。",
+        "history": "1994 年成立。成员既包括亚太裔身份议员，也包括关注亚裔—夏威夷原住民—太平洋岛民事务的盟友，故国会总人数常报约 80+，众院约数需谨慎。主席近年为 Grace Meng 等。",
+        "ideology_or_purpose": "反亚裔仇恨、移民、贸易与印太、教育与小企业等 AANHPI 议程；党派上高度偏民主党。",
+        "formality": "正式众院 CMO。官网人数口径可能含参院与盟友。",
+        "membership_notes": "众院约 75（区间约 70–83）；国会约 83。盟友制使人数膨胀——读作议题联盟而非「亚裔议员数」。"
+      }
     },
     {
       "id": "womens_caucus",
@@ -368,7 +487,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium_high"
+      "confidence": "medium_high",
+      "detail_zh": {
+        "blurb": "两党妇女党团（原国会妇女议题党团）：以众院女议员为主体的跨党身份/议题平台。",
+        "history": "可追溯至 1977 年 Congressional Caucus for Women's Issues；现常称 Bipartisan Women's Caucus。成员大体覆盖众院女议员（约 128 / 约 28% 众院）。勿与院外 National Women's Political Caucus（1971）混淆。",
+        "ideology_or_purpose": "妇女健康、经济、安全与代表性等跨党可谈议题；内部在堕胎等议题上仍有党派鸿沟。",
+        "formality": "正式跨党 CMO 传统。领导层两党共同主席。",
+        "membership_notes": "约 128（约等于众院女议员数，中高置信）。民主党约 90+、共和党约 30+ 量级。"
+      }
     },
     {
       "id": "equality",
@@ -394,7 +520,52 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "国会平等党团（LGBTQ+）：开放 LGBTQ+ 议员与大量盟友组成的权利议题党团，体量可近 200。",
+        "history": "2008 年由 Tammy Baldwin、Barney Frank 等推动成立（曾用 LGBTQIA+ Equality 等名称）。任何愿推进平等权益的议员可加入，故盟友数量远超公开 LGBTQ+ 身份议员。实践中几乎全为民主党。",
+        "ideology_or_purpose": "反歧视、仇恨犯罪、健康与民事权利；取消历史歧视性法律。",
+        "formality": "正式众院 CMO。盟友制 → 人数大。",
+        "membership_notes": "约 191（中置信）。读作盟友联盟，不是「众院 LGBTQ+ 议员 = 191」。"
+      }
+    },
+    {
+      "id": "labor",
+      "name_en": "Congressional Labor Caucus",
+      "name_zh": "国会劳工党团",
+      "party": "D",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "labor_issue",
+      "founded": 2020,
+      "chair": "Co-chairs Debbie Dingell, Steven Horsford, Donald Norcross, Mark Pocan",
+      "member_count": 123,
+      "count_detail": {
+        "voting_house_approx": 123,
+        "as_of_note": "Official Labor Caucus press release Mar 2025: record 123 members in 119th (+19 from 118th). DC Insiders later lists ~125. Overwhelmingly Democratic despite occasional bipartisan branding."
+      },
+      "official_url": "https://laborcaucus.house.gov/",
+      "sources": [
+        {
+          "label": "Labor Caucus largest membership (119th)",
+          "url": "https://laborcaucus.house.gov/media/press-releases/labor-caucus-announces-largest-ever-membership-new-task-forces",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Wikipedia Labor Caucus (United States)",
+          "url": "https://en.wikipedia.org/wiki/Labor_Caucus_(United_States)",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "high",
+      "detail_zh": {
+        "blurb": "国会劳工党团：亲工会、亲劳工立法的大型议题党团；119 届自称历史新高约 123 人，几乎全在民主党侧。",
+        "history": "2020 年 11 月前后组建，把工会组织权、最低工资、职场安全与「重建劳工运动」议程写成众院立法联盟。共同主席包括 Debbie Dingell、Steven Horsford、Donald Norcross、Mark Pocan 等。2025 年 3 月官方新闻稿称 119 届达到历史新高 123 人（较 118 届 +19）。虽偶有「跨党」措辞，公开体量压倒性为民主党。它与「蓝领党团」议题相近但名单更广、更偏立法任务小组；与 CPC 也大量重叠——同属「亲劳工」光谱上的不同组织标签。",
+        "ideology_or_purpose": "劳工主义：组织权、公平工资、安全职场、亲工会联邦政策。",
+        "formality": "正式众院 CMO（议题党团）。虽偶称跨党，公开体量压倒性为民主党。",
+        "membership_notes": "约 123（官方 2025-03 新闻稿；目录或报 125+）。与 CPC/蓝领重叠——勿加总。"
+      }
     },
     {
       "id": "rsc",
@@ -425,7 +596,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium_high"
+      "confidence": "medium_high",
+      "detail_zh": {
+        "blurb": "共和党研究委员会：众院共和党最大的正式保守派党团，常占会议绝大多数；≠ 共和党全会。",
+        "history": "1973 年成立，是众院共和党史上最耐久的保守派政策与投票联盟，长期充当「保守派工厂」：预算替代案、监管削减与社会保守议程。成员规模通常远大于自由核心小组，许多 HFC 成员同时挂名 RSC。第 119 届开局约 188 人，年中或报 189；约 2025 年起官网不再完整公开名单，故置信度为中高而非「官方精确」。切记：House Republican Conference（共和党全会）是全体共和党众议员的会议组织，RSC 只是其中的意识形态大党团，二者名称相近、绝不可互换。",
+        "ideology_or_purpose": "主流保守：低税、控支、强国防、社会保守与监管削减。比 HFC 更制度化、更接近领导层可合作对象。",
+        "formality": "正式众院 CMO。名单透明度近年下降 → 置信度中高而非「官方精确」。",
+        "membership_notes": "约 188–189。与 HFC、RGG 均有重叠；加总会严重重复计算。"
+      }
     },
     {
       "id": "freedom_caucus",
@@ -468,7 +646,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "自由核心小组：强硬右翼、邀请制、名单不透明；常被视为茶党能量在众院的制度化继承者。",
+        "history": "2015 年由茶党运动在众院的强硬一翼制度化而成，邀请制、纪律强、名单长期不透明。它曾在推翻 Boehner、施压预算与移民立场、以及 McCarthy 被罢免等议长危机中，把「关键少数」做成议价权。二手名录（Wikipedia、Ballotpedia、记者名册）常见 29–40 人；本页点估计约 31。院外 FreedomWorks 等倡导组织属于相关生态，不是党团本身。历史叙事上，它常被看作 Tea Party Caucus 停摆后的院内继承者——但组织、名单与战术并不等同于 2010–2016 的茶党党团。",
+        "ideology_or_purpose": "强硬保守：深度控支、反「妥协型」领导层、移民与文化议题右翼立场；近年更贴近特朗普联盟叙事。",
+        "formality": "正式众院 CMO，但运作像有纪律的派系；公开名册不完整。",
+        "membership_notes": "点估计 ~31，区间约 29–40（中置信）。常与 RSC 双挂。"
+      }
     },
     {
       "id": "main_street",
@@ -479,7 +664,7 @@
       "status": "active",
       "series": "republican_ideological",
       "spectrum": "pragmatic_conservative",
-      "founded": 2020,
+      "founded": 2017,
       "chair": "Dusty Johnson (SD-AL)",
       "member_count": 85,
       "count_detail": {
@@ -503,7 +688,15 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "founded_note": "House caucus founded 2017; dissolved 2019; re-established ~2021. Main Street Partnership (PAC) dates to 1994.",
+      "detail_zh": {
+        "blurb": "共和党主街党团：亲商业、反过度监管的务实保守派；与 Main Street Partnership 生态相关，2019 曾解散后重建。",
+        "history": "众院党团约 2017 年成立，2019 年一度解体，2021 年前后重启；更早的 Main Street Partnership（1994）是 PAC/倡导侧。119 届常见报道约 85–88。与 RGG 同属「可治理多数」光谱，但主街更强调亲商与监管。",
+        "ideology_or_purpose": "务实保守：亲商业、反繁琐监管、强调可通过的立法与保护摇摆区议员。",
+        "formality": "正式众院 CMO。成立年按 2017（首建），现状为 2021 重建后的延续。",
+        "membership_notes": "约 85–88（中置信）。与 RSC/RGG 重叠。"
+      }
     },
     {
       "id": "rgg",
@@ -517,7 +710,8 @@
       "founded": 1994,
       "aliases": [
         "Tuesday Group",
-        "Tuesday Lunch Bunch"
+        "Tuesday Lunch Bunch",
+        "RG2"
       ],
       "member_count": 44,
       "count_detail": {
@@ -540,7 +734,15 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "not_to_confuse_with_zh": "历史上的 Wednesday Group（周三小组）是另一温和共和党传统，与周二小组/RGG 不是同一组织。",
+      "detail_zh": {
+        "blurb": "共和党治理小组（原周二小组）：温和—务实共和党人；历史上的「周三小组」是另一传统，不要等同。",
+        "history": "1994 年共和党重夺众院后，「周二小组 / Tuesday Lunch Bunch」成为中间偏右、摇摆区共和党人的制度化午餐会；后更名为 Republican Governance Group。强调治理能力与保护脆弱席位。另：1960 年代起的 Wednesday Group 是更早的温和共和党俱乐部传统（后更多与参院温和派叙事相关），与周二小组/RGG 不是同一组织。",
+        "ideology_or_purpose": "温和共和党：财政保守但社会议题相对灵活，重视跨党立法与多数运作。",
+        "formality": "正式众院 CMO。别名 Tuesday Group / Tuesday Lunch Bunch。",
+        "membership_notes": "约 44–46（中置信）。与主街、RSC 重叠。"
+      }
     },
     {
       "id": "hispanic_conference",
@@ -570,7 +772,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium"
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "国会西裔会议：共和党西裔议员在与民主党 CHC 分家后组建的身份会议，体量很小。",
+        "history": "2003 年成立，作为共和党侧西裔平台，与民主党主导的 CHC 平行。119 届约 11 人量级。名称用 Conference 而非 Caucus，但功能上是身份党团。",
+        "ideology_or_purpose": "西裔选民、移民（偏执法与合法移民路径）、经济机会等共和党框架下的西裔议程。",
+        "formality": "正式众院组织/CMO 生态。勿与 CHC 混淆。",
+        "membership_notes": "约 11（中置信）。小样本，年度波动大。"
+      }
     },
     {
       "id": "problem_solvers",
@@ -596,7 +805,72 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "high"
+      "confidence": "high",
+      "related_outside": [
+        {
+          "name": "No Labels",
+          "note": "Outside centrist organization often described as adjacent in funding/ideology/networks; NOT a House CMO. Do not treat No Labels membership as Problem Solvers Caucus size."
+        }
+      ],
+      "detail_zh": {
+        "blurb": "问题解决者党团：跨党中心派，对开加入（一共和对一民主）；与院外 No Labels 相关但不是同一实体。",
+        "history": "约 2017 年在众院制度化，目标是打破党派僵局、推动「可成交」立法。核心规则是对开加入：一名共和党人通常需对开一名民主党人，以维持两党大致平衡。公开成员页约 48 人。媒体常把它与院外 No Labels 组织并提——资金、理念与人员网络相邻——但 No Labels 本身不是众院 CMO，不能把 No Labels 支持者人数当成问题解决者党团规模。读图时：这是跨党中心派的正式党团柱，不是院外品牌。",
+        "ideology_or_purpose": "跨党中间派：基建、财政规则、程序改革等「可成交」议程。",
+        "formality": "正式众院 CMO。No Labels = 院外组织（关联说明，不计入柱）。",
+        "membership_notes": "约 48（高置信）；报道或拆 22 共和等。对开规则使两党大致平衡。"
+      }
+    },
+    {
+      "id": "climate_solutions",
+      "name_en": "Climate Solutions Caucus",
+      "name_zh": "气候解决方案党团（跨党）",
+      "party": "bipartisan",
+      "kind": "formal",
+      "status": "active",
+      "series": "bipartisan",
+      "spectrum": "bipartisan_climate_centrist",
+      "founded": 2016,
+      "chair": "Co-chairs Andrew Garbarino (R-NY), Scott Peters (D-CA)",
+      "member_count": 57,
+      "count_detail": {
+        "total_approx": 57,
+        "party_split_note": "DC Insiders 119th: ~29 D / 27 R / 1 I; historically aims for partisan balance",
+        "as_of_note": "Roster drifts; ~57 is a directory point estimate for 119th—not a vote share of the House."
+      },
+      "preferred_display": {
+        "value": 57,
+        "display": "~57",
+        "range": [
+          50,
+          66
+        ]
+      },
+      "official_url": "https://climatesolutionscaucus-garbarino.house.gov/",
+      "sources": [
+        {
+          "label": "Climate Solutions Caucus (official)",
+          "url": "https://climatesolutionscaucus-garbarino.house.gov/",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Wikipedia Climate Solutions Caucus",
+          "url": "https://en.wikipedia.org/wiki/Climate_Solutions_Caucus",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "DC Insiders Climate Solutions Caucus",
+          "url": "https://dc-insiders.com/congress/caucuses/climate-solutions-caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium",
+      "detail_zh": {
+        "blurb": "气候解决方案党团：跨党气候—能源对话平台，成员常维持两党大致对等。",
+        "history": "约 2016 年前后兴起，2018 后一度沉寂，2023 年在 118 届重启；119 届共同主席常见 Garbarino（R）与 Peters（D）等。目录口径约 57（约 29D/27R/1I 量级），随名单更新会变。与进步派「气候紧急」党团不是同一组织。",
+        "ideology_or_purpose": "承认气候问题的同时强调经济、能源与跨党可通过方案（许可改革、输电等），而非单一支付式左翼气候议程。",
+        "formality": "正式跨党众院 CMO。",
+        "membership_notes": "约 57（中置信，目录口径）；两党平衡规则使人数成对敏感。"
+      }
     },
     {
       "id": "tea_party",
@@ -633,7 +907,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "medium_high"
+      "confidence": "medium_high",
+      "detail_zh": {
+        "blurb": "茶党党团（历史）：2010 年代右翼民粹在众院的制度化脸面；约 2016 后事实停摆，能量迁入自由核心小组。",
+        "history": "2010 年 Michele Bachmann 等组建，峰值约 2011 年 ~60 人；112 届开局约 49。Tim Huelskamp 2016 初选败选后事实停摆，115 届起不再作为活跃 CMO。草根茶党运动与 FreedomWorks 等院外组织远大于这一党团本身。",
+        "ideology_or_purpose": "反开支、反奥巴马医改、民粹保守；是 HFC 的重要前史。",
+        "formality": "历史/已停摆。不画 119 届现员假数。",
+        "membership_notes": "峰值约 60（2011）；年代 2010–2016。仅历史柱。"
+      }
     },
     {
       "id": "liberty_caucus",
@@ -660,7 +941,14 @@
           "retrieved": "2026-10-11"
         }
       ],
-      "confidence": "low"
+      "confidence": "low",
+      "detail_zh": {
+        "blurb": "自由党团（历史/非正式）：与 Justin Amash 等自由意志倾向共和党人相关的小圈子，从无稳定大名单。",
+        "history": "约 2011 年起出现在报道中，强调宪法限制、隐私与反监视、非干涉外交等 Ron Paul/Amash 式议程。从未形成像 RSC/HFC 那样的公开大体量名册；与茶党/HFC 辩论有交叉。",
+        "ideology_or_purpose": "自由意志保守：限权、自由市场、民事自由、怀疑对外战争与监控国家。",
+        "formality": "历史/非正式；峰值人数未知——显示为 —，不发明假精度。",
+        "membership_notes": "未知。置信度低。"
+      }
     }
   ],
   "chart_ready_rows": [
@@ -722,6 +1010,16 @@
       "status": "active"
     },
     {
+      "series": "democratic_ideological",
+      "id": "justice_democrats",
+      "party": "D",
+      "name_zh": "正义民主党人（院外）",
+      "members": 9,
+      "kind": "informal",
+      "status": "active",
+      "note": "院外 PAC，非众院 CMO"
+    },
+    {
       "series": "identity",
       "id": "equality",
       "party": "bipartisan",
@@ -743,17 +1041,27 @@
     },
     {
       "series": "identity",
+      "id": "labor",
+      "party": "D",
+      "name_zh": "国会劳工党团",
+      "members": 123,
+      "kind": "formal",
+      "status": "active",
+      "note": "官方宣称119届123人"
+    },
+    {
+      "series": "identity",
       "id": "capac",
       "party": "D",
       "name_zh": "亚太裔美国人党团",
       "members": 75,
       "kind": "formal",
       "status": "active",
+      "note": "国会约83；众院约数",
       "range": [
         70,
         83
-      ],
-      "note": "国会约83；众院约数"
+      ]
     },
     {
       "series": "identity",
@@ -843,16 +1151,30 @@
       "status": "active"
     },
     {
+      "series": "bipartisan",
+      "id": "climate_solutions",
+      "party": "bipartisan",
+      "name_zh": "气候解决方案党团",
+      "members": 57,
+      "kind": "formal",
+      "status": "active",
+      "note": "两党大致对等",
+      "range": [
+        50,
+        66
+      ]
+    },
+    {
       "series": "historical",
       "id": "tea_party",
       "party": "R",
       "name_zh": "茶党党团",
       "members": null,
-      "peak_members": 60,
-      "year_range": "2010–2016",
       "kind": "historical",
       "status": "defunct",
-      "note": "峰值约60（2011）；能量迁入自由核心小组"
+      "note": "峰值约60（2011）；能量迁入自由核心小组",
+      "peak_members": 60,
+      "year_range": "2010–2016"
     },
     {
       "series": "historical",
@@ -860,11 +1182,11 @@
       "party": "R",
       "name_zh": "自由党团",
       "members": null,
-      "peak_members": null,
-      "year_range": "约2011–2010年代中",
       "kind": "historical",
       "status": "defunct",
-      "note": "规模未知；不以假数入图"
+      "note": "规模未知；不以假数入图",
+      "peak_members": null,
+      "year_range": "约2011–2010年代中"
     }
   ]
 }
