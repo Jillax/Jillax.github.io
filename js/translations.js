@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var currentTag = 'all';
     var currentSort = 'date';
     var searchQuery = '';
+    var focusBvid = '';
+    try {
+        focusBvid = new URLSearchParams(window.location.search).get('bvid') || '';
+    } catch (e) {
+        focusBvid = '';
+    }
     var biliStatsCache = {};
 
     var statusCls = { '已完成': 'done', '译制中': 'ongoing' };
@@ -130,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('#tagBar .filter-tab.tag').forEach(function(t) { t.classList.remove('active'); });
                 this.classList.add('active');
                 currentTag = 'all';
+                focusBvid = '';
                 applyFilters();
             });
         }
@@ -144,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('#tagBar .filter-tab.tag').forEach(function(t) { t.classList.remove('active'); });
                 this.classList.add('active');
                 currentTag = this.dataset.tag;
+                focusBvid = '';
                 applyFilters();
             });
             tagBar.appendChild(btn);
@@ -164,6 +172,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     (i.description && i.description.toLowerCase().includes(q)) ||
                     (i.originalTitle && i.originalTitle.toLowerCase().includes(q));
             });
+        }
+
+        if (focusBvid) {
+            var focused = items.filter(function(i) { return i.bvid === focusBvid; });
+            if (focused.length) items = focused;
         }
 
         if (currentSort === 'plays') {
@@ -188,7 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         empty.style.display = 'none';
-        resultCount.textContent = '共 ' + items.length + ' 个作品';
+        resultCount.textContent = focusBvid && items.length === 1
+            ? '这一条'
+            : ('共 ' + items.length + ' 个作品');
 
         list.innerHTML = items.map(function(item) {
             var sClass = statusCls[item.status] || '';
@@ -268,6 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var self = this;
         searchTimer = setTimeout(function() {
             searchQuery = self.value;
+            if (searchQuery.trim()) focusBvid = '';
             applyFilters();
         }, 250);
     });

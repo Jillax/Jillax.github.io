@@ -1,6 +1,6 @@
 # Jillax.github.io
 
-个人主页 · 书影音游清单 · 译制作品 · 随笔博客 · AI 文本
+个人主页 · 作品 · 阅读与译制 · 随笔
 
 赛博朋克风格的个人网站，托管于 GitHub Pages。100% 由 AI Agent 构筑。
 
@@ -8,18 +8,28 @@
 
 ## 站点结构
 
+主导航是五条通道，写在 `js/components.js`。
+
+| 通道 | 入口 | 说明 |
+|------|------|------|
+| 首页 | `index.html` | 短介绍、三张首页作品、最近一条随笔或译制 |
+| 关于 | `about.html` | 个人简介、画像；页底链到联系 |
+| 作品 | `projects.html` | 卡片来自 `data/projects.json`。首页默认展示 `featured: true` 的三条可视化 |
+| 阅读与译制 | `reading.html` | 总览，链到书影音和译制。这两页仍各自保留 |
+| 随笔 / 联系 | `blog.html` | 随笔页和 `contact.html` 共用这一条导航 |
+
+作品数据在 `data/projects.json`。加一个对象就会出现在作品页；把 `featured` 设为 `true` 会放到首页。
+
 | 页面 | 说明 |
 |------|------|
-| `index.html` | 个人主页：Jillax 介绍、名言轮播、快捷导航 |
-| `about.html` | 关于：个人简介、技能树、时间线、项目展示 |
-| `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细） |
-| `contact.html` | 联系方式：GitHub / Bilibili / 豆瓣 / 知乎 / 邮箱 |
-| `projects.html` | 项目清单：挂在这个站上的专题页 |
 | `congress-portfolios/` | 申报上的美国：国会、总统、州长公开财产申报 |
 | `dsa/` | 帐篷里的派系：美国民主社会主义者的架构与内部派系 |
 | `sovereign-funds/` | 披露上的国家资本：各国主权基金公开持仓 |
+| `ai-investment/` | 账本上的中美 AI：私人资本与国家资本 |
+| `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细）。从作品页进入，不占顶栏 |
 | `translations.html` | 译制作品清单：Bilibili 视频译制作品管理与展示 |
 | `bookshelf.html` | 书影音游清单：豆瓣数据自动同步，含累计趋势折线图 |
+| `contact.html` | 联系方式：GitHub / Bilibili / 豆瓣 / 知乎 / 邮箱 |
 
 ### 博客页面（blog.html）
 

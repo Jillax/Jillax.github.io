@@ -125,5 +125,109 @@
         // Start dialog after initial animation delay
         getDialogQuotes();
         setTimeout(function() {}, 2500);
+
+        loadHomeStage();
     });
+
+    function esc(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function(ch) {
+            return ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[ch];
+        });
+    }
+
+    function featuredCard(item) {
+        var tags = (item.tags || []).map(function(tag) {
+            return '<span class="project-card-tag">' + esc(tag) + '</span>';
+        }).join('');
+        var kicker = item.group ? '<div class="project-card-kicker">' + esc(item.group) + '</div>' : '';
+        var tagRow = tags ? '<div class="project-card-tags">' + tags + '</div>' : '';
+        return '<a class="project-card" href="' + esc(item.href) + '">' +
+            kicker +
+            '<div class="project-card-name">' + esc(item.title) + '</div>' +
+            '<div class="project-card-desc">' + esc(item.blurb) + '</div>' +
+            tagRow +
+            '</a>';
+    }
+
+    function loadFeatured() {
+        var slot = document.getElementById('featuredProjects');
+        if (!slot) return;
+        fetch('data/projects.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                var items = ((data && data.items) || []).filter(function(item) {
+                    return item && item.featured && item.href && item.title;
+                });
+                if (!items.length) {
+                    slot.innerHTML = '<p class="home-loading">作品页里还没有标成首页展示的条目。<a href="projects.html">去作品</a></p>';
+                    return;
+                }
+                slot.innerHTML = items.map(featuredCard).join('');
+            })
+            .catch(function() {
+                slot.innerHTML = '<p class="home-loading">作品没有加载出来。<a href="projects.html">去作品</a></p>';
+            });
+    }
+
+    function consider(best, candidate) {
+        if (!candidate || !candidate.date || !candidate.title) return best;
+        if (!best || candidate.date > best.date) return candidate;
+        return best;
+    }
+
+    function loadRecent() {
+        var link = document.getElementById('recentLink');
+        var kind = document.getElementById('recentKind');
+        var title = document.getElementById('recentTitle');
+        var date = document.getElementById('recentDate');
+        if (!link || !title) return;
+
+        Promise.all([
+            fetch('data/posts.json').then(function(response) { return response.json(); }).catch(function() { return []; }),
+            fetch('data/translations.json').then(function(response) { return response.json(); }).catch(function() { return { items: [] }; })
+        ]).then(function(results) {
+            var posts = Array.isArray(results[0]) ? results[0] : [];
+            var translations = (results[1] && results[1].items) || [];
+            var best = null;
+            posts.forEach(function(post) {
+                best = consider(best, {
+                    date: post.date,
+                    title: post.title,
+                    kind: '随笔',
+                    href: 'blog.html'
+                });
+            });
+            translations.forEach(function(item) {
+                var href = 'translations.html';
+                if (item.bvid) href += '?bvid=' + encodeURIComponent(item.bvid);
+                best = consider(best, {
+                    date: item.date,
+                    title: item.title,
+                    kind: '译制',
+                    href: href
+                });
+            });
+            if (!best) {
+                title.textContent = '去看译制和随笔';
+                return;
+            }
+            link.href = best.href;
+            if (kind) kind.textContent = best.kind;
+            title.textContent = best.title;
+            if (date) date.textContent = best.date;
+        }).catch(function() {
+            title.textContent = '去看译制和随笔';
+        });
+    }
+
+    function loadHomeStage() {
+        loadFeatured();
+        loadRecent();
+    }
 })();

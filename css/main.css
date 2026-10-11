@@ -95,8 +95,10 @@ nav .container::before { display: none; }
 }
 .nav-links {
     display: flex;
-    gap: 22px;
-    font-size: 0.95rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px 18px;
+    font-size: 0.82rem;
     color: var(--text-muted);
     font-family: var(--font-display);
     text-transform: uppercase;
@@ -128,9 +130,48 @@ nav .container::before { display: none; }
     box-shadow: 0 0 8px var(--purple-glow);
 }
 
+/* Subnav for a channel that spans more than one page */
+.channel-bar {
+    position: sticky;
+    top: var(--nav-offset, 68px);
+    z-index: 90;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13, 10, 26, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+.channel-bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.channel-bar a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border: 1px solid transparent;
+}
+.channel-bar a:hover,
+.channel-bar a.current {
+    color: var(--purple-bright);
+    border-color: var(--border-glow);
+}
+body.has-channel main {
+    padding-top: var(--nav-offset, 68px);
+}
+body.has-channel .page-header {
+    padding-top: 28px;
+}
+
 /* ===== Page Header ===== */
 .page-header {
-    padding: 100px 0 40px;
+    padding: calc(var(--nav-offset, 68px) + 36px) 0 40px;
     position: relative;
     max-width: var(--container-text);
 }
@@ -382,14 +423,11 @@ footer::before {
 }
 @media (max-width: 768px) {
     nav { padding: 12px 0; }
-    .nav-links { gap: 14px; font-size: 0.75rem; letter-spacing: 0.5px; }
-    .nav-links a[data-nav-hide="mobile"] { display: none; }
+    nav .container { flex-wrap: wrap; row-gap: 8px; }
+    .nav-links { gap: 8px 12px; font-size: 0.68rem; letter-spacing: 0.4px; }
     .container { padding: 0 24px; }
-    .page-header { padding: 80px 0 20px; max-width: 100%; }
-}
-@media (max-width: 480px) {
-    .nav-links a[data-nav-hide="mobile"],
-    .nav-links a[data-nav-hide="small"] { display: none; }
+    .page-header { padding: calc(var(--nav-offset, 68px) + 16px) 0 20px; max-width: 100%; }
+    body.has-channel .page-header { padding-top: 20px; }
 }
 
 /* ===== Page Transition Overlay ===== */

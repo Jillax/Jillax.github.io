@@ -1,0 +1,79 @@
+/* ============================================
+   Jillax.github.io — Reading channel hub
+   ============================================ */
+
+.reading-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+}
+
+.reading-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 240px;
+    padding: 32px 28px;
+    border: 2px solid var(--border);
+    background: var(--bg-card);
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+.reading-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--neon-pink);
+    opacity: 0.45;
+}
+.reading-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(155, 89, 255, 0.15);
+}
+.reading-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--neon-cyan);
+}
+.reading-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+    color: var(--text);
+    font-weight: 700;
+}
+.reading-card p {
+    font-family: var(--font-chinese);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+.reading-latest {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--text-soft);
+    letter-spacing: 0.3px;
+}
+.reading-go {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple-bright);
+}
+
+@media (max-width: 768px) {
+    .reading-grid { grid-template-columns: 1fr; }
+}
