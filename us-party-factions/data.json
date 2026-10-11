@@ -2,13 +2,16 @@
   "meta": {
     "as_of": "2026-10-11",
     "congress": "119th (2025–2027)",
-    "chamber_focus": "U.S. House of Representatives (Senate factions noted separately)",
+    "chamber_focus": "U.S. House of Representatives (Senate factions noted separately when relevant)",
     "unit": "members",
     "caveats": [
       "Members may join multiple caucuses; party shares must NOT be summed to 100%.",
       "House Freedom Caucus and (in 119th) RSC often do not publish complete official public rosters; counts are best estimates with sources.",
       "Counts drift during a Congress (resignations, special elections, joins/leaves).",
-      "Informal labels (e.g. Squad) are not the same as formal House caucus membership."
+      "Informal labels (e.g. Squad) are not the same as formal House caucus membership.",
+      "Historical / defunct groups show peak or year-range figures, not current 119th counts.",
+      "Identity caucuses (CBC, CHC, CAPAC, Women's, Equality) cut across ideology; a member can sit in both an ideological and an identity caucus.",
+      "House Republican Conference / House Democratic Caucus are the party conferences (all R or D members), not ideological caucuses—do not confuse Conference with RSC or CPC."
     ],
     "house_party_baseline_approx": {
       "democrats_voting": 214,
@@ -16,13 +19,49 @@
       "note": "Approximate 119th House party split from Wikipedia caucus tables; vacancies may shift totals."
     }
   },
+  "intro_zh": {
+    "deck": "第 119 届众议院（2025–2027）里，民主党与共和党各有正式的意识形态党团，还有按身份认同组织的跨党或单党党团、媒体非正式标签，以及已解散或沉寂的历史派系。柱子是各党团/派系的规模（或历史峰值），不是该党众议员的加总。",
+    "sections": [
+      {
+        "title": "这页在做什么",
+        "body": "「众院里的派系」把众议院里常见的意识形态党团、身份党团、跨党组织，以及若干历史/非正式派系放在同一张可读的纸上。它不是选票预测，也不是把议员塞进互斥格子；目的是让你一眼看到：同一届国会里，正式 caucus、媒体标签、历史遗产各自有多大、怎么重叠、该怎么读数字。"
+      },
+      {
+        "title": "为什么以第 119 届为窗口",
+        "body": "人数、主席、名单都会随国会换届漂移。本页以 119 届众议院为「当前切片」，并单独标出历史或已沉寂组织（例如 Tea Party Caucus），用年份区间与峰值说明它们曾经有多强，而不是假装它们今天仍有精确席位数。参议院党团若出现，只作脚注，主图仍是众院。"
+      },
+      {
+        "title": "正式党团、身份党团、非正式标签、历史派系",
+        "body": "正式 House caucus / Congressional Member Organization（CMO）在众议院行政委员会登记，有主席与（常常）公开名单：例如新民主党人联盟（NDC）、国会进步派党团（CPC）、蓝狗、共和党研究委员会（RSC）、自由核心小组、主街、治理小组、问题解决者，以及 CBC / CHC / CAPAC、两党妇女党团等。身份党团按种族、族裔、性别、性取向等组织，横切意识形态。媒体非正式标签（如「小队」）没有 Clerk 登记的完整名单。历史派系（茶党党团等）已停摆或徒有其名，只保留峰值与年代。另：众议院共和党会议（House Republican Conference）与民主党党团（House Democratic Caucus）是全党议员的会议组织，不等于 RSC 或 CPC 这类意识形态小团体。"
+      },
+      {
+        "title": "为什么数字不能加总",
+        "body": "同一名众议员可以同时加入多个党团——约 30 人同时在 NDC 与 CPC；自由核心小组成员也常挂在 RSC。身份党团与意识形态党团同样重叠。因此各柱人数相加不等于民主党或共和党众议员总数，也不应解读为占该党的百分比之和。图例与红色提示框会反复强调这一点。"
+      },
+      {
+        "title": "怎么读图",
+        "body": "深蓝/软蓝：民主党正式或非正式；深红：共和党；橄榄绿：跨党。深色段是点估计，浅色延伸是区间上限（名单不完整时用）。历史行不画「当前席位」假数，而显示年份区间、峰值与「已停摆/历史」标签。点任意一行可看光谱、成立年、主席、置信度与来源链接。"
+      }
+    ]
+  },
+  "methodology_zh": "以 119 届国会为窗口；正式党团优先 Wikipedia 表头、官方站与 CMO 公开信息。RSC、自由核心小组因名单不完全公开，标了置信度与区间。身份党团（CBC/CHC/CAPAC/妇女/平等）与意识形态党团分开展示但仍可点开对照。历史派系只报峰值与年代，不伪造当前人数。非正式标签（小队）与正式 caucus 分色。FreedomWorks 等院外组织仅作关联说明，不当作众院党团计入柱图。",
+  "viz_notes_zh": [
+    "主图按系列分组：民主党意识形态、身份与议题、共和党意识形态、跨党、历史/已停摆。",
+    "成员可重叠，勿把各党团人数加总当成该党众议员总数或 100%。",
+    "HFC 与 RSC 用约数或误差条；CPC 可对照投票众议员 99 / 含参院与代表共 101。",
+    "历史组（茶党党团等）显示峰值与年份，不显示假的 119 届人数。",
+    "正式 caucus、身份党团、媒体非正式派系、历史派系在 UI 上用 kind/status 区分。",
+    "众议院共和党会议 / 民主党党团是全党会议，不是本页柱图里的意识形态党团。"
+  ],
   "caucuses": [
     {
       "id": "ndc",
       "name_en": "New Democrat Coalition",
       "name_zh": "新民主党人联盟",
       "party": "D",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "democratic_ideological",
       "spectrum": "center_to_center_left",
       "founded": 1997,
       "chair": "Brad Schneider (IL-10)",
@@ -51,7 +90,9 @@
       "name_en": "Congressional Progressive Caucus",
       "name_zh": "国会进步派党团",
       "party": "D",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "democratic_ideological",
       "spectrum": "progressive_left",
       "founded": 1991,
       "chair": "Greg Casar (TX-35)",
@@ -86,7 +127,9 @@
       "name_en": "Blue Dog Coalition",
       "name_zh": "蓝狗联盟",
       "party": "D",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "democratic_ideological",
       "spectrum": "moderate_conservative_democrat",
       "founded": 1995,
       "chair": "Co-chairs Marie Gluesenkamp Perez, Vicente Gonzalez, J. Luis Correa",
@@ -101,21 +144,73 @@
           "label": "Wikipedia Blue Dog Coalition",
           "url": "https://en.wikipedia.org/wiki/Blue_Dog_Coalition",
           "retrieved": "2026-10-11"
-        },
-        {
-          "label": "Blue Dog members page",
-          "url": "http://bluedogs-gluesenkampperez.house.gov/members",
-          "retrieved": "2026-10-11"
         }
       ],
       "confidence": "high"
+    },
+    {
+      "id": "blue_collar",
+      "name_en": "Blue Collar Caucus",
+      "name_zh": "蓝领党团",
+      "party": "D",
+      "kind": "formal",
+      "status": "active",
+      "series": "democratic_ideological",
+      "spectrum": "labor_left",
+      "founded": 2016,
+      "chair": "Co-chairs Brendan Boyle (PA), Marc Veasey (TX)",
+      "member_count": 29,
+      "count_detail": {
+        "voting_house": 29,
+        "peak_115th": 49,
+        "as_of_note": "Wikipedia Blue Collar Caucus: ~29–30 in recent listings; peaked at 49 in 115th Congress (2018)"
+      },
+      "official_url": null,
+      "sources": [
+        {
+          "label": "Wikipedia Blue Collar Caucus",
+          "url": "https://en.wikipedia.org/wiki/Blue_Collar_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "id": "medicare_for_all",
+      "name_en": "Medicare for All Caucus",
+      "name_zh": "全民医保党团",
+      "party": "D",
+      "kind": "formal",
+      "status": "active",
+      "series": "democratic_ideological",
+      "spectrum": "progressive_left",
+      "founded": 2018,
+      "chair": "Co-chairs Debbie Dingell, Pramila Jayapal (commonly cited)",
+      "member_count": 58,
+      "count_detail": {
+        "voting_house_approx": 58,
+        "as_of_note": "Wikipedia Medicare for All Caucus lists ~58; overlaps heavily with CPC; not a vote-share of all Democrats"
+      },
+      "parent_or_related": [
+        "cpc"
+      ],
+      "sources": [
+        {
+          "label": "Wikipedia Medicare for All Caucus",
+          "url": "https://en.wikipedia.org/wiki/Medicare_for_All_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
     },
     {
       "id": "squad",
       "name_en": "The Squad",
       "name_zh": "小队（非正式）",
       "party": "D",
-      "kind": "informal_faction",
+      "kind": "informal",
+      "status": "active",
+      "series": "democratic_ideological",
       "spectrum": "far_left_progressive",
       "founded": 2018,
       "member_count": 7,
@@ -136,11 +231,179 @@
       "confidence": "medium"
     },
     {
+      "id": "cbc",
+      "name_en": "Congressional Black Caucus",
+      "name_zh": "国会黑人党团",
+      "party": "D",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "identity_black",
+      "founded": 1971,
+      "chair": "Yvette Clarke (NY-9)",
+      "member_count": 58,
+      "count_detail": {
+        "cbc_total_119th_incl_senate": 62,
+        "voting_house_approx": 58,
+        "as_of_note": "CBC announced historic 62 members at start of 119th (incl. senators); House voting ~58 after subtracting senators/nonvoting—use as approx. Almost entirely Democrats; Black Republicans generally are not CBC members."
+      },
+      "official_url": "https://cbc.house.gov/",
+      "sources": [
+        {
+          "label": "CBC historic 62 members (119th)",
+          "url": "https://cbc.house.gov/news/documentsingle.aspx?DocumentID=2957",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Wikipedia Congressional Black Caucus",
+          "url": "https://en.wikipedia.org/wiki/Congressional_Black_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "id": "chc",
+      "name_en": "Congressional Hispanic Caucus",
+      "name_zh": "国会西裔党团",
+      "party": "D",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "identity_hispanic",
+      "founded": 1976,
+      "chair": "Adriano Espaillat (NY-13)",
+      "member_count": 40,
+      "count_detail": {
+        "voting_house": 40,
+        "nonvoting_plus": 1,
+        "senate": 4,
+        "congress_total_approx": 42,
+        "as_of_note": "Wikipedia 119th: ~40 House voting + delegate + 4 senators; Democrats only since late 1990s (Republicans formed Hispanic Conference)"
+      },
+      "official_url": "https://chc.house.gov/",
+      "sources": [
+        {
+          "label": "Wikipedia Congressional Hispanic Caucus",
+          "url": "https://en.wikipedia.org/wiki/Congressional_Hispanic_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "capac",
+      "name_en": "Congressional Asian Pacific American Caucus",
+      "name_zh": "国会亚太裔美国人党团",
+      "party": "D",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "identity_aapi",
+      "founded": 1994,
+      "chair": "Grace Meng (NY-6)",
+      "member_count": 75,
+      "count_detail": {
+        "congress_total_reported": 83,
+        "house_approx": 75,
+        "as_of_note": "CAPAC site cites 83 Members of Congress; House share ~75 approximate (includes associate members interested in AANHPI issues, not only AAPI identity). Predominantly Democratic."
+      },
+      "preferred_display": {
+        "value": 75,
+        "display": "~75（众院约；国会共约83）",
+        "range": [
+          70,
+          83
+        ]
+      },
+      "official_url": "https://capac.house.gov/",
+      "sources": [
+        {
+          "label": "CAPAC official",
+          "url": "https://capac.house.gov/",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Wikipedia CAPAC",
+          "url": "https://en.wikipedia.org/wiki/Congressional_Asian_Pacific_American_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "womens_caucus",
+      "name_en": "Bipartisan Women's Caucus (Congressional Caucus for Women's Issues)",
+      "name_zh": "两党妇女党团（原国会妇女议题党团）",
+      "party": "bipartisan",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "identity_women_bipartisan",
+      "founded": 1977,
+      "chair": "Co-chairs Monica De La Cruz (R-TX), Emilia Sykes (D-OH)",
+      "member_count": 128,
+      "count_detail": {
+        "women_in_house_approx": 128,
+        "democrats_approx": 96,
+        "republicans_approx": 32,
+        "as_of_note": "Membership generally includes women Members of the House (~128 / ~28% of House per WCPI). Formerly Congressional Caucus for Women's Issues; not the same as National Women's Political Caucus (outside advocacy group)."
+      },
+      "related_outside": [
+        {
+          "name": "National Women's Political Caucus",
+          "note": "Independent advocacy organization (founded 1971), not a House CMO; related historically in mission but separate from BWC."
+        }
+      ],
+      "official_url": null,
+      "sources": [
+        {
+          "label": "Women's Congressional Policy Institute – Women's Caucus",
+          "url": "https://www.wcpinst.org/our-work/the-womens-caucus/",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "119th Women's Caucus leadership",
+          "url": "https://www.wcpinst.org/caucus-leadership/womens-caucus-leadership-119th-congress/",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "id": "equality",
+      "name_en": "Congressional Equality Caucus",
+      "name_zh": "国会平等党团（LGBTQ+）",
+      "party": "bipartisan",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "identity_lgbtq",
+      "founded": 2008,
+      "chair": "Mark Takano (CA)",
+      "member_count": 191,
+      "count_detail": {
+        "total_approx": 191,
+        "as_of_note": "Wikipedia / Equality Caucus: ~191 members in 119th—large allies caucus, not limited to LGBTQ+ identity holders. Heavily Democratic in practice."
+      },
+      "official_url": "https://equality.house.gov/",
+      "sources": [
+        {
+          "label": "Wikipedia Congressional Equality Caucus",
+          "url": "https://en.wikipedia.org/wiki/Congressional_Equality_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
       "id": "rsc",
       "name_en": "Republican Study Committee",
       "name_zh": "共和党研究委员会",
       "party": "R",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "republican_ideological",
       "spectrum": "conservative",
       "founded": 1973,
       "chair": "August Pfluger (TX-11)",
@@ -148,7 +411,7 @@
       "count_detail": {
         "voting_house_entering_119th": 188,
         "reported_may_2025": 189,
-        "as_of_note": "Largest GOP caucus; stopped publishing full public roster on site since ~2025-01-25"
+        "as_of_note": "Largest GOP ideological caucus; stopped publishing full public roster on site since ~2025-01-25. Distinct from House Republican Conference (all House Republicans)."
       },
       "overlap": {
         "with_freedom_caucus_approx": 25,
@@ -169,7 +432,9 @@
       "name_en": "House Freedom Caucus",
       "name_zh": "自由核心小组",
       "party": "R",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "republican_ideological",
       "spectrum": "hard_right_conservative",
       "founded": 2015,
       "chair": "Andy Harris (MD-1)",
@@ -179,7 +444,7 @@
         "nada_roster_2025_04_22": 32,
         "wikipedia_known_as_of_2026_07": 31,
         "dc_insiders_119th": 29,
-        "as_of_note": "Historically invitation-only and opaque; prefer point 31 with range"
+        "as_of_note": "Historically invitation-only and opaque; prefer point 31 with range. Often described as heir to Tea Party Caucus energy inside the House."
       },
       "preferred_display": {
         "value": 31,
@@ -189,16 +454,17 @@
           40
         ]
       },
+      "related_outside": [
+        {
+          "name": "FreedomWorks",
+          "note": "Outside advocacy / PAC ecosystem historically aligned with Tea Party and hard-right House factions; NOT a House caucus and not counted as members here."
+        }
+      ],
       "official_url": "https://freedomcaucus.org/",
       "sources": [
         {
           "label": "Wikipedia Freedom Caucus",
           "url": "https://en.wikipedia.org/wiki/Freedom_Caucus",
-          "retrieved": "2026-10-11"
-        },
-        {
-          "label": "NADA HFC roster PDF 2025-04-22",
-          "url": "https://www.nada.org/media/16927/download?inline=",
           "retrieved": "2026-10-11"
         }
       ],
@@ -209,7 +475,9 @@
       "name_en": "Republican Main Street Caucus",
       "name_zh": "共和党主街党团",
       "party": "R",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "republican_ideological",
       "spectrum": "pragmatic_conservative",
       "founded": 2020,
       "chair": "Dusty Johnson (SD-AL)",
@@ -242,7 +510,9 @@
       "name_en": "Republican Governance Group",
       "name_zh": "共和党治理小组（原周二小组）",
       "party": "R",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "republican_ideological",
       "spectrum": "moderate_republican",
       "founded": 1994,
       "aliases": [
@@ -268,10 +538,35 @@
           "label": "Wikipedia Republican Governance Group",
           "url": "https://en.wikipedia.org/wiki/Republican_Governance_Group",
           "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "hispanic_conference",
+      "name_en": "Congressional Hispanic Conference",
+      "name_zh": "国会西裔会议（共和党）",
+      "party": "R",
+      "kind": "formal",
+      "status": "active",
+      "series": "identity",
+      "spectrum": "identity_hispanic_republican",
+      "founded": 2003,
+      "chair": "Co-chairs Mario Díaz-Balart, Tony Gonzales (commonly cited for 119th)",
+      "member_count": 11,
+      "count_detail": {
+        "voting_house_approx": 11,
+        "as_of_note": "Republican counterpart after split from CHC; ~11 members in 119th per Ballotpedia-style listings—small; do not confuse with Democratic CHC."
+      },
+      "sources": [
+        {
+          "label": "Wikipedia Congressional Hispanic Conference",
+          "url": "https://en.wikipedia.org/wiki/Congressional_Hispanic_Conference",
+          "retrieved": "2026-10-11"
         },
         {
-          "label": "Roll Call Jan 2025",
-          "url": "https://rollcall.com/2025/01/17/republican-governance-group-house-valadao-gimenez/",
+          "label": "Ballotpedia Congressional Hispanic Conference",
+          "url": "https://ballotpedia.org/Congressional_Hispanic_Conference",
           "retrieved": "2026-10-11"
         }
       ],
@@ -282,7 +577,9 @@
       "name_en": "Problem Solvers Caucus",
       "name_zh": "问题解决者党团（跨党）",
       "party": "bipartisan",
-      "kind": "formal_house_caucus",
+      "kind": "formal",
+      "status": "active",
+      "series": "bipartisan",
       "spectrum": "bipartisan_centrist",
       "founded": 2017,
       "member_count": 48,
@@ -300,81 +597,237 @@
         }
       ],
       "confidence": "high"
+    },
+    {
+      "id": "tea_party",
+      "name_en": "Tea Party Caucus",
+      "name_zh": "茶党党团（历史）",
+      "party": "R",
+      "kind": "historical",
+      "status": "defunct",
+      "series": "historical",
+      "spectrum": "hard_right_conservative",
+      "founded": 2010,
+      "year_range": "2010–2016（事实停摆）",
+      "dissolved_note": "De facto inactive after Tim Huelskamp lost 2016 primary; no longer registered as CMO by 115th. Energy largely migrated to House Freedom Caucus.",
+      "chair": "Michele Bachmann (2010–2015); Tim Huelskamp (2015–2016)",
+      "member_count": null,
+      "peak_members": 60,
+      "peak_note": "Peak ~60 House members in 2011; started with ~28 in July 2010; ~49 at start of 112th.",
+      "count_detail": {
+        "as_of_note": "Historical only—do not invent a 119th count. Show peak ~60 (2011) and year range."
+      },
+      "succeeded_by_de_facto": [
+        "freedom_caucus"
+      ],
+      "related_outside": [
+        {
+          "name": "FreedomWorks / Tea Party movement",
+          "note": "Grassroots and outside groups fueled the brand; the House Caucus was only one institutional face."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Wikipedia Tea Party Caucus",
+          "url": "https://en.wikipedia.org/wiki/Tea_Party_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "id": "liberty_caucus",
+      "name_en": "Liberty Caucus",
+      "name_zh": "自由党团（历史/非正式）",
+      "party": "R",
+      "kind": "historical",
+      "status": "defunct",
+      "series": "historical",
+      "spectrum": "libertarian_conservative",
+      "founded": 2011,
+      "year_range": "约 2011–2010年代中期",
+      "chair": "Associated with Justin Amash and libertarian-leaning Republicans (informal)",
+      "member_count": null,
+      "peak_members": null,
+      "peak_note": "Never a large formal roster; often described as a small libertarian-leaning circle. Exact peak unknown—show as —.",
+      "count_detail": {
+        "as_of_note": "Informal/historical; do not invent a precise membership number. Overlapped with Tea Party / later Freedom Caucus debates."
+      },
+      "sources": [
+        {
+          "label": "Wikipedia Liberty Caucus",
+          "url": "https://en.wikipedia.org/wiki/Liberty_Caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "low"
     }
   ],
   "chart_ready_rows": [
     {
-      "series": "democratic_ideological_caucuses",
+      "series": "democratic_ideological",
       "id": "ndc",
       "party": "D",
       "name_zh": "新民主党人联盟",
       "members": 112,
-      "kind": "formal"
+      "kind": "formal",
+      "status": "active"
     },
     {
-      "series": "democratic_ideological_caucuses",
+      "series": "democratic_ideological",
       "id": "cpc",
       "party": "D",
       "name_zh": "国会进步派党团",
       "members": 99,
       "kind": "formal",
+      "status": "active",
       "note": "仅计投票众议员；含参议院/代表共101"
     },
     {
-      "series": "democratic_ideological_caucuses",
+      "series": "democratic_ideological",
+      "id": "medicare_for_all",
+      "party": "D",
+      "name_zh": "全民医保党团",
+      "members": 58,
+      "kind": "formal",
+      "status": "active",
+      "note": "与 CPC 高度重叠"
+    },
+    {
+      "series": "democratic_ideological",
+      "id": "blue_collar",
+      "party": "D",
+      "name_zh": "蓝领党团",
+      "members": 29,
+      "kind": "formal",
+      "status": "active",
+      "note": "峰值约49（115届）"
+    },
+    {
+      "series": "democratic_ideological",
       "id": "blue_dog",
       "party": "D",
       "name_zh": "蓝狗联盟",
       "members": 10,
-      "kind": "formal"
+      "kind": "formal",
+      "status": "active"
     },
     {
-      "series": "democratic_informal",
+      "series": "democratic_ideological",
       "id": "squad",
       "party": "D",
       "name_zh": "小队（非正式）",
       "members": 7,
-      "kind": "informal"
+      "kind": "informal",
+      "status": "active"
     },
     {
-      "series": "republican_five_families",
+      "series": "identity",
+      "id": "equality",
+      "party": "bipartisan",
+      "name_zh": "平等党团（LGBTQ+）",
+      "members": 191,
+      "kind": "formal",
+      "status": "active",
+      "note": "含盟友，体量大"
+    },
+    {
+      "series": "identity",
+      "id": "womens_caucus",
+      "party": "bipartisan",
+      "name_zh": "两党妇女党团",
+      "members": 128,
+      "kind": "formal",
+      "status": "active",
+      "note": "约等于众院女议员人数"
+    },
+    {
+      "series": "identity",
+      "id": "capac",
+      "party": "D",
+      "name_zh": "亚太裔美国人党团",
+      "members": 75,
+      "kind": "formal",
+      "status": "active",
+      "range": [
+        70,
+        83
+      ],
+      "note": "国会约83；众院约数"
+    },
+    {
+      "series": "identity",
+      "id": "cbc",
+      "party": "D",
+      "name_zh": "国会黑人党团",
+      "members": 58,
+      "kind": "formal",
+      "status": "active",
+      "note": "CBC 宣称119届共62（含参院）"
+    },
+    {
+      "series": "identity",
+      "id": "chc",
+      "party": "D",
+      "name_zh": "国会西裔党团",
+      "members": 40,
+      "kind": "formal",
+      "status": "active",
+      "note": "民主党；勿与共和党西裔会议混淆"
+    },
+    {
+      "series": "identity",
+      "id": "hispanic_conference",
+      "party": "R",
+      "name_zh": "西裔会议（共和党）",
+      "members": 11,
+      "kind": "formal",
+      "status": "active"
+    },
+    {
+      "series": "republican_ideological",
       "id": "rsc",
       "party": "R",
       "name_zh": "共和党研究委员会",
       "members": 188,
-      "kind": "formal"
+      "kind": "formal",
+      "status": "active",
+      "note": "≠ 共和党全会 Conference"
     },
     {
-      "series": "republican_five_families",
+      "series": "republican_ideological",
       "id": "main_street",
       "party": "R",
       "name_zh": "主街党团",
       "members": 85,
       "kind": "formal",
+      "status": "active",
       "range": [
         85,
         88
       ]
     },
     {
-      "series": "republican_five_families",
+      "series": "republican_ideological",
       "id": "rgg",
       "party": "R",
       "name_zh": "治理小组/周二小组",
       "members": 44,
       "kind": "formal",
+      "status": "active",
       "range": [
         44,
         46
       ]
     },
     {
-      "series": "republican_five_families",
+      "series": "republican_ideological",
       "id": "freedom_caucus",
       "party": "R",
       "name_zh": "自由核心小组",
       "members": 31,
       "kind": "formal",
+      "status": "active",
       "range": [
         29,
         40
@@ -386,14 +839,32 @@
       "party": "bipartisan",
       "name_zh": "问题解决者党团",
       "members": 48,
-      "kind": "formal"
+      "kind": "formal",
+      "status": "active"
+    },
+    {
+      "series": "historical",
+      "id": "tea_party",
+      "party": "R",
+      "name_zh": "茶党党团",
+      "members": null,
+      "peak_members": 60,
+      "year_range": "2010–2016",
+      "kind": "historical",
+      "status": "defunct",
+      "note": "峰值约60（2011）；能量迁入自由核心小组"
+    },
+    {
+      "series": "historical",
+      "id": "liberty_caucus",
+      "party": "R",
+      "name_zh": "自由党团",
+      "members": null,
+      "peak_members": null,
+      "year_range": "约2011–2010年代中",
+      "kind": "historical",
+      "status": "defunct",
+      "note": "规模未知；不以假数入图"
     }
-  ],
-  "viz_notes_zh": [
-    "主图：民主党三大正式党团（NDC/CPC/蓝狗）与共和党五大家族中有规模的四组并排；跨党 Problem Solvers 单独一栏。",
-    "成员可重叠，勿把各党团人数加总当成该党众议员总数。",
-    "HFC 与 RSC 用约数或误差条；CPC 可切换投票众议员 99 / 总计 101。",
-    "正式 caucus 与媒体非正式派系（小队）分色或分图。"
-  ],
-  "methodology_zh": "以 119 届国会为窗口；正式党团优先 Wikipedia 表头 + 官方站；RSC/HFC 因名单不完全公开标注置信度与区间。"
+  ]
 }
