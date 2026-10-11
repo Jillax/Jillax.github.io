@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>账本上的中美 AI · 私人资本与国家资本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eadb;
+    --sheet: #faf6ee;
+    --ink: #221c16;
+    --muted: #6f6458;
+    --line: #d9cbb6;
+    --us: #1d4e89;
+    --cn: #8a3a2a;
+    --gold: #8a5a12;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--us) 0 50%, var(--cn) 50% 100%) top / 100% 8px no-repeat,
+      var(--paper);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  button, input { font: inherit; color: inherit; }
+  a { color: var(--us); }
+  .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+  header { padding: 42px 0 10px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    letter-spacing: .14em; text-transform: uppercase;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.02;
+    margin: 14px 0 10px;
+    letter-spacing: -0.03em;
+  }
+  h2, h3 { font-family: "Noto Serif SC", serif; scroll-margin-top: 18px; }
+  h2 { font-size: 28px; margin: 28px 0 6px; }
+  h3 { font-size: 22px; margin: 22px 0 6px; }
+  .deck { max-width: 68ch; font-size: 18px; margin: 0 0 8px; }
+  .deck strong, .method strong { font-weight: 700; }
+  .method strong { color: var(--ink); }
+  .method {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .stat { background: var(--sheet); padding: 14px 16px 16px; }
+  .stat.us { box-shadow: inset 3px 0 var(--us); }
+  .stat.cn { box-shadow: inset 3px 0 var(--cn); }
+  .stat b {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .stat span { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .stories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .story {
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--line);
+    padding: 12px 12px 14px;
+    cursor: pointer;
+    min-height: 132px;
+  }
+  .story:hover, .story:focus-visible,
+  .solo:hover, .solo:focus-visible,
+  .row:hover, .row:focus-visible { background: var(--sheet); outline: 2px solid var(--ink); outline-offset: 2px; }
+  .story em, .solo em { font-style: normal; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--gold); }
+  .story strong { display: block; font-family: "Noto Serif SC", serif; font-size: 18px; line-height: 1.25; margin: 6px 0; }
+  .story p { margin: 0; color: var(--muted); font-size: 13px; }
+  .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+  .legend i.us, .bar.us { background: var(--us); }
+  .legend i.cn, .bar.cn { background: var(--cn); }
+  .legend i.hatch, .bar.us.hatch {
+    background: repeating-linear-gradient(135deg, var(--us) 0 6px, #c5d4e6 6px 9px);
+  }
+  .chart { border-top: 1px solid var(--ink); }
+  .year-k {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: .14em;
+    color: var(--muted);
+    margin: 12px 0 0;
+  }
+  .row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(140px, 240px) 1fr minmax(132px, 176px);
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+  .row[aria-current="true"], .solo[aria-current="true"] { background: rgba(255,255,255,.55); }
+  .who { display: flex; flex-direction: column; min-width: 0; }
+  .who b { font-weight: 700; }
+  .who small { color: var(--muted); font-size: 12px; }
+  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .bar { height: 100%; display: block; min-width: 2px; }
+  .num {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .num i { font-style: normal; color: var(--muted); margin-right: 6px; font-size: 11px; }
+  .aside { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 14px 0 8px; }
+  .aside article { border-top: 1px solid var(--line); padding-top: 10px; }
+  .aside h3 { margin: 0 0 6px; font-size: 18px; }
+  .break { border-top: 1px solid var(--ink); margin-top: 28px; }
+  .solo {
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) 1fr;
+    gap: 12px 28px;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    margin: 8px 0 18px;
+    cursor: pointer;
+  }
+  .solo.dashed { border-style: dashed; }
+  .solo b {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 4px 0;
+  }
+  .solo small { display: block; color: var(--muted); }
+  .solo p { margin: 0; }
+  .detail {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 28px;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin: 18px 0 36px;
+    scroll-margin-top: 18px;
+  }
+  .party {
+    display: inline-block;
+    border: 1.5px solid currentColor;
+    padding: 2px 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+  .party.us { color: var(--us); }
+  .party.cn { color: var(--cn); }
+  .party.ink { color: var(--ink); }
+  .idcard h3 { font-family: "Noto Serif SC", serif; font-size: 32px; margin: 8px 0 0; line-height: 1.05; }
+  .idcard .series { color: var(--muted); margin: 0 0 8px; font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  .big {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 8px 0 0;
+    letter-spacing: -0.04em;
+  }
+  .blurb { font-size: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 16px; }
+  th, td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  .en { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; font-size: 13px; }
+  footer { border-top: 1px solid var(--ink); padding: 18px 0 40px; color: var(--muted); font-size: 13px; }
+  footer strong { color: var(--ink); font-weight: 700; }
+  @media (max-width: 860px) {
+    .stats, .stories, .detail, .aside, .solo { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .num { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <a href="https://jillax.github.io/">← Jillax</a>
+      <a href="../congress-portfolios/">申报上的美国</a>
+      <a href="../dsa/">DSA 派系</a>
+      <a href="../sovereign-funds/">主权基金</a>
+      <span>中美 AI · 2026</span>
+      <span>两套口径，不加成一柱</span>
+    </div>
+    <h1>账本上的中美 AI</h1>
+    <p class="deck">这页有<strong>两本账</strong>。私人投资能把美国和中国并排，用的是斯坦福 AI 指数的同一口径，单位是十亿美元。国家资本每条自己的出处、自己的年份，不和私人投资合成一根柱。</p>
+  </header>
+  <p class="method">私人资本来自 Stanford HAI《AI Index》对 Quid 的整理：融资超过 150 万美元的 AI/ML 公司，记风险投资和私募，大部分政府出资不在里面。国家与公共资本按出处分开：美国 NITRD 非国防 AI 研发的财年数字、美国 2013–2024 年与 AI 相关的资助和合同、中国政府引导基金在 2000–2023 年投向 AI 企业的估计，以及 2025 年宣布的国家风险投资基金。<strong>私人投资的数字，在把政府引导基金算进去之后，会低估中国的总量。引导基金的累计和私人投资的年度流量不是同一个时间窗口，不能并成一根可比较的柱。</strong></p>
+
+  <p class="note">下面四格只放私人投资，单位是十亿美元。国家资本不进这排。</p>
+  <section class="stats" id="stats"></section>
+  <section class="stories" id="stories"></section>
+
+  <h2 id="private-annual">私人投资，按年</h2>
+  <p class="note" id="annual-note">美国和中国同一口径。线性刻度只属于这一组年度流量，不收累计，也不收国家资本。</p>
+  <div class="legend" aria-hidden="true"><span><i class="us"></i>美国</span><span><i class="cn"></i>中国</span></div>
+  <div class="chart" id="annual"></div>
+
+  <h2 id="private-cumulative">私人投资，累计</h2>
+  <p class="note" id="cumulative-note">这是另一个窗口里的私人投资。刻度只属于这一组，不要和某一年的流量比长短，也不要和引导基金加在一起。</p>
+  <div class="chart" id="cumulative"></div>
+  <div class="aside" id="aside"></div>
+
+  <div class="break" id="state">
+    <h2>国家与公共资本</h2>
+  </div>
+  <p class="note">下面四组不共用刻度，也不和上面的私人投资并排。点任何一行看窗口和出处。</p>
+
+  <h3 id="nitrd">美国联邦非国防 AI 研发</h3>
+  <p class="note">NITRD 的非国防口径。实心是实际或已颁布，斜线是预算请求。刻度只属于这三个财年。</p>
+  <div class="legend" aria-hidden="true"><span><i class="us"></i>实际或已颁布</span><span><i class="hatch us"></i>预算请求</span></div>
+  <div class="chart" id="nitrd-chart"></div>
+
+  <h3 id="awards">美国与 AI 相关的资助和合同</h3>
+  <p class="note">2013–2024 的另一笔合计，不是上面的财年研发。第一行是合计，下面三行是原文分项。刻度只属于这一笔。研究稿写的出处是 Stanford AI Index 2026 政策章，没有单列链接。</p>
+  <div class="chart" id="awards-chart"></div>
+
+  <h3 id="guidance">中国政府引导基金里的 AI</h3>
+  <p class="note">投向 AI 企业的估计，单列。全部行业已经投放的规模写在旁边，范围不是 AI，不成第二根对比柱。</p>
+  <div id="guidance-card"></div>
+
+  <h3 id="announced">中国宣布的国家风险投资基金</h3>
+  <p class="note">这是宣布，不是已经投出，范围也不只是 AI。不和引导基金、不和私人投资画在一起。</p>
+  <div id="announced-card"></div>
+
+  <div id="leftover" hidden></div>
+
+  <h2 id="method-detail">口径</h2>
+  <p class="note">同一行里的窗口才能互相看。换一行就是换尺子。</p>
+  <table id="defs"></table>
+  <p class="en" id="src-def"></p>
+  <p class="en" id="src-caveat"></p>
+
+  <h2 id="detail-title">这一条</h2>
+  <section class="detail" id="detail"></section>
+
+  <footer>
+    <p id="foot-date"></p>
+    <p><strong>私人投资的数字，在把政府引导基金算进去之后，会低估中国的总量。引导基金的累计和私人投资的年度流量不是同一个时间窗口，不能并成一根可比较的柱。</strong></p>
+    <p id="foot-primary"></p>
+    <p id="foot-links"></p>
+    <p id="foot-text-sources"></p>
+    <p>2025 年宣布的国家风险投资基金，研究稿没有附来源链接。金额、时间和范围只用研究稿里的那三个字段。</p>
+  </footer>
+</div>
+<script src="data.js"></script>
+<script>
+const DATA = window.AI_CAPITAL;
+const ROWS = DATA.chart_ready_rows || [];
+const UNIT = DATA.meta.unit === "USD_billion" ? "十亿美元" : (DATA.meta.unit || "");
+const COUNTRY = { US: "美国", China: "中国" };
+const entries = new Map();
+let used = new Set();
+let selected = "p-2025-US";
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function num(n) {
+  if (typeof n !== "number" || !Number.isFinite(n)) return "—";
+  const text = String(n);
+  return /e/i.test(text) ? String(n) : text;
+}
+function safeUrl(u) {
+  return typeof u === "string" && /^https:\/\//.test(u) ? u : "";
+}
+function prettyPeriod(p) {
+  const m = /^(\d{4})-(\d{4})$/.exec(p || "");
+  return m ? `${m[1]}–${m[2]}` : (p || "");
+}
+function formatDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+  return m ? `${m[1]} 年 ${Number(m[2])} 月 ${Number(m[3])} 日` : (iso || "");
+}
+function formatMonth(iso) {
+  const m = /^(\d{4})-(\d{2})$/.exec(iso || "");
+  return m ? `${m[1]} 年 ${Number(m[2])} 月` : (iso || "");
+}
+function seriesRows(name) {
+  used.add(name);
+  return ROWS.filter(r => r.series === name);
+}
+function remember(entry) {
+  entries.set(entry.id, entry);
+}
+function currentAttr(id) {
+  return id === selected ? ' aria-current="true"' : "";
+}
+function widthPct(value, max) {
+  if (!max) return 0;
+  return Math.max(0, Math.min(100, (value / max) * 100));
+}
+function chartHtml(items) {
+  if (!items.length) return `<p class="note">这一组没有行。</p>`;
+  const max = Math.max(...items.map(i => i.value));
+  return scaleLine(max) + items.map(item => {
+    const w = widthPct(item.value, max);
+    return `<button type="button" class="row" data-id="${esc(item.id)}"${currentAttr(item.id)}>
+      <span class="who"><b>${esc(item.title)}</b><small>${esc(item.sub)}</small></span>
+      <span class="track"><i class="bar ${item.cls}" style="width:${w}%"></i></span>
+      <span class="num"><i>${esc(item.unit || UNIT)}</i>${esc(num(item.value))}</span>
+    </button>`;
+  }).join("");
+}
+function annualMeta(year) {
+  return (DATA.private_capital.annual || []).find(a => a.year === year) || {};
+}
+
+function scaleLine(max) {
+  return `<p class="note scale">这组刻度的右端是 ${esc(num(max))} ${esc(UNIT)}。不能拿到另一组图里比长短。</p>`;
+}
+function renderStats() {
+  const annual = ROWS.filter(r => r.series === "private_annual");
+  const cum = ROWS.filter(r => r.series === "private_cumulative_2013_2025");
+  const pick = (rows, country, year) => rows.find(r => r.country === country && (year == null || r.year === year));
+  const cells = [
+    [pick(annual, "US", 2025), "2025 私人投资 · 美国", "us"],
+    [pick(annual, "China", 2025), "2025 私人投资 · 中国", "cn"],
+    [pick(cum, "US"), "2013–2025 累计私人 · 美国", "us"],
+    [pick(cum, "China"), "2013–2025 累计私人 · 中国", "cn"]
+  ];
+  document.getElementById("stats").innerHTML = cells.map(([row, label, tone]) =>
+    `<div class="stat ${tone}"><b>${esc(row ? num(row.value_usd_bn) : "—")}</b><span>${esc(label)} · ${esc(UNIT)}</span></div>`
+  ).join("");
+}
+
+function renderStories() {
+  const annual = ROWS.filter(r => r.series === "private_annual");
+  const cum = ROWS.filter(r => r.series === "private_cumulative_2013_2025");
+  const at = (rows, country, year) => rows.find(r => r.country === country && (year == null || r.year === year));
+  const ratio = annualMeta(2025).ratio_US_to_China;
+  const us = at(annual, "US", 2025);
+  const cn = at(annual, "China", 2025);
+  const cu = at(cum, "US");
+  const cc = at(cum, "China");
+  const items = [
+    ["private-annual", ratio == null ? "年度" : num(ratio) + " 倍", "2025 年私人投资", `美国 ${us ? num(us.value_usd_bn) : "—"}，中国 ${cn ? num(cn.value_usd_bn) : "—"}。倍数用报告里的字段。`],
+    ["private-cumulative", "2013–2025", "累计还是私人投资", `美国 ${cu ? num(cu.value_usd_bn) : "—"}，中国 ${cc ? num(cc.value_usd_bn) : "—"}。不和国家资本画在一张图里。`],
+    ["state", "各算各的", "国家资本", "财年研发、资助合同、引导基金、一则宣布。没有共同刻度。"],
+    ["method-detail", "不能加总", "口径", "引导基金算进去的话，私人这列会低估中国。累计和年度也不能并柱。"]
+  ];
+  document.getElementById("stories").innerHTML = items.map(([id, em, title, copy]) =>
+    `<button type="button" class="story" data-jump="${esc(id)}"><em>${esc(em)}</em><strong>${esc(title)}</strong><p>${esc(copy)}</p></button>`
+  ).join("");
+}
+
+function renderAnnual() {
+  const rows = seriesRows("private_annual").filter(r => r.capital_type === "private");
+  const years = [...new Set(rows.map(r => r.year))].sort((a, b) => a - b);
+  const note = document.getElementById("annual-note");
+  note.textContent = years.length
+    ? `${years.join("、")} 年，美国和中国同一口径。线性刻度只属于这一组年度流量，不收累计，也不收国家资本。`
+    : "没有年度私人投资的行。";
+  const max = Math.max(...rows.map(r => r.value_usd_bn), 0);
+  const html = years.map(year => {
+    const items = [];
+    for (const country of ["US", "China"]) {
+      const row = rows.find(r => r.year === year && r.country === country);
+      if (!row) continue;
+      const meta = annualMeta(year);
+      const id = `p-${year}-${country}`;
+      let blurb = "这一格是年度流量，不是多年累计。";
+      if (year === 2025 && meta.ratio_US_to_China != null) blurb += `报告写出的美国对中国倍数是 ${num(meta.ratio_US_to_China)}。`;
+      if (year === 2024) blurb += "研究稿没有给 2024 年的美中倍数。";
+      blurb += "不和累计、不和国家资本并成一根柱。";
+      remember({
+        id,
+        tone: country === "US" ? "us" : "cn",
+        kicker: COUNTRY[country] || country,
+        title: `${year} 年私人投资`,
+        value: row.value_usd_bn,
+        unit: UNIT,
+        blurb,
+        window: String(year),
+        source: meta.source || "",
+        url: meta.url || "",
+        series: row.series
+      });
+      items.push({
+        id,
+        title: COUNTRY[country] || country,
+        sub: `${year} · 私人投资`,
+        value: row.value_usd_bn,
+        cls: country === "US" ? "us" : "cn"
+      });
+    }
+    const buttons = items.map(item => {
+      const w = widthPct(item.value, max);
+      return `<button type="button" class="row" data-id="${esc(item.id)}"${currentAttr(item.id)}>
+        <span class="who"><b>${esc(item.title)}</b><small>${esc(item.sub)}</small></span>
+        <span class="track"><i class="bar ${item.cls}" style="width:${w}%"></i></span>
+        <span class="num"><i>${esc(UNIT)}</i>${esc(num(item.value))}</span>
+      </button>`;
+    }).join("");
+    return `<div class="year-k">${esc(String(year))}</div>${buttons}`;
+  }).join("");
+  document.getElementById("annual").innerHTML = html ? scaleLine(max) + html : `<p class="note">没有年度私人投资的行。</p>`;
+}
+
+function renderCumulative() {
+  const rows = seriesRows("private_cumulative_2013_2025").filter(r => r.capital_type === "private");
+  const meta = DATA.private_capital.cumulative_2013_2025 || {};
+  const windowText = prettyPeriod("2013-2025");
+  document.getElementById("cumulative-note").textContent =
+    `窗口 ${windowText}。刻度只属于这一组私人投资，不要和某一年的流量比长短，也不要和引导基金加在一起。`;
+  const items = [];
+  for (const country of ["US", "China"]) {
+    const row = rows.find(r => r.country === country);
+    if (!row) continue;
+    const id = `c-${country}`;
+    remember({
+      id,
+      tone: country === "US" ? "us" : "cn",
+      kicker: COUNTRY[country] || country,
+      title: `${windowText} 累计私人投资`,
+      value: row.value_usd_bn,
+      unit: UNIT,
+      blurb: "这是十三年的加总。不要和单年流量放在一根柱上，也不要和引导基金的累计加在一起。",
+      window: windowText,
+      source: meta.source || "",
+      url: "",
+      series: row.series
+    });
+    items.push({
+      id,
+      title: COUNTRY[country] || country,
+      sub: `${windowText} · 私人投资`,
+      value: row.value_usd_bn,
+      cls: country === "US" ? "us" : "cn"
+    });
+  }
+  document.getElementById("cumulative").innerHTML = chartHtml(items);
+}
+
+function renderAside() {
+  const gen = DATA.private_capital.generative_AI_private_2025 || {};
+  const firms = DATA.private_capital.newly_funded_AI_companies_2025 || {};
+  const globalP = DATA.private_capital.global_private_2025;
+  document.getElementById("aside").innerHTML = `
+    <article>
+      <h3>旁边的私人投资</h3>
+      <p class="note">2025 年全球私人投资 ${esc(num(globalP))} ${esc(UNIT)}。生成式 AI 的私人投资：全球 ${esc(num(gen.global))}，美国 ${esc(num(gen.US))}，中国与欧洲合在一起 ${esc(num(gen.China_plus_Europe))}。中国没有单独的数，所以这里不画美中对比。这些数和 2025 年私人投资放在同一组，总出处见页脚，研究稿没有再单列链接。</p>
+    </article>
+    <article>
+      <h3>新拿到融资的公司</h3>
+      <p class="note">2025 年：美国 ${esc(num(firms.US))} 家，中国 ${esc(num(firms.China))} 家。这是家数，不是${esc(UNIT)}。</p>
+    </article>`;
+}
+
+function renderNitrd() {
+  const table = DATA.state_or_public_capital.US_federal_AI_RD_NITRD_nondefense || {};
+  const keys = ["FY2023_actual", "FY2024_enacted", "FY2025_request"];
+  const labels = {
+    FY2023_actual: "2023 财年 · 实际",
+    FY2024_enacted: "2024 财年 · 已颁布",
+    FY2025_request: "2025 财年 · 预算请求"
+  };
+  const rows = seriesRows("US_NITRD_AI_RD");
+  const items = [];
+  for (const key of keys) {
+    const value = table[key];
+    const keyYear = Number(String(key).slice(2, 6));
+    const row = rows.find(r => r.value_usd_bn === value && r.year === keyYear);
+    if (!row) continue;
+    const hatch = row.capital_type === "public_nondefense_RD_request";
+    const id = `nitrd-${row.year}`;
+    const blurb = hatch
+      ? "这是预算请求，不是已经花掉的钱。只和同表的另外两个财年比。"
+      : "美国联邦非国防 AI 研发。只和同表的另外两个财年比，不和资助合同或中国的数字比。";
+    remember({
+      id,
+      tone: "us",
+      kicker: "美国",
+      title: labels[key],
+      value: row.value_usd_bn,
+      unit: UNIT,
+      blurb,
+      window: labels[key],
+      source: "NITRD · " + key,
+      url: table.url || "",
+      series: row.series
+    });
+    items.push({ id, title: labels[key], sub: "NITRD · 非国防", value: row.value_usd_bn, cls: hatch ? "us hatch" : "us" });
+  }
+  document.getElementById("nitrd-chart").innerHTML = chartHtml(items);
+}
+
+function renderAwards() {
+  const a = DATA.state_or_public_capital.US_AI_related_contracts_grants_OTAs_2013_2024 || {};
+  const parts = [
+    ["awards-total", "合计", "2013–2024", a.total, "原文合计。分项和它的关系以研究稿所列数字为准，这页不去轧差。"],
+    ["awards-grants", "资助", "grants", a.grants, "合计里的资助。不和 NITRD 的财年研发加总。"],
+    ["awards-contracts", "合同", "contracts", a.contracts, "合计里的合同。不和 NITRD 的财年研发加总。"],
+    ["awards-otas", "OTA", "OTAs", a.OTAs, "合计里的其他交易协议。不和 NITRD 的财年研发加总。"]
+  ];
+  const items = [];
+  for (const [id, title, sub, value, blurb] of parts) {
+    if (typeof value !== "number") continue;
+    remember({
+      id,
+      tone: "us",
+      kicker: "美国",
+      title,
+      value,
+      unit: UNIT,
+      blurb,
+      window: "2013–2024",
+      source: a.source || "",
+      url: "",
+      series: "US_AI_related_contracts_grants_OTAs_2013_2024"
+    });
+    items.push({ id, title, sub, value, cls: "us" });
+  }
+  document.getElementById("awards-chart").innerHTML = chartHtml(items);
+}
+
+function renderGuidance() {
+  const meta = DATA.state_or_public_capital.China_government_guidance_funds_to_AI_firms || {};
+  const row = seriesRows("China_guidance_funds_AI_cumulative")[0];
+  const host = document.getElementById("guidance-card");
+  if (!row) {
+    host.innerHTML = `<p class="note">chart_ready_rows 里没有引导基金这一行。</p>`;
+    return;
+  }
+  const period = prettyPeriod(row.period || meta.period);
+  let side = `全部行业已投放 ${num(meta.all_industries_guidance_funds_deployed)} ${UNIT}。那不是 AI 的配置，只说明更大的池子，不拿来画对比柱。`;
+  if (row.value_usd_bn !== meta.estimated_AI_allocation) {
+    side = `可比行是 ${num(row.value_usd_bn)}，研究稿另一字段是 ${num(meta.estimated_AI_allocation)}。` + side;
+  }
+  remember({
+    id: "guidance",
+    tone: "cn",
+    kicker: "中国",
+    title: "引导基金 · AI 企业",
+    value: row.value_usd_bn,
+    unit: UNIT,
+    blurb: `估计值，窗口 ${period}。全部行业已投放是 ${num(meta.all_industries_guidance_funds_deployed)}，范围不同，所以不画成第二根柱。不和私人投资的年度或累计并排。`,
+    window: period,
+    source: meta.source || "",
+    url: "",
+    series: row.series
+  });
+  host.innerHTML = `<button type="button" class="solo" data-id="guidance"${currentAttr("guidance")}>
+    <span><em>${esc(period)} · 估计</em><b>${esc(num(row.value_usd_bn))}</b><small>${esc(UNIT)} · AI 企业</small></span>
+    <p>${esc(side)}</p>
+  </button>`;
+}
+
+function renderAnnounced() {
+  const a = DATA.state_or_public_capital.China_announced_state_VC_fund_2025 || {};
+  const host = document.getElementById("announced-card");
+  if (typeof a.amount !== "number") {
+    host.innerHTML = `<p class="note">研究稿没有这条宣布。</p>`;
+    return;
+  }
+  const when = formatMonth(a.announced);
+  remember({
+    id: "announced",
+    tone: "cn",
+    kicker: "中国",
+    title: "宣布的国家风险投资基金",
+    value: a.amount,
+    unit: UNIT,
+    blurb: `${when}宣布。范围是人工智能和其他前沿技术。宣布不等于已经投出，也不等于 AI 支出。研究稿没有附来源链接。`,
+    window: when + " · 宣布",
+    source: a.scope || "",
+    url: "",
+    series: "China_announced_state_VC_fund_2025"
+  });
+  host.innerHTML = `<button type="button" class="solo dashed" data-id="announced"${currentAttr("announced")}>
+    <span><em>宣布 · 不是已投放</em><b>${esc(num(a.amount))}</b><small>${esc(UNIT)} · ${esc(when)}</small></span>
+    <p>范围是人工智能和其他前沿技术。宣布不等于已经投出的 AI 支出。<span class="en">${esc(a.scope || "")}</span></p>
+  </button>`;
+}
+
+function renderLeftover() {
+  const extra = ROWS.filter(r => !used.has(r.series));
+  const host = document.getElementById("leftover");
+  if (!extra.length) {
+    host.hidden = true;
+    host.innerHTML = "";
+    return;
+  }
+  host.hidden = false;
+  host.innerHTML = `<p class="note">下面这些行没有并进上面的柱子，避免把不同口径画在一起。</p>` +
+    extra.map(r => `<p class="note">${esc(r.series)} · ${esc(r.country || "")} · ${esc(r.year || r.period || "")} · ${esc(num(r.value_usd_bn))} ${esc(UNIT)}</p>`).join("");
+}
+
+function renderDefs() {
+  const years = (DATA.private_capital.annual || []).map(a => a.year).join("、");
+  const g = DATA.state_or_public_capital.China_government_guidance_funds_to_AI_firms || {};
+  const announced = DATA.state_or_public_capital.China_announced_state_VC_fund_2025 || {};
+  const rows = [
+    ["私人投资 · 年度", years, "美国和中国可以并排"],
+    ["私人投资 · 累计", "2013–2025", "只在这个窗口里比美中"],
+    ["美国 NITRD 非国防 AI 研发", "2023 财年实际，2024 财年已颁布，2025 财年请求", "只在这三个财年里比"],
+    ["美国资助、合同、OTA", "2013–2024 合计", "只拆这一笔的内部分项"],
+    ["中国引导基金 · AI 企业", prettyPeriod(g.period), "单列。不和私人投资画在一起"],
+    ["中国国家风险投资基金", formatMonth(announced.announced) + " 宣布", "不是已投放"]
+  ];
+  document.getElementById("defs").innerHTML =
+    `<thead><tr><th>账</th><th>窗口</th><th>怎么读</th></tr></thead><tbody>` +
+    rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("") +
+    `</tbody>`;
+  document.getElementById("src-def").textContent = DATA.meta.private_definition || "";
+  document.getElementById("src-caveat").textContent = DATA.meta.caveat || "";
+}
+
+function renderDetail() {
+  const entry = entries.get(selected) || entries.get("p-2025-US") || [...entries.values()][0];
+  const host = document.getElementById("detail");
+  if (!entry) {
+    host.innerHTML = `<p class="note">没有可显示的条目。</p>`;
+    return;
+  }
+  selected = entry.id;
+  const link = safeUrl(entry.url);
+  host.innerHTML = `
+    <div class="idcard">
+      <div class="party ${esc(entry.tone)}">${esc(entry.kicker)}</div>
+      <h3>${esc(entry.title)}</h3>
+      <p class="series">${esc(entry.series || "")}</p>
+      <p class="big">${esc(num(entry.value))}</p>
+      <p class="note">${esc(entry.unit || UNIT)}</p>
+    </div>
+    <div>
+      <p class="blurb">${esc(entry.blurb || "")}</p>
+      <p class="note">窗口：${esc(entry.window || "—")}</p>
+      ${entry.source ? `<p class="note">出处：${esc(entry.source)}</p>` : `<p class="note">研究稿没有给这条单独的出处。</p>`}
+      ${link ? `<div class="links"><a href="${esc(link)}" target="_blank" rel="noreferrer">${esc(entry.source || link)}</a></div>` : ""}
+    </div>`;
+}
+
+function renderFooter() {
+  document.getElementById("foot-date").textContent = `研究稿日期 ${formatDate(DATA.meta.as_of)}。单位是${UNIT}。私人投资与国家资本没有加总。`;
+  document.getElementById("foot-primary").textContent = `私人投资的总出处：${DATA.meta.primary_source || ""}。`;
+  const links = [];
+  const seen = new Set();
+  function add(title, url) {
+    const u = safeUrl(url);
+    if (!u || seen.has(u)) return;
+    seen.add(u);
+    links.push({ title, url: u });
+  }
+  for (const row of DATA.private_capital.annual || []) add(row.source, row.url);
+  add("NITRD AI R&D Investments", (DATA.state_or_public_capital.US_federal_AI_RD_NITRD_nondefense || {}).url);
+  document.getElementById("foot-links").innerHTML = links.map(l =>
+    `<a href="${esc(l.url)}" target="_blank" rel="noreferrer">${esc(l.title)}</a>`
+  ).join(" · ");
+  const textSources = [
+    ["累计私人投资", (DATA.private_capital.cumulative_2013_2025 || {}).source],
+    ["美国资助与合同", (DATA.state_or_public_capital.US_AI_related_contracts_grants_OTAs_2013_2024 || {}).source],
+    ["引导基金", (DATA.state_or_public_capital.China_government_guidance_funds_to_AI_firms || {}).source]
+  ].filter(([, s]) => s);
+  document.getElementById("foot-text-sources").textContent = textSources.map(([name, src]) => `${name}：${src}`).join("。") + "。这些条目研究稿没有单列链接。";
+}
+
+function render() {
+  entries.clear();
+  used = new Set();
+  renderStats();
+  renderStories();
+  renderAnnual();
+  renderCumulative();
+  renderAside();
+  renderNitrd();
+  renderAwards();
+  renderGuidance();
+  renderAnnounced();
+  renderLeftover();
+  renderDefs();
+  renderDetail();
+  renderFooter();
+}
+
+document.body.addEventListener("click", (event) => {
+  const jump = event.target.closest("[data-jump]");
+  if (jump) {
+    const target = document.getElementById(jump.dataset.jump);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  const btn = event.target.closest("[data-id]");
+  if (!btn || !entries.has(btn.dataset.id)) return;
+  selected = btn.dataset.id;
+  render();
+  document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
+const hash = location.hash.slice(1);
+if (hash) selected = hash;
+render();
+if (!entries.has(selected)) {
+  selected = "p-2025-US";
+  render();
+}
+</script>
+</body>
+</html>
