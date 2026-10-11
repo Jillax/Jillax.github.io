@@ -20,6 +20,15 @@
       "featured": true
     },
     {
+      "id": "us-party-factions",
+      "title": "众院里的派系",
+      "blurb": "第 119 届众议院民主/共和意识形态党团规模。成员可重叠，勿加总。",
+      "href": "us-party-factions/",
+      "tags": ["可视化", "国会", "2026"],
+      "group": "可视化",
+      "featured": true
+    },
+    {
       "id": "sovereign-funds",
       "title": "披露上的国家资本",
       "blurb": "各国大型主权基金自己公布的持仓构成。年报和官网上的比例为主，美国 13F 只作为上市美股的补充。",

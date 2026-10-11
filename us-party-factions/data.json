@@ -1,0 +1,399 @@
+{
+  "meta": {
+    "as_of": "2026-10-11",
+    "congress": "119th (2025–2027)",
+    "chamber_focus": "U.S. House of Representatives (Senate factions noted separately)",
+    "unit": "members",
+    "caveats": [
+      "Members may join multiple caucuses; party shares must NOT be summed to 100%.",
+      "House Freedom Caucus and (in 119th) RSC often do not publish complete official public rosters; counts are best estimates with sources.",
+      "Counts drift during a Congress (resignations, special elections, joins/leaves).",
+      "Informal labels (e.g. Squad) are not the same as formal House caucus membership."
+    ],
+    "house_party_baseline_approx": {
+      "democrats_voting": 214,
+      "republicans_voting": 219,
+      "note": "Approximate 119th House party split from Wikipedia caucus tables; vacancies may shift totals."
+    }
+  },
+  "caucuses": [
+    {
+      "id": "ndc",
+      "name_en": "New Democrat Coalition",
+      "name_zh": "新民主党人联盟",
+      "party": "D",
+      "kind": "formal_house_caucus",
+      "spectrum": "center_to_center_left",
+      "founded": 1997,
+      "chair": "Brad Schneider (IL-10)",
+      "member_count": 112,
+      "count_detail": {
+        "voting_house": 112,
+        "including_nonvoting_delegates_reported": 116,
+        "as_of_note": "Wikipedia table: 112/214 of House Democratic Caucus; article body also cites 116 members incl. nonvoting as of Aug 11, 2025"
+      },
+      "overlap": {
+        "with_cpc_approx": 30,
+        "with_blue_dog_approx": 6
+      },
+      "official_url": "https://newdemocratcoalition.house.gov/",
+      "sources": [
+        {
+          "label": "Wikipedia New Democrat Coalition",
+          "url": "https://en.wikipedia.org/wiki/New_Democrat_Coalition",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "cpc",
+      "name_en": "Congressional Progressive Caucus",
+      "name_zh": "国会进步派党团",
+      "party": "D",
+      "kind": "formal_house_caucus",
+      "spectrum": "progressive_left",
+      "founded": 1991,
+      "chair": "Greg Casar (TX-35)",
+      "member_count": 99,
+      "count_detail": {
+        "voting_house": 99,
+        "nonvoting_delegate": 1,
+        "senate": 1,
+        "total_declared": 101,
+        "as_of_note": "Wikipedia as of 2026-09-25: 101 = 99 voting House + 1 delegate + 1 senator (Bernie Sanders)"
+      },
+      "overlap": {
+        "with_ndc_approx": 30
+      },
+      "official_url": "https://progressives.house.gov/",
+      "sources": [
+        {
+          "label": "Wikipedia Congressional Progressive Caucus",
+          "url": "https://en.wikipedia.org/wiki/Congressional_Progressive_Caucus",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "CPC About",
+          "url": "https://progressives.house.gov/about-the-cpc",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "blue_dog",
+      "name_en": "Blue Dog Coalition",
+      "name_zh": "蓝狗联盟",
+      "party": "D",
+      "kind": "formal_house_caucus",
+      "spectrum": "moderate_conservative_democrat",
+      "founded": 1995,
+      "chair": "Co-chairs Marie Gluesenkamp Perez, Vicente Gonzalez, J. Luis Correa",
+      "member_count": 10,
+      "count_detail": {
+        "voting_house": 10,
+        "as_of_note": "Wikipedia Blue Dog Coalition (2026) and Blue Dog House members page"
+      },
+      "official_url": "https://bluedogs-gluesenkampperez.house.gov/",
+      "sources": [
+        {
+          "label": "Wikipedia Blue Dog Coalition",
+          "url": "https://en.wikipedia.org/wiki/Blue_Dog_Coalition",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Blue Dog members page",
+          "url": "http://bluedogs-gluesenkampperez.house.gov/members",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "squad",
+      "name_en": "The Squad",
+      "name_zh": "小队（非正式）",
+      "party": "D",
+      "kind": "informal_faction",
+      "spectrum": "far_left_progressive",
+      "founded": 2018,
+      "member_count": 7,
+      "count_detail": {
+        "note": "Media/informal label overlapping CPC; not a Clerk-registered caucus roster"
+      },
+      "parent_or_related": [
+        "cpc",
+        "justice_democrats"
+      ],
+      "sources": [
+        {
+          "label": "Wikipedia Squad (U.S. Congress)",
+          "url": "https://en.wikipedia.org/wiki/Squad_(U.S._Congress)",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "rsc",
+      "name_en": "Republican Study Committee",
+      "name_zh": "共和党研究委员会",
+      "party": "R",
+      "kind": "formal_house_caucus",
+      "spectrum": "conservative",
+      "founded": 1973,
+      "chair": "August Pfluger (TX-11)",
+      "member_count": 188,
+      "count_detail": {
+        "voting_house_entering_119th": 188,
+        "reported_may_2025": 189,
+        "as_of_note": "Largest GOP caucus; stopped publishing full public roster on site since ~2025-01-25"
+      },
+      "overlap": {
+        "with_freedom_caucus_approx": 25,
+        "with_republican_governance_group_approx": 25
+      },
+      "official_url": "https://rsc-pfluger.house.gov/",
+      "sources": [
+        {
+          "label": "Wikipedia Republican Study Committee",
+          "url": "https://en.wikipedia.org/wiki/Republican_Study_Committee",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "id": "freedom_caucus",
+      "name_en": "House Freedom Caucus",
+      "name_zh": "自由核心小组",
+      "party": "R",
+      "kind": "formal_house_caucus",
+      "spectrum": "hard_right_conservative",
+      "founded": 2015,
+      "chair": "Andy Harris (MD-1)",
+      "member_count": 31,
+      "count_detail": {
+        "known_members_range": "29–40",
+        "nada_roster_2025_04_22": 32,
+        "wikipedia_known_as_of_2026_07": 31,
+        "dc_insiders_119th": 29,
+        "as_of_note": "Historically invitation-only and opaque; prefer point 31 with range"
+      },
+      "preferred_display": {
+        "value": 31,
+        "display": "~31（已知名单）",
+        "range": [
+          29,
+          40
+        ]
+      },
+      "official_url": "https://freedomcaucus.org/",
+      "sources": [
+        {
+          "label": "Wikipedia Freedom Caucus",
+          "url": "https://en.wikipedia.org/wiki/Freedom_Caucus",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "NADA HFC roster PDF 2025-04-22",
+          "url": "https://www.nada.org/media/16927/download?inline=",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "main_street",
+      "name_en": "Republican Main Street Caucus",
+      "name_zh": "共和党主街党团",
+      "party": "R",
+      "kind": "formal_house_caucus",
+      "spectrum": "pragmatic_conservative",
+      "founded": 2020,
+      "chair": "Dusty Johnson (SD-AL)",
+      "member_count": 85,
+      "count_detail": {
+        "reported_range": "85–88",
+        "dc_insiders_119th": 88,
+        "as_of_note": "Often described as 85+ pragmatic conservatives"
+      },
+      "preferred_display": {
+        "value": 85,
+        "display": "~85–88",
+        "range": [
+          85,
+          88
+        ]
+      },
+      "official_url": null,
+      "sources": [
+        {
+          "label": "DC Insiders Main Street Caucus",
+          "url": "https://dc-insiders.com/congress/caucuses/republican-main-street-caucus",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "rgg",
+      "name_en": "Republican Governance Group",
+      "name_zh": "共和党治理小组（原周二小组）",
+      "party": "R",
+      "kind": "formal_house_caucus",
+      "spectrum": "moderate_republican",
+      "founded": 1994,
+      "aliases": [
+        "Tuesday Group",
+        "Tuesday Lunch Bunch"
+      ],
+      "member_count": 44,
+      "count_detail": {
+        "roll_call_jan_2025": 44,
+        "wikipedia_roster_note": "later rosters ~46 including delegates"
+      },
+      "preferred_display": {
+        "value": 44,
+        "display": "~44–46",
+        "range": [
+          44,
+          46
+        ]
+      },
+      "official_url": "https://republicangovernance.com/",
+      "sources": [
+        {
+          "label": "Wikipedia Republican Governance Group",
+          "url": "https://en.wikipedia.org/wiki/Republican_Governance_Group",
+          "retrieved": "2026-10-11"
+        },
+        {
+          "label": "Roll Call Jan 2025",
+          "url": "https://rollcall.com/2025/01/17/republican-governance-group-house-valadao-gimenez/",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "problem_solvers",
+      "name_en": "Problem Solvers Caucus",
+      "name_zh": "问题解决者党团（跨党）",
+      "party": "bipartisan",
+      "kind": "formal_house_caucus",
+      "spectrum": "bipartisan_centrist",
+      "founded": 2017,
+      "member_count": 48,
+      "count_detail": {
+        "total": 48,
+        "republicans_reported": 22,
+        "rule": "Paired join with opposite-party member"
+      },
+      "official_url": "https://problemsolverscaucus.house.gov/",
+      "sources": [
+        {
+          "label": "Problem Solvers Caucus members",
+          "url": "https://problemsolverscaucus.house.gov/about/caucus-members.htm",
+          "retrieved": "2026-10-11"
+        }
+      ],
+      "confidence": "high"
+    }
+  ],
+  "chart_ready_rows": [
+    {
+      "series": "democratic_ideological_caucuses",
+      "id": "ndc",
+      "party": "D",
+      "name_zh": "新民主党人联盟",
+      "members": 112,
+      "kind": "formal"
+    },
+    {
+      "series": "democratic_ideological_caucuses",
+      "id": "cpc",
+      "party": "D",
+      "name_zh": "国会进步派党团",
+      "members": 99,
+      "kind": "formal",
+      "note": "仅计投票众议员；含参议院/代表共101"
+    },
+    {
+      "series": "democratic_ideological_caucuses",
+      "id": "blue_dog",
+      "party": "D",
+      "name_zh": "蓝狗联盟",
+      "members": 10,
+      "kind": "formal"
+    },
+    {
+      "series": "democratic_informal",
+      "id": "squad",
+      "party": "D",
+      "name_zh": "小队（非正式）",
+      "members": 7,
+      "kind": "informal"
+    },
+    {
+      "series": "republican_five_families",
+      "id": "rsc",
+      "party": "R",
+      "name_zh": "共和党研究委员会",
+      "members": 188,
+      "kind": "formal"
+    },
+    {
+      "series": "republican_five_families",
+      "id": "main_street",
+      "party": "R",
+      "name_zh": "主街党团",
+      "members": 85,
+      "kind": "formal",
+      "range": [
+        85,
+        88
+      ]
+    },
+    {
+      "series": "republican_five_families",
+      "id": "rgg",
+      "party": "R",
+      "name_zh": "治理小组/周二小组",
+      "members": 44,
+      "kind": "formal",
+      "range": [
+        44,
+        46
+      ]
+    },
+    {
+      "series": "republican_five_families",
+      "id": "freedom_caucus",
+      "party": "R",
+      "name_zh": "自由核心小组",
+      "members": 31,
+      "kind": "formal",
+      "range": [
+        29,
+        40
+      ]
+    },
+    {
+      "series": "bipartisan",
+      "id": "problem_solvers",
+      "party": "bipartisan",
+      "name_zh": "问题解决者党团",
+      "members": 48,
+      "kind": "formal"
+    }
+  ],
+  "viz_notes_zh": [
+    "主图：民主党三大正式党团（NDC/CPC/蓝狗）与共和党五大家族中有规模的四组并排；跨党 Problem Solvers 单独一栏。",
+    "成员可重叠，勿把各党团人数加总当成该党众议员总数。",
+    "HFC 与 RSC 用约数或误差条；CPC 可切换投票众议员 99 / 总计 101。",
+    "正式 caucus 与媒体非正式派系（小队）分色或分图。"
+  ],
+  "methodology_zh": "以 119 届国会为窗口；正式党团优先 Wikipedia 表头 + 官方站；RSC/HFC 因名单不完全公开标注置信度与区间。"
+}
