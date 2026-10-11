@@ -196,10 +196,71 @@
     letter-spacing: -0.04em;
   }
   .blurb { font-size: 16px; }
+  .longform { margin: 0 0 16px; }
+  .longform h4 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 15px;
+    margin: 14px 0 4px;
+    color: var(--ink);
+  }
+  .longform h4:first-child { margin-top: 0; }
+  .longform p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 68ch;
+    line-height: 1.65;
+  }
+  .longform .lede {
+    color: var(--ink);
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
   .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; margin-top: 8px; }
   .meta-grid dt { color: var(--muted); font-size: 12px; margin: 0; }
   .meta-grid dd { margin: 2px 0 0; font-size: 14px; }
   .links { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; font-size: 13px; }
+  .scope-banner {
+    background: #fff8e8;
+    border: 1.5px solid var(--gold);
+    padding: 12px 16px;
+    margin: 0 0 18px;
+    font-size: 14px;
+  }
+  .scope-banner strong { color: var(--gold); font-family: "Noto Serif SC", serif; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin: 8px 0 28px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    background: var(--sheet);
+    padding: 12px 14px;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+  .card:hover, .card[aria-current="true"] {
+    border-color: var(--ink);
+    background: #fff;
+  }
+  .card .tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .card b { display: block; font-size: 15px; margin-bottom: 4px; }
+  .card p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.45; }
+  .card .n {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 18px;
+    margin-top: 8px;
+    letter-spacing: -0.03em;
+  }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
   .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
   footer { border-top: 1px solid var(--ink); padding: 18px 0 40px; color: var(--muted); font-size: 13px; }
@@ -207,6 +268,7 @@
   .loading { color: var(--muted); padding: 40px 0; }
   @media (max-width: 860px) {
     .stats, .detail, .meta-grid { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; }
     .row { grid-template-columns: 1fr; gap: 4px; }
     .num { text-align: left; }
   }
@@ -228,6 +290,8 @@
 
   <section class="intro" id="intro" aria-label="导读"></section>
 
+  <div class="scope-banner" id="scope" role="note"></div>
+
   <p class="method" id="method">以 119 届国会为窗口；正式党团优先 Wikipedia 表头与官方站。历史派系只报峰值与年代。</p>
 
   <div class="caveat" role="note">
@@ -247,11 +311,11 @@
   </div>
 
   <h2 class="section">民主党意识形态党团</h2>
-  <p class="note">正式：NDC、CPC、蓝狗、蓝领、全民医保等。小队为媒体非正式标签，与 CPC 重叠。</p>
+  <p class="note">正式：NDC、CPC、蓝狗、蓝领、全民医保等。小队为媒体非正式标签；正义民主党人为院外 PAC——二者都与 CPC 重叠，不是 Clerk 登记党团。</p>
   <div class="chart" id="chart-d" role="list"></div>
 
   <h2 class="section">身份与议题党团（横切意识形态）</h2>
-  <p class="note">CBC / CHC / CAPAC、两党妇女党团、平等党团、共和党西裔会议等。成员可同时属于意识形态党团——再次：勿加总。</p>
+  <p class="note">CBC / CHC / CAPAC、两党妇女党团、平等党团、劳工党团、共和党西裔会议等。身份/议题横切意识形态——再次：勿加总。</p>
   <div class="chart" id="chart-id" role="list"></div>
 
   <h2 class="section">共和党意识形态党团</h2>
@@ -259,14 +323,19 @@
   <div class="chart" id="chart-r" role="list"></div>
 
   <h2 class="section">跨党</h2>
-  <p class="note">问题解决者党团实行对开加入：一名共和党人对开一名民主党人。</p>
+  <p class="note">问题解决者（对开加入；与院外 No Labels 相邻但不是同一实体）。气候解决方案党团维持两党大致对等。</p>
   <div class="chart" id="chart-bi" role="list"></div>
 
   <h2 class="section">历史 / 已停摆</h2>
   <p class="note">茶党党团等不画当前假数；斜纹柱为峰值（若已知），右侧标年份与状态。</p>
   <div class="chart" id="chart-hist" role="list"></div>
 
-  <h2 class="section" id="detail-title">点一行，看这一派</h2>
+  <h2 class="section">卡片速览</h2>
+  <p class="note">每张卡片是该派系的一句中文定位；点击打开下方详细介绍（沿革、宗旨、正式程度、成员读法）。</p>
+  <div class="cards" id="cards" role="list"></div>
+
+  <h2 class="section" id="detail-title">详细介绍</h2>
+  <p class="note">点柱状图一行或上方卡片，展开该派系的中文长介绍。</p>
   <section class="detail" id="detail" aria-live="polite"></section>
 
   <footer id="footer">
@@ -423,14 +492,16 @@
       center_to_center_left: "中间偏左",
       progressive_left: "进步左翼",
       moderate_conservative_democrat: "温和保守民主党",
-      far_left_progressive: "更左进步派（媒体标签）",
+      far_left_progressive: "更左进步派（媒体/院外）",
       labor_left: "劳工取向左翼",
+      labor_issue: "劳工议题（偏民主党）",
       conservative: "保守派",
       hard_right_conservative: "强硬右翼保守",
       pragmatic_conservative: "务实保守",
       moderate_republican: "温和共和党",
       libertarian_conservative: "自由意志保守",
       bipartisan_centrist: "跨党中间派",
+      bipartisan_climate_centrist: "跨党气候中间派",
       identity_black: "身份·非裔",
       identity_hispanic: "身份·西裔（民主党）",
       identity_hispanic_republican: "身份·西裔（共和党）",
@@ -446,7 +517,7 @@
     const c = findCaucus(selected);
     const el = document.getElementById("detail");
     if (!row || !c) {
-      el.innerHTML = "<p>选择一行查看详情。</p>";
+      el.innerHTML = "<p>选择一行或一张卡片，查看该派系的详细中文介绍。</p>";
       return;
     }
     const color = partyColor(row.party, row.kind);
@@ -473,6 +544,16 @@
     const related = (c.related_outside || []).map(r =>
       `${esc(r.name)}：${esc(r.note)}`
     ).join("；");
+    const dz = c.detail_zh || {};
+    const longform = `
+      <div class="longform">
+        ${dz.blurb ? `<p class="lede">${esc(dz.blurb)}</p>` : ""}
+        ${dz.history ? `<h4>沿革</h4><p>${esc(dz.history)}</p>` : ""}
+        ${dz.ideology_or_purpose ? `<h4>意识形态 / 宗旨</h4><p>${esc(dz.ideology_or_purpose)}</p>` : ""}
+        ${dz.formality ? `<h4>正式程度</h4><p>${esc(dz.formality)}</p>` : ""}
+        ${dz.membership_notes ? `<h4>成员与人数怎么读</h4><p>${esc(dz.membership_notes)}</p>` : ""}
+        ${!dz.blurb && !dz.history ? `<p style="color:var(--muted)">（尚无中文长介绍字段）</p>` : ""}
+      </div>`;
 
     el.innerHTML = `
       <div class="idcard">
@@ -487,12 +568,14 @@
         }</p>
       </div>
       <div class="blurb">
+        ${longform}
         <dl class="meta-grid">
           <div><dt>光谱</dt><dd>${esc(spectrumZh(c.spectrum))}</dd></div>
-          <div><dt>成立</dt><dd>${c.founded ?? "—"}</dd></div>
+          <div><dt>成立</dt><dd>${c.founded ?? "—"}${c.founded_note ? ` <span style="color:var(--muted);font-size:12px">（${esc(c.founded_note)}）</span>` : ""}</dd></div>
           <div><dt>主席 / 共同主席</dt><dd>${esc(c.chair || "—")}</dd></div>
           <div><dt>置信度</dt><dd>${esc(c.confidence || "—")}</dd></div>
           ${c.year_range ? `<div><dt>年代</dt><dd>${esc(c.year_range)}</dd></div>` : ""}
+          ${c.not_to_confuse_with_zh ? `<div style="grid-column:1/-1"><dt>勿混淆</dt><dd>${esc(c.not_to_confuse_with_zh)}</dd></div>` : ""}
           ${c.dissolved_note ? `<div style="grid-column:1/-1"><dt>停摆说明</dt><dd>${esc(c.dissolved_note)}</dd></div>` : ""}
           ${c.peak_note ? `<div style="grid-column:1/-1"><dt>峰值说明</dt><dd>${esc(c.peak_note)}</dd></div>` : ""}
           ${c.count_detail?.as_of_note ? `<div style="grid-column:1/-1"><dt>计数说明</dt><dd>${esc(c.count_detail.as_of_note)}</dd></div>` : ""}
@@ -504,6 +587,39 @@
         </dl>
         <div class="links">${official}${sources}</div>
       </div>`;
+  }
+
+  function renderScope() {
+    const el = document.getElementById("scope");
+    if (!el) return;
+    const note = meta.scope_note_zh || "本页是精选的主要众院派系集合，不是 Clerk/CHA 全部 CMO 名册。";
+    el.innerHTML = `<strong>范围：精选，不是穷尽。</strong> ${esc(note)}`;
+  }
+
+  function renderCards() {
+    const el = document.getElementById("cards");
+    if (!el) return;
+    el.innerHTML = rows.map(row => {
+      const c = findCaucus(row.id);
+      const blurb = (c && c.detail_zh && c.detail_zh.blurb) ? c.detail_zh.blurb : (row.note || "");
+      const color = partyColor(row.party, row.kind);
+      const tag = `${partyLabel(row.party)} · ${kindLabel(row.kind, row.status)}`;
+      return `
+        <button type="button" class="card" role="listitem" data-id="${esc(row.id)}"
+          aria-current="${row.id === selected ? "true" : "false"}">
+          <div class="tag" style="color:${color}">${esc(tag)}</div>
+          <b>${esc(row.name_zh)}</b>
+          <p>${esc(blurb)}</p>
+          <div class="n">${esc(displayNum(row))}</div>
+        </button>`;
+    }).join("");
+    el.querySelectorAll(".card").forEach(btn => {
+      btn.addEventListener("click", () => {
+        selected = btn.dataset.id;
+        renderAll();
+        document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    });
   }
 
   function renderCaveats() {
@@ -523,6 +639,7 @@
     renderChart("chart-r", r => r.series === "republican_ideological");
     renderChart("chart-bi", r => r.series === "bipartisan");
     renderChart("chart-hist", r => r.kind === "historical");
+    renderCards();
     renderDetail();
   }
 
@@ -530,6 +647,7 @@
     document.getElementById("method").textContent = DATA.methodology_zh;
   }
   renderIntro();
+  renderScope();
   renderCaveats();
   renderAll();
 })();
