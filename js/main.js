@@ -3,36 +3,6 @@
    VA-11 Hall-A Cyberpunk Theme
    ============================================ */
 
-// ===== Theme Toggle =====
-(function() {
-    const toggle = document.getElementById('themeToggle');
-    if (!toggle) return;
-    const html = document.documentElement;
-    const saved = localStorage.getItem('theme');
-
-    // Default is dark (cyberpunk). Light mode still stays dark-ish (cyberpunk lite)
-    if (saved === 'light') {
-        html.setAttribute('data-theme', 'light');
-        toggle.textContent = '☾';
-    } else if (saved === 'dark') {
-        html.removeAttribute('data-theme');
-        toggle.textContent = '☀';
-    }
-
-    toggle.addEventListener('click', function() {
-        const isLight = html.hasAttribute('data-theme');
-        if (isLight) {
-            html.removeAttribute('data-theme');
-            toggle.textContent = '☀';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            html.setAttribute('data-theme', 'light');
-            toggle.textContent = '☾';
-            localStorage.setItem('theme', 'light');
-        }
-    });
-})();
-
 // ===== Page Transition Overlay =====
 (function() {
     const overlay = document.getElementById('page-transition-overlay');
@@ -142,13 +112,6 @@
         requestAnimationFrame(animateGlow);
     }
     animateGlow();
-})();
-
-// ===== Service Worker =====
-(function() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').catch(function() {});
-    }
 })();
 
 // ===== Custom Cursor =====

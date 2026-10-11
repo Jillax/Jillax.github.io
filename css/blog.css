@@ -129,7 +129,6 @@
     color: var(--text);
     line-height: 1.25;
     letter-spacing: -0.3px;
-    font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .article-header .article-meta {
     font-size: 0.82rem;

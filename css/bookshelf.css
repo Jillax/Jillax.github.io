@@ -19,11 +19,11 @@
     transition: all 0.3s ease;
     font-family: var(--font-body);
 }
-.cat-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
+.cat-tab:hover { border-color: var(--purple); color: var(--purple-bright); }
 .cat-tab.active {
-    border-color: var(--gold-dim);
-    background: var(--gold-dim);
-    color: var(--gold);
+    border-color: var(--purple);
+    background: var(--purple-soft);
+    color: var(--purple-bright);
 }
 .cat-tab .count {
     font-size: 0.68rem;
@@ -47,10 +47,9 @@
 .stat-card .num {
     font-family: var(--font-display);
     font-size: 1.5rem;
-    color: var(--gold-soft);
+    color: var(--purple-bright);
     font-weight: 500;
     line-height: 1.1;
-    font-variation-settings: 'SOFT' 60, 'WONK' 0;
 }
 .stat-card .label {
     font-size: 0.68rem;
@@ -79,7 +78,6 @@
     letter-spacing: 2px;
     margin-bottom: 16px;
     text-transform: uppercase;
-    font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
 /* ---- 评分分布条 ---- */
@@ -109,7 +107,7 @@
 }
 .rating-fill {
     height: 100%;
-    background: var(--gold-dim);
+    background: var(--purple);
     width: 0;
     transition: width 0.8s ease;
 }
@@ -161,9 +159,9 @@
     transition: all 0.3s ease;
     font-family: var(--font-body);
 }
-.filter-tab:hover { border-color: var(--gold-dim); color: var(--text-soft); }
+.filter-tab:hover { border-color: var(--purple); color: var(--text-soft); }
 .filter-tab.active {
-    border-color: var(--gold-dim);
+    border-color: var(--purple);
     color: var(--text-soft);
 }
 .filter-count {
@@ -186,7 +184,7 @@
     border: 1px solid var(--border);
     transition: border-color 0.3s ease;
 }
-.item-card:hover { border-color: var(--gold-dim); }
+.item-card:hover { border-color: var(--purple); }
 .item-card.hidden { display: none; }
 
 .item-cover {
@@ -246,10 +244,10 @@
 }
 .item-status.collect { border-color: rgba(122, 139, 110, 0.3); color: #7a8b6e; }
 .item-status.wish    { border-color: var(--border); color: var(--text-faint); }
-.item-status.do      { border-color: var(--gold-dim); color: var(--gold-soft); }
+.item-status.do      { border-color: var(--purple); color: var(--purple-bright); }
 .item-rating {
     font-size: 0.7rem;
-    color: var(--gold-soft);
+    color: var(--purple-bright);
     letter-spacing: 1px;
 }
 .item-date {

@@ -34,8 +34,7 @@
         '<a href="' + logoHref + '" class="nav-logo">◆ Jillax</a>' +
         '<div class="nav-links">' +
         linksHTML +
-        '<button class="theme-toggle" id="themeToggle" title="切换主题">☀</button>' +
-                '</div>' +
+        '</div>' +
         '</div>' +
         '</nav>';
 
