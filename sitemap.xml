@@ -38,7 +38,7 @@
     </url>
     <url>
         <loc>https://jillax.github.io/projects.html</loc>
-        <lastmod>2026-10-10</lastmod>
+        <lastmod>2026-10-11</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -69,6 +69,12 @@
     <url>
         <loc>https://jillax.github.io/sovereign-funds/</loc>
         <lastmod>2026-10-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://jillax.github.io/ai-investment/</loc>
+        <lastmod>2026-10-11</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
