@@ -11,21 +11,41 @@
     const isHome = page === 'index';
     const logoHref = isHome ? '#' : 'index.html';
 
+    // Five channels. Portfolio lives on the works page.
+    // Bookshelf + translations share 阅读与译制.
+    // Blog is sparse, so contact sits on that same channel.
     const navItems = [
-        { href: 'about.html',     label: '关于我',   hide: '' },
-        { href: 'projects.html',  label: '项目',   hide: '' },
-        { href: 'portfolio.html', label: '投资',   hide: 'small' },
-        { href: 'contact.html',   label: '联系',   hide: 'small' },
-        { href: 'translations.html', label: '译制', hide: 'mobile' },
-        { href: 'bookshelf.html', label: '书影音', hide: 'mobile' },
-        { href: 'blog.html',      label: '随笔',   hide: 'mobile' },
+        { href: 'index.html',    label: '首页',       pages: ['index'] },
+        { href: 'about.html',    label: '关于',       pages: ['about'] },
+        { href: 'projects.html', label: '作品',       pages: ['projects', 'portfolio'] },
+        { href: 'reading.html',  label: '阅读与译制', pages: ['reading', 'bookshelf', 'translations'] },
+        { href: 'blog.html',     label: '随笔 / 联系', pages: ['blog', 'contact'] },
     ];
+
+    const channelBars = {
+        reading: [
+            { href: 'reading.html',      page: 'reading',      label: '总览' },
+            { href: 'bookshelf.html',    page: 'bookshelf',    label: '书影音' },
+            { href: 'translations.html', page: 'translations', label: '译制' },
+        ],
+        notes: [
+            { href: 'blog.html',    page: 'blog',    label: '随笔' },
+            { href: 'contact.html', page: 'contact', label: '联系' },
+        ],
+    };
+    const pageChannel = {
+        reading: 'reading',
+        bookshelf: 'reading',
+        translations: 'reading',
+        blog: 'notes',
+        contact: 'notes',
+    };
 
     // ---- Build nav HTML ----
     const linksHTML = navItems.map(function(item) {
-        var cls = (page !== 'index' && item.href.indexOf(page) !== -1) ? ' class="current"' : '';
-        var hideAttr = item.hide ? ' data-nav-hide="' + item.hide + '"' : '';
-        return '<a href="' + item.href + '"' + cls + hideAttr + '>' + item.label + '</a>';
+        var active = item.pages.indexOf(page) !== -1;
+        var cls = active ? ' class="current" aria-current="page"' : '';
+        return '<a href="' + item.href + '"' + cls + '>' + item.label + '</a>';
     }).join('\n                ');
 
     var navHTML =
@@ -60,6 +80,23 @@
         '</div>' +
         '</footer>';
 
+    // ---- Channel switcher (reading, or notes + contact) ----
+    var channelKey = pageChannel[page];
+    var channelHTML = '';
+    if (channelKey && channelBars[channelKey]) {
+        var channelLinks = channelBars[channelKey].map(function(item) {
+            var active = item.page === page;
+            var cls = active ? ' class="current" aria-current="page"' : '';
+            return '<a href="' + item.href + '"' + cls + '>' + item.label + '</a>';
+        }).join('');
+        channelHTML =
+            '<div class="channel-bar">' +
+            '<div class="container channel-bar-inner">' +
+            channelLinks +
+            '</div>' +
+            '</div>';
+    }
+
     // ---- Inject into DOM ----
     // Insert nav as first element in body
     document.body.insertAdjacentHTML('afterbegin', navHTML);
@@ -67,4 +104,22 @@
     document.body.insertAdjacentHTML('afterbegin', overlayHTML);
     // Append footer at end of body
     document.body.insertAdjacentHTML('beforeend', footerHTML);
+    if (channelHTML) {
+        var main = document.querySelector('main');
+        if (main) {
+            document.body.classList.add('has-channel');
+            main.insertAdjacentHTML('afterbegin', channelHTML);
+        }
+    }
+
+    function syncNavOffset() {
+        var nav = document.querySelector('nav');
+        if (!nav) return;
+        document.documentElement.style.setProperty('--nav-offset', nav.offsetHeight + 'px');
+    }
+    syncNavOffset();
+    window.addEventListener('resize', syncNavOffset);
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncNavOffset);
+    }
 })();

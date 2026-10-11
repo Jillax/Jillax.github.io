@@ -1,0 +1,50 @@
+{
+  "updated": "2026-10-11",
+  "items": [
+    {
+      "id": "congress-portfolios",
+      "title": "申报上的美国",
+      "blurb": "国会人物、近期总统和几位州长的公开财产申报。口径不同，页面上按国会、总统、州长分开看。",
+      "href": "congress-portfolios/",
+      "tags": ["可视化", "国会", "2026"],
+      "group": "可视化",
+      "featured": true
+    },
+    {
+      "id": "dsa",
+      "title": "帐篷里的派系",
+      "blurb": "美国民主社会主义者的全国架构，以及面包与玫瑰、社会主义多数、红星这些内部派系。席位按 2025 年大会和 2026 年青年改选。",
+      "href": "dsa/",
+      "tags": ["组织", "DSA", "2026"],
+      "group": "可视化",
+      "featured": true
+    },
+    {
+      "id": "sovereign-funds",
+      "title": "披露上的国家资本",
+      "blurb": "各国大型主权基金自己公布的持仓构成。年报和官网上的比例为主，美国 13F 只作为上市美股的补充。",
+      "href": "sovereign-funds/",
+      "tags": ["可视化", "主权基金", "2026"],
+      "group": "可视化",
+      "featured": true
+    },
+    {
+      "id": "ai-investment",
+      "title": "账本上的中美 AI",
+      "blurb": "中美人工智能投资：私人资本按同一口径并排，国家资本按出处分开。",
+      "href": "ai-investment/",
+      "tags": ["可视化", "AI", "2026"],
+      "group": "可视化",
+      "featured": false
+    },
+    {
+      "id": "portfolio",
+      "title": "投资组合",
+      "blurb": "自己的持仓。总资产走势、现金债券权益的配置，以及可以展开的明细。",
+      "href": "portfolio.html",
+      "tags": ["持仓", "2026"],
+      "group": "记录",
+      "featured": false
+    }
+  ]
+}

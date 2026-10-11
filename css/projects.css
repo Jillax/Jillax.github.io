@@ -1,0 +1,135 @@
+/* ============================================
+   Jillax.github.io — Works cards
+   Shared by projects.html and the homepage
+   ============================================ */
+
+.project-category {
+    margin-bottom: 56px;
+}
+.project-category-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--neon-pink);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+}
+.project-category-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 1px;
+    background: var(--neon-pink);
+    box-shadow: 0 0 8px var(--neon-pink-glow);
+}
+
+.project-grid,
+.home-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.project-card {
+    border: 2px solid var(--border);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-card);
+}
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--purple);
+    opacity: 0.4;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(155, 89, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+.project-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(155, 89, 255, 0.15);
+}
+.project-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 12px var(--purple-glow);
+}
+
+.project-card-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+}
+.project-card-name {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.5px;
+}
+.project-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+}
+.project-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+}
+.project-card-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    padding: 2px 10px;
+    border: 1px solid var(--border);
+    color: var(--text-faint);
+    letter-spacing: 1px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+.project-card:hover .project-card-tag {
+    border-color: var(--border-glow);
+    color: var(--text-muted);
+}
+
+.project-status,
+.home-loading {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+.project-status a,
+.home-loading a {
+    color: var(--purple-bright);
+}
+
+@media (max-width: 768px) {
+    .project-grid,
+    .home-cards { grid-template-columns: 1fr; }
+}

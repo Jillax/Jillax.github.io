@@ -3,188 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的个人项目 — 公开数据可视化与专题页。">
+    <meta name="description" content="Jillax 的作品 — 公开数据可视化，以及挂在这个站上的其他页面。">
     <meta name="author" content="Jillax">
-    <meta property="og:title" content="项目 · Jillax">
-    <meta property="og:description" content="公开数据可视化与专题页。">
+    <meta property="og:title" content="作品 · Jillax">
+    <meta property="og:description" content="公开数据可视化，以及挂在这个站上的其他页面。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jillax.github.io/projects.html">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://jillax.github.io/projects.html">
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
-    <title>项目 · Jillax</title>
+    <title>作品 · Jillax</title>
     <link rel="stylesheet" href="css/main.css">
-    <style>
-        .page-header {
-            padding: 100px 0 24px;
-            position: relative;
-            max-width: var(--container-text);
-        }
-        .page-header .back-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
-            color: var(--text-faint);
-            margin-bottom: 16px;
-            transition: color 0.3s ease;
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .page-header .back-home:hover { color: var(--purple); }
-        .page-header h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 3.5vw, 2.8rem);
-            font-weight: 700;
-            color: var(--text);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .page-header p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 6px;
-            font-family: var(--font-mono);
-        }
-
-        .project-category {
-            margin-bottom: 56px;
-        }
-        .project-category-title {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            font-weight: 400;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--neon-pink);
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-            position: relative;
-        }
-        .project-category-title::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 60px;
-            height: 1px;
-            background: var(--neon-pink);
-            box-shadow: 0 0 8px var(--neon-pink-glow);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .project-card {
-            border: 2px solid var(--border);
-            padding: 28px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: all 0.4s ease;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-card);
-        }
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--purple);
-            opacity: 0.4;
-            transition: all 0.3s;
-        }
-        .project-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(155,89,255,0.03) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .project-card:hover {
-            border-color: var(--purple);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 32px rgba(155,89,255,0.15);
-        }
-        .project-card:hover::before {
-            opacity: 1;
-            box-shadow: 0 0 12px var(--purple-glow);
-        }
-
-        .project-card-icon {
-            font-size: 1.8rem;
-            line-height: 1;
-        }
-        .project-card-name {
-            font-family: var(--font-body);
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: 0.5px;
-        }
-        .project-card-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-weight: 300;
-        }
-        .project-card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: auto;
-        }
-        .project-card-tag {
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            padding: 2px 10px;
-            border: 1px solid var(--border);
-            color: var(--text-faint);
-            letter-spacing: 1px;
-            transition: all 0.3s;
-        }
-        .project-card:hover .project-card-tag {
-            border-color: var(--border-glow);
-            color: var(--text-muted);
-        }
-        .project-card-tag.wip {
-            border-color: rgba(255, 170, 64, 0.4);
-            color: var(--amber);
-            background: rgba(255, 170, 64, 0.08);
-        }
-
-        /* Locked/placeholder cards */
-        .project-card.locked {
-            opacity: 0.5;
-            cursor: default;
-        }
-        .project-card.locked:hover {
-            transform: none;
-            border-color: var(--border);
-            box-shadow: none;
-        }
-        .project-card.locked::before { opacity: 0.2; }
-
-        @media (max-width: 768px) {
-            .project-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/projects.css">
 </head>
 <body data-page="projects">
     <noscript>
         <div style="text-align:center;padding:60px 20px;font-family:monospace;color:#b47aff;background:#0d0a1a">
-            <h1>项目</h1>
-            <p>公开数据可视化与专题页。</p>
+            <h1>作品</h1>
+            <p><a href="congress-portfolios/" style="color:#b47aff">申报上的美国</a> · <a href="dsa/" style="color:#b47aff">帐篷里的派系</a> · <a href="sovereign-funds/" style="color:#b47aff">披露上的国家资本</a></p>
         </div>
     </noscript>
 
@@ -192,59 +28,18 @@
     <div class="container">
         <div class="page-header">
             <a href="index.html" class="back-home">← 返回主页</a>
-            <h1>项 目</h1>
-            <p>挂在这个站上的网页。</p>
+            <h1>作 品</h1>
+            <p>公开数据做成的页面。新的实验也挂在这里。</p>
         </div>
 
-        <div class="project-category reveal">
-            <div class="project-category-title">// PAGES</div>
-            <div class="project-grid">
-                <a href="congress-portfolios/" class="project-card">
-                    <div class="project-card-icon">▣</div>
-                    <div class="project-card-name">申报上的美国</div>
-                    <div class="project-card-desc">国会人物、近期总统和几位州长的公开财产申报。口径不同，页面上按国会、总统、州长分开看。</div>
-                    <div class="project-card-tags">
-                        <span class="project-card-tag">可视化</span>
-                        <span class="project-card-tag">国会</span>
-                        <span class="project-card-tag">2026</span>
-                    </div>
-                </a>
-                <a href="dsa/" class="project-card">
-                    <div class="project-card-icon">▣</div>
-                    <div class="project-card-name">帐篷里的派系</div>
-                    <div class="project-card-desc">美国民主社会主义者的全国架构，以及面包与玫瑰、社会主义多数、红星这些内部派系。席位按 2025 年大会和 2026 年青年改选。</div>
-                    <div class="project-card-tags">
-                        <span class="project-card-tag">组织</span>
-                        <span class="project-card-tag">DSA</span>
-                        <span class="project-card-tag">2026</span>
-                    </div>
-                </a>
-                <a href="sovereign-funds/" class="project-card">
-                    <div class="project-card-icon">▣</div>
-                    <div class="project-card-name">披露上的国家资本</div>
-                    <div class="project-card-desc">各国大型主权基金自己公布的持仓构成。年报和官网上的比例为主，美国 13F 只作为上市美股的补充。</div>
-                    <div class="project-card-tags">
-                        <span class="project-card-tag">可视化</span>
-                        <span class="project-card-tag">主权基金</span>
-                        <span class="project-card-tag">2026</span>
-                    </div>
-                </a>
-                <a href="ai-investment/" class="project-card">
-                    <div class="project-card-icon">▣</div>
-                    <div class="project-card-name">账本上的中美 AI</div>
-                    <div class="project-card-desc">中美人工智能投资：私人资本按同一口径并排，国家资本按出处分开。</div>
-                    <div class="project-card-tags">
-                        <span class="project-card-tag">可视化</span>
-                        <span class="project-card-tag">AI</span>
-                        <span class="project-card-tag">2026</span>
-                    </div>
-                </a>
-            </div>
+        <div id="projectRoot">
+            <p class="project-status">加载作品…</p>
         </div>
     </div>
     </main>
 
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/projects.js"></script>
 </body>
 </html>

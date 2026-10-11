@@ -74,6 +74,19 @@
     color: var(--purple);
     margin-right: 6px;
 }
+.about-contact {
+    font-family: var(--font-chinese);
+    font-size: 0.95rem;
+    color: var(--text-soft);
+    line-height: 1.9;
+    max-width: 42em;
+}
+.about-contact a {
+    color: var(--purple-bright);
+    border-bottom: 1px solid var(--border-glow);
+    margin-left: 6px;
+}
+.about-contact a:hover { color: var(--neon-cyan); }
 /* ===== Skills Tree ===== */
 .skills-grid {
     display: grid;

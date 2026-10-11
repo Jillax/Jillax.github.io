@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/projects.css">
 </head>
 <body data-page="index">
     <noscript>
@@ -43,17 +44,9 @@
         <div class="hero-layout">
             <div class="hero-content">
                 <div class="hero-ornament">HUMANITIES · AI · VA-11 HALL-A</div>
-<h1><span class="highlight">Jillax</span></h1>
+                <h1><span class="highlight">Jillax</span></h1>
                 <div class="hero-subtitle">100% 由 AI Agent 构筑的数字空间，我的互联网秘密基地，集成一些对我来说重要的东西。</div>
-                <div class="hero-actions">
-                    <a href="about.html" class="btn btn-primary">关于我</a>
-                    <a href="projects.html" class="btn">项目</a>
-                    <a href="portfolio.html" class="btn">投资</a>
-                    <a href="contact.html" class="btn">联系</a>
-                    <a href="translations.html" class="btn">译制</a>
-                    <a href="bookshelf.html" class="btn">书影音</a>
-                    <a href="blog.html" class="btn">随笔</a>
-                </div>
+                <p class="hero-position">历史学师范生。作品是公开数据的页面，阅读与译制放书影音和字幕，随笔和联系在同一条通道里。</p>
             </div>
             <div class="hero-mascot">
                 <div class="mascot-frame">
@@ -92,6 +85,37 @@
             <span>社媒内容</span><span class="ticker-dot">◆</span>
         </div>
     </div>
+
+    <section class="home-stage" id="homeStage">
+        <div class="home-stage-inner">
+            <div class="home-block">
+                <div class="home-kicker">// WORKS</div>
+                <h2>作品</h2>
+                <p class="home-lead">首页放了三张可视化。投资组合和后来的实验在作品页。</p>
+                <div class="home-cards" id="featuredProjects">
+                    <p class="home-loading">加载作品…</p>
+                </div>
+                <noscript>
+                    <div class="home-cards">
+                        <a class="project-card" href="congress-portfolios/"><div class="project-card-name">申报上的美国</div></a>
+                        <a class="project-card" href="dsa/"><div class="project-card-name">帐篷里的派系</div></a>
+                        <a class="project-card" href="sovereign-funds/"><div class="project-card-name">披露上的国家资本</div></a>
+                    </div>
+                </noscript>
+                <a class="home-more" href="projects.html">全部作品</a>
+            </div>
+
+            <div class="home-block">
+                <div class="home-kicker">// RECENT</div>
+                <h2>最近</h2>
+                <a class="home-recent" id="recentLink" href="translations.html">
+                    <span class="home-recent-kind" id="recentKind">更新</span>
+                    <span class="home-recent-title" id="recentTitle">加载最近一条…</span>
+                    <span class="home-recent-date" id="recentDate"></span>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     </main>
