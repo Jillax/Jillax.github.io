@@ -43,7 +43,6 @@
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text);
-    font-variation-settings: 'SOFT' 60, 'WONK' 0;
     text-shadow: 0 0 10px var(--purple-glow);
 }
 .stat-label {
@@ -96,8 +95,8 @@
     background: none; cursor: pointer;
     transition: all 0.3s ease; font-family: var(--font-body);
 }
-.sort-btn:hover { border-color: var(--gold-dim); color: var(--text-soft); }
-.sort-btn.active { border-color: var(--gold-dim); color: var(--text-soft); }
+.sort-btn:hover { border-color: var(--purple); color: var(--text-soft); }
+.sort-btn.active { border-color: var(--purple); color: var(--text-soft); }
 
 /* ===== Cards ===== */
 .trans-list { display: flex; flex-direction: column; gap: 14px; }

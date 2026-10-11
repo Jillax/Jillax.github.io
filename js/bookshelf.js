@@ -110,10 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getChartTheme() {
-        var isLight = document.documentElement.hasAttribute('data-theme');
         return {
-            grid: isLight ? 'rgba(44,40,36,0.06)' : 'rgba(255,255,255,0.06)',
-            text: isLight ? '#8c7e6c' : '#8f8271',
+            grid: 'rgba(155, 89, 255, 0.08)',
+            text: '#6b5a8a',
             gold: '#9b59ff',
             fillTop: 'rgba(155,89,255,0.06)',
             fillBottom: 'rgba(155,89,255,0.005)'
@@ -186,10 +185,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: colors.text === '#8c7e6c' ? '#f0ebe2' : '#27231e',
-                        titleColor: colors.text === '#8c7e6c' ? '#2b221a' : '#ddd3c4',
-                        bodyColor: colors.text === '#8c7e6c' ? '#5c5142' : '#bfb29f',
-                        borderColor: colors.text === '#8c7e6c' ? 'rgba(44,40,36,0.08)' : 'rgba(255,255,255,0.06)',
+                        backgroundColor: '#1e1838',
+                        titleColor: '#d4c8ef',
+                        bodyColor: '#a896cc',
+                        borderColor: 'rgba(155, 89, 255, 0.2)',
                         borderWidth: 1,
                         cornerRadius: 0,
                         padding: 10,
@@ -205,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         grid: { display: false },
                         ticks: {
                             color: colors.text,
-                            font: { size: 10, family: 'Spectral' },
+                            font: { size: 10, family: 'Share Tech Mono' },
                             maxRotation: 45,
                             maxTicksLimit: 15
                         }
@@ -215,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         beginAtZero: true,
                         ticks: {
                             color: colors.text,
-                            font: { size: 10, family: 'Spectral' },
+                            font: { size: 10, family: 'Share Tech Mono' },
                             stepSize: 1
                         }
                     }

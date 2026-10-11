@@ -2,7 +2,7 @@
 
 个人主页 · 书影音游清单 · 译制作品 · 随笔博客 · AI 文本
 
-归档风格的个人网站，托管于 GitHub Pages。100% 由 AI Agent 构筑。
+赛博朋克风格的个人网站，托管于 GitHub Pages。100% 由 AI Agent 构筑。
 
 ---
 
@@ -14,12 +14,12 @@
 | `about.html` | 关于：个人简介、技能树、时间线、项目展示 |
 | `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细） |
 | `contact.html` | 联系方式：GitHub / Bilibili / 豆瓣 / 知乎 / 邮箱 |
-| `share.html` | 画廊：AI 生成图像与数字创作，清单由 `assets/Image-Share/index.json` 驱动 |
-| `projects.html` | 项目清单：各类个人项目展示 |
+| `projects.html` | 项目清单：挂在这个站上的专题页 |
+| `congress-portfolios/` | 申报上的美国：国会、总统、州长公开财产申报 |
+| `dsa/` | 帐篷里的派系：美国民主社会主义者的架构与内部派系 |
+| `sovereign-funds/` | 披露上的国家资本：各国主权基金公开持仓 |
 | `translations.html` | 译制作品清单：Bilibili 视频译制作品管理与展示 |
 | `bookshelf.html` | 书影音游清单：豆瓣数据自动同步，含累计趋势折线图 |
-| `anki-web/` | Anki Web：基于 IndexedDB 的浏览器端记忆卡复习（含中国历史卡组） |
-| `history-projects/` | 教学工具子应用：时间线生成、战役推演、随堂投票等 |
 
 ### 博客页面（blog.html）
 
@@ -34,7 +34,7 @@
 
 **特色功能：**
 - 🔍 **全文搜索**：跨所有标签页实时搜索内容
-- 📖 **阅读进度条**：阅读文章时顶部金色进度指示器
+- 📖 **阅读进度条**：阅读文章时顶部紫色进度指示器
 - 📷 **图片灯箱**：点击想法图片放大查看
 
 ## 书影音游（bookshelf.html）
@@ -91,37 +91,24 @@
 - 搜索、排序（按时间/播放量）
 - 标签筛选（已完成/译制中）
 
-## 画廊（share.html）
-
-展示 AI 生成图像与数字创作。**图片一律以 WebP 发布，原始 PNG/JPG 只保留在本地**，
-不进版本控制（见 `.gitignore`）。
-
-新增图片后重建索引即可，无需改动页面代码：
-
-```bash
-python scripts/build_gallery_index.py            # 仅重建 index.json
-python scripts/build_gallery_index.py --convert  # 先把 PNG/JPG 转 WebP（需 Pillow），再重建
-```
-
 ## 设计
 
-暖色调归档风格，灵感来自旧纸张与藏书印。
+VA-11 Hall-A 式赛博朋克：深色底、霓虹紫与品红点缀。
 
-- **双主题**：支持明暗主题切换，偏好保存在 `localStorage`
-- **CSS 变量驱动**：统一的设计令牌系统（颜色、字体、间距）
-- **字体**：英文衬线 `Fraunces` / `Spectral`，中文衬线 `Noto Serif SC`
+- **CSS 变量驱动**：统一的设计令牌系统（颜色、字体、间距），见 `css/variables.css`
+- **字体**：展示体 `Orbitron`，正文 `Rajdhani` / `Noto Sans SC`，等宽 `Share Tech Mono`，中文衬线 `Noto Serif SC`
 - **响应式**：适配桌面端与移动端
 - **页面过渡动画**：页面间切换淡入淡出效果
 - **滚动浮现动画**：内容进入视口时渐入
 
-### 色彩系统
+### 色彩
 
-| 令牌 | 暗色 | 亮色 |
-|------|------|------|
-| 背景 `--bg` | `#1a1714` 暖黑 | `#e6dfd4` 米白 |
-| 文字 `--text` | `#ddd3c4` 暖白 | `#2b221a` 暖黑 |
-| 金色 `--gold` | `#c4a35a` | `#b8963e` |
-| 背景噪点 | SVG 颗粒纹理覆盖 | 同左 |
+| 令牌 | 色值 |
+|------|------|
+| 背景 `--bg` | `#0d0a1a` |
+| 文字 `--text` | `#d4c8ef` |
+| 主色 `--purple` | `#9b59ff` |
+| 点缀 `--neon-pink` / `--neon-cyan` | `#ff4da6` / `#00e5ff` |
 
 ## 技术栈
 
@@ -133,7 +120,6 @@ python scripts/build_gallery_index.py --convert  # 先把 PNG/JPG 转 WebP（需
 - **浏览器自动化**：`Playwright`（知乎内容抓取）
 - **数据抓取**：`Python` + `requests` + `BeautifulSoup`（豆瓣）
 - **统计**：不蒜子访问统计
-- **双主题**：深色暖黑与亮色米白双主题切换（`localStorage` 持久化）
 
 ## GitHub Actions 工作流
 

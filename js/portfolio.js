@@ -89,9 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
         gradient.addColorStop(0, 'rgba(155, 89, 255, 0.25)');
         gradient.addColorStop(1, 'rgba(155, 89, 255, 0.01)');
 
-        var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-        var textColor = isDark ? 'rgba(212, 200, 239, 0.5)' : 'rgba(168, 150, 204, 0.5)';
-        var gridColor = isDark ? 'rgba(155, 89, 255, 0.06)' : 'rgba(155, 89, 255, 0.1)';
+        var textColor = 'rgba(212, 200, 239, 0.5)';
+        var gridColor = 'rgba(155, 89, 255, 0.06)';
 
         var isSingle = data.history.length === 1;
 
@@ -107,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     backgroundColor: gradient,
                     borderWidth: isSingle ? 0 : 1.5,
                     pointBackgroundColor: '#9b59ff',
-                    pointBorderColor: isDark ? '#0d0a1a' : '#1a1530',
+                    pointBorderColor: '#0d0a1a',
                     pointBorderWidth: 1.5,
                     pointRadius: isSingle ? 8 : 3,
                     pointHoverRadius: isSingle ? 10 : 5,
@@ -236,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var rows = document.querySelectorAll('#pctBars .pct-row');
         rows.forEach(function(row, i) {
-            var cat = cats[i] || { name: '', value: 0, color: 'var(--gold)' };
+            var cat = cats[i] || { name: '', value: 0, color: 'var(--amber)' };
             var pct = totalValue > 0 ? (cat.value / totalValue * 100) : 0;
             var pctStr = pct.toFixed(1);
             row.querySelector('.pct-name').textContent = cat.name;
@@ -317,8 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
             '恒生科技': 0.06
         };
 
-        var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-
         var items = [];
         var totalCurrent = 0;
         data.categories.forEach(function(cat) {
@@ -377,8 +374,8 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.width = parent.offsetWidth;
         canvas.height = parent.offsetHeight;
 
-        var labelColor = isDark ? 'rgba(212, 200, 239, 0.5)' : 'rgba(168, 150, 204, 0.5)';
-        var gridColor = isDark ? 'rgba(155, 89, 255, 0.06)' : 'rgba(155, 89, 255, 0.1)';
+        var labelColor = 'rgba(212, 200, 239, 0.5)';
+        var gridColor = 'rgba(155, 89, 255, 0.06)';
 
         new Chart(ctx, {
             type: 'line',
@@ -399,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     borderWidth: 1.5,
                     pointBackgroundColor: '#ff4da6',
-                    pointBorderColor: isDark ? '#0d0a1a' : '#1a1530',
+                    pointBorderColor: '#0d0a1a',
                     pointBorderWidth: 1.5,
                     pointRadius: 4,
                     pointHoverRadius: 6,

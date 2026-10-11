@@ -127,22 +127,6 @@ nav .container::before { display: none; }
     background: var(--purple);
     box-shadow: 0 0 8px var(--purple-glow);
 }
-.theme-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--purple);
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding: 6px 10px;
-    transition: all 0.3s ease;
-    font-family: var(--font-body);
-    line-height: 1;
-}
-.theme-toggle:hover {
-    color: var(--neon-pink);
-    border-color: var(--neon-pink);
-    box-shadow: 0 0 12px var(--neon-pink-glow);
-}
 
 /* ===== Page Header ===== */
 .page-header {

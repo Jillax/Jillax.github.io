@@ -1,6 +1,6 @@
 /* ============================================
    Jillax.github.io — Design Tokens
-   Shared across all pages & history-projects
+   Shared across all pages
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
@@ -59,20 +59,4 @@
     --font-chinese: 'Noto Sans SC', sans-serif;
     --font-serif: 'Noto Serif SC', Georgia, serif;
     --base-scale: 1.15;
-}
-
-/* Light mode override */
-[data-theme="light"] {
-    --bg: #1a1530;
-    --bg-soft: #1e1838;
-    --bg-surface: #241e42;
-    --bg-card: #2a2350;
-    --bg-nav: rgba(26, 21, 48, 0.92);
-    --text: #ddd3f0;
-    --text-soft: #b8a6d8;
-    --text-muted: #7a68a0;
-    --text-faint: #4a3a6a;
-    --border: rgba(155, 89, 255, 0.15);
-    --border-glow: rgba(155, 89, 255, 0.3);
-    --overlay-bg: #1a1530;
 }
