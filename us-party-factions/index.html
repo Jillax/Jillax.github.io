@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>众院里的派系 · 第 119 届众议院意识形态党团</title>
+<title>众院里的派系 · 第 119 届众议院意识形态与身份党团</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
@@ -21,6 +21,7 @@
     --rep: #9c2b3a;
     --rep-soft: #b85a4a;
     --bi: #5a6b4a;
+    --hist: #7a6e5e;
     --shadow: 0 1px 0 rgba(34,28,22,.06);
   }
   * { box-sizing: border-box; }
@@ -55,8 +56,22 @@
     margin: 14px 0 10px;
     letter-spacing: -0.03em;
   }
-  .deck { max-width: 68ch; font-size: 18px; margin: 0 0 8px; }
+  .deck { max-width: 72ch; font-size: 18px; margin: 0 0 16px; }
   .deck strong { font-weight: 700; }
+  .intro {
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    padding: 18px 20px 8px;
+    margin: 0 0 18px;
+  }
+  .intro h2 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .intro .block { margin-bottom: 14px; }
+  .intro p { margin: 0; color: var(--muted); font-size: 14px; max-width: 78ch; }
   .method {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -93,7 +108,7 @@
     line-height: 1.1;
   }
   .stat span { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
-  h2 {
+  h2.section {
     font-family: "Noto Serif SC", serif;
     font-size: 28px;
     margin: 28px 0 6px;
@@ -103,7 +118,7 @@
   .row {
     width: 100%;
     display: grid;
-    grid-template-columns: 200px 1fr 120px;
+    grid-template-columns: 220px 1fr 140px;
     gap: 10px;
     align-items: center;
     padding: 9px 0;
@@ -114,6 +129,7 @@
     cursor: pointer;
   }
   .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .row.historical { opacity: .92; }
   .who { display: flex; flex-direction: column; min-width: 0; }
   .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .who small { color: var(--muted); font-size: 12px; }
@@ -124,6 +140,18 @@
     background: rgba(34,28,22,.18);
     border-right: 2px solid var(--ink);
   }
+  .bar-peak {
+    height: 100%; display: block;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--hist),
+      var(--hist) 4px,
+      rgba(122,110,94,.35) 4px,
+      rgba(122,110,94,.35) 8px
+    );
+    min-width: 2px;
+    opacity: .85;
+  }
   .num {
     font-family: "IBM Plex Mono", monospace;
     font-size: 13px;
@@ -131,6 +159,16 @@
     white-space: nowrap;
   }
   .num i { font-style: normal; color: var(--muted); margin-right: 4px; font-size: 11px; }
+  .badge {
+    display: inline-block;
+    border: 1px solid currentColor;
+    padding: 0 5px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    margin-right: 4px;
+    vertical-align: 1px;
+  }
   .detail {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -185,39 +223,50 @@
       <span>成员可重叠 · 勿加总</span>
     </div>
     <h1>众院里的派系</h1>
-    <p class="deck">第 119 届众议院里，民主党与共和党各有正式的意识形态党团，再加上小队这类媒体标签，以及跨党的问题解决者。柱子是<strong>各党团规模</strong>，不是该党众议员的加总。</p>
+    <p class="deck" id="deck">第 119 届众议院里，民主党与共和党各有正式的意识形态党团，还有身份党团、非正式标签与历史派系。柱子是<strong>各党团规模</strong>，不是该党众议员的加总。</p>
   </header>
 
-  <p class="method" id="method">以 119 届国会为窗口；正式党团优先 Wikipedia 表头与官方站。RSC、自由核心小组因名单不完全公开，标了置信度与区间。非正式标签（小队）与正式 caucus 分开展示。</p>
+  <section class="intro" id="intro" aria-label="导读"></section>
+
+  <p class="method" id="method">以 119 届国会为窗口；正式党团优先 Wikipedia 表头与官方站。历史派系只报峰值与年代。</p>
 
   <div class="caveat" role="note">
     <strong>重要：成员可重叠，勿加总。</strong>
-    同一名众议员可以同时加入多个党团（例如约 30 人同时在 NDC 与 CPC）。各柱人数相加<strong>不等于</strong>民主党或共和党众议员总数，也不应解读为占该党的百分比之和。
+    同一名众议员可以同时加入多个党团（例如约 30 人同时在 NDC 与 CPC；身份党团与意识形态党团也横切重叠）。各柱人数相加<strong>不等于</strong>民主党或共和党众议员总数，也不应解读为占该党的百分比之和。历史组显示的是峰值，不是今天的席位。
   </div>
 
   <section class="stats" id="stats" aria-label="关键数字"></section>
 
   <div class="legend">
-    <span><i style="background:var(--dem)"></i>民主党正式党团</span>
+    <span><i style="background:var(--dem)"></i>民主党正式</span>
     <span><i style="background:var(--dem-soft);outline:1px dashed var(--dem)"></i>民主党非正式</span>
-    <span><i style="background:var(--rep)"></i>共和党党团</span>
+    <span><i style="background:var(--rep)"></i>共和党</span>
     <span><i style="background:var(--bi)"></i>跨党</span>
+    <span><i style="background:var(--hist)"></i>历史/峰值（斜纹）</span>
     <span>深色段为点估计；浅色延伸为区间上限</span>
   </div>
 
-  <h2>民主党意识形态党团</h2>
-  <p class="note">正式：新民主党人联盟、国会进步派党团、蓝狗。小队为媒体非正式标签，与 CPC 重叠。</p>
+  <h2 class="section">民主党意识形态党团</h2>
+  <p class="note">正式：NDC、CPC、蓝狗、蓝领、全民医保等。小队为媒体非正式标签，与 CPC 重叠。</p>
   <div class="chart" id="chart-d" role="list"></div>
 
-  <h2>共和党「五大家族」中有规模的四组</h2>
-  <p class="note">RSC 最大；主街、治理小组、自由核心小组有区间。人数可重叠，勿加总。</p>
+  <h2 class="section">身份与议题党团（横切意识形态）</h2>
+  <p class="note">CBC / CHC / CAPAC、两党妇女党团、平等党团、共和党西裔会议等。成员可同时属于意识形态党团——再次：勿加总。</p>
+  <div class="chart" id="chart-id" role="list"></div>
+
+  <h2 class="section">共和党意识形态党团</h2>
+  <p class="note">RSC 最大；主街、治理小组、自由核心小组有区间。勿与「众议院共和党会议」（全体共和党议员）混淆。</p>
   <div class="chart" id="chart-r" role="list"></div>
 
-  <h2>跨党</h2>
+  <h2 class="section">跨党</h2>
   <p class="note">问题解决者党团实行对开加入：一名共和党人对开一名民主党人。</p>
   <div class="chart" id="chart-bi" role="list"></div>
 
-  <h2 id="detail-title">点一根柱，看这一派</h2>
+  <h2 class="section">历史 / 已停摆</h2>
+  <p class="note">茶党党团等不画当前假数；斜纹柱为峰值（若已知），右侧标年份与状态。</p>
+  <div class="chart" id="chart-hist" role="list"></div>
+
+  <h2 class="section" id="detail-title">点一行，看这一派</h2>
   <section class="detail" id="detail" aria-live="polite"></section>
 
   <footer id="footer">
@@ -246,11 +295,18 @@
   const caucuses = DATA.caucuses || [];
   const meta = DATA.meta || {};
   const baseline = meta.house_party_baseline_approx || {};
-  let selected = rows[0]?.id || "ndc";
+  const intro = DATA.intro_zh || {};
+  let selected = rows.find(r => r.id === "ndc")?.id || rows[0]?.id;
 
-  const MAX = Math.max(...rows.map(r => (r.range ? r.range[1] : r.members)), 1);
+  const numericVals = rows.map(r => {
+    if (r.kind === "historical") return r.peak_members || 0;
+    if (r.range) return r.range[1];
+    return r.members || 0;
+  });
+  const MAX = Math.max(...numericVals, 1);
 
   function partyColor(party, kind) {
+    if (kind === "historical") return "var(--hist)";
     if (party === "D") return kind === "informal" ? "var(--dem-soft)" : "var(--dem)";
     if (party === "R") return "var(--rep)";
     return "var(--bi)";
@@ -262,47 +318,94 @@
     return "跨党";
   }
 
+  function kindLabel(kind, status) {
+    if (kind === "historical" || status === "defunct") return "历史";
+    if (kind === "informal") return "非正式";
+    return "正式";
+  }
+
   function findCaucus(id) {
     return caucuses.find(c => c.id === id);
   }
 
   function displayNum(row) {
+    if (row.kind === "historical") {
+      if (row.peak_members != null) return `峰值 ~${row.peak_members}`;
+      return "—";
+    }
     if (row.range) return `~${row.range[0]}–${row.range[1]}`;
+    if (row.members == null) return "—";
     return String(row.members);
+  }
+
+  function renderIntro() {
+    if (intro.deck) {
+      const deck = esc(intro.deck);
+      document.getElementById("deck").innerHTML = deck.replace(
+        "各党团/派系的规模（或历史峰值）",
+        "<strong>各党团/派系的规模（或历史峰值）</strong>"
+      );
+    }
+    const el = document.getElementById("intro");
+    const sections = intro.sections || [];
+    el.innerHTML = sections.map(s => `
+      <div class="block">
+        <h2>${esc(s.title)}</h2>
+        <p>${esc(s.body)}</p>
+      </div>`).join("");
   }
 
   function renderStats() {
     const el = document.getElementById("stats");
-    const dFormal = rows.filter(r => r.party === "D" && r.kind === "formal");
-    const rFormal = rows.filter(r => r.party === "R");
+    const active = rows.filter(r => r.kind !== "historical");
+    const hist = rows.filter(r => r.kind === "historical");
     el.innerHTML = `
       <div class="stat"><b>${baseline.democrats_voting ?? "—"}</b><span>民主党投票席（约）</span></div>
       <div class="stat"><b>${baseline.republicans_voting ?? "—"}</b><span>共和党投票席（约）</span></div>
-      <div class="stat"><b>${dFormal.length}</b><span>民主党正式党团（图中）</span></div>
-      <div class="stat"><b>${rFormal.length}</b><span>共和党党团（图中）</span></div>
+      <div class="stat"><b>${active.length}</b><span>现行党团/派系（图中）</span></div>
+      <div class="stat"><b>${hist.length}</b><span>历史/已停摆（图中）</span></div>
     `;
+  }
+
+  function rowNote(row) {
+    if (row.kind === "historical") {
+      const yr = row.year_range ? esc(row.year_range) : "历史";
+      return `<small><span class="badge">历史</span>${yr}${row.note ? " · " + esc(row.note) : ""}</small>`;
+    }
+    const k = row.kind === "informal" ? "非正式" : "正式";
+    return `<small><span class="badge">${k}</span>${row.note ? esc(row.note) : (row.status === "active" ? "现行" : "")}</small>`;
   }
 
   function renderChart(containerId, seriesFilter) {
     const el = document.getElementById(containerId);
     const subset = rows.filter(seriesFilter);
+    if (!subset.length) {
+      el.innerHTML = '<p class="note" style="padding:12px 0">（本栏暂无条目）</p>';
+      return;
+    }
     el.innerHTML = subset.map(row => {
-      const pct = (row.members / MAX) * 100;
-      const rangePct = row.range ? (row.range[1] / MAX) * 100 : null;
+      const isHist = row.kind === "historical";
+      const value = isHist ? (row.peak_members || 0) : (row.members || 0);
+      const pct = value ? (value / MAX) * 100 : 0;
+      const rangePct = !isHist && row.range ? (row.range[1] / MAX) * 100 : null;
       const color = partyColor(row.party, row.kind);
       const rangeHtml = rangePct != null
-        ? `<span class="bar-range" style="left:${pct}%;width:${Math.max(rangePct - pct, 0)}%" title="区间至 ${row.range[1]}"></span>`
+        ? `<span class="bar-range" style="left:${(row.members / MAX) * 100}%;width:${Math.max(rangePct - (row.members / MAX) * 100, 0)}%" title="区间至 ${row.range[1]}"></span>`
         : "";
-      const note = row.note ? `<small>${esc(row.note)}</small>` : `<small>${row.kind === "informal" ? "非正式" : "正式党团"}</small>`;
+      const barHtml = isHist
+        ? (row.peak_members != null
+            ? `<span class="bar-peak" style="width:${pct}%" title="历史峰值"></span>`
+            : `<span style="color:var(--muted);font-size:12px;line-height:16px">峰值未知</span>`)
+        : `<span class="bar" style="width:${pct}%;background:${color}"></span>${rangeHtml}`;
+      const numPrefix = isHist
+        ? (row.peak_members != null ? `<i>峰值</i>` : `<i>未知</i>`)
+        : (row.range ? `<i>区间</i>` : "");
       return `
-        <button type="button" class="row" role="listitem" data-id="${esc(row.id)}"
+        <button type="button" class="row${isHist ? " historical" : ""}" role="listitem" data-id="${esc(row.id)}"
           aria-current="${row.id === selected ? "true" : "false"}">
-          <span class="who"><b>${esc(row.name_zh)}</b>${note}</span>
-          <span class="track">
-            <span class="bar" style="width:${pct}%;background:${color}"></span>
-            ${rangeHtml}
-          </span>
-          <span class="num">${row.range ? `<i>区间</i>` : ""}${esc(displayNum(row))}</span>
+          <span class="who"><b>${esc(row.name_zh)}</b>${rowNote(row)}</span>
+          <span class="track">${barHtml}</span>
+          <span class="num">${numPrefix}${esc(displayNum(row))}</span>
         </button>`;
     }).join("");
 
@@ -321,11 +424,19 @@
       progressive_left: "进步左翼",
       moderate_conservative_democrat: "温和保守民主党",
       far_left_progressive: "更左进步派（媒体标签）",
+      labor_left: "劳工取向左翼",
       conservative: "保守派",
       hard_right_conservative: "强硬右翼保守",
       pragmatic_conservative: "务实保守",
       moderate_republican: "温和共和党",
-      bipartisan_centrist: "跨党中间派"
+      libertarian_conservative: "自由意志保守",
+      bipartisan_centrist: "跨党中间派",
+      identity_black: "身份·非裔",
+      identity_hispanic: "身份·西裔（民主党）",
+      identity_hispanic_republican: "身份·西裔（共和党）",
+      identity_aapi: "身份·亚太裔",
+      identity_women_bipartisan: "身份·妇女（两党）",
+      identity_lgbtq: "身份·LGBTQ+/盟友"
     };
     return map[s] || s || "—";
   }
@@ -335,13 +446,21 @@
     const c = findCaucus(selected);
     const el = document.getElementById("detail");
     if (!row || !c) {
-      el.innerHTML = "<p>选择一根柱查看详情。</p>";
+      el.innerHTML = "<p>选择一行查看详情。</p>";
       return;
     }
     const color = partyColor(row.party, row.kind);
-    const countLine = row.range
-      ? `${displayNum(row)} <span style="color:var(--muted);font-size:0.55em">点估计 ${row.members}</span>`
-      : String(row.members);
+    const statusZh = c.status === "defunct" ? "已停摆/历史" : (c.status === "active" ? "现行" : (c.status || "—"));
+    let countLine;
+    if (row.kind === "historical") {
+      countLine = row.peak_members != null
+        ? `峰值 ~${row.peak_members} <span style="color:var(--muted);font-size:0.5em">${esc(row.year_range || "")}</span>`
+        : `— <span style="color:var(--muted);font-size:0.5em">峰值未知 · ${esc(row.year_range || "")}</span>`;
+    } else if (row.range) {
+      countLine = `${displayNum(row)} <span style="color:var(--muted);font-size:0.55em">点估计 ${row.members}</span>`;
+    } else {
+      countLine = String(row.members);
+    }
     const overlap = c.overlap
       ? Object.entries(c.overlap).map(([k, v]) => `${k.replace(/_/g, " ")} ≈ ${v}`).join("；")
       : null;
@@ -351,14 +470,21 @@
     const official = c.official_url
       ? `<a href="${esc(c.official_url)}" rel="noopener" target="_blank">官网</a>`
       : "";
+    const related = (c.related_outside || []).map(r =>
+      `${esc(r.name)}：${esc(r.note)}`
+    ).join("；");
 
     el.innerHTML = `
       <div class="idcard">
-        <span class="party-tag" style="color:${color}">${partyLabel(c.party)} · ${c.kind === "informal_faction" ? "非正式" : "正式"}</span>
+        <span class="party-tag" style="color:${color}">${partyLabel(c.party)} · ${kindLabel(c.kind, c.status)} · ${esc(statusZh)}</span>
         <h3>${esc(c.name_zh)}</h3>
         <p class="en">${esc(c.name_en)}</p>
         <p class="big">${countLine}</p>
-        <p style="color:var(--muted);font-size:13px;margin:4px 0 0">众议员人数（${esc(meta.unit || "members")}）</p>
+        <p style="color:var(--muted);font-size:13px;margin:4px 0 0">${
+          row.kind === "historical"
+            ? "历史峰值 / 年代（非 119 届现员）"
+            : `众议员人数（${esc(meta.unit || "members")}）`
+        }</p>
       </div>
       <div class="blurb">
         <dl class="meta-grid">
@@ -366,10 +492,14 @@
           <div><dt>成立</dt><dd>${c.founded ?? "—"}</dd></div>
           <div><dt>主席 / 共同主席</dt><dd>${esc(c.chair || "—")}</dd></div>
           <div><dt>置信度</dt><dd>${esc(c.confidence || "—")}</dd></div>
+          ${c.year_range ? `<div><dt>年代</dt><dd>${esc(c.year_range)}</dd></div>` : ""}
+          ${c.dissolved_note ? `<div style="grid-column:1/-1"><dt>停摆说明</dt><dd>${esc(c.dissolved_note)}</dd></div>` : ""}
+          ${c.peak_note ? `<div style="grid-column:1/-1"><dt>峰值说明</dt><dd>${esc(c.peak_note)}</dd></div>` : ""}
           ${c.count_detail?.as_of_note ? `<div style="grid-column:1/-1"><dt>计数说明</dt><dd>${esc(c.count_detail.as_of_note)}</dd></div>` : ""}
           ${c.count_detail?.note ? `<div style="grid-column:1/-1"><dt>说明</dt><dd>${esc(c.count_detail.note)}</dd></div>` : ""}
           ${row.note ? `<div style="grid-column:1/-1"><dt>图注</dt><dd>${esc(row.note)}</dd></div>` : ""}
           ${overlap ? `<div style="grid-column:1/-1"><dt>重叠（约）</dt><dd>${esc(overlap)}</dd></div>` : ""}
+          ${related ? `<div style="grid-column:1/-1"><dt>院外关联（非党团）</dt><dd>${related}</dd></div>` : ""}
           ${c.aliases ? `<div style="grid-column:1/-1"><dt>别名</dt><dd>${esc(c.aliases.join("、"))}</dd></div>` : ""}
         </dl>
         <div class="links">${official}${sources}</div>
@@ -388,15 +518,18 @@
 
   function renderAll() {
     renderStats();
-    renderChart("chart-d", r => r.party === "D");
-    renderChart("chart-r", r => r.party === "R");
-    renderChart("chart-bi", r => r.party === "bipartisan");
+    renderChart("chart-d", r => r.series === "democratic_ideological");
+    renderChart("chart-id", r => r.series === "identity");
+    renderChart("chart-r", r => r.series === "republican_ideological");
+    renderChart("chart-bi", r => r.series === "bipartisan");
+    renderChart("chart-hist", r => r.kind === "historical");
     renderDetail();
   }
 
   if (DATA.methodology_zh) {
     document.getElementById("method").textContent = DATA.methodology_zh;
   }
+  renderIntro();
   renderCaveats();
   renderAll();
 })();
