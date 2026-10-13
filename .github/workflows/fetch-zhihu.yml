@@ -19,32 +19,31 @@ jobs:
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: 安装 Playwright
+      - name: 安装知乎 CLI
         run: |
-          npm install playwright
-          npm install -g playwright
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          curl --fail --silent --show-error --connect-timeout 10 --max-time 60 \
+            -o "$tmp/skill.zip" \
+            https://developer-cdn.zhihu.com/zhihu-cli/releases/stable/skill/zhihu-cli-skill.zip
+          unzip -q "$tmp/skill.zip" -d "$tmp"
+          bash "$tmp/zhihu/scripts/setup.sh"
 
-      - name: 安装 Chromium 浏览器
-        run: npx playwright install chromium
-
-      - name: 安装系统依赖
-        run: |
-          PLAYWRIGHT_PATH=$(npm root -g)/playwright
-          sudo node "$PLAYWRIGHT_PATH/cli.js" install-deps chromium
-
-      - name: 抓取知乎想法
+      - name: 抓取知乎想法与文章
         env:
-          ZHIHU_COOKIE: ${{ secrets.ZHIHU_COOKIE }}
+          ZHIHU_ACCESS_SECRET: ${{ secrets.ZHIHU_ACCESS_SECRET }}
         run: node scripts/fetch-zhihu.mjs
 
       - name: 提交更新
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git add data/zhihu.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: 同步知乎想法" && git pull --rebase origin main && git push origin main)
+          if git diff --cached --quiet; then
+            echo "无数据变更，跳过提交"
+          else
+            git commit -m "chore: 同步知乎想法"
+            git push
+          fi

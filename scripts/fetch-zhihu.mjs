@@ -1,337 +1,201 @@
 /**
- * 从知乎抓取用户想法 (Pins)
+ * 用知乎官方 CLI 同步想法和文章。
  *
- * 使用方法:
- *   ZHIHU_COOKIE="xxx" node scripts/fetch-zhihu.mjs
+ *   ZHIHU_ACCESS_SECRET="xxx" node scripts/fetch-zhihu.mjs
  *
- * 环境变量:
- *   ZHIHU_COOKIE - 知乎登录后的 Cookie 字符串（必需）
+ * Access Secret 在 https://developer.zhihu.com/profile 申请。
+ * GitHub Actions 读取同名仓库 Secret。本机无密钥链时只认这个环境变量，
+ * 不要把 Secret 写进仓库。
  *
- * 获取 Cookie 的方法:
- *   1. 在浏览器登录 zhihu.com
- *   2. 打开开发者工具 (F12) → Application/存储 → Cookies
- *   3. 复制所有 Cookie 值（完整字符串，如 "d_c0=xxx; z_c0=xxx; ..."）
- *   4. 添加到 GitHub 仓库 Secrets，名称设为 ZHIHU_COOKIE
+ * 可选：
+ *   ZHIHU_CLI            CLI 绝对路径，默认识别官方 setup 的安装位置
+ *   ZHIHU_DETAIL_BUDGET  每次补拉全文的条数上限，默认 30（计入创作能力额度）
  */
 
-import { chromium } from 'playwright';
+import { spawnSync } from 'child_process';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { applyArticleDetail, applyPinDetail, mergeZhihu } from './zhihu-merge.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = path.resolve(__dirname, '..', 'data', 'zhihu.json');
 const USER_URL_TOKEN = 'yi-ban-tong-guo-63';
-const MAX_PINS = 500;
-const MAX_ARTICLES = 50;
-const SCROLL_TIMES = 50;
-const STALE_SCROLL_LIMIT = 5;
+const PAGE_LIMIT = 50;
+const MAX_PAGES = 40;
 
-async function main() {
-  const cookieStr = process.env.ZHIHU_COOKIE;
-  if (!cookieStr) {
-    console.log('未设置 ZHIHU_COOKIE 环境变量，使用本地数据。');
-    console.log('如需自动同步，请将知乎 Cookie 添加到 GitHub Secrets。');
+function resolveCli() {
+  if (process.env.ZHIHU_CLI && fs.existsSync(process.env.ZHIHU_CLI)) return process.env.ZHIHU_CLI;
+  const home = os.homedir();
+  const xdg = process.env.XDG_DATA_HOME || path.join(home, '.local', 'share');
+  const candidates = [
+    path.join(xdg, 'zhihu-cli', 'current', 'zhihu-cli'),
+    path.join(home, 'Library', 'Application Support', 'zhihu-cli', 'current', 'zhihu-cli'),
+  ];
+  return candidates.find((candidate) => fs.existsSync(candidate)) || '';
+}
+
+function callCli(bin, args) {
+  const result = spawnSync(bin, args, {
+    encoding: 'utf8',
+    env: process.env,
+    maxBuffer: 32 * 1024 * 1024,
+  });
+  const stdout = (result.stdout || '').trim();
+  let payload = null;
+  try {
+    payload = stdout ? JSON.parse(stdout) : null;
+  } catch {
+    payload = null;
+  }
+  if (result.status !== 0 || payload?.ok === false) {
+    const message = payload?.error?.message || payload?.Message || (result.stderr || '').trim() || stdout || `zhihu-cli exit ${result.status}`;
+    const error = new Error(message);
+    error.code = payload?.error?.code || payload?.Code || '';
+    throw error;
+  }
+  if (!payload) throw new Error(`zhihu-cli 没有返回 JSON：${args.join(' ')}`);
+  if (payload.Code !== undefined && payload.Code !== 0) {
+    throw new Error(payload.Message || `知乎接口错误 ${payload.Code}`);
+  }
+  return payload;
+}
+
+function listContents(bin, type) {
+  const items = [];
+  let offset = 0;
+  let complete = false;
+
+  for (let page = 0; page < MAX_PAGES; page += 1) {
+    const payload = callCli(bin, [
+      'me', 'contents',
+      '--type', type,
+      '--sort', 'ts',
+      '--order', 'desc',
+      '--offset', String(offset),
+      '--limit', String(PAGE_LIMIT),
+      '--timeout', '20s',
+    ]);
+    const data = payload.Data || {};
+    const batch = Array.isArray(data.Items) ? data.Items : [];
+    items.push(...batch);
+    const paging = data.Paging || {};
+    console.log(`${type} 第 ${page + 1} 页：${batch.length} 条，累计 ${items.length}`);
+    if (paging.IsEnd || batch.length === 0) {
+      complete = true;
+      break;
+    }
+    if (paging.NextOffset === undefined || paging.NextOffset === null || paging.NextOffset === offset) {
+      console.log(`${type} 分页缺少下一页偏移，停止继续请求`);
+      complete = false;
+      break;
+    }
+    offset = paging.NextOffset;
+  }
+
+  return { items, complete };
+}
+
+function readDetail(bin, url) {
+  const payload = callCli(bin, ['me', 'content', '--content-url', url, '--timeout', '20s']);
+  return payload.Data?.Body || '';
+}
+
+function loadExisting() {
+  try {
+    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  } catch {
+    return { pins: [], articles: [] };
+  }
+}
+
+function fillDetails(bin, merged) {
+  const budget = Number(process.env.ZHIHU_DETAIL_BUDGET || 30);
+  const jobs = [
+    ...merged.pinDetailUrls.map((url) => ({ kind: 'pin', url })),
+    ...merged.articleDetailUrls.map((url) => ({ kind: 'article', url })),
+  ].slice(0, Number.isFinite(budget) && budget > 0 ? budget : 0);
+
+  if (jobs.length === 0) {
+    console.log('没有需要补拉的全文');
+    return merged;
+  }
+  console.log(`补拉全文 ${jobs.length} 条（上限 ${budget}）`);
+
+  for (const job of jobs) {
+    try {
+      const body = readDetail(bin, job.url);
+      if (!body) {
+        console.log(`全文为空：${job.url}`);
+        continue;
+      }
+      if (job.kind === 'pin') {
+        const index = merged.pins.findIndex((pin) => pin.url === job.url);
+        if (index >= 0) merged.pins[index] = applyPinDetail(merged.pins[index], body);
+      } else {
+        const index = merged.articles.findIndex((article) => article.url === job.url);
+        if (index >= 0) merged.articles[index] = applyArticleDetail(merged.articles[index], body);
+      }
+      console.log(`已补全文：${job.url}`);
+    } catch (error) {
+      console.log(`全文跳过 ${job.url}：${error.message}`);
+    }
+  }
+  return merged;
+}
+
+function main() {
+  const bin = resolveCli();
+  if (!bin) {
+    console.log('未找到 zhihu-cli。先运行官方 setup，或设置 ZHIHU_CLI。');
+    console.log('https://developer.zhihu.com/docs?key=zhihu_cli');
+    return;
+  }
+  if (!process.env.ZHIHU_ACCESS_SECRET) {
+    console.log('未设置 ZHIHU_ACCESS_SECRET，保留现有数据。');
+    console.log('打开 https://developer.zhihu.com/profile ，用知乎账号登录后申请 Access Secret。');
+    console.log('本地执行：ZHIHU_ACCESS_SECRET="..." node scripts/fetch-zhihu.mjs');
+    console.log('GitHub Actions：把同一串写入仓库 Secret，名称 ZHIHU_ACCESS_SECRET。');
     return;
   }
 
-  console.log('启动浏览器...');
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    locale: 'zh-CN',
-  });
+  console.log(`使用 CLI：${bin}`);
+  const pins = listContents(bin, 'pin');
+  const articles = listContents(bin, 'article');
+  console.log(`想法 ${pins.items.length} 条，完整=${pins.complete}；文章 ${articles.items.length} 篇，完整=${articles.complete}`);
 
-  // 设置 Cookie
-  const cookies = cookieStr.split(';').map(pair => {
-    const [name, ...rest] = pair.trim().split('=');
-    return {
-      name: name.trim(),
-      value: rest.join('=').trim(),
-      domain: '.zhihu.com',
-      path: '/',
-    };
-  }).filter(c => c.name && c.value);
-
-  await context.addCookies(cookies);
-  const page = await context.newPage();
-
-  try {
-    let pins = [];
-    let articles = [];
-
-    // ===== 抓取想法 =====
-    pins = await fetchPins(page);
-    console.log(`抓取到 ${pins.length} 条想法`);
-
-    // ===== 抓取文章 =====
-    articles = await fetchArticles(page);
-    console.log(`抓取到 ${articles.length} 篇文章`);
-
-    // ===== 读取现有数据 =====
-    let existingData = { pins: [], articles: [] };
-    try {
-      existingData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-    } catch (e) {
-      // 文件不存在或格式错误
-    }
-
-    // 如果这次抓取没拿到任何数据，可能是 cookie 过期或网络问题，保留现有数据不覆盖
-    if (pins.length === 0 && articles.length === 0) {
-      console.log('本次抓取未获取到数据，保留现有数据，避免误覆盖');
-      existingData.updated = new Date().toISOString();
-      fs.writeFileSync(DATA_FILE, JSON.stringify(existingData, null, 2), 'utf-8');
-      return;
-    }
-
-    // 合并数据：保留已被知乎屏蔽的想法
-    // 通过 created 时间戳匹配：旧数据中有、新抓取中没有的，标记为 blocked
-    const newPinTimestamps = new Set(pins.map(p => p.created));
-    const blockedPins = (existingData.pins || [])
-      .filter(oldPin => !newPinTimestamps.has(oldPin.created))
-      .map(oldPin => ({ ...oldPin, blocked: true }));
-
-    const mergedPins = [...pins, ...blockedPins];
-
-    // 文章同理，通过 url 匹配
-    const newArticleUrls = new Set(articles.map(a => a.url));
-    const preservedArticles = (existingData.articles || [])
-      .filter(oldArt => !newArticleUrls.has(oldArt.url));
-    const mergedArticles = [...articles, ...preservedArticles];
-
-    console.log(`新想法: ${pins.length} 条, 归档(被屏蔽): ${blockedPins.length} 条`);
-    console.log(`新文章: ${articles.length} 篇, 保留: ${preservedArticles.length} 篇`);
-
-    const output = {
-      updated: new Date().toISOString(),
-      source: 'zhihu',
-      profile: {
-        name: 'Jillax',
-        url: `https://www.zhihu.com/people/${USER_URL_TOKEN}`,
-        bio: '',
-      },
-      pins: mergedPins,
-      articles: mergedArticles,
-    };
-
-    fs.writeFileSync(DATA_FILE, JSON.stringify(output, null, 2), 'utf-8');
-    console.log(`已更新 ${DATA_FILE}`);
-    console.log(`想法: ${mergedPins.length} 条`);
-    console.log(`文章: ${mergedArticles.length} 篇`);
-
-  } catch (err) {
-    console.error('抓取失败:', err.message);
-    process.exit(1);
-  } finally {
-    await browser.close();
+  if (pins.items.length === 0 && articles.items.length === 0) {
+    console.log('本次没有拉到想法或文章，不改动存档。');
+    return;
   }
+
+  const existing = loadExisting();
+  const merged = mergeZhihu({
+    existing,
+    pinItems: pins.items,
+    articleItems: articles.items,
+    pinsComplete: pins.complete,
+  });
+  fillDetails(bin, merged);
+
+  const output = {
+    updated: new Date().toISOString(),
+    source: 'zhihu-cli',
+    profile: {
+      name: existing.profile?.name || 'Jillax',
+      url: `https://www.zhihu.com/people/${USER_URL_TOKEN}`,
+      bio: existing.profile?.bio || '',
+    },
+    pins: merged.pins,
+    articles: merged.articles,
+  };
+
+  fs.writeFileSync(DATA_FILE, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+  const blocked = output.pins.filter((pin) => pin.blocked).length;
+  console.log(`已写入 ${DATA_FILE}`);
+  console.log(`想法 ${output.pins.length} 条（其中屏蔽 ${blocked}），文章 ${output.articles.length} 篇`);
 }
 
-async function fetchPins(page) {
-  const url = `https://www.zhihu.com/people/${USER_URL_TOKEN}/pins`;
-  console.log(`访问想法页: ${url}`);
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  // 等待 React 渲染完成
-  await page.waitForTimeout(5000);
-
-  // 滚动加载更多，直到无新内容或达到上限
-  let prevCount = 0;
-  let staleScrolls = 0;
-  for (let i = 0; i < SCROLL_TIMES; i++) {
-    // 展开所有"阅读全文"（用 try-catch 避免个别按钮报错）
-    await page.evaluate(() => {
-      document.querySelectorAll('button').forEach(b => {
-        try {
-          if (b.textContent.includes('阅读全文')) b.click();
-        } catch(e) {}
-      });
-    });
-
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(1500);
-
-    const currentCount = await page.evaluate(() => {
-      // 统计包含实质文本的元素数量，作为卡片数的代理指标
-      const all = document.querySelectorAll('[class*="Topstory"], [class*="Pin"], [class*="Item"]');
-      let count = 0;
-      all.forEach(el => {
-        const text = el.textContent.trim();
-        if (text.length > 20) count++;
-      });
-      return count;
-    });
-
-    if (currentCount === prevCount) {
-      staleScrolls++;
-      if (staleScrolls >= STALE_SCROLL_LIMIT) {
-        console.log(`想法滚动 ${i + 1} 次后无新内容，停止`);
-        break;
-      }
-    } else {
-      staleScrolls = 0;
-    }
-    prevCount = currentCount;
-  }
-
-  // 仅从 DOM 提取想法数据（不依赖 initialData，后者只有首屏数据）
-  const pins = await page.evaluate(() => {
-    const items = [];
-
-    // 以卡片容器为单位遍历，避免捕获用户名/签名/按钮等 UI 文字
-    const cards = document.querySelectorAll('[class*="PinItem"], [class*="TopstoryItem--pin"], .TopstoryItem');
-
-    cards.forEach(card => {
-      // 只从 .RichText 提取正文，排除卡片 header/footer 的 UI 文字
-      const contentEl = card.querySelector('.RichText');
-      const content = contentEl?.textContent?.trim() || '';
-      if (!content || content.length < 5) return;
-
-      // 从卡片 DOM 中查找发布时间（不在 RichText 内）
-      let created = "";
-      var ct = card.textContent || "";
-      var tm = ct.match(/发布于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
-      if (tm) created = tm[1] + "T" + tm[2] + ":00+08:00";
-      if (!created) {
-        var em = ct.match(/编辑于(\d{4}-\d{2}-\d{2})\s*(\d{2}:\d{2})/);
-        if (em) created = em[1] + "T" + em[2] + ":00+08:00";
-      }
-      if (!created) {
-        var te = card.querySelector("time, [datetime]");
-        if (te) created = te.getAttribute("datetime") || "";
-      }
-      const voteEl = card.querySelector('[class*="VoteButton"], [class*="vote"]');
-      const likes = parseInt(voteEl?.textContent?.trim()) || 0;
-
-      // 找评论数
-      const cmtEl = card.querySelector('[class*="Comment"]');
-      const comments = parseInt(cmtEl?.textContent?.trim()) || 0;
-
-      // 只提取正文区域内的图片（排除头像、表情等）
-      const images = [];
-      if (contentEl) {
-        contentEl.querySelectorAll('img').forEach(img => {
-          const src = img.getAttribute('src') || img.getAttribute('data-src') || '';
-          if (src && !src.includes('data:image') && !src.includes('needBackground=1')) {
-            images.push(src);
-          }
-        });
-      }
-
-      // 清洗正文：去掉"发布于/编辑于"等时间戳文字（知乎渲染在 RichText 内）
-      const cleaned = content
-        .replace(/发布于\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}/g, '')
-        .replace(/编辑于\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}/g, '')
-        .replace(/发布于\s*\d{2}:\d{2}/g, '')
-        .replace(/编辑于\s*\d{2}:\d{2}/g, '')
-        .trim();
-      if (!cleaned) return;
-
-      items.push({ content: cleaned, created, likes, comments, images });
-    });
-
-    return items;
-  });
-
-  console.log(`DOM 提取到 ${pins.length} 条想法内容`);
-  return pins;
-}
-
-async function fetchArticles(page) {
-  // 先用知乎 API 抓文章（返回 JSON，不依赖 DOM 选择器）
-  let allArticles = [];
-  let offset = 0;
-  const limit = 20;
-
-  for (let pageNum = 0; pageNum < 5; pageNum++) {
-    const apiUrl = `https://www.zhihu.com/api/v4/members/${USER_URL_TOKEN}/articles?limit=${limit}&offset=${offset}`;
-    console.log(`请求文章 API: offset=${offset}`);
-    try {
-      const data = await page.evaluate(async (url) => {
-        const resp = await fetch(url, {
-          credentials: 'include',
-          headers: { 'Accept': 'application/json' }
-        });
-        if (!resp.ok) return null;
-        return await resp.json();
-      }, apiUrl);
-
-      if (!data || !data.data || data.data.length === 0) {
-        console.log('文章 API 无更多数据');
-        break;
-      }
-
-      const articles = data.data.map(a => ({
-        title: a.title || '',
-        summary: a.excerpt || '',
-        created: a.created ? new Date(a.created * 1000).toISOString().split('T')[0] : '',
-        url: a.url || '',
-        likes: a.voteup_count || 0,
-        comments: a.comment_count || 0,
-      })).filter(a => a.title);
-
-      allArticles = allArticles.concat(articles);
-      console.log(`文章 API 第 ${pageNum + 1} 页: ${articles.length} 篇`);
-
-      if (data.paging && data.paging.is_end) break;
-      offset += limit;
-    } catch (e) {
-      console.log(`文章 API 请求失败: ${e.message}`);
-      break;
-    }
-  }
-
-  // 获取每篇文章的完整正文（通过专栏API）
-  if (allArticles.length > 0) {
-    console.log(`获取 ${allArticles.length} 篇文章的正文...`);
-    let fc = 0;
-    for (const a of allArticles) {
-      const m = a.url.match(/\/p\/(\d+)/);
-      if (!m) continue;
-      try {
-        const html = await page.evaluate(async (aid) => {
-          const r = await fetch('https://zhuanlan.zhihu.com/api/articles/' + aid, {
-            credentials: 'include',
-            headers: { 'Accept': 'application/json' }
-          });
-          if (!r.ok) return '';
-          const d = await r.json();
-          return d.content || '';
-        }, m[1]);
-        a.body_html = html;
-        fc++;
-        if (fc % 10 === 0) console.log(`  正文: ${fc}/${allArticles.length}`);
-      } catch(e) {
-        a.body_html = '';
-      }
-    }
-    console.log(`正文获取完成: ${fc} 篇`);
-    console.log(`API 共获取 ${allArticles.length} 篇文章`);
-    return allArticles;
-  }
-
-  // API 没拿到数据，降级到 DOM 提取
-  console.log('API 方式未获取到文章，降级 DOM 提取...');
-  const url = `https://www.zhihu.com/people/${USER_URL_TOKEN}/posts`;
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForTimeout(3000);
-
-  const articles = await page.evaluate(() => {
-    const items = [];
-    const seen = new Set();
-    document.querySelectorAll('a[href*="/p/"]').forEach(link => {
-      const href = link.getAttribute('href') || '';
-      const url = href.startsWith('http') ? href : `https://www.zhihu.com${href}`;
-      if (seen.has(url)) return;
-      seen.add(url);
-      const title = link.textContent.trim();
-      if (!title || title.length < 2) return;
-      items.push({ title, summary: '', created: '', url, likes: 0, comments: 0 });
-    });
-    return items;
-  });
-
-  console.log(`DOM 降级提取到 ${articles.length} 篇文章`);
-  return articles;
-}
-
-main();
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) main();
