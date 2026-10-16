@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-15T15:31:58Z",
+  "updated": "2026-10-16T15:18:30Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,45 @@
     }
   ],
   "movies": [
+    {
+      "id": "26966301",
+      "title": "认识特朗普家族：从移民到总统 / Meet the Trumps: From Immigrant to President",
+      "author": "2017-01-17 / 英国 / 马克·雷迪斯 / 65分钟 / 认识特朗普家族：从移民到总统 / 纪录片 / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2920843978.jpg",
+      "url": "https://movie.douban.com/subject/26966301/",
+      "rating": 4,
+      "tags": [],
+      "comment": "nice，节奏挺好的",
+      "date": "2026-10-16",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
+      "id": "20415236",
+      "title": "不平等的时代 / Inequality for All",
+      "author": "2013-01-19(圣丹斯电影节) / 2013-09-27(美国) / 罗伯特·赖克 / 美国 / 雅各布·科恩布卢斯 / 89分钟 / 不平等的时代 / 纪录片 / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2076464853.jpg",
+      "url": "https://movie.douban.com/subject/20415236/",
+      "rating": 5,
+      "tags": [],
+      "comment": "尽管内容在今天看来（或者对有相关了解的人而言）有些繁复，尽管拍摄节奏什么的可能有点闷，但选题本身值得满分。一部分传记性质，记录Robert Reich.可惜13年过去了，贫富差距变得更悬殊，bigtech几乎是寡头式的，川普更是拿到了两任任期。下个路口见，我们保持乐观和在场，准备见证一场怎样的finale呢。",
+      "date": "2026-10-16",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
+      "id": "36721134",
+      "title": "天啦 / Vingt dieux",
+      "author": "2024-05-17(戛纳电影节) / 2024-12-11(法国) / 迈文娜·巴泰勒米 / 迪米特里·鲍德里 / 马希伊斯·伯纳德 / 克莱门特·法沃 / 卢娜·加勒特 / 法国 / 路易丝·库沃西耶 / 90分钟 / 天啦 / 剧情 / 喜剧 / Théo Abadie / 路易丝·库沃西耶 Louise Courvoisier / 玛西娅·罗马诺 Marcia Romano / 法语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2915148249.jpg",
+      "url": "https://movie.douban.com/subject/36721134/",
+      "rating": 4,
+      "tags": [],
+      "comment": "内容其实挺多的，弗朗什孔泰做奶酪、乡镇文学，青春片里的战斗爽和感情。拍的气质很好，尽管好像内容不太轻松但还是给人轻松感。",
+      "date": "2026-10-16",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "30455615",
       "title": "菜单 / The Menu",
@@ -16729,7 +16768,7 @@
       "id": "37404003",
       "title": "巅峰 PEAK",
       "author": "",
-      "cover": "https://img3.doubanio.com/lpic/s35467897.jpg",
+      "cover": "https://img9.doubanio.com/lpic/s35186364.jpg",
       "url": "https://www.douban.com/game/37404003/",
       "rating": 3,
       "tags": [],
