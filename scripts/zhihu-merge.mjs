@@ -97,8 +97,12 @@ function sameText(a, b) {
   const left = compact(a).replace(/[…\.]+$/u, '');
   const right = compact(b).replace(/[…\.]+$/u, '');
   if (!left || !right) return false;
-  const size = Math.min(24, left.length, right.length);
-  return left.slice(0, size) === right.slice(0, size);
+  const shorter = left.length <= right.length ? left : right;
+  const longer = left.length <= right.length ? right : left;
+  const size = Math.min(24, shorter.length);
+  if (size < 5) return shorter === longer.slice(0, shorter.length);
+  // 旧存档的正文有时比接口多出开头一小段，允许较短正文出现在较长正文的开头附近
+  return longer.slice(0, size + 12).includes(shorter.slice(0, size));
 }
 
 function longer(current, incoming) {
@@ -137,38 +141,38 @@ export function mergeZhihu({ existing = {}, pinItems = [], articleItems = [], pi
 
   for (const item of pinItems) {
     const created = shanghaiIso(item.CreatedAt);
-    const minute = minuteKey(created);
     const summary = item.Summary || item.Title || '';
     const url = httpsUrl(item.Url || '');
+    const itemImages = Array.isArray(item.Images)
+      ? item.Images.filter((src) => typeof src === 'string' && src.startsWith('https://'))
+      : [];
     let matchIndex = -1;
 
     if (url) {
       matchIndex = existingPins.findIndex((pin, index) => !used.has(index) && pin.url && canonicalUrl(pin.url) === canonicalUrl(url));
     }
-    if (matchIndex < 0 && minute && summary) {
+    // 旧存档的时间戳可能有偏差，按正文对齐；多条候选时取时间最接近的一条
+    if (matchIndex < 0 && summary) {
+      const target = Date.parse(created) || 0;
       const candidates = existingPins
         .map((pin, index) => ({ pin, index }))
-        .filter(({ pin, index }) => !used.has(index) && minuteKey(pin.created) === minute && sameText(pin.content, summary));
-      if (candidates.length > 0) {
-        candidates.sort((a, b) => {
-          const gapA = Math.abs((a.pin.content || '').length - summary.length);
-          const gapB = Math.abs((b.pin.content || '').length - summary.length);
-          return gapA - gapB;
-        });
-        matchIndex = candidates[0].index;
-      }
+        .filter(({ pin, index }) => !used.has(index) && sameText(pin.content, summary))
+        .sort((a, b) => Math.abs((Date.parse(a.pin.created) || 0) - target) - Math.abs((Date.parse(b.pin.created) || 0) - target));
+      if (candidates.length > 0) matchIndex = candidates[0].index;
     }
 
     const prev = matchIndex >= 0 ? existingPins[matchIndex] : null;
     if (matchIndex >= 0) used.add(matchIndex);
 
-    const content = longer(prev?.content, summary);
+    // 旧存档正文可能残留 <br> 等标记，先转纯文本再与接口正文比较长度
+    const prevContent = prev?.content ? htmlToText(prev.content) : '';
+    const content = longer(prevContent, summary);
     mergedPins.push({
       content,
       created: created || prev?.created || '',
       likes: Number(item.LikeCount ?? prev?.likes ?? 0),
       comments: Number(item.CommentCount ?? prev?.comments ?? 0),
-      images: Array.isArray(prev?.images) ? prev.images : [],
+      images: itemImages.length ? itemImages : (Array.isArray(prev?.images) ? prev.images : []),
       ...(url || prev?.url ? { url: url || prev.url } : {}),
     });
 
@@ -181,11 +185,9 @@ export function mergeZhihu({ existing = {}, pinItems = [], articleItems = [], pi
   for (let index = 0; index < existingPins.length; index += 1) {
     if (used.has(index)) continue;
     const prev = existingPins[index];
-    if (markBlocked) mergedPins.push({ ...prev, blocked: true });
-    else {
-      const kept = { ...prev };
-      mergedPins.push(kept);
-    }
+    const content = htmlToText(prev.content || '');
+    if (markBlocked) mergedPins.push({ ...prev, content, blocked: true });
+    else mergedPins.push({ ...prev, content });
   }
 
   mergedPins.sort((a, b) => String(b.created).localeCompare(String(a.created)));

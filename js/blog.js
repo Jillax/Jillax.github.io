@@ -125,6 +125,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // 想法正文是纯文本，先转义再换行，避免标签泄漏或被当成 HTML 解析
+    function escapeHtml(text) {
+        return String(text || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     // Pins
     function renderPins(data) {
         if (!data) return;
@@ -144,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var name = data.profile && data.profile.name ? data.profile.name : 'Jillax';
         feed.innerHTML = pins.map(function(pin) {
             var timeStr = fmtDate(pin.created);
-            var content = (pin.content || '').replace(/\n/g, '<br>');
+            var content = escapeHtml(pin.content).replace(/\n/g, '<br>');
             var hasImages = pin.images && pin.images.length > 0;
             var isBlocked = pin.blocked;
 

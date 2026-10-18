@@ -21,19 +21,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: 安装知乎 CLI
-        run: |
-          set -euo pipefail
-          tmp=$(mktemp -d)
-          curl --fail --silent --show-error --connect-timeout 10 --max-time 60 \
-            -o "$tmp/skill.zip" \
-            https://developer-cdn.zhihu.com/zhihu-cli/releases/stable/skill/zhihu-cli-skill.zip
-          unzip -q "$tmp/skill.zip" -d "$tmp"
-          bash "$tmp/zhihu/scripts/setup.sh"
-
-      - name: 抓取知乎想法与文章
+      - name: 抓取知乎想法
         env:
-          ZHIHU_ACCESS_SECRET: ${{ secrets.ZHIHU_ACCESS_SECRET }}
+          # 想法走公开接口，无需凭证；设置 ZHIHU_COOKIE 才会同步文章
+          ZHIHU_COOKIE: ${{ secrets.ZHIHU_COOKIE }}
         run: node scripts/fetch-zhihu.mjs
 
       - name: 提交更新
