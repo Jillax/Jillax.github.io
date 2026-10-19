@@ -1,6 +1,15 @@
 {
-  "updated": "2026-10-11",
+  "updated": "2026-10-19",
   "items": [
+    {
+      "id": "electoral-college-cn",
+      "title": "假如有选举人团",
+      "blurb": "把美国选举人团制度原样搬到 31 个省级行政区：538 张票怎么分，三种众议院规模下各自的失衡程度。",
+      "href": "electoral-college-cn/",
+      "tags": ["可视化", "推演", "2026"],
+      "group": "可视化",
+      "featured": false
+    },
     {
       "id": "congress-portfolios",
       "title": "申报上的美国",

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>假如有选举人团 · 31 个省级行政区的票数推演</title>
+<meta name="description" content="把美国选举人团制度原样搬到中国：31 个省、自治区、直辖市按 2020 年七普人口分配 538 张选举人票，并给出三种众议院规模下的对照结果。">
+<meta property="og:title" content="假如有选举人团 · 31 个省级行政区的票数推演">
+<meta property="og:description" content="538 张票怎么分：广东 45、西藏 3。三种口径下的人口—代表权失衡对照。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/electoral-college-cn/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://jillax.github.io/electoral-college-cn/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eadb;
+    --sheet: #faf6ee;
+    --ink: #221c16;
+    --body: #3a3128;
+    --muted: #6f6458;
+    --line: #d9cbb6;
+    --rose: #9c2b3a;
+    --gold: #8a5a12;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --serif: "Noto Serif SC", "Songti SC", serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--rose) 0 52.8%, var(--ink) 52.8% 100%) top / 100% 8px no-repeat,
+      var(--paper);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  a { color: var(--rose); }
+  .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+  button { font: inherit; color: inherit; }
+
+  /* ---------- header ---------- */
+  header { padding: 40px 0 0; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(44px, 7.2vw, 78px); line-height: .98;
+    letter-spacing: -0.035em; margin: 16px 0 0;
+  }
+  .sub {
+    font-family: var(--serif); font-size: clamp(17px, 2vw, 23px);
+    color: var(--muted); margin: 10px 0 0; line-height: 1.5;
+  }
+  .deck { max-width: 74ch; font-size: 17px; line-height: 1.75; margin: 18px 0 0; }
+  .deck strong { font-weight: 700; }
+  .method {
+    background: var(--sheet); border: 1px solid var(--line);
+    padding: 16px 18px; margin: 22px 0 0; font-size: 14px; line-height: 1.7; color: var(--muted);
+  }
+  .method b {
+    display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
+    color: var(--rose); text-transform: uppercase; margin-bottom: 6px; font-weight: 500;
+  }
+  .method em { color: var(--ink); font-style: normal; font-weight: 500; }
+
+  /* ---------- stats ---------- */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); margin: 26px 0 0;
+  }
+  .stat { background: var(--sheet); padding: 13px 14px 15px; }
+  .stat b {
+    display: block; font-family: var(--mono); font-weight: 500;
+    font-size: clamp(24px, 3.2vw, 31px); letter-spacing: -0.03em; line-height: 1.1;
+  }
+  .stat b.accent { color: var(--rose); }
+  .stat span { display: block; font-size: 13px; color: var(--muted); margin-top: 5px; }
+
+  /* ---------- sections ---------- */
+  section { padding-top: 46px; }
+  .secno {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
+    color: var(--rose); text-transform: uppercase;
+  }
+  h2 {
+    font-family: var(--serif); font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.5; margin: 6px 0 0; font-weight: 700;
+  }
+  .note { color: var(--muted); font-size: 14px; line-height: 1.75; margin: 8px 0 0; max-width: 84ch; }
+  .note em { font-style: normal; color: var(--body); }
+
+  /* ---------- rules table ---------- */
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+  table.rules { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  table.rules th, table.rules td { text-align: left; padding: 12px 10px; vertical-align: top; }
+  table.rules th {
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    letter-spacing: .14em; color: var(--muted); text-transform: uppercase;
+    border-bottom: 1px solid var(--ink); white-space: nowrap;
+  }
+  table.rules td { border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.65; }
+  table.rules tr:last-child td { border-bottom: 0; }
+  table.rules td.no { font-family: var(--mono); font-size: 11px; color: var(--rose); width: 34px; }
+  table.rules td.mech { font-size: 15px; font-weight: 500; color: var(--ink); width: 210px; }
+  table.rules td.desc { color: var(--body); }
+  table.rules td.val {
+    font-family: var(--mono); font-size: 15px; text-align: right;
+    width: 74px; white-space: nowrap; color: var(--ink);
+  }
+
+  /* ---------- model switch ---------- */
+  .ctl {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    margin: 16px 0 4px; padding-bottom: 12px; border-bottom: 1px solid var(--line);
+  }
+  .ctl-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    color: var(--muted); text-transform: uppercase; margin-right: 4px;
+  }
+  .ctl button {
+    border: 1px solid var(--line); background: var(--sheet); cursor: pointer;
+    padding: 6px 11px; font-size: 13px; line-height: 1.3; color: var(--muted);
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .ctl button:hover { border-color: var(--ink); color: var(--ink); }
+  .ctl button[aria-pressed="true"] {
+    background: var(--ink); border-color: var(--ink); color: var(--paper);
+  }
+  .ctl .spacer { flex: 1 1 auto; }
+  .ctl .meta { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  /* ---------- chart ---------- */
+  .chart { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .chart-head, .row {
+    display: grid;
+    grid-template-columns: 132px 1fr 58px 62px 112px 66px;
+    gap: 12px; align-items: center;
+  }
+  .chart-head {
+    padding: 8px 2px; border-bottom: 1px solid var(--ink);
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .chart-head span:nth-child(n+3) { text-align: right; }
+  .row {
+    width: 100%; padding: 7px 2px; border: 0; border-bottom: 1px solid var(--line);
+    background: transparent; text-align: left; cursor: default;
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: rgba(255, 255, 255, .5); }
+  .row .who { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+  .row .who b { font-weight: 500; font-size: 15px; white-space: nowrap; }
+  .row .who small { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+  .track { height: 18px; background: rgba(34, 28, 22, .05); position: relative; }
+  .bar {
+    display: block; height: 100%; background: var(--rose); min-width: 2px;
+    transition: width .35s cubic-bezier(.4, 0, .2, 1);
+  }
+  .row.dim .bar { background: #b98b8f; }
+  .num { font-family: var(--mono); text-align: right; font-size: 15px; }
+  .num.small { font-size: 12px; color: var(--muted); }
+  .dev { font-family: var(--mono); text-align: right; font-size: 12px; }
+  .dev.pos { color: var(--rose); }
+  .dev.neg { color: var(--gold); }
+  .dev.zero { color: var(--muted); }
+
+  .chart-foot {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 9px 2px 0; font-size: 12px; color: var(--muted); font-family: var(--mono);
+  }
+
+  /* ---------- model cards ---------- */
+  .cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); margin-top: 16px;
+  }
+  .card { background: var(--sheet); padding: 15px; }
+  .card .lab {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    color: var(--rose); text-transform: uppercase;
+  }
+  .card .big {
+    font-family: var(--mono); font-size: 32px; letter-spacing: -0.03em;
+    line-height: 1.15; margin-top: 4px;
+  }
+  .card .spec {
+    font-family: var(--mono); font-size: 12px; color: var(--ink);
+    margin-top: 6px; line-height: 1.65;
+  }
+  .card .txt { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
+  .card.on { outline: 2px solid var(--rose); outline-offset: -2px; }
+
+  /* ---------- decomposition ---------- */
+  .decomp {
+    margin-top: 18px; border: 1px solid var(--line); background: var(--sheet);
+    padding: 16px 18px;
+  }
+  .decomp h3 {
+    font-family: var(--serif); font-size: 18px; margin: 0 0 6px; font-weight: 700;
+  }
+  .decomp p { font-size: 14px; line-height: 1.75; color: var(--muted); margin: 0 0 12px; }
+  .decomp p em { font-style: normal; color: var(--ink); font-weight: 500; }
+  .dgrid {
+    display: grid; grid-template-columns: 180px 1fr 1fr 84px; gap: 10px 14px;
+    align-items: center; font-size: 13px;
+  }
+  .dgrid .h {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    color: var(--muted); text-transform: uppercase; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .dgrid .n { font-family: var(--mono); }
+  .dbar { height: 9px; background: rgba(34, 28, 22, .07); position: relative; }
+  .dbar i { position: absolute; left: 0; top: 0; bottom: 0; display: block; }
+  .dbar i.a { background: #c8a9ad; }
+  .dbar i.b { background: var(--rose); }
+  .dgrid .v { font-family: var(--mono); text-align: right; }
+
+  /* ---------- coalition ---------- */
+  .coal { display: flex; gap: 36px; align-items: flex-start; flex-wrap: wrap; margin-top: 14px; }
+  .big-num { flex: 0 0 230px; }
+  .big-num b {
+    display: block; font-family: var(--mono); font-weight: 500;
+    font-size: clamp(72px, 11vw, 106px); line-height: .9; letter-spacing: -0.05em; color: var(--rose);
+  }
+  .big-num span { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+  .coal-txt { flex: 1 1 460px; min-width: 280px; }
+  .coal-txt p { margin: 0 0 10px; font-size: 15px; line-height: 1.75; }
+  .coal-txt p.small { font-size: 14px; color: var(--muted); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
+  .chip {
+    font-family: var(--mono); font-size: 11px; padding: 4px 7px;
+    border: 1px solid var(--line); color: var(--muted); background: transparent;
+    white-space: nowrap;
+  }
+  .chip b { font-weight: 500; margin-left: 3px; }
+  .chip.in { background: var(--rose); border-color: var(--rose); color: #fdf7ec; }
+  .chip.in b { color: #fdf7ec; }
+  .cutline {
+    flex-basis: 100%; border-top: 1px dashed var(--rose); margin: 6px 0 2px;
+    font-family: var(--mono); font-size: 10px; color: var(--rose);
+    padding-top: 3px; letter-spacing: .1em;
+  }
+
+  /* ---------- misc tables ---------- */
+  table.mini { border-top: 1px solid var(--ink); font-size: 14px; }
+  table.mini th {
+    font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .12em;
+    color: var(--muted); text-transform: uppercase; text-align: left;
+    padding: 8px 10px; border-bottom: 1px solid var(--ink); white-space: nowrap;
+  }
+  table.mini td { padding: 10px; border-bottom: 1px solid var(--line); }
+  table.mini td.n, table.mini th.n { font-family: var(--mono); text-align: right; }
+  table.mini td b { font-weight: 500; }
+  table.mini td.hi { font-family: var(--mono); color: var(--rose); }
+
+  .gains { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 14px; }
+  .gains > div { flex: 1 1 340px; }
+  .gains h3 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 8px; font-weight: 500;
+  }
+  .gainline { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gainline span {
+    font-family: var(--mono); font-size: 12px; padding: 3px 7px;
+    border: 1px solid var(--line); background: var(--sheet);
+  }
+  .gainline.up span { border-color: #cfa9ae; }
+  .gainline.up span b { color: var(--rose); font-weight: 500; }
+  .gainline.down span b { color: var(--muted); font-weight: 500; }
+
+  /* ---------- details ---------- */
+  .details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 16px; }
+  .detail { background: var(--sheet); padding: 16px 18px 18px; }
+  .detail h3 {
+    font-family: var(--serif); font-size: 17px; margin: 0 0 6px; font-weight: 700;
+  }
+  .detail h3 i {
+    font-family: var(--mono); font-style: normal; font-size: 10px;
+    color: var(--rose); margin-right: 7px; letter-spacing: .1em;
+  }
+  .detail p { margin: 0; font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .detail p b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- footer ---------- */
+  footer { margin-top: 48px; padding: 0 0 40px; }
+  .src {
+    background: var(--sheet); border: 1px solid var(--line); padding: 18px 20px;
+  }
+  .src h2 {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--rose); margin: 0 0 8px; font-weight: 500;
+  }
+  .src p { margin: 0 0 8px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+  .src p:last-child { margin-bottom: 0; }
+  .src p b { color: var(--body); font-weight: 500; }
+  .footline {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    margin-top: 16px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .12em; color: var(--muted);
+  }
+  .footline a { color: inherit; text-decoration: none; }
+  .footline a:hover { color: var(--ink); }
+
+  @media (max-width: 860px) {
+    body { font-size: 15px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .cards { grid-template-columns: 1fr; }
+    .details { grid-template-columns: 1fr; }
+    .chart-head, .row { grid-template-columns: 92px 1fr 46px 92px; gap: 9px; }
+    .chart-head span:nth-child(3), .chart-head span:nth-child(6),
+    .row .hseats, .row .dev { display: none; }
+    .dgrid { grid-template-columns: 1fr 76px; }
+    .dgrid .h:nth-child(2), .dgrid .h:nth-child(3),
+    .dgrid .dbar { display: none; }
+    .big-num { flex-basis: 100%; }
+    table.rules td.mech { width: auto; }
+    table.rules th:nth-child(3), table.rules td.desc { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">
+    <a href="../index.html">← 返回作品</a>
+    <span>Jillax · 推演 01 / 选举人团</span>
+  </div>
+  <h1>假如有选举人团</h1>
+  <p class="sub">美国式总统选举制度，在 31 个省级行政区上的算术推演</p>
+  <p class="deck">
+    美国选总统不是数人头，是数州。538 张选举人票里，加州 54 张、怀俄明 3 张——折算成每票代表的人口，
+    后者的人均权重是前者的 <strong>3.8 倍</strong>。把这套规则原样搬到中国，31 个省、自治区、直辖市会各拿多少票？
+    本页只做算术，不做主张。
+  </p>
+  <div class="method">
+    <b>口径</b>
+    人口取 2020 年第七次全国人口普查，31 个省、自治区、直辖市合计 <em>14.10 亿</em>。
+    每个单位固定 2 票（对应参议院席位），另有 <em>476</em> 席按人口用亨廷顿—希尔法分配，
+    每单位至少 1 席，故最小单位也有 3 票。合计 <em>538</em> 票，过半门槛 <em>270</em>。
+    香港、澳门、台湾单列于第五节。
+  </div>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<section id="s1">
+  <div class="secno">01 / 规则移植</div>
+  <h2>五条规则，一个门槛</h2>
+  <p class="note">
+    选举人团不是普选票的换算，它把「州」当成计票单位。前三条决定每个单位有多少票，
+    后两条决定这些票怎么用。两条加起来，才是这个制度真正的形状。
+  </p>
+  <table class="rules">
+    <thead>
+      <tr><th></th><th>美国机制</th><th>在 31 个省级行政区上的对应</th><th class="n" style="text-align:right">数字</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="no">01</td>
+        <td class="mech">参议院席位均等</td>
+        <td class="desc">每州 2 名参议员，与人口无关。这是小单位的第一重保险——怀俄明 57.7 万人和加州 3,950 万人，在参议院是平等的。</td>
+        <td class="val">62</td>
+      </tr>
+      <tr>
+        <td class="no">02</td>
+        <td class="mech">众议院按人口分配</td>
+        <td class="desc">435 席按人口切分，每州至少 1 席。中国版留 476 席，用亨廷顿—希尔法分配（与美国现行方法一致）。</td>
+        <td class="val">476</td>
+      </tr>
+      <tr>
+        <td class="no">03</td>
+        <td class="mech">最小单位保底 3 票</td>
+        <td class="desc">人口最少的一级行政区也拿满 3 票。西藏 364.8 万人配 1 席，是全场最划算的一张票。</td>
+        <td class="val">3</td>
+      </tr>
+      <tr>
+        <td class="no">04</td>
+        <td class="mech">赢者通吃</td>
+        <td class="desc">除缅因、内布拉斯加按国会选区拆分，其余各州全票归一人。中国版会是 31 个独立结算的单元，一省 50.1% 对 49.9%，结果按 100% 对 0% 计。</td>
+        <td class="val">31</td>
+      </tr>
+      <tr>
+        <td class="no">05</td>
+        <td class="mech">绝对多数门槛</td>
+        <td class="desc">538 票里须得 270 票，不是相对多数。第三方拿不到任何一张——这是制度的结构性排斥，不是选民偏好。</td>
+        <td class="val">270</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="s2">
+  <div class="secno">02 / 计票表</div>
+  <h2>538 票的分法</h2>
+  <p class="note">
+    按选举人票降序。末列「偏差」是该单位实得票数减去按人口比例应得的票数——正数说明它占了便宜。
+    全国均值为 <em id="avgSeat">262 万人／票</em>。
+  </p>
+
+  <div class="ctl">
+    <span class="ctl-label">口径</span>
+    <button data-model="A" aria-pressed="true">A · 原样移植 538</button>
+    <button data-model="B" aria-pressed="false">B · 规模对齐 1,912</button>
+    <button data-model="C" aria-pressed="false">C · 怀俄明规则 448</button>
+    <span class="spacer"></span>
+    <span class="meta" id="modelMeta"></span>
+  </div>
+
+  <div class="chart">
+    <div class="chart-head">
+      <span>单位</span>
+      <span>选举人票</span>
+      <span>院席</span>
+      <span>票</span>
+      <span>人／票</span>
+      <span>偏差</span>
+    </div>
+    <div id="rows"></div>
+  </div>
+  <div class="chart-foot">
+    <span id="footLeft"></span>
+    <span>亨廷顿—希尔法 · 每单位保底 1 席</span>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="secno">03 / 席位规模</div>
+  <h2>三个口径，三种失衡</h2>
+  <p class="note">
+    538 是美国的数字，不是普适常数。换一个众议院规模，整张表就会重排。三张表用的是同一套人口数据，
+    差别只在众议院留多少席。
+  </p>
+  <div class="cards" id="cards"></div>
+
+  <div class="decomp">
+    <h3>失衡是从哪来的</h3>
+    <p>
+      把「每单位 2 票」拆掉，只按众议院席位算，三种口径的票权极差分别只有
+      <em>1.32×</em>、<em>1.10×</em>、<em>1.31×</em>——亨廷顿—希尔法本身就相当接近一人一票。
+      加上那 2 票，数字立刻翻倍。所以选举人团的失衡主要来自<b>参议院那一半</b>，不是来自众议院席位的取整误差。
+    </p>
+    <div class="dgrid" id="dgrid"></div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="secno">04 / 最小获胜联盟</div>
+  <h2>22 个单位就够</h2>
+  <p class="note">
+    把 31 个单位按「每票代表人口」从少到多排列，一直累加到过半门槛为止。
+    这条路径不含任何偏好假设，只回答一个问题：最少要多少人，才能锁住 270 票。
+  </p>
+  <div class="coal">
+    <div class="big-num">
+      <b id="coalN">22</b>
+      <span id="coalSub">个单位 / 276 票</span>
+    </div>
+    <div class="coal-txt">
+      <p id="coalMain"></p>
+      <p class="small" id="coalVs"></p>
+    </div>
+  </div>
+  <div class="chips" id="chips"></div>
+</section>
+
+<section id="s5">
+  <div class="secno">05 / 三个特殊单位</div>
+  <h2>香港、澳门、台湾怎么算</h2>
+  <p class="note">
+    美国对非州领地有两种处理：波多黎各 328 万人零票，哥伦比亚特区凭第 23 条修正案得 3 票。
+    中国版若沿用这种差别，港澳台就得单列，而不是并入 31 个计票单位。
+  </p>
+  <table class="mini">
+    <thead>
+      <tr>
+        <th>单位</th><th class="n">人口</th>
+        <th class="n">方案① 比照特区</th>
+        <th class="n">方案② 按人口并入</th>
+      </tr>
+    </thead>
+    <tbody id="sarRows"></tbody>
+  </table>
+  <p class="note" id="sarNote"></p>
+</section>
+
+<section id="s6">
+  <div class="secno">06 / 十年重分配</div>
+  <h2>席位会跟着人走</h2>
+  <p class="note">
+    每十年普查一次、重算一次席位。这是 2010 年六普到 2020 年七普这一轮的净变动——
+    用同一个算法、同一个 476 席规模，在旧人口上重算得来，所以可比。
+  </p>
+  <div class="gains" id="gains"></div>
+</section>
+
+<section id="s7">
+  <div class="secno">07 / 制度细节</div>
+  <h2>四个容易被忽略的机关</h2>
+  <p class="note">规则表里的五条只是骨架。真正决定结果的是下面这几个接口。</p>
+  <div class="details">
+    <div class="detail">
+      <h3><i>01</i>赢者通吃把差距放大成断层</h3>
+      <p>48 个州全州票归一人。一省 50.1% 对 49.9% 的差距，在计票上变成 100% 对 0%。这意味着候选人不必去赢「多」，只需去赢「刚好够」——资源会向少数几个势均力敌的单元集中，其余单元沦为背景。</p>
+    </div>
+    <div class="detail">
+      <h3><i>02</i>选举人可以失信</h3>
+      <p>美国多数州有「失信选举人」立法，但宪法层面并未强制。2016 年出现过 <b>7 名</b>未按本州结果投票的选举人，票投给了鲍威尔、保罗、卡西奇等人。3 票之差就可能翻盘的格局下，这是真实存在的随机项。</p>
+    </div>
+    <div class="detail">
+      <h3><i>03</i>平票交给众议院，一省一票</h3>
+      <p>538 是偶数，269 对 269 在算术上完全可能。美国宪法第十二修正案规定此时交众议院，<b>每州代表团一票</b>，26 州即可当选。换成 31 个单位，就是 16 个单位定胜负——人口第一大省与最小的自治区，在这一步等值。</p>
+    </div>
+    <div class="detail">
+      <h3><i>04</i>第三党结构性出局</h3>
+      <p>绝对多数门槛加赢者通吃，使第三党几乎拿不到任何选举人票。美国历史上最接近的一次是 1912 年的进步党，老罗斯福拿到 <b>88 票</b>，仍不足以改变两党格局。这不是选民不给机会，是计票规则不给。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="src">
+    <h2>方法与出处</h2>
+    <p><b>人口</b>　国家统计局《第七次全国人口普查公报》，2020 年 11 月 1 日零时；2010 年数据取第六次全国人口普查。香港、澳门为 2020 年年底常住人口，台湾为 2020 年年底户籍人口。</p>
+    <p><b>席位</b>　亨廷顿—希尔法（Huntington–Hill），与美国现行众议院分配方法一致，每单位保底 1 席。2010 年席位在旧人口上以同一算法重算，保证与 2020 年可比。</p>
+    <p><b>美国对照</b>　2020 年人口普查后的席位分配：加州 52 席、怀俄明 1 席，折算每票代表 73.2 万与 19.2 万人，比值 3.81。怀俄明 57.7 万人、加州 3,950 万人，州际人口比 68.5 倍；中国省级单位的人口比是 34.5 倍——所以照搬之后，权重极差反而低于美国。</p>
+    <p><b>说明</b>　本页是制度算术的推演，用来看「按单位计票」会怎样改变人口与代表权的对应关系，不含任何制度主张。</p>
+  </div>
+  <div class="footline">
+    <span>Jillax · 2026 · 作品 / 推演</span>
+    <a href="../index.html">← 返回作品</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* 2020 七普；p10 为 2010 六普 */
+  var U = [
+    { n: "广东", t: "省", p: 126012510, p10: 104303132 },
+    { n: "山东", t: "省", p: 101527453, p10: 95793065 },
+    { n: "河南", t: "省", p: 99365519, p10: 94023567 },
+    { n: "江苏", t: "省", p: 84748016, p10: 78659903 },
+    { n: "四川", t: "省", p: 83674866, p10: 80418200 },
+    { n: "河北", t: "省", p: 74610235, p10: 71854202 },
+    { n: "湖南", t: "省", p: 66444864, p10: 65683722 },
+    { n: "浙江", t: "省", p: 64567588, p10: 54426891 },
+    { n: "安徽", t: "省", p: 61027171, p10: 59500468 },
+    { n: "湖北", t: "省", p: 57752557, p10: 57237740 },
+    { n: "广西", t: "自治区", p: 50126804, p10: 46026629 },
+    { n: "云南", t: "省", p: 47209277, p10: 45966239 },
+    { n: "江西", t: "省", p: 45188635, p10: 44567475 },
+    { n: "辽宁", t: "省", p: 42591407, p10: 43746323 },
+    { n: "福建", t: "省", p: 41540086, p10: 36894216 },
+    { n: "陕西", t: "省", p: 39528999, p10: 37327378 },
+    { n: "贵州", t: "省", p: 38562148, p10: 34746468 },
+    { n: "山西", t: "省", p: 34915616, p10: 35712111 },
+    { n: "重庆", t: "直辖市", p: 32054159, p10: 28846170 },
+    { n: "黑龙江", t: "省", p: 31850088, p10: 38312224 },
+    { n: "新疆", t: "自治区", p: 25852345, p10: 21815815 },
+    { n: "甘肃", t: "省", p: 25019831, p10: 25575254 },
+    { n: "上海", t: "直辖市", p: 24870895, p10: 23019148 },
+    { n: "吉林", t: "省", p: 24073453, p10: 27462297 },
+    { n: "内蒙古", t: "自治区", p: 24049155, p10: 24706321 },
+    { n: "北京", t: "直辖市", p: 21893095, p10: 19612368 },
+    { n: "天津", t: "直辖市", p: 13866009, p10: 12938224 },
+    { n: "海南", t: "省", p: 10081232, p10: 8671485 },
+    { n: "宁夏", t: "自治区", p: 7202654, p10: 6301350 },
+    { n: "青海", t: "省", p: 5923957, p10: 5626722 },
+    { n: "西藏", t: "自治区", p: 3648100, p10: 3002166 }
+  ];
+
+  var SAR = [
+    { n: "香港", p: 7474200 },
+    { n: "澳门", p: 683218 },
+    { n: "台湾", p: 23561236 }
+  ];
+
+  var US_POP = 331449281, US_SEATS = 435;
+  var US_PER_SEAT = US_POP / US_SEATS;
+
+  var total = U.reduce(function (s, u) { return s + u.p; }, 0);
+  var minPop = Math.min.apply(null, U.map(function (u) { return u.p; }));
+  var maxPop = Math.max.apply(null, U.map(function (u) { return u.p; }));
+
+  /* ---------- 亨廷顿—希尔法 ---------- */
+  function alloc(units, seats) {
+    var a = {}, names = units.map(function (u) { return u.n; });
+    names.forEach(function (n) { a[n] = 1; });
+    var left = seats - names.length;
+    while (left > 0) {
+      var best = null, bv = -1;
+      for (var i = 0; i < names.length; i++) {
+        var k = names[i];
+        var v = 1;
+        for (var j = 0; j < units.length; j++) { if (units[j].n === k) { v = units[j].p; break; } }
+        v = v / Math.sqrt(a[k] * (a[k] + 1));
+        if (v > bv) { bv = v; best = k; }
+      }
+      a[best] += 1;
+      left--;
+    }
+    return a;
+  }
+
+  var MODELS = {
+    A: { label: "A · 原样移植", seats: 538 - 2 * U.length },
+    B: { label: "B · 规模对齐", seats: Math.round(total / US_PER_SEAT) },
+    C: { label: "C · 怀俄明规则", seats: Math.floor(total / minPop) }
+  };
+
+  function build(id) {
+    var m = MODELS[id];
+    var h = alloc(U, m.seats);
+    var rows = U.map(function (u) {
+      return { n: u.n, t: u.t, p: u.p, p10: u.p10, house: h[u.n], ev: h[u.n] + 2 };
+    });
+    var tot = rows.reduce(function (s, r) { return s + r.ev; }, 0);
+    rows.forEach(function (r) {
+      r.ppe = r.p / r.ev;
+      r.dev = r.ev - (r.p / total) * tot;
+    });
+    rows.sort(function (a, b) { return b.ev - a.ev || b.p - a.p; });
+    return { id: id, seats: m.seats, rows: rows, tot: tot, thr: Math.floor(tot / 2) + 1, label: m.label };
+  }
+
+  var cache = {};
+  function model(id) { return cache[id] || (cache[id] = build(id)); }
+
+  function ratio(rows, field) {
+    var mx = 0, mn = Infinity;
+    rows.forEach(function (r) {
+      var v = field === "ev" ? r.ppe : r.p / r.house;
+      if (v > mx) mx = v;
+      if (v < mn) mn = v;
+    });
+    return mx / mn;
+  }
+
+  var fmt = function (n) { return n.toLocaleString("en-US"); };
+  var cur = "A";
+
+  /* ---------- 顶部四格 ---------- */
+  function renderStats(m) {
+    var r = ratio(m.rows, "ev");
+    document.getElementById("stats").innerHTML = [
+      '<div class="stat"><b>' + fmt(m.tot) + '</b><span>总选举人票</span></div>',
+      '<div class="stat"><b>' + m.thr + '</b><span>过半门槛</span></div>',
+      '<div class="stat"><b>' + U.length + '</b><span>个计票单位</span></div>',
+      '<div class="stat"><b class="accent">' + r.toFixed(2) + '×</b><span>单票权重极差</span></div>'
+    ].join("");
+  }
+
+  /* ---------- 主表 ---------- */
+  function renderRows(m) {
+    var max = m.rows[0].ev;
+    document.getElementById("rows").innerHTML = m.rows.map(function (r) {
+      var w = Math.max(2, (r.ev / max) * 100);
+      var dv = r.dev;
+      var cls = Math.abs(dv) < 0.05 ? "zero" : (dv > 0 ? "pos" : "neg");
+      var txt = (dv > 0 ? "+" : dv < 0 ? "−" : "±") + Math.abs(dv).toFixed(1);
+      return '<div class="row" title="' + r.n + '：' + fmt(r.p) + ' 人，' + r.house + ' 席 + 2 票 = ' + r.ev + ' 票">' +
+        '<div class="who"><b>' + r.n + '</b><small>' + r.t + '</small></div>' +
+        '<div class="track"><i class="bar" style="width:' + w.toFixed(1) + '%"></i></div>' +
+        '<div class="num small hseats">' + r.house + '</div>' +
+        '<div class="num">' + r.ev + '</div>' +
+        '<div class="num small">' + fmt(Math.round(r.ppe)) + '</div>' +
+        '<div class="dev ' + cls + '">' + txt + '</div>' +
+        '</div>';
+    }).join("");
+    document.getElementById("modelMeta").textContent =
+      "众议院 " + fmt(m.seats) + " 席 · 单席 " + (total / m.seats / 1e4).toFixed(1) + " 万人";
+    document.getElementById("footLeft").textContent =
+      m.rows.length + " 个单位 · 合计 " + fmt(m.tot) + " 票";
+    document.getElementById("avgSeat").textContent =
+      Math.round(total / m.tot / 1e4) + " 万人／票";
+  }
+
+  /* ---------- 三张卡 + 拆解 ---------- */
+  function renderCards(m) {
+    var txt = {
+      A: "总票数与美国完全对齐。但每个院席背后站着 296 万人，是美国的 3.9 倍，单个选区的代表性被摊薄。",
+      B: "按美国的单席人口反推，要 1,850 个院席。最接近一人一票，也最不现实——议事厅坐不下。",
+      C: "以最小的西藏为一把尺。总席位反而变少，那 2 张保底票就更值钱，极差比 A 还大。"
+    };
+    document.getElementById("cards").innerHTML = ["A", "B", "C"].map(function (k) {
+      var x = model(k);
+      var r = ratio(x.rows, "ev");
+      return '<div class="card' + (k === m.id ? " on" : "") + '">' +
+        '<div class="lab">' + MODELS[k].label + '</div>' +
+        '<div class="big">' + fmt(x.tot) + '</div>' +
+        '<div class="spec">' + fmt(x.seats) + ' 席 · 单席 ' + (total / x.seats / 1e4).toFixed(1) +
+        ' 万人 · 极差 ' + r.toFixed(2) + '×</div>' +
+        '<div class="txt">' + txt[k] + '</div>' +
+        '</div>';
+    }).join("");
+
+    var maxR = 3;
+    document.getElementById("dgrid").innerHTML =
+      '<div class="h">口径</div><div class="h">只算院席</div><div class="h">加上每单位 2 票</div><div class="h" style="text-align:right">放大</div>' +
+      ["A", "B", "C"].map(function (k) {
+        var x = model(k);
+        var a = ratio(x.rows, "ev") > 0 ? ratio(x.rows, "house") : 1;
+        var b = ratio(x.rows, "ev");
+        return '<div class="n">' + k + ' · ' + fmt(x.seats) + ' 席</div>' +
+          '<div class="dbar"><i class="a" style="width:' + (a / maxR * 100).toFixed(1) + '%"></i></div>' +
+          '<div class="dbar"><i class="b" style="width:' + (b / maxR * 100).toFixed(1) + '%"></i></div>' +
+          '<div class="v">' + (b / a).toFixed(2) + '×</div>';
+      }).join("");
+  }
+
+  /* ---------- 最小获胜联盟 ---------- */
+  function renderCoalition(m) {
+    var order = m.rows.slice().sort(function (a, b) { return a.ppe - b.ppe; });
+    var sum = 0, pop = 0, k = 0, cutAt = -1;
+    for (var i = 0; i < order.length; i++) {
+      sum += order[i].ev; pop += order[i].p; k = i + 1;
+      if (sum >= m.thr) { cutAt = i; break; }
+    }
+    var pct = (pop / total * 100);
+    document.getElementById("coalN").textContent = k;
+    document.getElementById("coalSub").textContent = "个单位 / " + sum + " 票";
+    document.getElementById("coalMain").innerHTML =
+      "这 " + k + " 个单位合计 <b>" + (pop / 1e8).toFixed(2) + " 亿人</b>，占全国 <b>" + pct.toFixed(1) +
+      "%</b>。" + order.slice(0, 3).map(function (r) { return r.n; }).join("、") +
+      "排在最前面——它们每张票背后的人口，不到广东的一半。";
+    var big5 = ["广东", "山东", "河南", "江苏", "四川"];
+    var b5pop = 0, b5ev = 0;
+    big5.forEach(function (n) {
+      m.rows.forEach(function (r) { if (r.n === n) { b5pop += r.p; b5ev += r.ev; } });
+    });
+    document.getElementById("coalVs").innerHTML =
+      "作为对照：广东、山东、河南、江苏、四川五个亿级大省合计 " + (b5pop / 1e8).toFixed(2) + " 亿人（" +
+      (b5pop / total * 100).toFixed(1) + "%），握有 " + b5ev + " 票（" + (b5ev / m.tot * 100).toFixed(1) +
+      "%），一个都不在名单里。";
+
+    var html = "";
+    order.forEach(function (r, i) {
+      html += '<span class="chip' + (i <= cutAt ? " in" : "") + '">' + r.n + "<b>" + r.ev + "</b></span>";
+      if (i === cutAt) {
+        html += '<span class="cutline">↑ 至此已达 ' + m.thr + " 票门槛，余下 " +
+          (order.length - cutAt - 1) + " 个单位可以不争</span>";
+      }
+    });
+    document.getElementById("chips").innerHTML = html;
+  }
+
+  /* ---------- 港澳台 ---------- */
+  function renderSar() {
+    var c = {};
+    SAR.forEach(function (s) { c[s.n] = 3; });
+    var all = U.concat(SAR.map(function (s) { return { n: s.n, p: s.p }; }));
+    var h = alloc(all, 538 - 2 * all.length);
+    var rows = SAR.map(function (s) {
+      return '<tr><td><b>' + s.n + '</b></td><td class="n">' + fmt(s.p) + '</td>' +
+        '<td class="n">3</td><td class="n hi">' + (h[s.n] + 2) + '</td></tr>';
+    }).join("");
+    document.getElementById("sarRows").innerHTML = rows;
+    var tot2 = SAR.reduce(function (s, x) { return s + h[x.n] + 2; }, 0);
+    var gd = h["广东"] + 2;
+    document.getElementById("sarNote").innerHTML =
+      "方案① 总票升至 <b>547</b>、门槛 <b>274</b>；方案② 总票仍为 538，港澳台合计 <b>" + tot2 +
+      " 票</b>，各省相应减席——广东由 45 降至 <b>" + gd + "</b>。两种方案都不改变本页其余结论的方向。";
+  }
+
+  /* ---------- 十年重分配 ---------- */
+  function renderGains(m) {
+    var h10 = alloc(U.map(function (u) { return { n: u.n, p: u.p10 }; }), m.seats);
+    var up = [], down = [];
+    m.rows.forEach(function (r) {
+      var d = r.house - h10[r.n];
+      if (d > 0) up.push({ n: r.n, d: d });
+      if (d < 0) down.push({ n: r.n, d: d });
+    });
+    up.sort(function (a, b) { return b.d - a.d; });
+    down.sort(function (a, b) { return a.d - b.d; });
+    var net = up.reduce(function (s, x) { return s + x.d; }, 0);
+    document.getElementById("gains").innerHTML =
+      '<div><h3>得席 · 共 ' + net + ' 席</h3><div class="gainline up">' +
+      up.map(function (x) { return "<span>" + x.n + " <b>+" + x.d + "</b></span>"; }).join("") +
+      "</div></div>" +
+      '<div><h3>失席 · 共 ' + Math.abs(net) + ' 席</h3><div class="gainline down">' +
+      down.map(function (x) { return "<span>" + x.n + " <b>−" + Math.abs(x.d) + "</b></span>"; }).join("") +
+      "</div><p class=\"note\" style=\"margin-top:10px\">东北三省合计减 " +
+      (function () {
+        var s = 0;
+        ["黑龙江", "辽宁", "吉林"].forEach(function (n) {
+          down.forEach(function (x) { if (x.n === n) s += x.d; });
+        });
+        return Math.abs(s);
+      })() + " 席，是这一轮最大的输家；广东一省加 " +
+      (function () { var s = 0; up.forEach(function (x) { if (x.n === "广东") s += x.d; }); return s; })() +
+      " 席，几乎抵掉整个东北的损失。</p></div>";
+  }
+
+  /* ---------- 切换 ---------- */
+  function render(id) {
+    cur = id;
+    var m = model(id);
+    renderStats(m);
+    renderRows(m);
+    renderCards(m);
+    renderCoalition(m);
+    renderGains(m);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".ctl button"), function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".ctl button"), function (x) {
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+      render(b.dataset.model);
+    });
+  });
+
+  render("A");
+  renderSar();
+})();
+</script>
+</body>
+</html>
