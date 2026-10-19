@@ -316,6 +316,88 @@
   .footline a { color: inherit; text-decoration: none; }
   .footline a:hover { color: var(--ink); }
 
+  /* ---------- map ---------- */
+  .mapwrap { margin-top: 14px; }
+  .mapbox {
+    position: relative; border: 1px solid var(--line);
+    background: var(--sheet); padding: 6px;
+  }
+  #cnMap { width: 100%; height: auto; display: block; }
+  .pv {
+    stroke: #f7f0e3; stroke-width: 1.1;
+    transition: fill .3s ease, stroke .15s;
+    cursor: pointer;
+  }
+  .pv:hover { stroke: #221c16; stroke-width: 1.6; }
+  .pv.na { cursor: default; }
+  .pv-lbl {
+    font-family: var(--mono); font-size: 12px; text-anchor: middle;
+    dominant-baseline: middle; pointer-events: none;
+    paint-order: stroke; stroke: rgba(247, 240, 227, .7); stroke-width: 2.6;
+    stroke-linejoin: round;
+  }
+  .nh-lbl {
+    font-family: var(--mono); font-size: 9px; fill: var(--muted);
+    text-anchor: middle; letter-spacing: .08em;
+  }
+  .map-tip {
+    position: absolute; z-index: 5; pointer-events: none;
+    background: #221c16; color: #f3eadb; font-size: 12px; line-height: 1.55;
+    padding: 6px 9px; opacity: 0; transition: opacity .12s; white-space: nowrap;
+    font-family: var(--mono);
+  }
+  .panel {
+    border: 1px solid var(--line); background: var(--sheet);
+    padding: 13px 15px 14px; margin-top: 12px;
+  }
+  .prow {
+    display: flex; justify-content: space-between; gap: 16px;
+    align-items: center; flex-wrap: wrap;
+  }
+  .prow .grow { flex: 1 1 420px; min-width: 260px; }
+  .tnums { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; margin-top: 8px; }
+  .tnums .a { color: var(--rose); }
+  .tnums .b { color: #2f4a63; }
+  .tnums .mut { color: var(--muted); }
+  .ranks { display: flex; gap: 8px 22px; flex-wrap: wrap; font-size: 13px; color: var(--body); }
+  .ranks i { font-style: normal; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .1em; margin-right: 4px; }
+  .ranks b { font-family: var(--mono); font-weight: 500; color: var(--ink); }
+  .panel h3 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 10px; font-weight: 500;
+  }
+  .tally { position: relative; display: flex; height: 20px; background: #e8dfcf; margin-bottom: 9px; }
+  .tally i { display: block; height: 100%; transition: width .3s ease; }
+  .tally i.a { background: var(--rose); }
+  .tally i.b { background: #2f4a63; }
+  .tally u { position: absolute; top: -4px; bottom: -4px; width: 1px; background: #221c16; }
+  .trow {
+    display: flex; justify-content: space-between; gap: 8px;
+    font-family: var(--mono); font-size: 12px; margin-bottom: 4px;
+  }
+  .trow.a { color: var(--rose); }
+  .trow.b { color: #2f4a63; }
+  .trow.mut { color: var(--muted); margin-bottom: 10px; }
+  .panel .pbtns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .panel .pbtns button {
+    border: 1px solid var(--line); background: transparent; cursor: pointer;
+    padding: 5px 9px; font-size: 12px; color: var(--muted); transition: .15s;
+  }
+  .panel .pbtns button:hover { border-color: var(--ink); color: var(--ink); }
+  .panel .hint { font-size: 12px; line-height: 1.7; color: var(--muted); margin: 9px 0 0; }
+  .rank { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; padding: 4px 0; border-bottom: 1px dotted var(--line); }
+  .rank:last-child { border-bottom: 0; }
+  .rank span:first-child { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+  .rank span:last-child { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .legend { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .legend .ramp {
+    height: 9px; width: 200px; border: 1px solid var(--line);
+    background: linear-gradient(90deg, #8f2231 0%, #efe2cd 50%, #2b435c 100%);
+  }
+  .legend .sw { width: 12px; height: 12px; border: 1px solid var(--line); background: #e4dac8; }
+  .legend span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .legend .sep { width: 1px; height: 14px; background: var(--line); }
+
   @media (max-width: 860px) {
     body { font-size: 15px; }
     .stats { grid-template-columns: repeat(2, 1fr); }
@@ -330,6 +412,11 @@
     .big-num { flex-basis: 100%; }
     table.rules td.mech { width: auto; }
     table.rules th:nth-child(3), table.rules td.desc { display: none; }
+    .mapwrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .pv-lbl { display: none; }
+    .legend .ramp { width: 130px; }
   }
 </style>
 </head>
@@ -353,7 +440,7 @@
     人口取 2020 年第七次全国人口普查，31 个省、自治区、直辖市合计 <em>14.10 亿</em>。
     每个单位固定 2 票（对应参议院席位），另有 <em>476</em> 席按人口用亨廷顿—希尔法分配，
     每单位至少 1 席，故最小单位也有 3 票。合计 <em>538</em> 票，过半门槛 <em>270</em>。
-    香港、澳门、台湾单列于第五节。
+    香港、澳门、台湾单列于第六节。
   </div>
 </header>
 
@@ -439,8 +526,47 @@
   </div>
 </section>
 
+<section id="s3map">
+  <div class="secno">03 / 地图</div>
+  <h2>把票摊开来看</h2>
+  <p class="note">
+    同一组数字落到地上，结构就出来了。左图按「每票代表多少人」着色：越红，这一票越值钱；越蓝，越被稀释。
+    右边是沙盘——可以自己一省一省地分配，看要多少单位才够 <em>270</em>。
+  </p>
+
+  <div class="ctl" id="mapCtl">
+    <span class="ctl-label">图层</span>
+    <button data-layer="weight" aria-pressed="true">票权</button>
+    <button data-layer="sandbox" aria-pressed="false">沙盘</button>
+    <span class="spacer"></span>
+    <span class="meta" id="mapMeta"></span>
+  </div>
+
+  <div class="mapwrap">
+    <div class="mapbox" id="mapBox">
+      <svg id="cnMap" viewBox="0 0 1130 841" role="img" aria-label="中国省级行政区选举人票权示意图"></svg>
+      <div class="map-tip" id="mapTip"></div>
+    </div>
+    <aside class="panel" id="mapPanel"></aside>
+  </div>
+
+  <div class="legend">
+    <span>票被放大</span>
+    <span class="ramp"></span>
+    <span>票被稀释</span>
+    <span class="sep"></span>
+    <span class="sw"></span>
+    <span>不在本口径</span>
+  </div>
+  <p class="note">
+    底图：省级边界取自高德开放平台公开数据，含南海诸岛与十段线；示意性数据图，不作勘界依据。
+    香港、澳门、台湾不在这 31 个计票单位之内，以浅灰另示。色阶按对数压缩，两侧各自对称。
+    北京、天津、上海面积过小未在图上标注，悬停可看，票数依次为 <em id="cityNote">9 · 7 · 10</em>。
+  </p>
+</section>
+
 <section id="s3">
-  <div class="secno">03 / 席位规模</div>
+  <div class="secno">04 / 席位规模</div>
   <h2>三个口径，三种失衡</h2>
   <p class="note">
     538 是美国的数字，不是普适常数。换一个众议院规模，整张表就会重排。三张表用的是同一套人口数据，
@@ -460,7 +586,7 @@
 </section>
 
 <section id="s4">
-  <div class="secno">04 / 最小获胜联盟</div>
+  <div class="secno">05 / 最小获胜联盟</div>
   <h2>22 个单位就够</h2>
   <p class="note">
     把 31 个单位按「每票代表人口」从少到多排列，一直累加到过半门槛为止。
@@ -480,7 +606,7 @@
 </section>
 
 <section id="s5">
-  <div class="secno">05 / 三个特殊单位</div>
+  <div class="secno">06 / 三个特殊单位</div>
   <h2>香港、澳门、台湾怎么算</h2>
   <p class="note">
     美国对非州领地有两种处理：波多黎各 328 万人零票，哥伦比亚特区凭第 23 条修正案得 3 票。
@@ -500,7 +626,7 @@
 </section>
 
 <section id="s6">
-  <div class="secno">06 / 十年重分配</div>
+  <div class="secno">07 / 十年重分配</div>
   <h2>席位会跟着人走</h2>
   <p class="note">
     每十年普查一次、重算一次席位。这是 2010 年六普到 2020 年七普这一轮的净变动——
@@ -510,7 +636,7 @@
 </section>
 
 <section id="s7">
-  <div class="secno">07 / 制度细节</div>
+  <div class="secno">08 / 制度细节</div>
   <h2>四个容易被忽略的机关</h2>
   <p class="note">规则表里的五条只是骨架。真正决定结果的是下面这几个接口。</p>
   <div class="details">
@@ -549,6 +675,7 @@
 
 </div>
 
+<script src="china-map.js"></script>
 <script>
 (function () {
   "use strict";
@@ -811,6 +938,214 @@
       " 席，几乎抵掉整个东北的损失。</p></div>";
   }
 
+  /* ---------- 地图 ---------- */
+  var MAP = window.CHINA_MAP || null;
+  var NA_SET = { "香港": 1, "澳门": 1, "台湾": 1 };
+  var layer = "weight";
+  var sand = {};
+
+  var C_RED = [143, 34, 49], C_BLUE = [43, 67, 92], C_PAPER = [239, 226, 205], C_NA = [228, 218, 200];
+
+  function rgb(c) { return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")"; }
+  function mixc(a, b, t) {
+    return [Math.round(a[0] + (b[0] - a[0]) * t),
+            Math.round(a[1] + (b[1] - a[1]) * t),
+            Math.round(a[2] + (b[2] - a[2]) * t)];
+  }
+
+  /* 对数压缩、两侧对称：红＝票被放大，蓝＝票被稀释 */
+  function weightColor(ppe, mean, lo) {
+    var K = Math.log(mean / lo);
+    var r = Math.log(mean / ppe) / K;
+    r = Math.max(-1, Math.min(1, r));
+    var t = (r >= 0 ? 1 : -1) * Math.sqrt(Math.abs(r));
+    return t >= 0 ? rgb(mixc(C_PAPER, C_RED, t)) : rgb(mixc(C_PAPER, C_BLUE, -t));
+  }
+
+  function byName(m) {
+    var o = {};
+    m.rows.forEach(function (r) { o[r.n] = r; });
+    return o;
+  }
+
+  function buildMap() {
+    if (!MAP) return;
+    var h = "";
+    MAP.p.forEach(function (p) {
+      h += '<path class="pv' + (NA_SET[p.n] ? " na" : "") + '" data-n="' + p.n + '" d="' + p.d + '"></path>';
+    });
+    MAP.p.forEach(function (p) {
+      if (p.a < 1500) return;
+      h += '<text class="pv-lbl" x="' + p.x + '" y="' + p.y + '">' + p.n + "</text>";
+    });
+    var nh = MAP.nh, ox = 975, oy = 560;
+    h += '<g transform="translate(' + ox + "," + oy + ')">';
+    h += '<rect x="-8" y="-8" width="' + (nh.w + 16) + '" height="' + (nh.h + 16) +
+         '" fill="#faf6ee" stroke="#d9cbb6"></rect>';
+    nh.islands.forEach(function (d) { h += '<path d="' + d + '" fill="#c4b8a6"></path>'; });
+    nh.lines.forEach(function (d) {
+      h += '<path d="' + d + '" fill="none" stroke="#60544a" stroke-width="1.8"></path>';
+    });
+    h += '<text class="nh-lbl" x="' + (nh.w / 2) + '" y="' + (nh.h + 15) + '">南海诸岛</text>';
+    h += "</g>";
+    document.getElementById("cnMap").innerHTML = h;
+  }
+
+  function sandStats(m) {
+    var a = 0, b = 0, pa = 0, none = 0;
+    m.rows.forEach(function (r) {
+      var s = sand[r.n] || 0;
+      if (s === 1) { a += r.ev; pa += r.p; }
+      else if (s === 2) { b += r.ev; }
+      else { none += r.ev; }
+    });
+    return { a: a, b: b, pa: pa, none: none };
+  }
+
+  function renderPanel(m) {
+    var el = document.getElementById("mapPanel");
+    if (layer === "sandbox") {
+      var s = sandStats(m);
+      var wa = (s.a / m.tot * 100), wb = (s.b / m.tot * 100);
+      el.innerHTML =
+        '<div class="prow"><div class="grow">' +
+        '<div class="tally"><i class="a" style="width:' + wa.toFixed(1) + '%"></i>' +
+        '<i class="b" style="width:' + wb.toFixed(1) + '%"></i>' +
+        '<u style="left:' + (m.thr / m.tot * 100).toFixed(2) + '%"></u></div>' +
+        '<div class="tnums">' +
+        '<span class="a">甲 ' + s.a + " 票</span>" +
+        '<span class="b">乙 ' + s.b + " 票</span>" +
+        '<span class="mut">未定 ' + s.none + " 票</span>" +
+        '<span class="mut">门槛 ' + m.thr + "</span>" +
+        '<span class="mut">甲覆盖人口 ' + (s.pa / total * 100).toFixed(1) + "%</span>" +
+        "</div></div>" +
+        '<div class="pbtns"><button data-act="coal">载入 22 单位方案</button>' +
+        '<button data-act="clear">清空</button></div></div>' +
+        '<p class="hint">点省份循环切换：未定 → 甲 → 乙。竖线是过半门槛。</p>';
+    } else {
+      var asc = m.rows.slice().sort(function (x, y) { return x.ppe - y.ppe; });
+      var pack = function (arr) {
+        return arr.map(function (r) {
+          return r.n + " <b>" + (r.ppe / 1e4).toFixed(1) + "</b> 万";
+        }).join(" · ");
+      };
+      el.innerHTML =
+        '<div class="ranks">' +
+        "<span><i>票最值钱</i>" + pack(asc.slice(0, 3)) + "</span>" +
+        "<span><i>票最稀释</i>" + pack(asc.slice(-3).reverse()) + "</span>" +
+        "</div>" +
+        '<p class="hint">全国均值 ' + (total / m.tot / 1e4).toFixed(1) +
+        " 万人／票，两端相差 " + (asc[asc.length - 1].ppe / asc[0].ppe).toFixed(2) +
+        " 倍。悬停任意省份看票数与偏差；切到「沙盘」可以自己分配。</p>";
+    }
+  }
+
+  function paintMap(m) {
+    if (!MAP) return;
+    var idx = byName(m);
+    var minPpe = Math.min.apply(null, m.rows.map(function (r) { return r.ppe; }));
+    var maxPpe = Math.max.apply(null, m.rows.map(function (r) { return r.ppe; }));
+    var mean = total / m.tot;
+    var s = sandStats(m);
+    Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv"), function (el) {
+      var n = el.getAttribute("data-n");
+      if (NA_SET[n] || !idx[n]) { el.style.fill = rgb(C_NA); return; }
+      if (layer === "sandbox") {
+        var st = sand[n] || 0;
+        el.style.fill = st === 1 ? "#9c2b3a" : st === 2 ? "#2f4a63" : "#ece1cf";
+      } else {
+        el.style.fill = weightColor(idx[n].ppe, mean, minPpe);
+      }
+    });
+    document.getElementById("mapMeta").textContent = layer === "sandbox"
+      ? "门槛 " + m.thr + " · 未定 " + s.none + " 票"
+      : "每票 " + (minPpe / 1e4).toFixed(1) + "—" + (maxPpe / 1e4).toFixed(1) + " 万人";
+    var cn = document.getElementById("cityNote");
+    if (cn) cn.textContent = ["北京", "天津", "上海"].map(function (n) { return idx[n] ? idx[n].ev : "—"; }).join(" · ");
+    renderPanel(m);
+  }
+
+  function cycle(n) {
+    sand[n] = ((sand[n] || 0) + 1) % 3;
+    paintMap(model(cur));
+  }
+
+  function loadCoalition() {
+    var m = model(cur);
+    var asc = m.rows.slice().sort(function (x, y) { return x.ppe - y.ppe; });
+    sand = {};
+    var sum = 0;
+    for (var i = 0; i < asc.length; i++) {
+      sand[asc[i].n] = 1; sum += asc[i].ev;
+      if (sum >= m.thr) break;
+    }
+    layer = "sandbox";
+    Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (b) {
+      b.setAttribute("aria-pressed", b.dataset.layer === "sandbox" ? "true" : "false");
+    });
+    paintMap(m);
+  }
+
+  function initMap() {
+    if (!MAP) return;
+    buildMap();
+    var svg = document.getElementById("cnMap");
+    var tip = document.getElementById("mapTip");
+    var box = document.getElementById("mapBox");
+
+    function tipFor(el) {
+      var n = el.getAttribute("data-n");
+      var m = model(cur);
+      var r = byName(m)[n];
+      if (NA_SET[n] || !r) return n + " · 未纳入 31 个单位";
+      var dv = r.dev;
+      return n + " · " + r.ev + " 票 · " + (r.ppe / 1e4).toFixed(1) + " 万人／票 · 偏差 " +
+        (dv > 0 ? "+" : dv < 0 ? "−" : "±") + Math.abs(dv).toFixed(1);
+    }
+
+    svg.addEventListener("mouseover", function (e) {
+      var t = e.target;
+      if (!t.classList || !t.classList.contains("pv")) return;
+      tip.textContent = tipFor(t);
+      tip.style.opacity = "1";
+    });
+    svg.addEventListener("mouseout", function (e) {
+      if (e.target.classList && e.target.classList.contains("pv")) tip.style.opacity = "0";
+    });
+    svg.addEventListener("mousemove", function (e) {
+      var r = box.getBoundingClientRect();
+      var x = e.clientX - r.left + 14, y = e.clientY - r.top + 14;
+      if (x + tip.offsetWidth > r.width - 8) x = e.clientX - r.left - tip.offsetWidth - 12;
+      tip.style.left = x + "px";
+      tip.style.top = y + "px";
+    });
+    svg.addEventListener("click", function (e) {
+      var t = e.target;
+      if (!t.classList || !t.classList.contains("pv")) return;
+      var n = t.getAttribute("data-n");
+      if (NA_SET[n] || layer !== "sandbox") return;
+      cycle(n);
+    });
+
+    document.getElementById("mapPanel").addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b) return;
+      var act = b.getAttribute("data-act");
+      if (act === "clear") { sand = {}; paintMap(model(cur)); }
+      if (act === "coal") { loadCoalition(); }
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (b) {
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (x) {
+          x.setAttribute("aria-pressed", x === b ? "true" : "false");
+        });
+        layer = b.dataset.layer;
+        paintMap(model(cur));
+      });
+    });
+  }
+
   /* ---------- 切换 ---------- */
   function render(id) {
     cur = id;
@@ -820,17 +1155,19 @@
     renderCards(m);
     renderCoalition(m);
     renderGains(m);
+    paintMap(m);
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll(".ctl button"), function (b) {
+  Array.prototype.forEach.call(document.querySelectorAll("#s2 .ctl button"), function (b) {
     b.addEventListener("click", function () {
-      Array.prototype.forEach.call(document.querySelectorAll(".ctl button"), function (x) {
+      Array.prototype.forEach.call(document.querySelectorAll("#s2 .ctl button"), function (x) {
         x.setAttribute("aria-pressed", x === b ? "true" : "false");
       });
       render(b.dataset.model);
     });
   });
 
+  initMap();
   render("A");
   renderSar();
 })();
