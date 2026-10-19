@@ -391,9 +391,15 @@
   .rank span:last-child { font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .legend { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
   .legend .ramp {
-    height: 9px; width: 200px; border: 1px solid var(--line);
-    background: linear-gradient(90deg, #8f2231 0%, #efe2cd 50%, #2b435c 100%);
+    height: 10px; width: 88px; border: 1px solid var(--line);
   }
+  .legend .ramp.red { background: linear-gradient(90deg, #e8cfd2, #8f2231); }
+  .legend .ramp.blue { background: linear-gradient(90deg, #2b435c, #cfd8e2); }
+  .split {
+    border-left: 3px solid var(--rose); margin: 14px 0 0;
+    padding: 2px 0 2px 13px; font-size: 14px; line-height: 1.8; color: var(--body);
+  }
+  .split b { font-family: var(--mono); color: var(--rose); font-weight: 500; }
   .legend .sw { width: 12px; height: 12px; border: 1px solid var(--line); background: #e4dac8; }
   .legend span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .legend .sep { width: 1px; height: 14px; background: var(--line); }
@@ -527,41 +533,51 @@
 </section>
 
 <section id="s3map">
-  <div class="secno">03 / 地图</div>
-  <h2>把票摊开来看</h2>
+  <div class="secno">03 / 模拟</div>
+  <h2>跑一次大选</h2>
   <p class="note">
-    同一组数字落到地上，结构就出来了。上图按「每票代表多少人」着色：越红，这一票越值钱；越蓝，越被稀释。
-    下面那条是沙盘——可以自己一省一省地分配，看要多少单位才够 <em>270</em>。
+    31 个单位各有一个抽出来的固定倾向，每场选举再加一个全国摆动和一点噪声，单位越小噪声越大。
+    谁在一个单位过半，就整块拿走它的选举人票；颜色深浅是票差。这是纯算术的沙盘，
+    倾向是随机数，不对应任何真实政治分布——它要展示的是规则，不是判断谁会赢。
   </p>
 
   <div class="ctl" id="mapCtl">
     <span class="ctl-label">图层</span>
-    <button data-layer="weight" aria-pressed="true">票权</button>
-    <button data-layer="sandbox" aria-pressed="false">沙盘</button>
+    <button data-layer="sim" aria-pressed="true">模拟结果</button>
+    <button data-layer="sand" aria-pressed="false">手动沙盘</button>
     <span class="spacer"></span>
     <span class="meta" id="mapMeta"></span>
   </div>
 
   <div class="mapwrap">
     <div class="mapbox" id="mapBox">
-      <svg id="cnMap" viewBox="0 0 1130 841" role="img" aria-label="中国省级行政区选举人票权示意图"></svg>
+      <svg id="cnMap" viewBox="0 0 1130 841" role="img" aria-label="中国省级行政区模拟大选结果示意图"></svg>
       <div class="map-tip" id="mapTip"></div>
     </div>
     <aside class="panel" id="mapPanel"></aside>
   </div>
 
+  <p class="split" id="splitLine"></p>
+
   <div class="legend">
-    <span>票被放大</span>
-    <span class="ramp"></span>
-    <span>票被稀释</span>
+    <span>甲</span>
+    <span class="ramp red"></span>
+    <span class="ramp blue"></span>
+    <span>乙</span>
     <span class="sep"></span>
     <span class="sw"></span>
-    <span>不在本口径</span>
+    <span>未定</span>
   </div>
   <p class="note">
     底图：省级边界取自高德开放平台公开数据，含南海诸岛与十段线；示意性数据图，不作勘界依据。
-    香港、澳门、台湾不在这 31 个计票单位之内，以浅灰另示。色阶按对数压缩，两侧各自对称。
-    北京、天津、上海面积过小未在图上标注，悬停可看，票数依次为 <em id="cityNote">9 · 7 · 10</em>。
+    香港、澳门、台湾不在这 31 个计票单位之内，以浅灰另示。
+    北京、天津、上海面积过小未在图上标注，悬停可看。
+  </p>
+  <p class="note">
+    抽签规则：每个单位先抽一个固定倾向 λ ~ 正态（0，7%），并对其作人口加权归零；每场选举再抽一个
+    全国摆动 S ~ 正态（0，1.2%）。单位得票率 = 50% + λ + S + 噪声，噪声标准差为 1.2% ÷ √（该单位人口 ÷ 单位均值），
+    截断于 6%—94%。倾向是随机数，与任何真实政治分布无关；「重新模拟」只换 S 与噪声，所以翻动的是少数几个
+    边缘单位，不是全图重来。
   </p>
 </section>
 
@@ -938,13 +954,17 @@
       " 席，几乎抵掉整个东北的损失。</p></div>";
   }
 
-  /* ---------- 地图 ---------- */
+  /* ---------- 地图：模拟大选 ---------- */
   var MAP = window.CHINA_MAP || null;
   var NA_SET = { "香港": 1, "澳门": 1, "台湾": 1 };
-  var layer = "weight";
+  var mode = "sim";
   var sand = {};
+  var seed = 20261019, simNo = 1;
+  var simCache = {}, mcCache = {};
 
-  var C_RED = [143, 34, 49], C_BLUE = [43, 67, 92], C_PAPER = [239, 226, 205], C_NA = [228, 218, 200];
+  var C_RED = [143, 34, 49], C_BLUE = [43, 67, 92];
+  var C_RED_L = [232, 207, 210], C_BLUE_L = [207, 216, 226];
+  var C_NONE = [236, 225, 207], C_NA = [228, 218, 200];
 
   function rgb(c) { return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")"; }
   function mixc(a, b, t) {
@@ -953,19 +973,99 @@
             Math.round(a[2] + (b[2] - a[2]) * t)];
   }
 
-  /* 对数压缩、两侧对称：红＝票被放大，蓝＝票被稀释 */
-  function weightColor(ppe, mean, lo) {
-    var K = Math.log(mean / lo);
-    var r = Math.log(mean / ppe) / K;
-    r = Math.max(-1, Math.min(1, r));
-    var t = (r >= 0 ? 1 : -1) * Math.sqrt(Math.abs(r));
-    return t >= 0 ? rgb(mixc(C_PAPER, C_RED, t)) : rgb(mixc(C_PAPER, C_BLUE, -t));
+  /* 可复现的伪随机数 + 正态抽样 */
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function gaussOf(rnd) {
+    var u = 1 - rnd(), v = rnd();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
   }
 
   function byName(m) {
     var o = {};
     m.rows.forEach(function (r) { o[r.n] = r; });
     return o;
+  }
+
+  /* 每个单位一个固定倾向（随机抽取，与真实政治地理无关） */
+  var leanCache = {}, LIDX = {};
+  U.forEach(function (u, i) { LIDX[u.n] = i; });
+  function leans() {
+    if (leanCache.done) return leanCache.map;
+    var o = {}, wsum = 0;
+    var tp = U.reduce(function (a, u) { return a + u.p; }, 0);
+    U.forEach(function (u, i) {
+      var v = 0.070 * gaussOf(mulberry32(7777 + i * 97));
+      o[u.n] = Math.max(-0.19, Math.min(0.19, v));
+      wsum += v * u.p / tp;
+    });
+    /* 人口加权归零：代表一个势均力敌的全国环境 */
+    U.forEach(function (u) { o[u.n] = Math.max(-0.24, Math.min(0.24, o[u.n] - wsum)); });
+    leanCache.map = o; leanCache.done = true;
+    return o;
+  }
+
+  /* 一次抽签：固定倾向 + 全国摆动 + 单位噪声（小单位噪声大） */
+  function simulate(m) {
+    var key = m.id + "|" + seed + "|" + m.tot;
+    if (simCache[key]) return simCache[key];
+    var rnd = mulberry32(seed + m.tot * 31);
+    var swing = 0.012 * gaussOf(rnd);
+    var ln = leans();
+    var meanP = total / m.rows.length;
+    var out = { rows: {}, ea: 0, eb: 0, pvA: 0, pvB: 0 };
+    var pv = 0;
+    m.rows.forEach(function (r) {
+      var sig = 0.012 / Math.sqrt(r.p / meanP);
+      var v = 0.5 + ln[r.n] + swing + sig * gaussOf(rnd);
+      v = Math.max(0.06, Math.min(0.94, v));
+      var win = v >= 0.5 ? 1 : 2;
+      out.rows[r.n] = { a: v, margin: Math.abs(v - 0.5), win: win };
+      if (win === 1) { out.ea += r.ev; } else { out.eb += r.ev; }
+      pv += r.p * v;
+    });
+    out.pvA = pv / total;
+    out.pvB = 1 - out.pvA;
+    simCache[key] = out;
+    return out;
+  }
+
+  /* 同一套规则重复 800 次，统计「选举人票赢家 ≠ 普选票赢家」的比例 */
+  function monteCarlo(m) {
+    if (mcCache[m.id] != null) return mcCache[m.id];
+    var N = 800, bad = 0, half = m.tot / 2;
+    var meanP = total / m.rows.length;
+    var ln = leans();
+    var rows = m.rows.map(function (r) {
+      return { n: r.n, ev: r.ev, p: r.p, sig: 0.012 / Math.sqrt(r.p / meanP) };
+    });
+    for (var i = 0; i < N; i++) {
+      var rnd = mulberry32(9173 + i * 7919 + m.tot);
+      var swing = 0.012 * gaussOf(rnd);
+      var ea = 0, pv = 0;
+      for (var j = 0; j < rows.length; j++) {
+        var v = 0.5 + ln[rows[j].n] + swing + rows[j].sig * gaussOf(rnd);
+        v = Math.max(0.06, Math.min(0.94, v));
+        if (v >= 0.5) ea += rows[j].ev;
+        pv += rows[j].p * v;
+      }
+      var evWin = ea > half ? 1 : (ea < half ? 2 : 0);
+      var pvWin = (pv / total) >= 0.5 ? 1 : 2;
+      if (evWin && evWin !== pvWin) bad++;
+    }
+    return (mcCache[m.id] = bad / N);
+  }
+
+  /* 票差决定深浅：领先越多，颜色越实 */
+  function simColor(x) {
+    var t = 0.25 + 0.75 * Math.min(1, x.margin / 0.16);
+    return rgb(x.win === 1 ? mixc(C_RED_L, C_RED, t) : mixc(C_BLUE_L, C_BLUE, t));
   }
 
   function buildMap() {
@@ -1004,13 +1104,12 @@
 
   function renderPanel(m) {
     var el = document.getElementById("mapPanel");
-    if (layer === "sandbox") {
+    if (mode === "sand") {
       var s = sandStats(m);
-      var wa = (s.a / m.tot * 100), wb = (s.b / m.tot * 100);
       el.innerHTML =
         '<div class="prow"><div class="grow">' +
-        '<div class="tally"><i class="a" style="width:' + wa.toFixed(1) + '%"></i>' +
-        '<i class="b" style="width:' + wb.toFixed(1) + '%"></i>' +
+        '<div class="tally"><i class="a" style="width:' + (s.a / m.tot * 100).toFixed(1) + '%"></i>' +
+        '<i class="b" style="width:' + (s.b / m.tot * 100).toFixed(1) + '%"></i>' +
         '<u style="left:' + (m.thr / m.tot * 100).toFixed(2) + '%"></u></div>' +
         '<div class="tnums">' +
         '<span class="a">甲 ' + s.a + " 票</span>" +
@@ -1023,46 +1122,58 @@
         '<button data-act="clear">清空</button></div></div>' +
         '<p class="hint">点省份循环切换：未定 → 甲 → 乙。竖线是过半门槛。</p>';
     } else {
-      var asc = m.rows.slice().sort(function (x, y) { return x.ppe - y.ppe; });
-      var pack = function (arr) {
-        return arr.map(function (r) {
-          return r.n + " <b>" + (r.ppe / 1e4).toFixed(1) + "</b> 万";
-        }).join(" · ");
-      };
+      var sim = simulate(m);
+      var leadA = sim.ea >= sim.eb;
       el.innerHTML =
-        '<div class="ranks">' +
-        "<span><i>票最值钱</i>" + pack(asc.slice(0, 3)) + "</span>" +
-        "<span><i>票最稀释</i>" + pack(asc.slice(-3).reverse()) + "</span>" +
-        "</div>" +
-        '<p class="hint">全国均值 ' + (total / m.tot / 1e4).toFixed(1) +
-        " 万人／票，两端相差 " + (asc[asc.length - 1].ppe / asc[0].ppe).toFixed(2) +
-        " 倍。悬停任意省份看票数与偏差；切到「沙盘」可以自己分配。</p>";
+        '<div class="prow"><div class="grow">' +
+        '<div class="tally"><i class="a" style="width:' + (sim.ea / m.tot * 100).toFixed(1) + '%"></i>' +
+        '<i class="b" style="width:' + (sim.eb / m.tot * 100).toFixed(1) + '%"></i>' +
+        '<u style="left:' + (m.thr / m.tot * 100).toFixed(2) + '%"></u></div>' +
+        '<div class="tnums">' +
+        '<span class="' + (leadA ? "a" : "mut") + '">甲 ' + sim.ea + " 票</span>" +
+        '<span class="' + (leadA ? "mut" : "b") + '">乙 ' + sim.eb + " 票</span>" +
+        '<span class="mut">门槛 ' + m.thr + "</span>" +
+        '<span class="mut">普选 ' + (sim.pvA * 100).toFixed(1) + "% : " +
+        (sim.pvB * 100).toFixed(1) + "%</span>" +
+        "</div></div>" +
+        '<div class="pbtns"><button data-act="reroll">重新模拟</button></div></div>' +
+        '<p class="hint">颜色深浅是票差。悬停省份看具体得票率；切到「手动沙盘」可以自己分配。</p>';
     }
   }
 
   function paintMap(m) {
     if (!MAP) return;
     var idx = byName(m);
-    var minPpe = Math.min.apply(null, m.rows.map(function (r) { return r.ppe; }));
-    var maxPpe = Math.max.apply(null, m.rows.map(function (r) { return r.ppe; }));
-    var mean = total / m.tot;
+    var sim = mode === "sim" ? simulate(m) : null;
     var s = sandStats(m);
     Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv"), function (el) {
       var n = el.getAttribute("data-n");
       if (NA_SET[n] || !idx[n]) { el.style.fill = rgb(C_NA); return; }
-      if (layer === "sandbox") {
+      if (mode === "sand") {
         var st = sand[n] || 0;
-        el.style.fill = st === 1 ? "#9c2b3a" : st === 2 ? "#2f4a63" : "#ece1cf";
+        el.style.fill = st === 1 ? rgb(C_RED) : st === 2 ? rgb(C_BLUE) : rgb(C_NONE);
       } else {
-        el.style.fill = weightColor(idx[n].ppe, mean, minPpe);
+        el.style.fill = simColor(sim.rows[n]);
       }
     });
-    document.getElementById("mapMeta").textContent = layer === "sandbox"
+    document.getElementById("mapMeta").textContent = mode === "sand"
       ? "门槛 " + m.thr + " · 未定 " + s.none + " 票"
-      : "每票 " + (minPpe / 1e4).toFixed(1) + "—" + (maxPpe / 1e4).toFixed(1) + " 万人";
-    var cn = document.getElementById("cityNote");
-    if (cn) cn.textContent = ["北京", "天津", "上海"].map(function (n) { return idx[n] ? idx[n].ev : "—"; }).join(" · ");
+      : "第 " + simNo + " 次 · 普选 " + (sim.pvA * 100).toFixed(1) + "%";
     renderPanel(m);
+    renderSplit(m);
+  }
+
+  function renderSplit(m) {
+    var el = document.getElementById("splitLine");
+    if (!el) return;
+    var r = monteCarlo(m);
+    var others = ["A", "B", "C"].filter(function (k) { return k !== m.id; }).map(function (k) {
+      return k + " " + (monteCarlo(model(k)) * 100).toFixed(1) + "%";
+    }).join(" ／ ");
+    el.innerHTML =
+      "同样这套规则重复 800 次，其中有 <b>" + (r * 100).toFixed(1) + "%</b> 的局面是——" +
+      "选举人票的赢家不是普选票的赢家。" +
+      '<span style="color:var(--muted);font-size:13px">　其余口径：' + others + "</span>";
   }
 
   function cycle(n) {
@@ -1079,11 +1190,15 @@
       sand[asc[i].n] = 1; sum += asc[i].ev;
       if (sum >= m.thr) break;
     }
-    layer = "sandbox";
-    Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (b) {
-      b.setAttribute("aria-pressed", b.dataset.layer === "sandbox" ? "true" : "false");
-    });
+    mode = "sand";
+    syncCtl();
     paintMap(m);
+  }
+
+  function syncCtl() {
+    Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (b) {
+      b.setAttribute("aria-pressed", b.dataset.layer === mode ? "true" : "false");
+    });
   }
 
   function initMap() {
@@ -1098,9 +1213,13 @@
       var m = model(cur);
       var r = byName(m)[n];
       if (NA_SET[n] || !r) return n + " · 未纳入 31 个单位";
-      var dv = r.dev;
-      return n + " · " + r.ev + " 票 · " + (r.ppe / 1e4).toFixed(1) + " 万人／票 · 偏差 " +
-        (dv > 0 ? "+" : dv < 0 ? "−" : "±") + Math.abs(dv).toFixed(1);
+      if (mode === "sand") {
+        var st = sand[n] || 0;
+        return n + " · " + r.ev + " 票 · " + (st === 1 ? "甲" : st === 2 ? "乙" : "未定");
+      }
+      var x = simulate(m).rows[n];
+      return n + " · " + r.ev + " 票 · 甲 " + (x.a * 100).toFixed(1) + "% : " +
+        ((1 - x.a) * 100).toFixed(1) + "% 乙";
     }
 
     svg.addEventListener("mouseover", function (e) {
@@ -1123,7 +1242,7 @@
       var t = e.target;
       if (!t.classList || !t.classList.contains("pv")) return;
       var n = t.getAttribute("data-n");
-      if (NA_SET[n] || layer !== "sandbox") return;
+      if (NA_SET[n] || mode !== "sand") return;
       cycle(n);
     });
 
@@ -1133,14 +1252,17 @@
       var act = b.getAttribute("data-act");
       if (act === "clear") { sand = {}; paintMap(model(cur)); }
       if (act === "coal") { loadCoalition(); }
+      if (act === "reroll") {
+        seed = Math.floor(Math.random() * 1000000000);
+        simNo++;
+        paintMap(model(cur));
+      }
     });
 
     Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (b) {
       b.addEventListener("click", function () {
-        Array.prototype.forEach.call(document.querySelectorAll("#mapCtl button"), function (x) {
-          x.setAttribute("aria-pressed", x === b ? "true" : "false");
-        });
-        layer = b.dataset.layer;
+        mode = b.dataset.layer;
+        syncCtl();
         paintMap(model(cur));
       });
     });
