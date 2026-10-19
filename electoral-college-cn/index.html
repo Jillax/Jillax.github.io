@@ -336,6 +336,13 @@
     paint-order: stroke; stroke: rgba(247, 240, 227, .7); stroke-width: 2.6;
     stroke-linejoin: round;
   }
+  .pv-num {
+    font-family: var(--mono); font-size: 10px; text-anchor: middle;
+    dominant-baseline: middle; pointer-events: none; display: none;
+    paint-order: stroke; stroke: rgba(247, 240, 227, .6); stroke-width: 2.2;
+    stroke-linejoin: round;
+  }
+  #cnMap.show-num .pv-num { display: block; }
   .nh-lbl {
     font-family: var(--mono); font-size: 9px; fill: var(--muted);
     text-anchor: middle; letter-spacing: .08em;
@@ -394,6 +401,7 @@
     height: 10px; width: 88px; border: 1px solid var(--line);
   }
   .legend .ramp.red { background: linear-gradient(90deg, #e8cfd2, #8f2231); }
+  .legend .ramp.ev { background: linear-gradient(90deg, #f0e3cc, #8f2231); width: 150px; }
   .legend .ramp.blue { background: linear-gradient(90deg, #2b435c, #cfd8e2); }
   .split {
     border-left: 3px solid var(--rose); margin: 14px 0 0;
@@ -533,17 +541,18 @@
 </section>
 
 <section id="s3map">
-  <div class="secno">03 / 模拟</div>
-  <h2>跑一次大选</h2>
+  <div class="secno">03 / 地图</div>
+  <h2>同一张图，三种读法</h2>
   <p class="note">
-    31 个单位各有一个抽出来的固定倾向，每场选举再加一个全国摆动和一点噪声，单位越小噪声越大。
-    谁在一个单位过半，就整块拿走它的选举人票；颜色深浅是票差。这是纯算术的沙盘，
-    倾向是随机数，不对应任何真实政治分布——它要展示的是规则，不是判断谁会赢。
+    <em>票数</em>：每个单位手里有多少票，颜色越深票越多，票数直接标在省上。
+    <em>模拟</em>：抽一局，看谁在一省过半就整块拿走它，颜色是票差。
+    <em>沙盘</em>：你自己一省一省地分，看要多少单位才够 <em id="thrInline">270</em> 票。
   </p>
 
   <div class="ctl" id="mapCtl">
     <span class="ctl-label">图层</span>
-    <button data-layer="sim" aria-pressed="true">模拟结果</button>
+    <button data-layer="ev" aria-pressed="true">票数</button>
+    <button data-layer="sim" aria-pressed="false">模拟结果</button>
     <button data-layer="sand" aria-pressed="false">手动沙盘</button>
     <span class="spacer"></span>
     <span class="meta" id="mapMeta"></span>
@@ -559,22 +568,14 @@
 
   <p class="split" id="splitLine"></p>
 
-  <div class="legend">
-    <span>甲</span>
-    <span class="ramp red"></span>
-    <span class="ramp blue"></span>
-    <span>乙</span>
-    <span class="sep"></span>
-    <span class="sw"></span>
-    <span>未定</span>
-  </div>
+  <div class="legend" id="mapLegend"></div>
   <p class="note">
     底图：省级边界取自高德开放平台公开数据，含南海诸岛与十段线；示意性数据图，不作勘界依据。
     香港、澳门、台湾不在这 31 个计票单位之内，以浅灰另示。
     北京、天津、上海面积过小未在图上标注，悬停可看。
   </p>
   <p class="note">
-    抽签规则：每个单位先抽一个固定倾向 λ ~ 正态（0，7%），并对其作人口加权归零；每场选举再抽一个
+    模拟层的抽签规则：每个单位先抽一个固定倾向 λ ~ 正态（0，7%），并对其作人口加权归零；每场选举再抽一个
     全国摆动 S ~ 正态（0，1.2%）。单位得票率 = 50% + λ + S + 噪声，噪声标准差为 1.2% ÷ √（该单位人口 ÷ 单位均值），
     截断于 6%—94%。倾向是随机数，与任何真实政治分布无关；「重新模拟」只换 S 与噪声，所以翻动的是少数几个
     边缘单位，不是全图重来。
@@ -957,14 +958,14 @@
   /* ---------- 地图：模拟大选 ---------- */
   var MAP = window.CHINA_MAP || null;
   var NA_SET = { "香港": 1, "澳门": 1, "台湾": 1 };
-  var mode = "sim";
+  var mode = "ev";
   var sand = {};
   var seed = 20261019, simNo = 1;
   var simCache = {}, mcCache = {};
 
   var C_RED = [143, 34, 49], C_BLUE = [43, 67, 92];
   var C_RED_L = [232, 207, 210], C_BLUE_L = [207, 216, 226];
-  var C_NONE = [236, 225, 207], C_NA = [228, 218, 200];
+  var C_NONE = [236, 225, 207], C_NA = [228, 218, 200], C_SAND = [240, 227, 204];
 
   function rgb(c) { return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")"; }
   function mixc(a, b, t) {
@@ -1068,6 +1069,13 @@
     return rgb(x.win === 1 ? mixc(C_RED_L, C_RED, t) : mixc(C_BLUE_L, C_BLUE, t));
   }
 
+  /* 票数越多颜色越深 */
+  function evT(ev, lo, hi) {
+    var t = hi > lo ? (ev - lo) / (hi - lo) : 1;
+    return Math.pow(t, 0.8);
+  }
+  function evColor(ev, lo, hi) { return rgb(mixc(C_SAND, C_RED, evT(ev, lo, hi))); }
+
   function buildMap() {
     if (!MAP) return;
     var h = "";
@@ -1076,7 +1084,8 @@
     });
     MAP.p.forEach(function (p) {
       if (p.a < 1500) return;
-      h += '<text class="pv-lbl" x="' + p.x + '" y="' + p.y + '">' + p.n + "</text>";
+      h += '<text class="pv-lbl" x="' + p.x + '" y="' + (p.y - 5) + '">' + p.n + "</text>";
+      h += '<text class="pv-num" data-n="' + p.n + '" x="' + p.x + '" y="' + (p.y + 10) + '"></text>';
     });
     var nh = MAP.nh, ox = 975, oy = 560;
     h += '<g transform="translate(' + ox + "," + oy + ')">';
@@ -1121,6 +1130,23 @@
         '<div class="pbtns"><button data-act="coal">载入 22 单位方案</button>' +
         '<button data-act="clear">清空</button></div></div>' +
         '<p class="hint">点省份循环切换：未定 → 甲 → 乙。竖线是过半门槛。</p>';
+    } else if (mode === "ev") {
+      var desc = m.rows.slice().sort(function (a, b) { return b.ev - a.ev; });
+      var pk = function (arr) {
+        return arr.map(function (r) { return r.n + " <b>" + r.ev + "</b>"; }).join(" · ");
+      };
+      var top1 = desc[0].ev, bot1 = desc[desc.length - 1].ev;
+      el.innerHTML =
+        '<div class="ranks">' +
+        "<span><i>票最多</i>" + pk(desc.slice(0, 3)) + "</span>" +
+        "<span><i>票最少</i>" + pk(desc.slice(-3).reverse()) + "</span>" +
+        "</div>" +
+        '<p class="hint">颜色深浅就是票数：' + top1 + " 票最深，" + bot1 + " 票最浅。全图合计 " +
+        m.tot + " 票，过半门槛 " + m.thr + "。" +
+        (m.id === "A" ? "广东一省 45 票，抵得上十五个西藏。" : "") +
+        '<br>北京 ' + (idxEv(m, "北京") || "—") + " · 天津 " + (idxEv(m, "天津") || "—") +
+        " · 上海 " + (idxEv(m, "上海") || "—") + "（图幅过小，未标在图上）。" +
+        "切到「模拟结果」可以抽一局看谁过半。</p>";
     } else {
       var sim = simulate(m);
       var leadA = sim.ea >= sim.eb;
@@ -1141,26 +1167,70 @@
     }
   }
 
+  function idxEv(m, n) {
+    var r = byName(m)[n];
+    return r ? r.ev : 0;
+  }
+
   function paintMap(m) {
     if (!MAP) return;
     var idx = byName(m);
     var sim = mode === "sim" ? simulate(m) : null;
     var s = sandStats(m);
+    var evs = m.rows.map(function (r) { return r.ev; });
+    var lo = Math.min.apply(null, evs), hi = Math.max.apply(null, evs);
+    var svg = document.getElementById("cnMap");
+
     Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv"), function (el) {
       var n = el.getAttribute("data-n");
       if (NA_SET[n] || !idx[n]) { el.style.fill = rgb(C_NA); return; }
-      if (mode === "sand") {
+      if (mode === "ev") {
+        el.style.fill = evColor(idx[n].ev, lo, hi);
+      } else if (mode === "sand") {
         var st = sand[n] || 0;
         el.style.fill = st === 1 ? rgb(C_RED) : st === 2 ? rgb(C_BLUE) : rgb(C_NONE);
       } else {
         el.style.fill = simColor(sim.rows[n]);
       }
     });
-    document.getElementById("mapMeta").textContent = mode === "sand"
-      ? "门槛 " + m.thr + " · 未定 " + s.none + " 票"
+
+    if (svg.classList && svg.classList.toggle) svg.classList.toggle("show-num", mode === "ev");
+    Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv-num"), function (el) {
+      var n = el.getAttribute("data-n");
+      var r = idx[n];
+      if (!r) { el.textContent = ""; return; }
+      el.textContent = r.ev;
+      el.style.fill = evT(r.ev, lo, hi) > 0.55 ? "#fdf7ec" : "#3a3128";
+    });
+
+    var thr = document.getElementById("thrInline");
+    if (thr) thr.textContent = m.thr;
+
+    document.getElementById("mapMeta").textContent =
+      mode === "ev" ? "最多 " + hi + " 票 · 最少 " + lo + " 票"
+      : mode === "sand" ? "门槛 " + m.thr + " · 未定 " + s.none + " 票"
       : "第 " + simNo + " 次 · 普选 " + (sim.pvA * 100).toFixed(1) + "%";
+
+    renderLegend(lo, hi);
     renderPanel(m);
     renderSplit(m);
+  }
+
+  function renderLegend(lo, hi) {
+    var el = document.getElementById("mapLegend");
+    if (!el) return;
+    if (mode === "ev") {
+      el.innerHTML = "<span>" + lo + " 票</span><span class=\"ramp ev\"></span><span>" + hi +
+        " 票</span><span class=\"sep\"></span><span class=\"sw\"></span><span>不在本口径</span>";
+    } else if (mode === "sim") {
+      el.innerHTML = "<span>甲</span><span class=\"ramp red\"></span>" +
+        "<span class=\"ramp blue\"></span><span>乙</span>" +
+        "<span class=\"sep\"></span><span class=\"sw\"></span><span>未定</span>";
+    } else {
+      el.innerHTML = "<span class=\"sw\" style=\"background:#9c2b3a\"></span><span>甲</span>" +
+        "<span class=\"sw\" style=\"background:#2f4a63\"></span><span>乙</span>" +
+        "<span class=\"sw\"></span><span>未定</span>";
+    }
   }
 
   function renderSplit(m) {
@@ -1213,6 +1283,9 @@
       var m = model(cur);
       var r = byName(m)[n];
       if (NA_SET[n] || !r) return n + " · 未纳入 31 个单位";
+      if (mode === "ev") {
+        return n + " · " + r.ev + " 票 · " + (r.ppe / 1e4).toFixed(1) + " 万人／票";
+      }
       if (mode === "sand") {
         var st = sand[n] || 0;
         return n + " · " + r.ev + " 票 · " + (st === 1 ? "甲" : st === 2 ? "乙" : "未定");
