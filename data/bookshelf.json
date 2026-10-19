@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18T14:23:54Z",
+  "updated": "2026-10-19T17:22:55Z",
   "books": [
     {
       "id": "2996046",
@@ -876,7 +876,7 @@
       "id": "34896921",
       "title": "父权制与资本主义",
       "author": "[日] 上野千鹤子 / 邹韵、薛梅 / 浙江大学出版社 / 2020-3 / 58.00元",
-      "cover": "https://img3.doubanio.com/view/subject/l/public/s35012802.jpg",
+      "cover": "https://img3.doubanio.com/view/subject/l/public/s35012793.jpg",
       "url": "https://book.douban.com/subject/34896921/",
       "rating": 4,
       "tags": [],
@@ -969,7 +969,7 @@
       "author": "张岂之、刘宝才、钱逊、周苏平 / 高等教育出版社 / 2001-7 / 25.6",
       "cover": "https://img9.doubanio.com/view/subject/l/public/s3012325.jpg",
       "url": "https://book.douban.com/subject/1615114/",
-      "rating": 4,
+      "rating": 3,
       "tags": [],
       "comment": "教材",
       "date": "2024-11-17",
@@ -2032,6 +2032,19 @@
   ],
   "movies": [
     {
+      "id": "38934715",
+      "title": "马斯克宇宙：暗黑新篇章 / Musk: The Next Chapter",
+      "author": "2026-05-21(英国) / 伊隆·马斯克 / 英国 / 60分钟(英国) / 52分钟(国际版) / 马斯克宇宙：暗黑新篇章 / 纪录片 / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2936634642.jpg",
+      "url": "https://movie.douban.com/subject/38934715/",
+      "rating": 4,
+      "tags": [],
+      "comment": "内容编排和选择上是偏左立场的政治文化上的吹哨/警告/反思/批倒批臭倾向，并没有很多关于Musk工作成果/进度等等的商业技术愿景进程叙述。不过现在看到这些1.（从马斯克那赚了几个亿的）早期投资人说跟马斯克不是一路人；2.Twitter的“伦理委员会”负责人（比员工中位工资高几个数量级的Big Tech赎罪券位置高管？）说“保证”算法要符合人类价值，真是特别能理解那个买RV追马斯克的中年southern妇女所说的，起码马斯克是say whats he means的。我们确实看够受够了虚伪。看完之后生出很多对所谓“铁盘”“川粉/maga粉”“红脖子”的同情（或者是理解）吧，文化“左翼”建制和“woke”（仅指停留在身份政治横向同谋拥趸层面的）把他们甩在身后，他们自然要寻找一个认同之所的。",
+      "date": "2026-10-18",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
       "id": "1309101",
       "title": "查理和巧克力工厂 / Charlie and the Chocolate Factory",
       "author": "2005-07-15(美国) / 约翰尼·德普 / 弗莱迪·海默 / 海伦娜·伯翰·卡特 / 克里斯托弗·李 / 诺亚·泰勒 / 大卫·凯利 / 米西·派勒 / 詹姆斯·福克斯 / 安娜索菲亚·罗伯 / 迪普·罗伊 / 美国 / 英国 / 澳大利亚 / 蒂姆·波顿 / 115 分钟 / 查理和巧克力工厂 / 喜剧 / 奇幻 / 冒险 / 约翰·奥古斯特 John August / 英语",
@@ -2039,7 +2052,7 @@
       "url": "https://movie.douban.com/subject/1309101/",
       "rating": 4,
       "tags": [],
-      "comment": "其实跟天使爱美丽挺像的，从主角的妆造开始就带有童话奇幻（以及邪典）感。所以很吃观看者喜好/预期/状态/阶吧。个人3☆，但是原作者和导演的独特风格化比较有意思多给一星。w/",
+      "comment": "其实跟天使爱美丽挺像的，从主角的妆造开始就带有童话奇幻（以及邪典）感。所以很吃观看者喜好/预期/状态/阶段吧。个人3☆，但是原作者和导演的独特风格化比较有意思多给一星。w/",
       "date": "2026-10-18",
       "status": "collect",
       "category": "movie"
@@ -13554,7 +13567,7 @@
     {
       "id": "1426818",
       "title": "小太阳",
-      "author": "坏女儿 / 2003 / 专辑 / CD",
+      "author": "坏女儿 / 2003 / 专辑 / CD / 摇滚",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s4711742.jpg",
       "url": "https://music.douban.com/subject/1426818/",
       "rating": 4,
