@@ -29,7 +29,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          # workflow_run 触发时 github.sha/event.workflow_run.head_sha 都可能是同步前的旧提交，
+          # 而同步 workflow 已经把新数据 push 到 main，这里统一取 main 最新提交。
+          ref: main
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
