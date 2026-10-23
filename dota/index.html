@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dota 2 数据战报 · Jillax</title>
+<meta name="description" content="Jillax 的 Dota 2 数据战报：1800 余场对局里的英雄池、作息节律、开黑搭子与聊天口头禅。数据来自 OpenDota，每周自动更新。">
+<meta name="author" content="Jillax">
+<meta property="og:title" content="Dota 2 数据战报 · Jillax">
+<meta property="og:description" content="1800 余场对局里的英雄池、作息节律、开黑搭子与聊天口头禅。数据来自 OpenDota。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/dota/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dota 2 数据战报 · Jillax">
+<meta name="twitter:description" content="1800 余场对局里的英雄池、作息节律、开黑搭子与聊天口头禅。">
+<link rel="canonical" href="https://jillax.github.io/dota/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dota.css">
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow bg-glow-radiant" aria-hidden="true"></div>
+<div class="bg-glow bg-glow-dire" aria-hidden="true"></div>
+
+<header class="topbar" id="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="../"><span class="brand-name">JILLAX</span><span class="brand-sub">// DOTA 2 数据战报</span></a>
+    <nav class="topnav" id="topnav" aria-label="页内导航">
+      <a href="#sec-overview">概览</a>
+      <a href="#sec-insights">洞察</a>
+      <a href="#sec-heroes">英雄池</a>
+      <a href="#sec-signature">绝活</a>
+      <a href="#sec-rhythm">节律</a>
+      <a href="#sec-recent">近期</a>
+      <a href="#sec-peers">搭子</a>
+      <a href="#sec-wordcloud">词云</a>
+      <a href="#sec-method">数据</a>
+      <a href="../projects.html">← 作品</a>
+    </nav>
+    <div class="topmeta" id="dataMeta"><span class="dot"></span>数据加载中…</div>
+  </div>
+</header>
+
+<main class="wrap" id="app">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-main">
+      <p class="kicker">// DOTA 2 · PERSONAL MATCH REPORT</p>
+      <h1 class="hero-title">数据战报<span class="hero-title-dot">.</span></h1>
+      <p class="hero-sub">六年，一千八百余场：<em>天辉</em>与<em class="dire">夜魇</em>之间</p>
+      <p class="hero-deck" id="heroDeck">把 OpenDota 上能拿到的数据全部摊开：英雄池、作息节律、开黑搭子、聊天口头禅，以及那些被 OpenDota 判定为「绝活」的英雄。</p>
+      <div class="hero-chips" id="heroChips"></div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#sec-overview">从总览开始 ↓</a>
+        <a class="btn" href="#sec-method">数据口径</a>
+      </div>
+    </div>
+    <aside class="player-card" id="playerCard" aria-label="玩家档案">
+      <div class="player-card-skel">正在读取玩家档案…</div>
+    </aside>
+  </section>
+
+  <!-- ============ FILTER ============ -->
+  <nav class="filterbar" id="filterBar" aria-label="按对局类型筛选">
+    <span class="filterbar-label">// 筛选</span>
+    <div class="filter-tabs" id="filterTabs"></div>
+    <span class="filterbar-note" id="filterNote"></span>
+  </nav>
+
+  <!-- ============ 01 OVERVIEW ============ -->
+  <section class="section" id="sec-overview">
+    <div class="sec-head">
+      <span class="secno">01 / OVERVIEW</span>
+      <h2>生涯总览</h2>
+      <p class="sec-deck">当前筛选下的基本盘。切换上方的筛选，全页数字会一起变。</p>
+    </div>
+    <div class="kpi-grid" id="overviewKpis"></div>
+    <div class="panel career-panel">
+      <div class="panel-head"><h3>生涯累计</h3><span class="panel-tag">OpenDota · 含快速模式</span></div>
+      <div class="career-strip" id="overviewCareer"></div>
+    </div>
+    <div class="facts-row" id="overviewFacts"></div>
+  </section>
+
+  <!-- ============ 02 INSIGHTS ============ -->
+  <section class="section" id="sec-insights">
+    <div class="sec-head">
+      <span class="secno">02 / INSIGHTS</span>
+      <h2>机器观察</h2>
+      <p class="sec-deck">从这批对局里自动读出来的几句话。每条都带数字。</p>
+    </div>
+    <div class="insight-grid" id="insightList"></div>
+  </section>
+
+  <!-- ============ 03 HERO POOL ============ -->
+  <section class="section" id="sec-heroes">
+    <div class="sec-head">
+      <span class="secno">03 / HERO POOL</span>
+      <h2>英雄池</h2>
+      <p class="sec-deck">玩得最多的英雄、胜率最高的英雄，以及一整面墙的英雄池。</p>
+    </div>
+    <div class="hero-top" id="topHeroes"></div>
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-head"><h3>胜率最高</h3><span class="panel-tag">≥ 8 场</span></div>
+        <div class="hero-ranklist" id="bestHeroes"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>胜率最低</h3><span class="panel-tag">≥ 8 场</span></div>
+        <div class="hero-ranklist" id="worstHeroes"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>英雄池全图</h3><span class="panel-tag" id="heroWallTag"></span></div>
+      <div class="hero-wall" id="heroWall"></div>
+      <div class="wall-legend"><span>边框颜色 = 胜率</span><span class="legend-scale"><i class="s-low"></i><i class="s-mid"></i><i class="s-high"></i></span><span>悬停看场次</span></div>
+    </div>
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-head"><h3>属性偏好</h3></div>
+        <div class="attr-bars" id="attrBars"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>角色标签</h3><span class="panel-tag">按英雄定位出现场次</span></div>
+        <div class="role-bars" id="roleBars"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 SIGNATURE ============ -->
+  <section class="section" id="sec-signature">
+    <div class="sec-head">
+      <span class="secno">04 / SIGNATURE</span>
+      <h2>绝活榜</h2>
+      <p class="sec-deck">OpenDota 为每个英雄算了「绝活指数」：同英雄所有玩家里的百分位。越接近 100%，越是只有你会玩。</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>百分位排名</h3><span class="panel-tag">样本 ≥ 1 场</span></div>
+      <div class="chart-box" id="signatureChart"></div>
+    </div>
+    <p class="signature-note" id="signatureNote"></p>
+  </section>
+
+  <!-- ============ 05 RHYTHM ============ -->
+  <section class="section" id="sec-rhythm">
+    <div class="sec-head">
+      <span class="secno">05 / RHYTHM</span>
+      <h2>时间节律</h2>
+      <p class="sec-deck">什么时候打，打多少，胜率又如何。</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>逐月战况</h3><span class="panel-tag">柱 = 场次 · 线 = 胜率</span></div>
+      <div class="chart-box chart-box-wide" id="monthlyChart"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>作息热力图</h3><span class="panel-tag">本地时间（UTC+8）· 颜色越亮场次越多</span></div>
+      <div class="chart-box chart-box-wide" id="heatmapChart"></div>
+    </div>
+    <div class="rhythm-stats" id="rhythmStats"></div>
+    <div class="three-col">
+      <div class="panel">
+        <div class="panel-head"><h3>天辉 vs 夜魇</h3></div>
+        <div class="chart-box" id="sideChart"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>游戏模式</h3></div>
+        <div class="chart-box" id="modeChart"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>匹配类型</h3></div>
+        <div class="chart-box" id="lobbyChart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 RECENT ============ -->
+  <section class="section" id="sec-recent">
+    <div class="sec-head">
+      <span class="secno">06 / RECENT</span>
+      <h2>最近二十场</h2>
+      <p class="sec-deck">不看筛选，只看最近。最近 20 场几乎都是快速模式，GPM 会明显偏高。</p>
+    </div>
+    <div class="kpi-grid kpi-grid-4" id="recentKpis"></div>
+    <div class="panel">
+      <div class="panel-head"><h3>胜负条带</h3><span class="panel-tag" id="recentStripTag"></span></div>
+      <div class="recent-strip" id="recentStrip"></div>
+      <div class="recent-list" id="recentList"></div>
+    </div>
+  </section>
+
+  <!-- ============ 07 PEERS ============ -->
+  <section class="section" id="sec-peers">
+    <div class="sec-head">
+      <span class="secno">07 / PEERS</span>
+      <h2>开黑搭子</h2>
+      <p class="sec-deck">同一队友出场次数最多的那些人。胜率是「和 TA 同队时」的胜率。</p>
+    </div>
+    <p class="peer-tagline" id="peerTagline"></p>
+    <div class="peer-grid" id="peerGrid"></div>
+    <p class="section-note">注：「同队场次」口径来自 OpenDota 的 peers 数据，包含已解析的全部对局（含快速模式）。</p>
+  </section>
+
+  <!-- ============ 08 WORDCLOUD ============ -->
+  <section class="section" id="sec-wordcloud">
+    <div class="sec-head">
+      <span class="secno">08 / CHAT</span>
+      <h2>聊天词云</h2>
+      <p class="sec-deck">聊天框里说了什么。字号越大，说得越多。</p>
+    </div>
+    <div class="panel wordcloud-panel">
+      <div class="wordcloud" id="wordCloud"></div>
+      <p class="word-note" id="wordNote"></p>
+    </div>
+  </section>
+
+  <!-- ============ 09 METHOD ============ -->
+  <section class="section" id="sec-method">
+    <div class="sec-head">
+      <span class="secno">09 / METHOD</span>
+      <h2>数据与方法</h2>
+    </div>
+    <div class="method">
+      <p><b>来源</b>：<a href="https://www.opendota.com/players/1063862727" target="_blank" rel="noopener">OpenDota</a> 公开 API；英雄中文名与图标来自 Valve 官方数据接口与 Steam CDN。数据每周一自动同步一次，本页展示的是<strong id="methodUpdated">上次同步时间</strong>的快照。</p>
+      <p><b>范围</b>：账号 <code>1063862727</code> 在 OpenDota 上记录的<strong id="methodCount">全部对局</strong>，含快速模式。OpenDota 默认口径会排除快速模式；本页统一用「含快速模式」的全量口径。部分对局缺少解析数据（例如 lane、party_size），相关维度会显示为空缺，不做补全。</p>
+      <p><b>胜率</b>：按「玩家所在阵营是否获胜」判定，与 OpenDota 一致。段位取自 OpenDota 记录的 <code>rank_tier</code>，估算 MMR 由 OpenDota 计算，仅供参考。</p>
+      <p><b>KDA</b>：<code>(击杀 + 助攻) ÷ 死亡</code>，按当前筛选内的<strong>总量</strong>计算，不是每局比值的平均。快速模式节奏快、GPM 天然偏高，页面会单独标注。</p>
+      <p><b>绝活指数</b>：OpenDota 对每个英雄统计玩家表现的百分位（<code>percent_rank</code>），不是胜率。它只反映「相对所有玩这个英雄的人」的水平位置。</p>
+      <p><b>隐私</b>：只用了公开战绩数据，没有聊天记录原文，词云是 OpenDota 提供的分词统计。想更新数据可直接跑 <code>node scripts/fetch_dota.mjs</code>，或手动触发仓库里的 <code>sync-dota</code> workflow。</p>
+      <p class="method-links">
+        <a href="https://www.opendota.com/players/1063862727" target="_blank" rel="noopener">OpenDota 档案 ↗</a>
+        <a href="https://steamcommunity.com/profiles/76561199024128455" target="_blank" rel="noopener">Steam 档案 ↗</a>
+        <a href="https://www.dotabuff.com/players/1063862727" target="_blank" rel="noopener">Dotabuff ↗</a>
+        <a href="../projects.html">← 全部作品</a>
+      </p>
+    </div>
+  </section>
+
+  <noscript>
+    <p class="noscript">这一页的图表由 JavaScript 根据快照数据渲染。原始数据在 <a href="../data/dota/snapshot.json">data/dota/snapshot.json</a>，抓取脚本是 <a href="../scripts/fetch_dota.mjs">scripts/fetch_dota.mjs</a>。</p>
+  </noscript>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>Dota 2 数据战报 · 数据来自 OpenDota 公开 API，由 GitHub Actions 每周同步。</p>
+    <p class="footer-src">本页不做胜负预测，也不评价队友。所有图表都能用快照数据复算。</p>
+  </div>
+</footer>
+
+<div class="fatal" id="fatal" hidden>
+  <div class="fatal-card">
+    <h2>数据没加载出来</h2>
+    <p id="fatalMsg">请刷新重试。</p>
+    <p class="fatal-hint">如果一直失败，说明快照文件缺失或路径不对：页面读取 <code>../data/dota/snapshot.json</code>。</p>
+    <p class="fatal-hint">页面其余静态内容仍然可以看，也可以去 <a href="../projects.html">全部作品</a>。</p>
+    <button type="button" class="btn btn-primary" id="fatalClose">先看静态内容</button>
+  </div>
+</div>
+
+<script type="module" src="dota.js"></script>
+</body>
+</html>

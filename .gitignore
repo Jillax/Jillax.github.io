@@ -30,6 +30,7 @@ mineru_env/
 # Build/test artifacts
 playwright-report/
 test-results/
+tmp/
 
 # Logs
 *.log

@@ -1,0 +1,9 @@
+{
+  "name": "jillax-dota-report",
+  "private": true,
+  "type": "module",
+  "description": "Jillax 的 Dota 2 数据战报页面：纯静态快照 + 原生 ESM 分析/图表模块。",
+  "scripts": {
+    "test": "node --test analysis.test.mjs charts.test.mjs"
+  }
+}

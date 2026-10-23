@@ -65,6 +65,15 @@
       "featured": false
     },
     {
+      "id": "dota",
+      "title": "Dota 2 数据战报",
+      "blurb": "1800 余场对局：99 个英雄、一张作息热力图、87 位开黑搭子，以及聊天框里说得最多的那个词。数据来自 OpenDota，每周自动同步。",
+      "href": "dota/",
+      "tags": ["游戏", "Dota 2", "2026"],
+      "group": "游戏",
+      "featured": false
+    },
+    {
       "id": "portfolio",
       "title": "投资组合",
       "blurb": "自己的持仓。总资产走势、现金债券权益的配置，以及可以展开的明细。",

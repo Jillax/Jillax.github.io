@@ -1,0 +1,47 @@
+name: 同步 Dota 2 数据
+
+on:
+  schedule:
+    # 每周一 UTC 03:17 运行（北京时间周一 11:17）
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+    # 支持手动触发
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-dota
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 运行抓取脚本
+        run: |
+          node --version
+          node scripts/fetch_dota.mjs
+
+      - name: 提交更新
+        run: |
+          git config user.name "dota-sync[bot]"
+          git config user.email "dota-sync[bot]@users.noreply.github.com"
+          git add data/dota/snapshot.json
+          if [ -f assets/dota/avatar.jpg ]; then
+            git add assets/dota/avatar.jpg
+          fi
+          if git diff --cached --quiet; then
+            echo "无数据变更，跳过提交"
+          else
+            git commit -m "chore: 同步 Dota 2 数据 $(date +'%Y-%m-%d')"
+            git push
+          fi

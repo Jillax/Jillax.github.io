@@ -26,6 +26,7 @@
 | `dsa/` | 帐篷里的派系：美国民主社会主义者的架构与内部派系 |
 | `sovereign-funds/` | 披露上的国家资本：各国主权基金公开持仓 |
 | `ai-investment/` | 账本上的中美 AI：私人资本与国家资本 |
+| `dota/` | Dota 2 数据战报：OpenDota 个人战绩，英雄池 / 作息热力图 / 开黑搭子 / 聊天词云，每周自动同步 |
 | `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细）。从作品页进入，不占顶栏 |
 | `translations.html` | 译制作品清单：Bilibili 视频译制作品管理与展示 |
 | `bookshelf.html` | 书影音游清单：豆瓣数据自动同步，含累计趋势折线图 |
@@ -64,6 +65,15 @@
 1. GitHub Actions 每天 UTC 11:00（北京时间 19:00）自动运行
 2. Python 脚本通过 Cookie 登录豆瓣，抓取用户标记为"已完成"的条目
 3. 数据保存到 `data/bookshelf.json`，页面读取该 JSON 渲染
+
+## Dota 2 数据战报（dota/）
+
+把 OpenDota 上的个人战绩摊开：生涯总览、英雄池与绝活榜、逐月战况与作息热力图、最近 20 场、开黑搭子、聊天词云。纯静态：页面用原生 ESM（`analysis.js` 算指标、`charts.js` 画 SVG），不依赖第三方图表库。
+
+- **数据**：`scripts/fetch_dota.mjs` 抓取 OpenDota 公开 API，产出 `data/dota/snapshot.json`（全部对局，含快速模式；英雄中文名与图标来自 Valve 数据接口与 Steam CDN）
+- **更新**：GitHub Actions 每周一 UTC 03:17 自动同步，也可本地 `node scripts/fetch_dota.mjs`
+- **测试**：`node dota/analysis.test.mjs`、`node dota/charts.test.mjs`
+- **页面**：`dota/index.html` + `dota.css` + `dota.js`（控制器）+ `analysis.js`（纯函数分析）+ `charts.js`（纯函数 SVG 图表）
 
 ## 投资组合（portfolio.html）
 
@@ -152,6 +162,7 @@ VA-11 Hall-A 式赛博朋克：深色底、霓虹紫与品红点缀。作品子�
 | 同步豆瓣书影音数据 | 定时 (UTC 11:00) / 手动 | 抓取豆瓣书籍/电影/音乐/游戏收藏 |
 | 同步知乎想法 | 定时 (UTC 6:00) / 手动 | 用知乎官方 CLI 抓取想法和文章 |
 | 同步译制作品数据 | 手动 | 更新 Bilibili 译制作品列表 |
+| 同步 Dota 2 数据 | 定时 (周一 UTC 03:17) / 手动 | 用 OpenDota 公开 API 抓取个人战绩快照 |
 
 ## AI 文本（thesis/）
 
