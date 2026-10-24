@@ -175,59 +175,39 @@
             });
     }
 
-    function consider(best, candidate) {
-        if (!candidate || !candidate.date || !candidate.title) return best;
-        if (!best || candidate.date > best.date) return candidate;
-        return best;
-    }
+    function loadRecentVideos() {
+        var list = document.getElementById('recentList');
+        if (!list) return;
 
-    function loadRecent() {
-        var link = document.getElementById('recentLink');
-        var kind = document.getElementById('recentKind');
-        var title = document.getElementById('recentTitle');
-        var date = document.getElementById('recentDate');
-        if (!link || !title) return;
+        fetch('data/translations.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                var items = ((data && data.items) || []).filter(function(item) {
+                    return item && item.title && item.date && item.bvid;
+                }).sort(function(a, b) {
+                    return String(b.date).localeCompare(String(a.date));
+                }).slice(0, 3);
 
-        Promise.all([
-            fetch('data/posts.json').then(function(response) { return response.json(); }).catch(function() { return []; }),
-            fetch('data/translations.json').then(function(response) { return response.json(); }).catch(function() { return { items: [] }; })
-        ]).then(function(results) {
-            var posts = Array.isArray(results[0]) ? results[0] : [];
-            var translations = (results[1] && results[1].items) || [];
-            var best = null;
-            posts.forEach(function(post) {
-                best = consider(best, {
-                    date: post.date,
-                    title: post.title,
-                    kind: '随笔',
-                    href: 'blog.html'
-                });
+                if (!items.length) {
+                    list.innerHTML = '<p class="home-loading">译制列表里还没有可显示的条目。<a href="translations.html">去看译制</a></p>';
+                    return;
+                }
+
+                list.innerHTML = items.map(function(item) {
+                    return '<a class="home-recent-item" href="translations.html?bvid=' + encodeURIComponent(item.bvid) + '">' +
+                        '<span class="home-recent-kind">译制</span>' +
+                        '<span class="home-recent-title">' + esc(item.title) + '</span>' +
+                        '<span class="home-recent-date">' + esc(item.date) + '</span>' +
+                        '</a>';
+                }).join('');
+            })
+            .catch(function() {
+                list.innerHTML = '<p class="home-loading">最近译制没有加载出来。<a href="translations.html">去看译制</a></p>';
             });
-            translations.forEach(function(item) {
-                var href = 'translations.html';
-                if (item.bvid) href += '?bvid=' + encodeURIComponent(item.bvid);
-                best = consider(best, {
-                    date: item.date,
-                    title: item.title,
-                    kind: '译制',
-                    href: href
-                });
-            });
-            if (!best) {
-                title.textContent = '去看译制和随笔';
-                return;
-            }
-            link.href = best.href;
-            if (kind) kind.textContent = best.kind;
-            title.textContent = best.title;
-            if (date) date.textContent = best.date;
-        }).catch(function() {
-            title.textContent = '去看译制和随笔';
-        });
     }
 
     function loadHomeStage() {
         loadFeatured();
-        loadRecent();
+        loadRecentVideos();
     }
 })();

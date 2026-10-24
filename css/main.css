@@ -8,7 +8,7 @@
 
 /* ===== Reset & Base ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 18.4px; }
 body {
     font-family: var(--font-body);
     font-size: 1.2rem;
@@ -51,7 +51,7 @@ ul { list-style: none; }
 .container {
     max-width: var(--container);
     margin: 0 auto;
-    padding: 0 48px;
+    padding: 0 56px;
     position: relative;
     z-index: 1;
 }
@@ -64,7 +64,7 @@ nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 16px 0;
+    padding: 26px 0;
     background: var(--bg-nav);
     backdrop-filter: blur(24px) saturate(1.5);
     -webkit-backdrop-filter: blur(24px) saturate(1.5);
@@ -77,15 +77,15 @@ nav .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
+    max-width: 1600px;
 }
 nav .container::before { display: none; }
 .nav-logo {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     color: var(--purple-bright);
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
     text-shadow: 0 0 20px var(--purple-glow);
     transition: text-shadow 0.3s ease;
@@ -97,8 +97,8 @@ nav .container::before { display: none; }
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: 8px 18px;
-    font-size: 0.82rem;
+    gap: 10px 26px;
+    font-size: 0.92rem;
     color: var(--text-muted);
     font-family: var(--font-display);
     text-transform: uppercase;
@@ -413,21 +413,26 @@ footer::before {
 /* ===== Responsive ===== */
 @media (min-width: 1600px) {
     :root {
-        --container: 1360px;
+        --container: 1560px;
     }
 }
 @media (max-width: 1200px) {
     :root {
-        --container: 960px;
+        --container: 1104px;
     }
 }
 @media (max-width: 768px) {
-    nav { padding: 12px 0; }
-    nav .container { flex-wrap: wrap; row-gap: 8px; }
-    .nav-links { gap: 8px 12px; font-size: 0.68rem; letter-spacing: 0.4px; }
-    .container { padding: 0 24px; }
+    html { font-size: 17px; }
+    nav { padding: 16px 0; }
+    nav .container { flex-wrap: wrap; row-gap: 10px; }
+    .nav-links { gap: 8px 16px; font-size: 0.76rem; letter-spacing: 0.4px; }
+    .container { padding: 0 28px; }
     .page-header { padding: calc(var(--nav-offset, 68px) + 16px) 0 20px; max-width: 100%; }
     body.has-channel .page-header { padding-top: 20px; }
+}
+@media (max-width: 480px) {
+    html { font-size: 16.5px; }
+    .container { padding: 0 20px; }
 }
 
 /* ===== Page Transition Overlay ===== */
