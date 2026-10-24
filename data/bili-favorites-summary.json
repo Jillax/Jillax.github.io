@@ -1,0 +1,779 @@
+{
+  "schema_version": 1,
+  "fetched_at": "2026-10-24",
+  "mid": "518618885",
+  "source": "https://space.bilibili.com/518618885/favlist",
+  "folders": 26,
+  "declared_items": 5760,
+  "readable_items": 5670,
+  "unique_items": 5666,
+  "university": {
+    "start": "2024-09-01",
+    "end": "2026-10-24",
+    "items": 5012,
+    "active_days": 600,
+    "duration_hours": 1096
+  },
+  "periods": [
+    {
+      "name": "大一上",
+      "start": "2024-09-01",
+      "end": "2025-01-31",
+      "items": 981,
+      "active_days": 94,
+      "duration_hours": 353,
+      "median_duration_min": 10,
+      "short_under_5min_pct": 31,
+      "top_folders": [
+        {
+          "name": "音乐",
+          "count": 164
+        },
+        {
+          "name": "中国人文历史",
+          "count": 130
+        },
+        {
+          "name": "社科与生活",
+          "count": 126
+        },
+        {
+          "name": "经济理财与商业",
+          "count": 114
+        },
+        {
+          "name": "世界人文历史",
+          "count": 103
+        },
+        {
+          "name": "科技科学与工业军事",
+          "count": 71
+        },
+        {
+          "name": "乐Internet",
+          "count": 57
+        },
+        {
+          "name": "影视戏剧与动画",
+          "count": 56
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "老旦聊历史",
+          "count": 31
+        },
+        {
+          "name": "王鲁九班",
+          "count": 26
+        },
+        {
+          "name": "清言片羽",
+          "count": 24
+        },
+        {
+          "name": "Chris的军事基地",
+          "count": 24
+        },
+        {
+          "name": "HiRes无损体验馆",
+          "count": 23
+        },
+        {
+          "name": "聊点不一样的聊酱",
+          "count": 19
+        },
+        {
+          "name": "JLRS-LeoFM",
+          "count": 18
+        },
+        {
+          "name": "全景历史地理",
+          "count": 17
+        }
+      ]
+    },
+    {
+      "name": "大一下",
+      "start": "2025-02-01",
+      "end": "2025-06-30",
+      "items": 316,
+      "active_days": 85,
+      "duration_hours": 47,
+      "median_duration_min": 3,
+      "short_under_5min_pct": 60,
+      "top_folders": [
+        {
+          "name": "乐Internet",
+          "count": 86
+        },
+        {
+          "name": "乐Polireal",
+          "count": 77
+        },
+        {
+          "name": "体育运动与游戏",
+          "count": 36
+        },
+        {
+          "name": "社科与生活",
+          "count": 33
+        },
+        {
+          "name": "工作学校与教育",
+          "count": 17
+        },
+        {
+          "name": "中国人文历史",
+          "count": 12
+        },
+        {
+          "name": "影视戏剧与动画",
+          "count": 12
+        },
+        {
+          "name": "公民权利与法律",
+          "count": 10
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "-战舰波将金-",
+          "count": 10
+        },
+        {
+          "name": "账号已注销",
+          "count": 10
+        },
+        {
+          "name": "bili_5917288",
+          "count": 9
+        },
+        {
+          "name": "RavenDungeon",
+          "count": 8
+        },
+        {
+          "name": "新华社",
+          "count": 7
+        },
+        {
+          "name": "四川观察",
+          "count": 6
+        },
+        {
+          "name": "竹竹暴风雪",
+          "count": 4
+        },
+        {
+          "name": "久远Vortex",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "name": "大一暑假",
+      "start": "2025-07-01",
+      "end": "2025-08-31",
+      "items": 452,
+      "active_days": 51,
+      "duration_hours": 138,
+      "median_duration_min": 6,
+      "short_under_5min_pct": 44,
+      "top_folders": [
+        {
+          "name": "体育运动与游戏",
+          "count": 79
+        },
+        {
+          "name": "社科与生活",
+          "count": 74
+        },
+        {
+          "name": "乐Internet",
+          "count": 56
+        },
+        {
+          "name": "乐Polireal",
+          "count": 54
+        },
+        {
+          "name": "音乐",
+          "count": 52
+        },
+        {
+          "name": "世界人文历史",
+          "count": 41
+        },
+        {
+          "name": "工作学校与教育",
+          "count": 31
+        },
+        {
+          "name": "经济理财与商业",
+          "count": 23
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "账号已注销",
+          "count": 10
+        },
+        {
+          "name": "小约翰可汗",
+          "count": 8
+        },
+        {
+          "name": "学长表示理解",
+          "count": 7
+        },
+        {
+          "name": "奥特OTTER",
+          "count": 7
+        },
+        {
+          "name": "Psych2Go官方帐号",
+          "count": 6
+        },
+        {
+          "name": "CLS同学",
+          "count": 6
+        },
+        {
+          "name": "小Lin说",
+          "count": 6
+        },
+        {
+          "name": "尚在天国EX",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "name": "大二上",
+      "start": "2025-09-01",
+      "end": "2026-01-31",
+      "items": 822,
+      "active_days": 126,
+      "duration_hours": 198,
+      "median_duration_min": 4,
+      "short_under_5min_pct": 54,
+      "top_folders": [
+        {
+          "name": "音乐",
+          "count": 131
+        },
+        {
+          "name": "社科与生活",
+          "count": 127
+        },
+        {
+          "name": "乐Internet",
+          "count": 111
+        },
+        {
+          "name": "中国人文历史",
+          "count": 78
+        },
+        {
+          "name": "世界人文历史",
+          "count": 73
+        },
+        {
+          "name": "乐Polireal",
+          "count": 65
+        },
+        {
+          "name": "经济理财与商业",
+          "count": 56
+        },
+        {
+          "name": "科技科学与工业军事",
+          "count": 48
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "东洋雪莲",
+          "count": 23
+        },
+        {
+          "name": "硅谷101",
+          "count": 21
+        },
+        {
+          "name": "李福特斯姬Official",
+          "count": 17
+        },
+        {
+          "name": "账号已注销",
+          "count": 14
+        },
+        {
+          "name": "老猫鱼不吃鱼",
+          "count": 14
+        },
+        {
+          "name": "JLRS日落fm",
+          "count": 12
+        },
+        {
+          "name": "Veritasium真理元素",
+          "count": 11
+        },
+        {
+          "name": "橘猫_exe已停止运行",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "name": "大二下",
+      "start": "2026-02-01",
+      "end": "2026-06-30",
+      "items": 1353,
+      "active_days": 141,
+      "duration_hours": 237,
+      "median_duration_min": 3,
+      "short_under_5min_pct": 62,
+      "top_folders": [
+        {
+          "name": "乐Internet",
+          "count": 220
+        },
+        {
+          "name": "乐Polireal",
+          "count": 147
+        },
+        {
+          "name": "医学心理与营养健康",
+          "count": 142
+        },
+        {
+          "name": "音乐",
+          "count": 125
+        },
+        {
+          "name": "中国人文历史",
+          "count": 124
+        },
+        {
+          "name": "世界人文历史",
+          "count": 88
+        },
+        {
+          "name": "饮食消费与产品评测",
+          "count": 84
+        },
+        {
+          "name": "社科与生活",
+          "count": 82
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "行业101",
+          "count": 20
+        },
+        {
+          "name": "医学边界",
+          "count": 20
+        },
+        {
+          "name": "冷却报告",
+          "count": 16
+        },
+        {
+          "name": "医痴的木头屋授权",
+          "count": 16
+        },
+        {
+          "name": "付鹏的财经世界",
+          "count": 15
+        },
+        {
+          "name": "医学科普联盟",
+          "count": 13
+        },
+        {
+          "name": "账号已注销",
+          "count": 12
+        },
+        {
+          "name": "有点意思研究所",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "name": "大二暑假",
+      "start": "2026-07-01",
+      "end": "2026-08-31",
+      "items": 555,
+      "active_days": 54,
+      "duration_hours": 64,
+      "median_duration_min": 2,
+      "short_under_5min_pct": 77,
+      "top_folders": [
+        {
+          "name": "乐Internet",
+          "count": 116
+        },
+        {
+          "name": "历史素材和Edit",
+          "count": 106
+        },
+        {
+          "name": "乐Polireal",
+          "count": 78
+        },
+        {
+          "name": "历史List",
+          "count": 70
+        },
+        {
+          "name": "社科与生活",
+          "count": 44
+        },
+        {
+          "name": "音乐",
+          "count": 33
+        },
+        {
+          "name": "世界人文历史",
+          "count": 24
+        },
+        {
+          "name": "工作学校与教育",
+          "count": 21
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "一支yuuu",
+          "count": 12
+        },
+        {
+          "name": "大圆镜新知",
+          "count": 7
+        },
+        {
+          "name": "bili_3706981609114152",
+          "count": 7
+        },
+        {
+          "name": "松间白鹤_",
+          "count": 6
+        },
+        {
+          "name": "账号已注销",
+          "count": 5
+        },
+        {
+          "name": "未明子",
+          "count": 5
+        },
+        {
+          "name": "Aismr_",
+          "count": 5
+        },
+        {
+          "name": "老谢的饭局",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "name": "大三上",
+      "start": "2026-09-01",
+      "end": "2026-10-24",
+      "items": 533,
+      "active_days": 49,
+      "duration_hours": 59,
+      "median_duration_min": 3,
+      "short_under_5min_pct": 70,
+      "top_folders": [
+        {
+          "name": "历史素材和Edit",
+          "count": 99
+        },
+        {
+          "name": "乐Internet",
+          "count": 76
+        },
+        {
+          "name": "世界人文历史",
+          "count": 56
+        },
+        {
+          "name": "乐Polireal",
+          "count": 52
+        },
+        {
+          "name": "经济理财与商业",
+          "count": 27
+        },
+        {
+          "name": "音乐",
+          "count": 27
+        },
+        {
+          "name": "历史List",
+          "count": 25
+        },
+        {
+          "name": "影视戏剧与动画",
+          "count": 23
+        }
+      ],
+      "top_uppers": [
+        {
+          "name": "英国首相威灵顿公爵",
+          "count": 36
+        },
+        {
+          "name": "松间白鹤_",
+          "count": 6
+        },
+        {
+          "name": "何大爷课堂",
+          "count": 6
+        },
+        {
+          "name": "Not小月月二转神童",
+          "count": 5
+        },
+        {
+          "name": "南半球聊财经",
+          "count": 5
+        },
+        {
+          "name": "一支yuuu",
+          "count": 5
+        },
+        {
+          "name": "守家老锤石",
+          "count": 5
+        },
+        {
+          "name": "二郎有理想",
+          "count": 5
+        }
+      ]
+    }
+  ],
+  "folders_overall": [
+    {
+      "name": "乐Internet",
+      "declared": 824,
+      "readable": 801
+    },
+    {
+      "name": "音乐",
+      "declared": 692,
+      "readable": 687
+    },
+    {
+      "name": "社科与生活",
+      "declared": 597,
+      "readable": 594
+    },
+    {
+      "name": "乐Polireal",
+      "declared": 535,
+      "readable": 517
+    },
+    {
+      "name": "世界人文历史",
+      "declared": 472,
+      "readable": 463
+    },
+    {
+      "name": "中国人文历史",
+      "declared": 421,
+      "readable": 409
+    },
+    {
+      "name": "经济理财与商业",
+      "declared": 329,
+      "readable": 326
+    },
+    {
+      "name": "工作学校与教育",
+      "declared": 326,
+      "readable": 325
+    },
+    {
+      "name": "影视戏剧与动画",
+      "declared": 273,
+      "readable": 271
+    },
+    {
+      "name": "体育运动与游戏",
+      "declared": 269,
+      "readable": 268
+    },
+    {
+      "name": "科技科学与工业军事",
+      "declared": 222,
+      "readable": 218
+    },
+    {
+      "name": "历史素材和Edit",
+      "declared": 207,
+      "readable": 205
+    },
+    {
+      "name": "医学心理与营养健康",
+      "declared": 178,
+      "readable": 175
+    },
+    {
+      "name": "饮食消费与产品评测",
+      "declared": 102,
+      "readable": 102
+    },
+    {
+      "name": "历史List",
+      "declared": 95,
+      "readable": 95
+    },
+    {
+      "name": "公民权利与法律",
+      "declared": 83,
+      "readable": 80
+    },
+    {
+      "name": "动植物与自然景观",
+      "declared": 45,
+      "readable": 44
+    },
+    {
+      "name": "另一些现实",
+      "declared": 31,
+      "readable": 31
+    },
+    {
+      "name": "旅游，各地人文",
+      "declared": 25,
+      "readable": 25
+    },
+    {
+      "name": "文学与设计艺术史",
+      "declared": 11,
+      "readable": 11
+    },
+    {
+      "name": "城市",
+      "declared": 6,
+      "readable": 6
+    },
+    {
+      "name": "宗教",
+      "declared": 5,
+      "readable": 5
+    },
+    {
+      "name": "家居装修",
+      "declared": 5,
+      "readable": 5
+    },
+    {
+      "name": "语言",
+      "declared": 4,
+      "readable": 4
+    },
+    {
+      "name": "轨交",
+      "declared": 2,
+      "readable": 2
+    },
+    {
+      "name": "不知道咋分",
+      "declared": 1,
+      "readable": 1
+    }
+  ],
+  "top_uppers_overall": [
+    {
+      "name": "账号已注销",
+      "count": 71
+    },
+    {
+      "name": "清言片羽",
+      "count": 47
+    },
+    {
+      "name": "JLRS日落fm",
+      "count": 42
+    },
+    {
+      "name": "英国首相威灵顿公爵",
+      "count": 38
+    },
+    {
+      "name": "HiRes无损体验馆",
+      "count": 38
+    },
+    {
+      "name": "JLRS-LeoFM",
+      "count": 37
+    },
+    {
+      "name": "老旦聊历史",
+      "count": 31
+    },
+    {
+      "name": "河畔的伯爵",
+      "count": 30
+    },
+    {
+      "name": "硅谷101",
+      "count": 28
+    },
+    {
+      "name": "李福特斯姬Official",
+      "count": 26
+    },
+    {
+      "name": "王鲁九班",
+      "count": 26
+    },
+    {
+      "name": "东洋雪莲",
+      "count": 26
+    },
+    {
+      "name": "未明子",
+      "count": 24
+    },
+    {
+      "name": "Chris的军事基地",
+      "count": 24
+    },
+    {
+      "name": "行业101",
+      "count": 23
+    },
+    {
+      "name": "一支yuuu",
+      "count": 23
+    },
+    {
+      "name": "医学边界",
+      "count": 22
+    },
+    {
+      "name": "冷却报告",
+      "count": 21
+    },
+    {
+      "name": "Not小月月二转神童",
+      "count": 20
+    },
+    {
+      "name": "医学科普联盟",
+      "count": 20
+    }
+  ]
+}
