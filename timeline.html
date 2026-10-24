@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jillax 的大学编年 — 把 Dota 对局、豆瓣标记、B站收藏与投稿对齐到学期。">
+    <meta name="description" content="Jillax 的大学编年 — 把 Dota 对局、豆瓣标记、B站收藏、投稿与基金账户收益对齐到学期。">
     <meta name="author" content="Jillax">
     <meta property="og:title" content="大学编年 · Jillax">
-    <meta property="og:description" content="把 Dota 对局、豆瓣标记、B站收藏与投稿对齐到学期。">
+    <meta property="og:description" content="把 Dota 对局、豆瓣标记、B站收藏、投稿与基金账户收益对齐到学期。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jillax.github.io/timeline.html">
     <meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
@@ -35,7 +35,7 @@
         </div>
 
         <section class="log-intro reveal">
-            <p>把四条时间线对齐到学期：Dota 对局、豆瓣标记、B站收藏、B站投稿。数字说明精力去了哪里，收藏夹说明注意力去了哪里。</p>
+            <p>把四条活动线对齐到学期：Dota 对局、豆瓣标记、B站收藏、B站投稿；再单列易方达与摩根的账户收益。数字说明精力去了哪里，收藏夹说明注意力去了哪里，收益曲线说明钱在哪里经历了波动。</p>
         </section>
 
         <section class="log-stats reveal" aria-label="大学期间总览">
@@ -401,6 +401,166 @@
                     <p>2026 年 4 月是分水岭；大二暑假是产量峰值，大三上出现单条 4.2 万播放的爆款。</p>
                 </article>
             </div>
+        </section>
+
+        <section class="log-invest-section reveal" aria-labelledby="logInvestTitle">
+            <div class="log-section-head">
+                <h2 class="log-section-label" id="logInvestTitle">资金的另一条线</h2>
+                <span class="log-section-note">2024.07 — 2026.10</span>
+            </div>
+            <p class="log-summary-lead">2025 年是小额、平稳的：易方达全年 +361.93，最大单月也只有 +148.36。2025-10 之后波动明显放大，2026 年的月度盈亏从几十元变成上千元：4 月 +1,137.26 是单月峰值，7 月 −954.50、9–10 月合计 −737.88 又把大半吐回去。摩根第二段 +1,229.42 也集中在同一时期。投资收益的起伏和大二下起的投稿高峰重叠，但截图只有收益、没有本金与仓位，不能据此判断是加仓还是行情。</p>
+
+            <div class="inv-stats">
+                <div class="inv-stat">
+                    <span class="inv-stat-label">易方达 · 2025 全年</span>
+                    <span class="inv-stat-num gain">+361.93</span>
+                    <span class="inv-stat-sub">12 个月 · 10 正 2 负</span>
+                </div>
+                <div class="inv-stat">
+                    <span class="inv-stat-label">易方达 · 2026 至今</span>
+                    <span class="inv-stat-num gain">+75.57</span>
+                    <span class="inv-stat-sub">10 个月 · 5 正 5 负</span>
+                </div>
+                <div class="inv-stat">
+                    <span class="inv-stat-label">摩根 · 2024.07 — 2025.10.01</span>
+                    <span class="inv-stat-num gain">+154.63</span>
+                    <span class="inv-stat-sub">+4.30% · 区间累计</span>
+                </div>
+                <div class="inv-stat">
+                    <span class="inv-stat-label">摩根 · 2025.10.01 — 至今</span>
+                    <span class="inv-stat-num gain">+1,229.42</span>
+                    <span class="inv-stat-sub">+2.20% · 区间累计</span>
+                </div>
+            </div>
+
+            <div class="inv-chart-box">
+                <div class="inv-chart-head">
+                    <span class="inv-chart-title">易方达 · 月度收益</span>
+                    <span class="inv-chart-legend"><i class="inv-dot gain"></i>盈利 <i class="inv-dot loss"></i>亏损 <em>单位：元</em></span>
+                </div>
+                <div class="inv-chart" role="img" aria-label="易方达基金 2025 年 1 月至 2026 年 10 月月度收益柱状图，最高为 2026 年 4 月 +1,137.26 元，最低为 2026 年 7 月 −954.50 元">
+                    <div class="inv-years" aria-hidden="true">
+                        <span class="inv-year" style="grid-column: 1 / span 12">2025</span>
+                        <span class="inv-year" style="grid-column: 13 / span 10">2026</span>
+                    </div>
+                    <div class="inv-plot">
+                            <div class="inv-col" title="2025-01 +0.45 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:0.04%" role="img" aria-label="2025 年 1 月 +0.45 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-02 −13.09 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:1.09%" role="img" aria-label="2025 年 2 月 −13.09 元"></span></div>
+                            </div>
+                            <div class="inv-col" title="2025-03 +9.02 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:0.75%" role="img" aria-label="2025 年 3 月 +9.02 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-04 +12.05 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:1.00%" role="img" aria-label="2025 年 4 月 +12.05 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-05 +13.63 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:1.14%" role="img" aria-label="2025 年 5 月 +13.63 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-06 +32.89 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:2.74%" role="img" aria-label="2025 年 6 月 +32.89 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-07 +28.61 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:2.38%" role="img" aria-label="2025 年 7 月 +28.61 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-08 +148.36 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:12.36%" role="img" aria-label="2025 年 8 月 +148.36 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-09 +46.87 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:3.91%" role="img" aria-label="2025 年 9 月 +46.87 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-10 +70.66 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:5.89%" role="img" aria-label="2025 年 10 月 +70.66 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2025-11 −94.07 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:7.84%" role="img" aria-label="2025 年 11 月 −94.07 元"></span></div>
+                            </div>
+                            <div class="inv-col" title="2025-12 +106.55 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:8.88%" role="img" aria-label="2025 年 12 月 +106.55 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2026-01 +138.95 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:11.58%" role="img" aria-label="2026 年 1 月 +138.95 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2026-02 −58.80 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:4.90%" role="img" aria-label="2026 年 2 月 −58.80 元"></span></div>
+                            </div>
+                            <div class="inv-col" title="2026-03 −542.03 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:45.17%" role="img" aria-label="2026 年 3 月 −542.03 元"></span></div>
+                            </div>
+                            <div class="inv-col" title="2026-04 +1,137.26 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:94.77%" role="img" aria-label="2026 年 4 月 +1,137.26 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2026-05 +661.00 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:55.08%" role="img" aria-label="2026 年 5 月 +661.00 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2026-06 +48.07 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:4.01%" role="img" aria-label="2026 年 6 月 +48.07 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2026-07 −954.50 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:79.54%" role="img" aria-label="2026 年 7 月 −954.50 元"></span></div>
+                            </div>
+                            <div class="inv-col" title="2026-08 +383.50 元">
+                                <div class="inv-half top"><span class="inv-bar gain" style="--h:31.96%" role="img" aria-label="2026 年 8 月 +383.50 元"></span></div>
+                                <div class="inv-half bottom"></div>
+                            </div>
+                            <div class="inv-col" title="2026-09 −331.22 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:27.60%" role="img" aria-label="2026 年 9 月 −331.22 元"></span></div>
+                            </div>
+                            <div class="inv-col" title="2026-10 −406.66 元">
+                                <div class="inv-half top"></div>
+                                <div class="inv-half bottom"><span class="inv-bar loss" style="--h:33.89%" role="img" aria-label="2026 年 10 月 −406.66 元"></span></div>
+                            </div>
+                    </div>
+                    <div class="inv-months" aria-hidden="true">
+                        <span class="inv-month q">1</span><span class="inv-month">2</span><span class="inv-month">3</span><span class="inv-month q">4</span><span class="inv-month">5</span><span class="inv-month">6</span><span class="inv-month q">7</span><span class="inv-month">8</span><span class="inv-month">9</span><span class="inv-month q">10</span><span class="inv-month">11</span><span class="inv-month">12</span><span class="inv-month q">1</span><span class="inv-month">2</span><span class="inv-month">3</span><span class="inv-month q">4</span><span class="inv-month">5</span><span class="inv-month">6</span><span class="inv-month q">7</span><span class="inv-month">8</span><span class="inv-month">9</span><span class="inv-month q">10</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inv-table-wrap">
+                <table class="inv-table">
+                    <thead>
+                        <tr><th>学期</th><th class="num">易方达收益</th><th>最大单月</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>大一上</td><td class="num gain">+0.45</td><td>仅 2025-01 有数据</td></tr>
+                        <tr><td>大一下</td><td class="num gain">+54.50</td><td>6 月 +32.89</td></tr>
+                        <tr><td>大一暑假</td><td class="num gain">+176.97</td><td>8 月 +148.36</td></tr>
+                        <tr><td>大二上</td><td class="num gain">+268.96</td><td>1 月 +138.95</td></tr>
+                        <tr><td>大二下</td><td class="num gain">+1,245.50</td><td>4 月 +1,137.26</td></tr>
+                        <tr><td>大二暑假</td><td class="num loss">−571.00</td><td>7 月 −954.50</td></tr>
+                        <tr><td>大三上</td><td class="num loss">−737.88</td><td>10 月 −406.66</td></tr>
+                    </tbody>
+                    <tfoot>
+                        <tr><td>合计</td><td class="num gain">+437.50</td><td>2025-01 — 2026-10</td></tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <p class="inv-note">口径：易方达为月度收益，摩根为区间累计收益，分段边界按 2025-10-01；易方达截图选择“全部”渠道，收益贡献里出现摩根标普500，两个账户可能存在同一基金的不同份额，因此只分列、不加总。2024-07 至 2024-12 的易方达数据未提供；收益不等于资产，当前持仓见 <a href="portfolio.html">投资页</a>（2026-10-21 快照，约 ¥5.5 万）。</p>
+            <a class="inv-link" href="portfolio.html">查看当前持仓 →</a>
         </section>
 
         <section class="log-notes reveal">
