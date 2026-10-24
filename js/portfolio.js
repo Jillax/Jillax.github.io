@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(r) { return r.json(); })
         .then(function(data) {
             renderStats(data);
-            if (document.getElementById('lineChart')) renderLineChart(data);
-            renderChart(data);
             renderPctBars(data);
             renderTable(data);
             renderProjection(data);
+            if (document.getElementById('lineChart')) renderLineChart(data);
+            renderChart(data);
             var updateDateEl = document.getElementById('updateDate');
             if (updateDateEl) updateDateEl.textContent = data.updated;
             document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
