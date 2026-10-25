@@ -1,0 +1,709 @@
+{
+  "book": "gz-xx",
+  "book_name": "中外历史纲要（下）",
+  "stage": "高中",
+  "theme": "世界史通史",
+  "lessons": [
+    {
+      "no": 1,
+      "unit": "第一单元 古代文明的产生与发展",
+      "title": "文明的产生与早期发展",
+      "songs": [
+        {
+          "title": "Rivers of Babylon（巴比伦河）",
+          "artist": "Boney M",
+          "year": "1978",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "歌词取自《圣经·诗篇》137篇巴比伦之囚，呼应两河流域古巴比伦文明",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Walk Like an Egyptian（像埃及人一样行走）",
+          "artist": "The Bangles",
+          "year": "1986",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "以古埃及壁画人物姿态入歌，呼应尼罗河流域的古埃及文明",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 2,
+      "unit": "第一单元 古代文明的产生与发展",
+      "title": "古代世界的帝国与文明的交流",
+      "songs": [
+        {
+          "title": "Now We Are Free（电影《角斗士》主题曲）",
+          "artist": "Hans Zimmer & Lisa Gerrard",
+          "year": "2000",
+          "lang": "纯音乐",
+          "tag": "影视配乐",
+          "why": "电影《角斗士》配乐，再现罗马帝国的强盛、扩张与辽阔疆域",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "丝绸之路（Silk Road）",
+          "artist": "喜多郎（Kitarō）",
+          "year": "1980",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "NHK纪录片《丝绸之路》配乐，呼应横贯欧亚的商路与早期文明交流",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 3,
+      "unit": "第二单元 中古时期的世界",
+      "title": "中古时期的欧洲",
+      "songs": [
+        {
+          "title": "Dies Irae（末日经，格里高利圣咏）",
+          "artist": "格里高利圣咏（佚名修士）",
+          "year": "约1250",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "中世纪天主教会圣咏代表作，见证教会对西欧社会的精神主导",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "O Fortuna（命运女神，《布兰诗歌》选段）",
+          "artist": "卡尔·奥夫（Carl Orff）",
+          "year": "1936",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "取词自13世纪游方修士诗集《布兰诗歌》，折射中世纪城市世俗文化",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 4,
+      "unit": "第二单元 中古时期的世界",
+      "title": "中古时期的亚洲",
+      "songs": [
+        {
+          "title": "Ceddin Deden（祖先与祖父）",
+          "artist": "奥斯曼梅赫泰尔军乐团",
+          "year": "约16世纪",
+          "lang": "土耳其语",
+          "tag": "军歌",
+          "why": "奥斯曼近卫军军乐代表曲，见证奥斯曼帝国的武力扩张与宫廷威仪",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Istanbul (Not Constantinople)（伊斯坦布尔）",
+          "artist": "They Might Be Giants",
+          "year": "1990",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "歌名直指1453年奥斯曼攻陷君士坦丁堡后都城更名的史事",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Lamma Bada Yatathanna（当她款款而来）",
+          "artist": "Lena Chamamyan",
+          "year": "约12世纪",
+          "lang": "阿拉伯语",
+          "tag": "外国歌曲",
+          "why": "源自安达卢西亚的阿拉伯穆瓦沙哈古典名曲，见证阿拉伯-伊斯兰文化圈",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 5,
+      "unit": "第二单元 中古时期的世界",
+      "title": "古代非洲与美洲",
+      "songs": [
+        {
+          "title": "El Cóndor Pasa（山鹰之歌）",
+          "artist": "Simon & Garfunkel（改编自秘鲁民谣）",
+          "year": "1970",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "改编自秘鲁民谣，以安第斯神鹰遥想印加故地，呼应美洲古文明",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Pata Pata",
+          "artist": "Miriam Makeba",
+          "year": "1967",
+          "lang": "科萨语",
+          "tag": "流行",
+          "why": "南非歌后马凯巴的科萨语名曲，展现非洲大陆深厚的文化传统",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 6,
+      "unit": "第三单元 走向整体的世界",
+      "title": "全球航路的开辟",
+      "songs": [
+        {
+          "title": "Conquest of Paradise（征服天堂）",
+          "artist": "Vangelis（范吉利斯）",
+          "year": "1992",
+          "lang": "拉丁语",
+          "tag": "影视配乐",
+          "why": "电影《1492：征服天堂》主题曲，再现哥伦布开辟新航路的壮举",
+          "src": "fav",
+          "bvid": "BV1N14y1h7Y3"
+        },
+        {
+          "title": "Sailing（航行）",
+          "artist": "Rod Stewart",
+          "year": "1975",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "扬帆远航的意象，呼应大航海时代冲破风浪驶向未知的远航",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 7,
+      "unit": "第三单元 走向整体的世界",
+      "title": "全球联系的初步建立与世界格局的演变",
+      "songs": [
+        {
+          "title": "Amazing Grace（奇异恩典）",
+          "artist": "传统圣歌（词：约翰·牛顿）",
+          "year": "1779",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "贩奴船长牛顿悔悟后所作，直指三角贸易的罪恶与人性的救赎",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Cortez the Killer（科尔特斯，那杀手）",
+          "artist": "Neil Young & Crazy Horse",
+          "year": "1975",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "咏叹科尔特斯征服阿兹特克，呼应殖民征服与新旧大陆的碰撞交流",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 8,
+      "unit": "第四单元 资本主义制度的确立",
+      "title": "欧洲的思想解放运动",
+      "songs": [
+        {
+          "title": "Greensleeves（绿袖子）",
+          "artist": "英格兰传统民谣（佚名）",
+          "year": "约1580",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "伊丽莎白时代英格兰民谣代表，折射文艺复兴时期世俗文化的兴盛",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Ein feste Burg ist unser Gott（上主是我坚固保障）",
+          "artist": "马丁·路德",
+          "year": "1529",
+          "lang": "德语",
+          "tag": "外国歌曲",
+          "why": "路德亲作的新教圣歌，被誉为宗教改革的战歌，直接服务于宗教改革",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "《费加罗的婚礼》序曲",
+          "artist": "莫扎特",
+          "year": "1786",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "据博马舍讽刺贵族的喜剧谱曲，仆人智胜主人，折射启蒙思想传播",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 9,
+      "unit": "第四单元 资本主义制度的确立",
+      "title": "资产阶级革命与资本主义制度的确立",
+      "songs": [
+        {
+          "title": "La Marseillaise（马赛曲）",
+          "artist": "鲁日·德·李尔（Rouget de Lisle）",
+          "year": "1792",
+          "lang": "法语",
+          "tag": "军歌",
+          "why": "法国大革命中诞生的战歌，此后始终是革命与共和的象征",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Yankee Doodle（扬基歌）",
+          "artist": "美国独立战争军歌（佚名）",
+          "year": "约1755",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "从嘲弄殖民者的调子变为大陆军自豪传唱，见证美国独立战争",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Southern Soldier / Dixie（迪克西）",
+          "artist": "美国内战南方军歌（佚名）",
+          "year": "1859",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "南北战争时期南方传唱的《迪克西》，见证美国维护联邦的统一战争",
+          "src": "fav",
+          "bvid": "BV12w4m1v7nU"
+        }
+      ]
+    },
+    {
+      "no": 10,
+      "unit": "第五单元 工业革命与马克思主义的诞生",
+      "title": "影响世界的工业革命",
+      "songs": [
+        {
+          "title": "Jerusalem（耶路撒冷）",
+          "artist": "休伯特·帕里（词：威廉·布莱克）",
+          "year": "1916",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "诗中黑暗的撒旦工厂直指工业革命的煤烟、工厂与发电厂",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Hard Times Come Again No More（艰难时光别再来）",
+          "artist": "Stephen Foster（斯蒂芬·福斯特）",
+          "year": "1854",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "唱出工业化年代贫病者的艰辛，呼应工人阶级生活的苦难",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 11,
+      "unit": "第五单元 工业革命与马克思主义的诞生",
+      "title": "马克思主义的诞生与传播",
+      "songs": [
+        {
+          "title": "L'Internationale（国际歌）",
+          "artist": "皮埃尔·狄盖特曲（欧仁·鲍狄埃词）",
+          "year": "1888",
+          "lang": "法语",
+          "tag": "红歌",
+          "why": "巴黎公社失败后鲍狄埃作词、狄盖特谱曲，国际无产阶级的战歌",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Which Side Are You On（你站在哪一边）",
+          "artist": "Florence Reece",
+          "year": "1931",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "美国煤矿工人工会斗争歌曲，展现工人运动及其歌声的国际传播",
+          "src": "fav",
+          "bvid": "BV12E411P7im"
+        }
+      ]
+    },
+    {
+      "no": 12,
+      "unit": "第六单元 世界殖民体系与亚非拉民族独立运动",
+      "title": "资本主义世界市场的形成",
+      "songs": [
+        {
+          "title": "I've Been Working on the Railroad（我一直在修铁路）",
+          "artist": "美国传统劳动号子（佚名）",
+          "year": "1894",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "铁路网把各大洲连成一体，正是资本主义世界市场形成的缩影",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Banana Boat Song (Day-O)（香蕉船之歌）",
+          "artist": "Harry Belafonte",
+          "year": "1956",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "牙买加香蕉装卸工的号子，反映殖民地种植园经济被纳入世界市场",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 13,
+      "unit": "第六单元 世界殖民体系与亚非拉民族独立运动",
+      "title": "亚非拉民族独立运动",
+      "songs": [
+        {
+          "title": "La Cucaracha（小蟑螂）",
+          "artist": "墨西哥革命民歌（佚名）",
+          "year": "约1910",
+          "lang": "西班牙语",
+          "tag": "民谣",
+          "why": "墨西哥革命中比利亚部队传唱，折射20世纪初民族民主革命浪潮",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "萨帕塔民族解放军之歌",
+          "artist": "墨西哥传统赞歌（佚名）",
+          "year": "约1915",
+          "lang": "西班牙语",
+          "tag": "民谣",
+          "why": "以墨西哥革命英雄萨帕塔命名的赞歌，呼应其土地与自由的呼声",
+          "src": "fav",
+          "bvid": "BV1re411Q7wo"
+        },
+        {
+          "title": "共青团进行曲",
+          "artist": "土耳其革命歌曲",
+          "year": "20世纪初",
+          "lang": "土耳其语",
+          "tag": "红歌",
+          "why": "一战后凯末尔领导土耳其独立斗争，此曲折射其民族觉醒与革命激情",
+          "src": "fav",
+          "bvid": "BV1Z8411B7iJ"
+        }
+      ]
+    },
+    {
+      "no": 14,
+      "unit": "第七单元 两次世界大战、十月革命与国际秩序的演变",
+      "title": "第一次世界大战与战后国际秩序",
+      "songs": [
+        {
+          "title": "It's a Long Way to Tipperary（漫漫长路到蒂珀雷里）",
+          "artist": "Jack Judge",
+          "year": "1912",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "一战开赴前线的英国士兵传唱，成为大战最具标志性的旋律",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Over There（在那边）",
+          "artist": "George M. Cohan",
+          "year": "1917",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "美国参战后的动员歌曲，号召美军远征欧洲战场",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Hej Sokoly（嘿翔隼）",
+          "artist": "波兰-乌克兰爱国民谣（佚名）",
+          "year": "19世纪",
+          "lang": "波兰语",
+          "tag": "民谣",
+          "why": "被瓜分民族的复国渴望之歌，呼应一战后波兰等民族国家重建",
+          "src": "fav",
+          "bvid": "BV1n64y1D7FV"
+        }
+      ]
+    },
+    {
+      "no": 15,
+      "unit": "第七单元 两次世界大战、十月革命与国际秩序的演变",
+      "title": "十月革命的胜利与苏联的社会主义实践",
+      "songs": [
+        {
+          "title": "华沙曲（Варшавянка）",
+          "artist": "波兰革命歌曲（克尔日扎诺夫斯基俄译）",
+          "year": "1905",
+          "lang": "俄语",
+          "tag": "红歌",
+          "why": "1905年革命起在俄国工人中传唱的布尔什维克战歌，十月革命的先声",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "卡秋莎（Катюша）",
+          "artist": "马特维·勃兰切尔曲",
+          "year": "1938",
+          "lang": "俄语",
+          "tag": "红歌",
+          "why": "诞生于苏联工业化年代的爱国歌曲，见证社会主义建设时期的风貌",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 16,
+      "unit": "第七单元 两次世界大战、十月革命与国际秩序的演变",
+      "title": "亚非拉民族民主运动的高涨",
+      "songs": [
+        {
+          "title": "Raghupati Raghava Raja Ram",
+          "artist": "Om Voices（甘地祷歌）",
+          "year": "传统祷歌",
+          "lang": "印地语",
+          "tag": "外国歌曲",
+          "why": "甘地祈祷会与食盐进军中传唱的祷歌，非暴力不合作运动的标志",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Vande Mataram（母亲，我向你致敬）",
+          "artist": "A. R. Rahman",
+          "year": "1997",
+          "lang": "印地语",
+          "tag": "外国歌曲",
+          "why": "改编自19世纪班金·钱德拉的诗，是印度民族运动的精神符号",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 17,
+      "unit": "第七单元 两次世界大战、十月革命与国际秩序的演变",
+      "title": "第二次世界大战与战后国际秩序的形成",
+      "songs": [
+        {
+          "title": "神圣的战争（Священная война）",
+          "artist": "亚历山德罗夫曲（列别杰夫-库马奇词）",
+          "year": "1941",
+          "lang": "俄语",
+          "tag": "红歌",
+          "why": "卫国战争爆发后诞生的第一首苏联战歌，再现反法西斯的全民动员",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Lili Marleen（莉莉·玛莲）",
+          "artist": "Lale Andersen",
+          "year": "1939",
+          "lang": "德语",
+          "tag": "军歌",
+          "why": "交战双方士兵共同传唱的哨卡之歌，成为二战中独特的人性记忆",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "人民之风前进！（国际纵队歌曲）",
+          "artist": "Ebri Knight",
+          "year": "2010年代",
+          "lang": "西班牙语",
+          "tag": "红歌",
+          "why": "西班牙内战中各国志愿者组成国际纵队支援共和政府，此为纵队战歌",
+          "src": "fav",
+          "bvid": "BV1dK411M7VB"
+        }
+      ]
+    },
+    {
+      "no": 18,
+      "unit": "第八单元 20世纪下半叶世界的新变化",
+      "title": "冷战与国际格局的演变",
+      "songs": [
+        {
+          "title": "99 Luftballons（99个气球）",
+          "artist": "Nena",
+          "year": "1983",
+          "lang": "德语",
+          "tag": "摇滚",
+          "why": "气球误引发核战争的寓言，折射冷战军备竞赛下的核恐惧",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Back in the U.S.S.R.（回到苏联）",
+          "artist": "The Beatles",
+          "year": "1968",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "披头士以戏谑笔调写两大阵营的隔膜与想象，见证冷战氛围",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 19,
+      "unit": "第八单元 20世纪下半叶世界的新变化",
+      "title": "社会主义国家的发展与变化",
+      "songs": [
+        {
+          "title": "Go West（去西方）",
+          "artist": "Pet Shop Boys",
+          "year": "1993",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "旋律与MV寄托对乌托邦的想象，常与苏联解体前的怀旧语境相连",
+          "src": "fav",
+          "bvid": "BV1uh98YkEjL"
+        },
+        {
+          "title": "渴望变革（Перемен）",
+          "artist": "维克多·崔（Kino乐队）",
+          "year": "1986",
+          "lang": "俄语",
+          "tag": "摇滚",
+          "why": "苏联摇滚标志性作品，唱出戈尔巴乔夫改革年代对变革的渴望",
+          "src": "fav",
+          "bvid": "BV1ts4y1C7Z9"
+        }
+      ]
+    },
+    {
+      "no": 20,
+      "unit": "第八单元 20世纪下半叶世界的新变化",
+      "title": "世界殖民体系的瓦解与新兴国家的发展",
+      "songs": [
+        {
+          "title": "团结人民之歌（El pueblo unido jamás será vencido）",
+          "artist": "Quilapayún",
+          "year": "1973",
+          "lang": "西班牙语",
+          "tag": "红歌",
+          "why": "智利人民团结阵线之歌，成为拉美与亚非拉反帝运动的国际战歌",
+          "src": "fav",
+          "bvid": "BV12o4y1K7Yn"
+        },
+        {
+          "title": "Nkosi Sikelel' iAfrika（天佑非洲）",
+          "artist": "Soweto Gospel Choir（索恩通加曲）",
+          "year": "1897",
+          "lang": "科萨语",
+          "tag": "外国歌曲",
+          "why": "从教堂赞美诗变为非洲民族解放运动的颂歌，今为南非国歌",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Free Nelson Mandela（释放曼德拉）",
+          "artist": "The Specials",
+          "year": "1984",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "为狱中的曼德拉而作，响彻全球反种族隔离运动",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 21,
+      "unit": "第八单元 20世纪下半叶世界的新变化",
+      "title": "冷战后的世界格局",
+      "songs": [
+        {
+          "title": "Wind of Change（变革之风）",
+          "artist": "Scorpions（蝎子乐队）",
+          "year": "1990",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "柏林墙倒塌后写东欧剧变的变革之风，呼应两极格局瓦解",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "自由（波罗的海之路）",
+          "artist": "立陶宛歌曲",
+          "year": "1989",
+          "lang": "立陶宛语",
+          "tag": "民谣",
+          "why": "波罗的海之路两百万人手拉手合唱，见证苏联解体前的独立浪潮",
+          "src": "fav",
+          "bvid": "BV1rm4y1H7AZ"
+        }
+      ]
+    },
+    {
+      "no": 22,
+      "unit": "第九单元 当代世界发展的特点与主要趋势",
+      "title": "世界多极化与经济全球化",
+      "songs": [
+        {
+          "title": "We Are the World（天下一家）",
+          "artist": "USA for Africa",
+          "year": "1985",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "45位歌星为非洲饥荒赈灾合唱，体现地球村的全球协作意识",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "欢乐颂（《第九交响曲》终乐章）",
+          "artist": "贝多芬",
+          "year": "1824",
+          "lang": "德语",
+          "tag": "器乐",
+          "why": "席勒四海之内皆兄弟的颂歌，后成为欧盟盟歌，呼应区域一体化",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 23,
+      "unit": "第九单元 当代世界发展的特点与主要趋势",
+      "title": "和平发展合作共赢的历史潮流",
+      "songs": [
+        {
+          "title": "Imagine（想象）",
+          "artist": "John Lennon",
+          "year": "1971",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "想象没有国界、战争与占有的世界，契合和平发展的时代主题",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Where Have All the Flowers Gone（花儿都到哪里去了）",
+          "artist": "Pete Seeger",
+          "year": "1955",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "反战民谣质问战争代价，呼应当代人类对持久和平的追求",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Holiday（假日）",
+          "artist": "Green Day",
+          "year": "2004",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "批判以神圣名义发动的战争，传递当代世界的反战呼声",
+          "src": "fav",
+          "bvid": "BV1bD4y1U7gm"
+        }
+      ]
+    }
+  ]
+}

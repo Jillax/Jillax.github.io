@@ -1,0 +1,555 @@
+{
+  "book": "q9a",
+  "book_name": "世界历史 九年级上册",
+  "stage": "初中",
+  "theme": "世界古代史—近代早期",
+  "lessons": [
+    {
+      "no": 1,
+      "unit": "第一单元 古代亚非文明",
+      "title": "古代埃及",
+      "songs": [
+        {
+          "title": "尼罗河畔的歌声（埃及民歌风）",
+          "artist": "朱逢博（朱宝勇词曲，埃及民歌基调）",
+          "year": "20世纪70年代末",
+          "lang": "中文",
+          "tag": "外国歌曲",
+          "why": "咏唱尼罗河畔的劳动与歌舞，直接呼应古埃及依托尼罗河的农耕文明",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "凯旋进行曲（选自歌剧《阿依达》）",
+          "artist": "朱塞佩·威尔第（Giuseppe Verdi）",
+          "year": "1871",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "歌剧《阿依达》以古埃及为背景，小号凯旋曲再现法老时代的雄壮场面",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Walk Like an Egyptian（像埃及人一样行走）",
+          "artist": "The Bangles（手镯乐队）",
+          "year": "1986",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "流行金曲以古埃及壁画姿态入歌，见证古埃及形象在今天的传播",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 2,
+      "unit": "第一单元 古代亚非文明",
+      "title": "古代两河流域",
+      "songs": [
+        {
+          "title": "爱在西元前",
+          "artist": "周杰伦",
+          "year": "2001",
+          "lang": "中文",
+          "tag": "流行",
+          "why": "开篇即唱“古巴比伦王颁布了汉谟拉比法典”，楔形文字直扣两河文明",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Rivers of Babylon（巴比伦河）",
+          "artist": "Boney M",
+          "year": "1978",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "歌词出自《圣经·诗篇》，“巴比伦河畔”直指两河流域的巴比伦古城",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 3,
+      "unit": "第一单元 古代亚非文明",
+      "title": "古代印度",
+      "songs": [
+        {
+          "title": "三皈依（Buddham Saranam Gacchami）",
+          "artist": "黄慧音（Imee Ooi）",
+          "year": "1999",
+          "lang": "巴利语",
+          "tag": "外国歌曲",
+          "why": "“皈依佛、皈依法、皈依僧”的巴利语佛诵，源自佛陀创教的古印度",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Raga Bhairavi（拜拉维拉格）",
+          "artist": "拉维·香卡（Ravi Shankar）",
+          "year": "1968",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "西塔琴大师演奏北印度经典拉格，传承印度古典音乐与婆罗门传统",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 4,
+      "unit": "第二单元 古代欧洲文明",
+      "title": "希腊城邦和亚历山大帝国",
+      "songs": [
+        {
+          "title": "Song of Seikilos（塞基洛斯墓志铭歌）",
+          "artist": "塞基洛斯（古希腊，复原演唱）",
+          "year": "约公元1世纪",
+          "lang": "古希腊语",
+          "tag": "外国歌曲",
+          "why": "现存最完整的古希腊歌曲，墓碑咏唱见证城邦时代的音乐生活",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Alexander the Great (356–323 BC)（亚历山大大帝）",
+          "artist": "Iron Maiden（铁娘子乐队）",
+          "year": "1986",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "重金属长曲历数亚历山大从马其顿起兵到东征的传奇一生",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 5,
+      "unit": "第二单元 古代欧洲文明",
+      "title": "罗马城邦和罗马帝国",
+      "songs": [
+        {
+          "title": "O Fortuna（命运女神，选自《布兰诗歌》）",
+          "artist": "卡尔·奥尔夫（Carl Orff）",
+          "year": "1936",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "气势恢宏的《命运女神》合唱，常作罗马帝国题材的影视配乐",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Now We Are Free（我们终获自由，电影《角斗士》终曲）",
+          "artist": "汉斯·季默 & 丽莎·杰勒德（Hans Zimmer & Lisa Gerrard）",
+          "year": "2000",
+          "lang": "英语/吟唱",
+          "tag": "影视配乐",
+          "why": "电影《角斗士》终曲，唱尽罗马帝国竞技场时代的荣光与悲怆",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 6,
+      "unit": "第二单元 古代欧洲文明",
+      "title": "希腊罗马古典文化",
+      "songs": [
+        {
+          "title": "Remember Me（记住我，电影《特洛伊》片尾曲）",
+          "artist": "乔许·葛洛班（Josh Groban）",
+          "year": "2004",
+          "lang": "英语",
+          "tag": "影视配乐",
+          "why": "电影《特洛伊》片尾曲，回响荷马史诗中的特洛伊战争与英雄传奇",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Jupiter, the Bringer of Jollity（朱庇特——欢乐使者，选自《行星组曲》）",
+          "artist": "古斯塔夫·霍尔斯特（Gustav Holst）",
+          "year": "1914",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "以罗马主神朱庇特命名的管弦乐章，希腊罗马神话与天文交相辉映",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 7,
+      "unit": "第三单元 封建时代的欧洲",
+      "title": "基督教的兴起和法兰克王国",
+      "songs": [
+        {
+          "title": "Dies irae（震怒之日，格里高利圣咏）",
+          "artist": "格里高利圣咏（佚名）",
+          "year": "约1250",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "中世纪最著名的格里高利圣咏，见证基督教会主导西欧社会的时代",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 8,
+      "unit": "第三单元 封建时代的欧洲",
+      "title": "西欧庄园",
+      "songs": [
+        {
+          "title": "Sumer is icumen in（夏天来了）",
+          "artist": "佚名（中世纪英格兰轮唱曲）",
+          "year": "约1250",
+          "lang": "中古英语",
+          "tag": "民谣",
+          "why": "约1250年英格兰六声部轮唱古曲，唱出庄园时代乡村的夏日农事",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 9,
+      "unit": "第三单元 封建时代的欧洲",
+      "title": "中世纪城市和大学的兴起",
+      "songs": [
+        {
+          "title": "Gaudeamus igitur（让我们欢乐吧，拉丁学生歌）",
+          "artist": "佚名（中世纪拉丁学生歌）",
+          "year": "约1250",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "传唱数百年的拉丁学生歌，正是中世纪大学师生生活的真实写照",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "In taberna quando sumus（当我们在酒馆中，选自《布兰诗歌》）",
+          "artist": "卡尔·奥尔夫（Carl Orff）",
+          "year": "1936",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "13世纪浪游学生诗篇谱写的酒馆歌，折射中世纪城市的市井繁华",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 10,
+      "unit": "第三单元 封建时代的欧洲",
+      "title": "拜占庭帝国和《查士丁尼法典》",
+      "songs": [
+        {
+          "title": "Istanbul (Not Constantinople)（伊斯坦布尔，不是君士坦丁堡）",
+          "artist": "They Might Be Giants",
+          "year": "1990",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "一句“不再是君士坦丁堡”，道尽1453年奥斯曼攻陷古城后的改名",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Ceddin Deden（祖辈先贤，奥斯曼军乐）",
+          "artist": "土耳其梅赫泰尔军乐团（Mehter）",
+          "year": "奥斯曼传统",
+          "lang": "土耳其语",
+          "tag": "军歌",
+          "why": "奥斯曼近卫军军乐传承至今，奏响攻灭拜占庭的帝国的时代军声",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 11,
+      "unit": "第四单元 封建时代的亚洲国家",
+      "title": "古代日本",
+      "songs": [
+        {
+          "title": "さくらさくら（樱花樱花，日本古谣）",
+          "artist": "日本古谣（佚名）",
+          "year": "江户时代",
+          "lang": "日语",
+          "tag": "民谣",
+          "why": "最负盛名的日本古谣，筝乐咏樱映照古代日本和风文化之美",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "春の海（春之海，筝与尺八）",
+          "artist": "宫城道雄",
+          "year": "1929",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "筝与尺八对话的日本邦乐名作，展现古代日本音乐传统的延续",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 12,
+      "unit": "第四单元 封建时代的亚洲国家",
+      "title": "阿拉伯帝国",
+      "songs": [
+        {
+          "title": "Scheherazade（天方夜谭组曲）",
+          "artist": "里姆斯基-科萨科夫（Rimsky-Korsakov）",
+          "year": "1888",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "交响组曲取材《一千零一夜》，奏响阿拉伯帝国的传奇与海洋",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Arabian Nights（阿拉伯之夜，迪士尼《阿拉丁》开场曲）",
+          "artist": "布鲁斯·阿德勒（Bruce Adler）",
+          "year": "1992",
+          "lang": "英语",
+          "tag": "影视配乐",
+          "why": "开场即唱阿拉伯市集驼铃与商旅，重现阿拉伯商业帝国的风情",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 13,
+      "unit": "第五单元 步入近代",
+      "title": "西欧经济和社会的发展",
+      "songs": [
+        {
+          "title": "Stella Splendens（闪耀之星，《红书》朝圣歌）",
+          "artist": "佚名（14世纪加泰罗尼亚朝圣歌）",
+          "year": "约1360",
+          "lang": "拉丁语",
+          "tag": "外国歌曲",
+          "why": "14世纪加泰罗尼亚朝圣歌，见证中世纪晚期城乡人流与商贸复苏",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 14,
+      "unit": "第五单元 步入近代",
+      "title": "文艺复兴运动",
+      "songs": [
+        {
+          "title": "Greensleeves（绿袖子，英格兰民歌）",
+          "artist": "英格兰民歌（佚名）",
+          "year": "约1580",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "伊丽莎白时代传唱至今的英格兰民歌，尽展文艺复兴世俗乐风",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Mona Lisa（蒙娜丽莎）",
+          "artist": "纳特·金·科尔（Nat King Cole）",
+          "year": "1950",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "以达·芬奇名画《蒙娜丽莎》入歌，人文主义的艺术之美跨时代回响",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 15,
+      "unit": "第五单元 步入近代",
+      "title": "探寻新航路",
+      "songs": [
+        {
+          "title": "Conquest of Paradise（征服天堂，电影《1492》主题曲）",
+          "artist": "范吉利斯（Vangelis）",
+          "year": "1992",
+          "lang": "拉丁语合唱",
+          "tag": "影视配乐",
+          "why": "电影《1492：征服天堂》主题，唱响哥伦布首航美洲的史诗",
+          "src": "fav",
+          "bvid": "BV1N14y1h7Y3"
+        },
+        {
+          "title": "Sailing（航行）",
+          "artist": "罗德·斯图尔特（Rod Stewart）",
+          "year": "1975",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "“我在航行”唱尽扬帆远方的渴望，正是大航海时代精神的回声",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 16,
+      "unit": "第五单元 步入近代",
+      "title": "早期殖民掠夺",
+      "songs": [
+        {
+          "title": "He's a Pirate（他是个海盗，电影《加勒比海盗》主题曲）",
+          "artist": "克劳斯·巴德尔特（Klaus Badelt）",
+          "year": "2003",
+          "lang": "纯音乐",
+          "tag": "影视配乐",
+          "why": "《加勒比海盗》主题曲，海盗与私掠正是早期殖民掠夺的海上剪影",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Amazing Grace（奇异恩典）",
+          "artist": "约翰·牛顿词（传统曲调）",
+          "year": "1779",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "作者曾是贩奴船长，悔悟写下此曲，映照三角贸易的罪恶与救赎",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 17,
+      "unit": "第六单元 资本主义制度的初步确立",
+      "title": "君主立宪制的英国",
+      "songs": [
+        {
+          "title": "Rule, Britannia!（统治吧，不列颠尼亚）",
+          "artist": "托马斯·阿恩（Thomas Arne）",
+          "year": "1740",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "光荣革命后英国崛起海上，这首爱国颂歌唱出“统治波涛”的雄心",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "God Save the King（天佑吾王，英国国歌）",
+          "artist": "英国国歌（佚名）",
+          "year": "1745",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "“天佑吾王”传唱于君主立宪确立之后，王权已在议会法权之下",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 18,
+      "unit": "第六单元 资本主义制度的初步确立",
+      "title": "美国的独立",
+      "songs": [
+        {
+          "title": "Yankee Doodle（扬基歌）",
+          "artist": "美国独立战争军歌（佚名）",
+          "year": "约1755",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "从英军嘲讽北美人的小调到大陆军的战歌，见证独立战争历程",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "The Star-Spangled Banner（星条旗之歌，美国国歌）",
+          "artist": "弗朗西斯·基 词（Francis Scott Key）",
+          "year": "1814",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "1814年麦克亨利堡之战所写，星条旗承载着独立战争缔造的国度",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 19,
+      "unit": "第六单元 资本主义制度的初步确立",
+      "title": "法国大革命和拿破仑帝国",
+      "songs": [
+        {
+          "title": "La Marseillaise（马赛曲）",
+          "artist": "鲁热·德·利尔（Rouget de Lisle）",
+          "year": "1792",
+          "lang": "法语",
+          "tag": "军歌",
+          "why": "1792年志愿军战歌，随马赛义勇军唱进巴黎，大革命最响亮的声音",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Le Chant du départ（出征歌）",
+          "artist": "艾蒂安·梅于尔（Étienne Méhul）",
+          "year": "1794",
+          "lang": "法语",
+          "tag": "军歌",
+          "why": "大革命的“第二国歌”，后成拿破仑帝国军团出征的进军号角",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 20,
+      "unit": "第七单元 工业革命和国际共产主义运动的兴起",
+      "title": "第一次工业革命",
+      "songs": [
+        {
+          "title": "Jerusalem（耶路撒冷，布莱克诗/帕里曲）",
+          "artist": "休伯特·帕里（Hubert Parry）",
+          "year": "1916",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "布莱克“黑暗的撒旦磨坊”直指工业革命，帕里谱成英国名歌",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Hard Times Come Again No More（艰难时日莫再来）",
+          "artist": "斯蒂芬·福斯特（Stephen Foster）",
+          "year": "1854",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "工业化时代的美国歌曲，唱出底层民众在“艰难时日”里的叹息",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 21,
+      "unit": "第七单元 工业革命和国际共产主义运动的兴起",
+      "title": "马克思主义的诞生和国际工人运动的兴起",
+      "songs": [
+        {
+          "title": "L'Internationale（国际歌）",
+          "artist": "欧仁·鲍狄埃词，皮埃尔·狄盖特曲",
+          "year": "1888",
+          "lang": "中文",
+          "tag": "红歌",
+          "why": "巴黎公社失败后鲍狄埃作词、狄盖特谱曲，国际工人运动的战歌",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "El pueblo unido jamás será vencido（团结人民之歌）",
+          "artist": "基拉帕永乐团（Quilapayún，智利）",
+          "year": "1973",
+          "lang": "西班牙语",
+          "tag": "红歌",
+          "why": "“团结的人民永不败”，智利人民团结运动之歌，国际左翼传唱",
+          "src": "fav",
+          "bvid": "BV12o4y1K7Yn"
+        }
+      ]
+    }
+  ]
+}

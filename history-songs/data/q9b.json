@@ -1,0 +1,672 @@
+{
+  "book": "q9b",
+  "book_name": "世界历史 九年级下册",
+  "stage": "初中",
+  "theme": "世界近现代史：19世纪—21世纪",
+  "lessons": [
+    {
+      "no": 1,
+      "unit": "第一单元 殖民地人民的反抗与资本主义制度的扩展",
+      "title": "殖民地人民的反抗斗争",
+      "songs": [
+        {
+          "title": "El Cóndor Pasa（山鹰之歌）",
+          "artist": "Simon & Garfunkel",
+          "year": "1970（原曲1913）",
+          "lang": "英语",
+          "tag": "外国歌曲",
+          "why": "安第斯神鹰之歌，秘鲁旋律寄寓拉美人民摆脱殖民的渴望",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Vande Mataram (Maa Tujhe Salaam)",
+          "artist": "A. R. Rahman",
+          "year": "1997",
+          "lang": "印地语",
+          "tag": "外国歌曲",
+          "why": "《向母亲致敬》唤起印度民族认同，遥应1857年民族大起义",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 2,
+      "unit": "第一单元 殖民地人民的反抗与资本主义制度的扩展",
+      "title": "俄国的改革",
+      "songs": [
+        {
+          "title": "伏尔加船夫曲（Эй, ухнем!）",
+          "artist": "俄罗斯民歌（夏里亚宾唱红）",
+          "year": "约1860年代",
+          "lang": "俄语",
+          "tag": "外国歌曲",
+          "why": "纤夫血汗浓缩农奴制苦难，正是1861年亚历山大二世改革的时代底色",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Боже, Царя храни!（天佑沙皇）",
+          "artist": "阿列克谢·利沃夫（曲）",
+          "year": "1833",
+          "lang": "俄语",
+          "tag": "外国歌曲",
+          "why": "沙俄国歌，见证从彼得一世到亚历山大二世的罗曼诺夫帝国时代",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 3,
+      "unit": "第一单元 殖民地人民的反抗与资本主义制度的扩展",
+      "title": "美国内战",
+      "songs": [
+        {
+          "title": "Battle Hymn of the Republic（共和国战歌）",
+          "artist": "朱莉娅·沃德·豪（词）",
+          "year": "1862",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "北军战歌，呼应林肯《解放黑人奴隶宣言》的自由事业",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Southern Soldier / Dixie",
+          "artist": "美国内战传统军歌（佚名）",
+          "year": "1859",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "南方邦联非正式国歌，内战南北对垒的另一面声音记忆",
+          "src": "fav",
+          "bvid": "BV12w4m1v7nU"
+        }
+      ]
+    },
+    {
+      "no": 4,
+      "unit": "第一单元 殖民地人民的反抗与资本主义制度的扩展",
+      "title": "日本明治维新",
+      "songs": [
+        {
+          "title": "宮さん宮さん（トコトンヤレ節）",
+          "artist": "品川弥二郎（词，传）",
+          "year": "1868",
+          "lang": "日语",
+          "tag": "军歌",
+          "why": "戊辰战争官军东征进行曲，王政复古与倒幕胜利之声",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "荒城之月（荒城の月）",
+          "artist": "泷廉太郎",
+          "year": "1901",
+          "lang": "日语",
+          "tag": "外国歌曲",
+          "why": "明治新式教育音乐名曲，维新后日本近代化的缩影",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 5,
+      "unit": "第二单元 第二次工业革命和近代科学文化",
+      "title": "第二次工业革命",
+      "songs": [
+        {
+          "title": "蓝色多瑙河（An der schönen blauen Donau）",
+          "artist": "小约翰·施特劳斯",
+          "year": "1867",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "1867年巴黎世博会一举成名，电气时代黎明的大众舞曲",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "康康舞曲（地狱中的奥菲欧）",
+          "artist": "雅克·奥芬巴赫",
+          "year": "1858",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "第二帝国巴黎的都市狂欢，工业化催生的大众娱乐",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 6,
+      "unit": "第二单元 第二次工业革命和近代科学文化",
+      "title": "工业化国家的社会变化",
+      "songs": [
+        {
+          "title": "Which Side Are You On",
+          "artist": "Florence Reece",
+          "year": "1931",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "矿工罢工歌，直指工业化国家的劳资分化与社会矛盾",
+          "src": "fav",
+          "bvid": "BV12E411P7im"
+        },
+        {
+          "title": "Sixteen Tons",
+          "artist": "Tennessee Ernie Ford",
+          "year": "1955（原曲1946）",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "'生来装满煤斗'，工业化下矿工债役劳动的悲歌",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 7,
+      "unit": "第二单元 第二次工业革命和近代科学文化",
+      "title": "近代科学与文化",
+      "songs": [
+        {
+          "title": "Vincent（Starry Starry Night）",
+          "artist": "Don McLean",
+          "year": "1971",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "唱给课本名画《星月夜》，梵高的孤独与天才",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "第五交响曲《命运》",
+          "artist": "贝多芬",
+          "year": "1808",
+          "lang": "纯音乐",
+          "tag": "器乐",
+          "why": "课本音乐家贝多芬'扼住命运咽喉'的不朽乐章",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 8,
+      "unit": "第三单元 第一次世界大战和战后初期的世界",
+      "title": "第一次世界大战",
+      "songs": [
+        {
+          "title": "It's a Long Way to Tipperary",
+          "artist": "Jack Judge",
+          "year": "1912",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "1914年英军开赴西线的行军歌，一战爆发的声音注脚",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Over There",
+          "artist": "George M. Cohan",
+          "year": "1917",
+          "lang": "英语",
+          "tag": "军歌",
+          "why": "美国参战动员曲，1917年大战扩展为世界规模",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Die Wacht am Rhein（守望莱茵兰）",
+          "artist": "卡尔·威廉（曲）",
+          "year": "1840",
+          "lang": "德语",
+          "tag": "军歌",
+          "why": "德国士兵开赴前线时传唱的爱国军歌，一战西线的声音记忆",
+          "src": "fav",
+          "bvid": "BV1VyYrzgEdz"
+        }
+      ]
+    },
+    {
+      "no": 9,
+      "unit": "第三单元 第一次世界大战和战后初期的世界",
+      "title": "列宁与十月革命",
+      "songs": [
+        {
+          "title": "国际歌（Интернационал，俄语版）",
+          "artist": "狄盖特（曲）/欧仁·鲍狄埃（词）",
+          "year": "1888",
+          "lang": "俄语",
+          "tag": "红歌",
+          "why": "十月革命后定为苏俄国歌，阿芙乐尔炮响的时代之声",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "华沙曲（Варшавянка）",
+          "artist": "亚历山德罗夫红旗歌舞团（演唱）",
+          "year": "1905",
+          "lang": "俄语",
+          "tag": "红歌",
+          "why": "1905年革命工人战歌，1917年列宁归来时群众高唱",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 10,
+      "unit": "第三单元 第一次世界大战和战后初期的世界",
+      "title": "《凡尔赛条约》和《九国公约》",
+      "songs": [
+        {
+          "title": "Paris 1919",
+          "artist": "John Cale",
+          "year": "1973",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "歌名即巴黎和会，战胜国瓜分世界之'和平'的挽歌",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "中国男儿",
+          "artist": "石更（词，学堂乐歌）",
+          "year": "1906",
+          "lang": "汉语",
+          "tag": "学堂乐歌",
+          "why": "巴黎和会山东问题引爆五四，'中国男儿'的救亡强音",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 11,
+      "unit": "第三单元 第一次世界大战和战后初期的世界",
+      "title": "苏联的社会主义建设",
+      "songs": [
+        {
+          "title": "祖国进行曲（Широка страна моя родная）",
+          "artist": "伊·杜纳耶夫斯基（曲）",
+          "year": "1936",
+          "lang": "俄语",
+          "tag": "影视配乐",
+          "why": "出自电影《大马戏团》，唱出两个五年计划的工业化豪情",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "红军最强大（Красная Армия всех сильней）",
+          "artist": "萨穆伊尔·波克拉斯（曲）",
+          "year": "1920",
+          "lang": "俄语",
+          "tag": "红歌",
+          "why": "内战中的红军战歌，见证苏维埃政权巩固与红军创建",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 12,
+      "unit": "第三单元 第一次世界大战和战后初期的世界",
+      "title": "亚非拉民族民主运动的高涨",
+      "songs": [
+        {
+          "title": "Raghupati Raghava Raja Ram",
+          "artist": "V. D. Paluskar（配曲）",
+          "year": "约1930",
+          "lang": "印地语",
+          "tag": "外国歌曲",
+          "why": "甘地食盐进军时高唱的祷歌，非暴力不合作运动的心声",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "萨帕塔民族解放军之歌",
+          "artist": "墨西哥萨帕塔歌曲（EZLN）",
+          "year": "1994",
+          "lang": "西班牙语",
+          "tag": "外国歌曲",
+          "why": "纪念墨西哥革命农民领袖萨帕塔，土地诉求延续到卡德纳斯改革",
+          "src": "fav",
+          "bvid": "BV1re411Q7wo"
+        },
+        {
+          "title": "共青团进行曲（土耳其语）",
+          "artist": "土耳其左翼歌曲（佚名）",
+          "year": "不详",
+          "lang": "土耳其语",
+          "tag": "红歌",
+          "why": "土耳其语进行曲，呼应一战战后土耳其的民族独立浪潮",
+          "src": "fav",
+          "bvid": "BV1Z8411B7iJ"
+        }
+      ]
+    },
+    {
+      "no": 13,
+      "unit": "第四单元 经济大危机和第二次世界大战",
+      "title": "罗斯福新政",
+      "songs": [
+        {
+          "title": "Brother, Can You Spare a Dime?",
+          "artist": "Bing Crosby",
+          "year": "1932",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "大萧条中失业者的诘问，罗斯福新政出台的时代底色",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "This Land Is Your Land",
+          "artist": "Woody Guthrie",
+          "year": "1940",
+          "lang": "英语",
+          "tag": "民谣",
+          "why": "尘暴区流民眼中的美国，萧条年代底层社会的民谣见证",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 14,
+      "unit": "第四单元 经济大危机和第二次世界大战",
+      "title": "法西斯国家的侵略扩张",
+      "songs": [
+        {
+          "title": "Faccetta Nera（小黑脸）",
+          "artist": "朱塞佩·布朗克（曲）",
+          "year": "1926",
+          "lang": "意大利语",
+          "tag": "军歌",
+          "why": "墨索里尼政权宣传曲，1935年意大利武装侵略埃塞俄比亚",
+          "src": "fav",
+          "bvid": "BV15KM86FE3k"
+        },
+        {
+          "title": "人民之风前进！（El Paso del Ebro）",
+          "artist": "Ebri Knight",
+          "year": "约2015（原曲1938）",
+          "lang": "西班牙语",
+          "tag": "摇滚",
+          "why": "国际纵队驰援西班牙共和国，反法西斯阵线的战歌",
+          "src": "fav",
+          "bvid": "BV1dK411M7VB"
+        },
+        {
+          "title": "不要法西斯也不要马克思",
+          "artist": "西班牙长枪党歌曲（佚名）",
+          "year": "约1936",
+          "lang": "西班牙语",
+          "tag": "军歌",
+          "why": "佛朗哥阵营战歌，西班牙内战两大阵营对决的另一面",
+          "src": "fav",
+          "bvid": "BV165a16GEwZ"
+        }
+      ]
+    },
+    {
+      "no": 15,
+      "unit": "第四单元 经济大危机和第二次世界大战",
+      "title": "第二次世界大战",
+      "songs": [
+        {
+          "title": "神圣的战争（Священная война）",
+          "artist": "亚·亚历山德罗夫（曲）",
+          "year": "1941",
+          "lang": "俄语",
+          "tag": "军歌",
+          "why": "卫国战争爆发的第一声怒吼，苏联反法西斯的圣歌",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "喀秋莎（Катюша）",
+          "artist": "马特维·勃兰切尔（曲）",
+          "year": "1938",
+          "lang": "俄语",
+          "tag": "军歌",
+          "why": "战地传遍苏军，'喀秋莎'火箭炮因这首歌得名",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Lili Marleen",
+          "artist": "Lale Andersen",
+          "year": "1939",
+          "lang": "德语",
+          "tag": "流行",
+          "why": "交战双方战壕同唱的小曲，战争阴云下士兵的孤独与乡愁",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Das Einheitsfrontlied（统一战线之歌）",
+          "artist": "布莱希特词、艾斯勒曲",
+          "year": "1934",
+          "lang": "德语",
+          "tag": "外国歌曲",
+          "why": "反法西斯统一战线的国际呼声，1930年代左翼反战运动的声音",
+          "src": "fav",
+          "bvid": "BV1RGZ8YbEEk"
+        }
+      ]
+    },
+    {
+      "no": 16,
+      "unit": "第五单元 二战后的世界变化",
+      "title": "冷战",
+      "songs": [
+        {
+          "title": "99 Luftballons（99只气球）",
+          "artist": "Nena",
+          "year": "1983",
+          "lang": "德语",
+          "tag": "摇滚",
+          "why": "99只气球误触核警报，冷战核阴云下的德语摇滚寓言",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Heroes",
+          "artist": "David Bowie",
+          "year": "1977",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "柏林墙下相拥的恋人，铁幕分割欧洲的冷战隐喻",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 17,
+      "unit": "第五单元 二战后的世界变化",
+      "title": "战后资本主义的新变化",
+      "songs": [
+        {
+          "title": "欢乐颂（Ode to Joy，第九交响曲终章）",
+          "artist": "贝多芬/席勒（词）",
+          "year": "1824",
+          "lang": "德语",
+          "tag": "器乐",
+          "why": "'四海之内皆兄弟'颂歌，今为欧盟盟歌，欧洲联合之声",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "上を向いて歩こう（昂首向前走）",
+          "artist": "坂本九",
+          "year": "1961",
+          "lang": "日语",
+          "tag": "流行",
+          "why": "1963年登顶美国公告牌榜，战后日本经济腾飞的声音名片",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 18,
+      "unit": "第五单元 二战后的世界变化",
+      "title": "社会主义的发展与挫折",
+      "songs": [
+        {
+          "title": "渴望变革（Перемен!）",
+          "artist": "维克多·崔 / Kino乐队",
+          "year": "1986",
+          "lang": "俄语",
+          "tag": "摇滚",
+          "why": "'你要什么变革？'戈尔巴乔夫改革年代苏联青年的呐喊",
+          "src": "fav",
+          "bvid": "BV1ts4y1C7Z9"
+        },
+        {
+          "title": "Go West",
+          "artist": "Pet Shop Boys",
+          "year": "1993",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "苏东剧变后'向西去'的狂欢曲，苏联解体的时代注脚",
+          "src": "fav",
+          "bvid": "BV1uh98YkEjL"
+        }
+      ]
+    },
+    {
+      "no": 19,
+      "unit": "第五单元 二战后的世界变化",
+      "title": "亚非拉国家的新发展",
+      "songs": [
+        {
+          "title": "El pueblo unido（团结人民之歌）",
+          "artist": "Quilapayún",
+          "year": "1973",
+          "lang": "西班牙语",
+          "tag": "外国歌曲",
+          "why": "智利阿连德时期的团结颂歌，1973年政变后传遍世界",
+          "src": "fav",
+          "bvid": "BV12o4y1K7Yn"
+        },
+        {
+          "title": "Nkosi Sikelel' iAfrika（天佑非洲）",
+          "artist": "Enoch Sontonga（曲）",
+          "year": "1897",
+          "lang": "祖鲁语",
+          "tag": "外国歌曲",
+          "why": "非洲解放圣歌今为南非国歌，唱响1960'非洲独立年'",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Free Nelson Mandela",
+          "artist": "The Specials",
+          "year": "1984",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "声援曼德拉的全球浪潮，南非废除种族隔离的前奏",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 20,
+      "unit": "第六单元 走向和平发展的世界",
+      "title": "联合国与世界贸易组织",
+      "songs": [
+        {
+          "title": "We Are the World",
+          "artist": "USA for Africa",
+          "year": "1985",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "45位巨星为非洲饥荒赈灾合唱，经济全球化时代的互助宣言",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Heal the World",
+          "artist": "Michael Jackson",
+          "year": "1991",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "为战地儿童而唱，联合国和平与人道主义理想的回声",
+          "src": "new",
+          "bvid": ""
+        }
+      ]
+    },
+    {
+      "no": 21,
+      "unit": "第六单元 走向和平发展的世界",
+      "title": "冷战后的世界格局",
+      "songs": [
+        {
+          "title": "Wind of Change",
+          "artist": "Scorpions",
+          "year": "1990",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "柏林墙倒塌后'变革之风'吹遍东欧，冷战终结之声",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Holiday",
+          "artist": "Green Day",
+          "year": "2004",
+          "lang": "英语",
+          "tag": "摇滚",
+          "why": "反战摇滚质问美国单边主义战争，多极化时代的抗议之声",
+          "src": "fav",
+          "bvid": "BV1bD4y1U7gm"
+        }
+      ]
+    },
+    {
+      "no": 22,
+      "unit": "第六单元 走向和平发展的世界",
+      "title": "不断发展的现代社会",
+      "songs": [
+        {
+          "title": "Imagine",
+          "artist": "John Lennon",
+          "year": "1971",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "想象没有国界与战争的世界，和平与发展的世纪主题",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "Earth Song",
+          "artist": "Michael Jackson",
+          "year": "1995",
+          "lang": "英语",
+          "tag": "流行",
+          "why": "泣问森林海洋之殇，直指现代社会的生态环境与人口问题",
+          "src": "new",
+          "bvid": ""
+        },
+        {
+          "title": "上帝、叙利亚与巴沙尔",
+          "artist": "叙利亚军歌（佚名）",
+          "year": "2010s",
+          "lang": "阿拉伯语",
+          "tag": "外国歌曲",
+          "why": "当代中东强人政治与战乱的侧影，现代社会发展的另一面",
+          "src": "fav",
+          "bvid": "BV19eNq63EyD"
+        }
+      ]
+    }
+  ]
+}

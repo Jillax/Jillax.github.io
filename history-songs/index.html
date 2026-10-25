@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一课一歌 · 初高中历史课配乐歌单</title>
+<meta name="description" content="把初高中历史教材的每一课配上几首相关的歌：180 课 363 首，62 首来自 B 站收藏夹「历史List」。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eadb;
+    --sheet: #faf6ee;
+    --ink: #221c16;
+    --muted: #6f6458;
+    --line: #d9cbb6;
+    --accent: #8a3a2a;
+    --gold: #8a5a12;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: linear-gradient(90deg, var(--accent) 0 50%, #1d4e89 50% 100%) top / 100% 8px no-repeat, var(--paper);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  button, input { font: inherit; color: inherit; }
+  a { color: var(--ink); text-decoration-color: var(--line); }
+  a:hover { color: var(--accent); }
+  .wrap { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+  header { padding: 42px 0 10px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap;
+    letter-spacing: .14em; text-transform: uppercase;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  .kicker .right { display: flex; gap: 16px; flex-wrap: wrap; }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 66px);
+    line-height: 1.05;
+    margin: 14px 0 10px;
+    letter-spacing: -0.03em;
+  }
+  .deck { max-width: 70ch; font-size: 18px; margin: 0 0 8px; }
+  .deck strong { font-weight: 700; }
+  .method {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 82ch;
+  }
+  .method strong { color: var(--ink); font-weight: 700; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .stat { background: var(--sheet); padding: 14px 16px 16px; }
+  .stat b {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .stat span { display: block; color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0 4px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tabs button {
+    border: 1px solid var(--line);
+    background: transparent;
+    padding: 7px 13px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+  .tabs button em { font-style: normal; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); margin-left: 5px; }
+  .tabs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .tabs button[aria-pressed="true"] em { color: var(--paper); opacity: .75; }
+  .toolbar input[type="search"] {
+    flex: 1 1 220px;
+    min-width: 200px;
+    border: 1px solid var(--line);
+    background: var(--sheet);
+    padding: 8px 12px;
+  }
+  .toolbar input[type="search"]:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .fav-toggle {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; cursor: pointer; user-select: none;
+    white-space: nowrap;
+  }
+  .fav-toggle input { accent-color: var(--accent); }
+  .star { color: var(--accent); }
+  .result-note { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+  .unit { margin-top: 30px; }
+  .unit h2 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 20px;
+    margin: 0 0 2px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .lesson {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 8px 22px;
+    padding: 15px 0 13px;
+    border-bottom: 1px solid var(--line);
+  }
+  .lesson .no {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: .12em;
+    color: var(--gold);
+    display: block;
+  }
+  .lesson h3 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 19px;
+    line-height: 1.35;
+    margin: 3px 0 0;
+    font-weight: 700;
+  }
+  ul.songs { list-style: none; margin: 0; padding: 0; }
+  .song { padding: 6px 0 9px; border-bottom: 1px dashed var(--line); }
+  .song:last-child { border-bottom: 0; padding-bottom: 2px; }
+  .song .mark { margin-right: 7px; font-style: normal; }
+  .song .mark.fav { color: var(--accent); }
+  .song .mark.new { color: var(--muted); }
+  .song .t { font-weight: 700; }
+  .song .meta { color: var(--muted); font-size: 13px; margin-left: 9px; }
+  .song .chip {
+    display: inline-block;
+    border: 1px solid var(--line);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    padding: 0 7px;
+    color: var(--muted);
+    margin-left: 9px;
+    white-space: nowrap;
+    vertical-align: 1px;
+  }
+  .song .alt { font-size: 12px; color: var(--muted); margin-left: 9px; white-space: nowrap; }
+  .song .why { margin: 3px 0 0; color: var(--muted); font-size: 14px; max-width: 78ch; }
+  .empty { color: var(--muted); margin: 30px 0; }
+  footer { border-top: 1px solid var(--ink); margin-top: 40px; padding: 16px 0 60px; color: var(--muted); font-size: 13px; }
+  footer strong { color: var(--ink); font-weight: 700; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .lesson { grid-template-columns: 1fr; gap: 4px; }
+    .song .meta, .song .chip, .song .alt { margin-left: 0; display: inline-block; margin-right: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <a href="../">← Jillax</a>
+      <nav class="right">
+        <a href="../congress-portfolios/">申报上的美国</a>
+        <a href="../sovereign-funds/">主权基金</a>
+        <a href="../timeline.html">大学编年</a>
+      </nav>
+      <div class="right">
+        <span>一课一歌 · 2026</span>
+        <span id="kicker-counts"></span>
+      </div>
+    </div>
+    <h1>一课一歌</h1>
+    <p class="deck">初高中历史教材，<strong>一课配几首相关的歌</strong>。南美左翼配智利的《团结人民之歌》，九一八配《松花江上》，盛唐长安配《长安姑娘》，苏联解体配维克多·崔——歌是气氛组，也是记忆锚点。</p>
+    <p class="method">歌曲走两条线：<strong>带 ★ 的</strong>来自 B 站收藏夹「历史List」，点歌名直达原视频；<strong>不带 ★ 的是推荐曲目</strong>，链接指向 B 站、网易云的搜索页，搜不到就换个关键词。课号按统编版目录（初中 2016 版 / 高中《中外历史纲要》2019 版），不同年份版次课序略有出入。</p>
+  </header>
+
+  <section class="stats" id="stats"></section>
+
+  <div class="toolbar">
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <input type="search" id="q" placeholder="搜课名、歌名、歌手、关联点……" aria-label="搜索">
+    <label class="fav-toggle"><input type="checkbox" id="fav-only">只看收藏夹 <span class="star">★</span></label>
+  </div>
+  <p class="result-note" id="result-note"></p>
+
+  <main id="content"></main>
+
+  <footer>
+    <p><strong>维护方式</strong>：每册一个 JSON，在 <code>history-songs/data/</code> 下；改完运行 <code>python scripts/build_history_songs.py</code> 重新生成本页的 <code>data.js</code>。想给某课补歌，丢进 B 站收藏夹或直接改 JSON 都行。</p>
+    <p id="foot-updated"></p>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const DATA = window.HISTORY_SONGS;
+const BOOKS = DATA.books;
+const state = { book: BOOKS[0].book, q: "", favOnly: false };
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function norm(s) { return String(s ?? "").toLowerCase(); }
+function keyword(s) { return (s.title + " " + (s.artist || "")).trim(); }
+function biliSearch(s) { return "https://search.bilibili.com/all?keyword=" + encodeURIComponent(keyword(s)); }
+function neteaseSearch(s) { return "https://music.163.com/#/search/m/?s=" + encodeURIComponent(keyword(s)) + "&type=1"; }
+
+function renderStats() {
+  const lessons = BOOKS.reduce((n, b) => n + b.lessons.length, 0);
+  const songs = BOOKS.reduce((n, b) => n + b.song_count, 0);
+  const fav = BOOKS.reduce((n, b) => n + b.fav_count, 0);
+  document.getElementById("stats").innerHTML = [
+    [BOOKS.length, "册教材（初中 6 + 高中 2）"],
+    [lessons, "课文逐课配歌"],
+    [songs, "首歌曲"],
+    [fav, "首来自收藏夹 · ★"]
+  ].map(([n, label]) => `<div class="stat"><b>${n}</b><span>${esc(label)}</span></div>`).join("");
+  document.getElementById("kicker-counts").textContent = `${BOOKS.length} 册 · ${lessons} 课 · ${songs} 首`;
+  document.getElementById("foot-updated").textContent = `数据更新于 ${DATA.updated}。收藏夹来源：B 站「历史List」（space.bilibili.com/518618885）。`;
+}
+
+function renderTabs() {
+  document.getElementById("tabs").innerHTML = BOOKS.map(b =>
+    `<button type="button" role="tab" aria-pressed="${b.book === state.book}" data-book="${esc(b.book)}">${esc(b.label)}<em>${b.song_count}</em></button>`
+  ).join("");
+}
+
+function songRow(s) {
+  const isFav = s.src === "fav" && s.bvid;
+  const href = isFav ? "https://www.bilibili.com/video/" + encodeURIComponent(s.bvid) : biliSearch(s);
+  const mark = isFav ? '<i class="mark fav" title="来自收藏夹">★</i>' : '<i class="mark new" title="推荐曲目">♪</i>';
+  const alt = isFav
+    ? `<a class="alt" href="${esc(biliSearch(s))}" target="_blank" rel="noreferrer">B站搜索</a>`
+    : `<a class="alt" href="${esc(neteaseSearch(s))}" target="_blank" rel="noreferrer">网易云</a>`;
+  return `<li class="song">${mark}<a class="t" href="${esc(href)}" target="_blank" rel="noreferrer">${esc(s.title)}</a>` +
+    `<span class="meta">${esc(s.artist)} · ${esc(s.year)} · ${esc(s.lang)}</span>` +
+    `<span class="chip">${esc(s.tag)}</span>${alt}` +
+    (s.why ? `<p class="why">${esc(s.why)}</p>` : "") + `</li>`;
+}
+
+function render() {
+  const book = BOOKS.find(b => b.book === state.book) || BOOKS[0];
+  const q = norm(state.q.trim());
+  const unitGroups = [];
+  let shownLessons = 0, shownSongs = 0;
+
+  for (const lesson of book.lessons) {
+    const lessonMatch = !q || norm(lesson.title).includes(q) || norm(lesson.unit).includes(q);
+    const songs = lesson.songs.filter(s =>
+      (!state.favOnly || s.src === "fav") &&
+      (!q || lessonMatch || [s.title, s.artist, s.why, s.lang, s.tag].some(f => norm(f).includes(q)))
+    );
+    if (!songs.length) continue;
+    shownLessons += 1;
+    shownSongs += songs.length;
+    let group = unitGroups[unitGroups.length - 1];
+    if (!group || group.unit !== lesson.unit) {
+      group = { unit: lesson.unit, lessons: [] };
+      unitGroups.push(group);
+    }
+    group.lessons.push({ lesson, songs });
+  }
+
+  document.getElementById("result-note").textContent =
+    `《${book.book_name}》显示 ${shownLessons} 课 · ${shownSongs} 首` +
+    (state.favOnly ? "（只看收藏夹）" : "") + (q ? `（关键词：${state.q.trim()}）` : "");
+
+  const host = document.getElementById("content");
+  if (!unitGroups.length) {
+    host.innerHTML = `<p class="empty">这一册没有匹配的课。换个关键词，或关掉「只看收藏夹」。</p>`;
+    return;
+  }
+  host.innerHTML = unitGroups.map(g =>
+    `<section class="unit"><h2>${esc(g.unit)}</h2>` +
+    g.lessons.map(({ lesson, songs }) =>
+      `<article class="lesson" id="l-${esc(book.book)}-${lesson.no}">` +
+      `<div><span class="no">第 ${lesson.no} 课</span><h3>${esc(lesson.title)}</h3></div>` +
+      `<ul class="songs">${songs.map(songRow).join("")}</ul>` +
+      `</article>`
+    ).join("") + `</section>`
+  ).join("");
+}
+
+document.getElementById("tabs").addEventListener("click", e => {
+  const btn = e.target.closest("[data-book]");
+  if (!btn) return;
+  state.book = btn.dataset.book;
+  renderTabs();
+  render();
+});
+document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; render(); });
+document.getElementById("fav-only").addEventListener("change", e => { state.favOnly = e.target.checked; render(); });
+
+renderStats();
+renderTabs();
+render();
+</script>
+</body>
+</html>
