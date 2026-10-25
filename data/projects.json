@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-23",
+  "updated": "2026-10-25",
   "items": [
     {
       "id": "shandong-fiscal",
@@ -71,6 +71,15 @@
       "href": "dota/",
       "tags": ["游戏", "Dota 2", "2026"],
       "group": "游戏",
+      "featured": false
+    },
+    {
+      "id": "timeline",
+      "title": "大学编年",
+      "blurb": "1,777 局 Dota、811 条豆瓣标记、5,012 条 B站收藏和 110 条投稿，按学期对齐；再单列易方达与摩根的账户收益。",
+      "href": "timeline.html",
+      "tags": ["学期", "2026"],
+      "group": "记录",
       "featured": false
     },
     {
