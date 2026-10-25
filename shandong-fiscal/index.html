@@ -21,16 +21,17 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f1eee5;
-    --sheet: #faf8f2;
-    --ink: #191c22;
-    --body: #363b44;
-    --muted: #6d6a60;
-    --line: #d7d1c2;
-    --coast: #17506b;   /* 胶东经济圈 */
-    --capital: #8a5a12; /* 省会经济圈 */
-    --south: #7d2540;   /* 鲁南经济圈 */
-    --claim: #a8341f;   /* 强调 */
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --ink: #efe7ff;
+    --body: #cbbfe6;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --coast: #38c5e0;   /* 胶东经济圈 */
+    --capital: #e5b45c; /* 省会经济圈 */
+    --south: #ff6f8f;   /* 鲁南经济圈 */
+    --claim: #ff8360;   /* 强调 */
     --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     --serif: "Noto Serif SC", "Songti SC", serif;
@@ -41,7 +42,9 @@
     margin: 0;
     color: var(--ink);
     background:
-      linear-gradient(90deg, var(--coast) 0 41.8%, var(--ink) 41.8% 100%) top / 100% 8px no-repeat,
+      linear-gradient(90deg, var(--coast) 0 41.8%, #9b59ff 41.8% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+      radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
       var(--paper);
     font-family: var(--sans);
     font-size: 16px;
@@ -108,8 +111,8 @@
   .map-svg .region.pinned { stroke: var(--claim); stroke-width: 2.4; }
   .map-svg .region:focus-visible { stroke: var(--ink); stroke-width: 2.4; }
   .map-svg text { font-family: var(--sans); pointer-events: none; }
-  .map-svg.mode-circle text { fill: #f6f3ea; }
-  .map-svg.mode-metric text {
+  .map-svg svg.mode-circle text { fill: #150f28; }
+  .map-svg svg.mode-metric text {
     fill: var(--ink); paint-order: stroke;
     stroke: var(--sheet); stroke-width: 3px; stroke-linejoin: round;
   }
@@ -195,7 +198,7 @@
     padding: 7px 0; border-bottom: 1px solid var(--line);
   }
   .bar-name { font-weight: 500; font-size: 15px; letter-spacing: .02em; }
-  .bar-track { background: rgba(25,28,34,.055); height: 16px; position: relative; }
+  .bar-track { background: rgba(155, 89, 255, .10); height: 16px; position: relative; }
   .bar-fill { display: block; height: 100%; min-width: 2px; }
   .bar-val {
     font-family: var(--mono); font-size: 13px; text-align: right; white-space: nowrap;
@@ -235,7 +238,7 @@
   caption { text-align: left; font-size: 13px; color: var(--muted); padding: 0 0 8px; }
   th, td { padding: 7px 9px 7px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: baseline; }
   thead th { border-bottom: 1.5px solid var(--ink); font-weight: 500; font-size: 11.5px; color: var(--muted); white-space: nowrap; line-height: 1.35; }
-  tbody tr:hover { background: rgba(250,248,242,.85); }
+  tbody tr:hover { background: rgba(155, 89, 255, .14); }
   td.n, th.n { text-align: right; font-family: var(--mono); white-space: nowrap; letter-spacing: -0.02em; }
   td.city { font-weight: 500; white-space: nowrap; }
   td.circle { font-size: 12px; color: var(--muted); white-space: nowrap; }
@@ -273,7 +276,7 @@
 
   footer { margin-top: 56px; border-top: 1px solid var(--ink); padding: 20px 0 56px; font-size: 13px; color: var(--muted); }
   footer p { margin: 0 0 8px; line-height: 1.7; }
-  footer a { color: var(--claim); text-decoration: none; border-bottom: 1px solid rgba(168,52,31,.3); }
+  footer a { color: var(--claim); text-decoration: none; border-bottom: 1px solid rgba(255, 131, 96, .3); }
   footer .src { font-size: 12.5px; }
   .noscript {
     background: var(--sheet); border: 1px solid var(--line); padding: 14px 16px;
@@ -297,6 +300,12 @@
     .stats { grid-template-columns: 1fr; }
   }
   @media print {
+    /* 纸面打印：把暗色 token 退回油墨值 */
+    :root {
+      --paper: #f1eee5; --sheet: #faf8f2; --ink: #191c22; --body: #363b44;
+      --muted: #6d6a60; --line: #d7d1c2;
+      --coast: #17506b; --capital: #8a5a12; --south: #7d2540; --claim: #a8341f;
+    }
     body { background: #fff; }
     .switch, .tbl-controls, .page-nav { display: none; }
   }
@@ -550,11 +559,11 @@
   var CITIES = D.cities;
   var PROV = D.province;
 
-  var COLOR = { "胶东": "#17506b", "省会": "#8a5a12", "鲁南": "#7d2540" };
-  var CLAIM = "#a8341f";
-  var INK = "#191c22";
-  var MUTED = "#6d6a60";
-  var LINE = "#d7d1c2";
+  var COLOR = { "胶东": "#38c5e0", "省会": "#e5b45c", "鲁南": "#ff6f8f" };
+  var CLAIM = "#ff8360";
+  var INK = "#efe7ff";
+  var MUTED = "#8a79ab";
+  var LINE = "rgba(155, 89, 255, .22)";
 
   /* ---------- helpers ---------- */
   function n2(v) {
@@ -640,8 +649,8 @@
     var pinned = null;    // 点选固定的城市 id，null = 全省
     var hoverId = null;   // 正在悬停的城市 id
 
-    // 着色标尺：纸色 → 赭 → 深红（与 --claim 同族）
-    var RAMP = [[236, 229, 209], [198, 136, 82], [140, 35, 20]];
+    // 着色标尺：暗底 → 赭 → 亮红（与 --claim 同族）
+    var RAMP = [[26, 21, 44], [200, 126, 62], [255, 107, 92]];
     function ramp(t) {
       t = Math.max(0, Math.min(1, t));
       var seg = t < .5 ? 0 : 1;
@@ -692,7 +701,7 @@
       if (mode === "circle") {
         el.innerHTML = ["胶东", "省会", "鲁南"].map(function (k) {
           return '<span><i style="background:' + COLOR[k] + '"></i>' + k + "经济圈</span>";
-        }).join("") + '<span style="color:#8a8578">2020 年官方划分</span>';
+        }).join("") + '<span style="color:#8a79ab">2020 年官方划分</span>';
       } else {
         var m = METRICS[mode], r = rangeOf(mode);
         var lo = CITIES.slice().sort(function (a, b) { return m.get(a) - m.get(b); })[0];
@@ -842,7 +851,7 @@
         if (v < ymin || v > ymax) return;
         var base = v === 100;
         s.push('<line x1="' + L + '" y1="' + Y(v).toFixed(1) + '" x2="' + (L + pw) + '" y2="' + Y(v).toFixed(1) +
-          '" stroke="' + (base ? "#a9a396" : LINE) + '" stroke-width="' + (base ? 1.4 : 1) +
+          '" stroke="' + (base ? "#4a3f66" : LINE) + '" stroke-width="' + (base ? 1.4 : 1) +
           '" stroke-dasharray="' + (base ? "5 4" : "2 5") + '"/>');
         s.push('<text x="' + (L - 8) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="11" fill="' +
           MUTED + '">' + v + "</text>");
@@ -928,7 +937,7 @@
       document.getElementById("tl-legend").innerHTML =
         '<span><i style="background:' + INK + '"></i>GDP（黑线）</span>' +
         '<span><i style="background:' + CLAIM + '"></i>一般公共预算收入（红线）</span>' +
-        '<span style="color:#8a8578">虚线 = 2021 年 = 100，十六张小图共用同一纵轴</span>';
+        '<span style="color:#8a79ab">虚线 = 2021 年 = 100，十六张小图共用同一纵轴</span>';
     })();
   })();
 
@@ -966,7 +975,7 @@
       ["胶东", "省会", "鲁南"].map(function (k) {
         return '<span><i style="background:' + COLOR[k] + '"></i>' + k + "经济圈</span>";
       }).join("") +
-      '<span style="color:#8a8578">（三大经济圈为 2020 年山东省确定的官方划分：胶东 5 市、省会 7 市、鲁南 4 市）</span>';
+      '<span style="color:#8a79ab">（三大经济圈为 2020 年山东省确定的官方划分：胶东 5 市、省会 7 市、鲁南 4 市）</span>';
   }
 
   document.getElementById("bars-switch").innerHTML = Object.keys(METRICS).map(function (k) {
@@ -1037,7 +1046,7 @@
       var x = X(c.g25), y = Y(c.rate);
       var lab = LAB[c.id] || [10, 4, "start"];
       s.push('<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="5" fill="' + COLOR[c.circle] +
-        '" stroke="#faf8f2" stroke-width="1.5"/>');
+        '" stroke="#16112b" stroke-width="1.5"/>');
       s.push('<text x="' + (x + lab[0]).toFixed(1) + '" y="' + (y + lab[1]).toFixed(1) + '" text-anchor="' +
         lab[2] + '" font-size="12" fill="' + INK + '" font-family="Noto Sans SC, sans-serif">' +
         esc(c.id) + "</text>");
@@ -1081,14 +1090,14 @@
       // 连线：两点重合时自然消失
       if (Math.abs(c.gap) > 0) {
         s.push('<line x1="' + x1.toFixed(1) + '" y1="' + y + '" x2="' + x2.toFixed(1) + '" y2="' + y +
-          '" stroke="' + (big ? CLAIM : "#a9a396") + '" stroke-width="' + (big ? 2.2 : 1.4) +
+          '" stroke="' + (big ? CLAIM : "#4a3f66") + '" stroke-width="' + (big ? 2.2 : 1.4) +
           '" opacity="' + (big ? 1 : 0.75) + '"/>');
       }
       // GDP 位次：空心；财政收入位次：实心
-      s.push('<circle cx="' + x1.toFixed(1) + '" cy="' + y + '" r="4.6" fill="#faf8f2" stroke="' +
+      s.push('<circle cx="' + x1.toFixed(1) + '" cy="' + y + '" r="4.6" fill="#16112b" stroke="' +
         COLOR[c.circle] + '" stroke-width="1.7"/>');
       s.push('<circle cx="' + x2.toFixed(1) + '" cy="' + y + '" r="4.6" fill="' + COLOR[c.circle] +
-        '" stroke="#faf8f2" stroke-width="1"/>');
+        '" stroke="#16112b" stroke-width="1"/>');
 
       s.push('<text x="' + NX + '" y="' + (y + 4.5) + '" text-anchor="end" font-size="13" fill="' + INK +
         '" font-family="Noto Sans SC, sans-serif">' + esc(c.id) + "</text>");

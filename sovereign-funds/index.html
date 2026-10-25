@@ -9,17 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f3eadb;
-    --sheet: #faf6ee;
-    --ink: #221c16;
-    --muted: #6f6458;
-    --line: #d9cbb6;
-    --eu: #1d4e89;
-    --asia: #8a5a12;
-    --gulf: #1f6b4a;
-    --other: #5c5348;
-    --gold: #8a5a12;
-    --shadow: 0 1px 0 rgba(34,28,22,.06);
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --ink: #efe7ff;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --eu: #5aa9ff;
+    --asia: #e5b45c;
+    --gulf: #4ade80;
+    --other: #a89cc4;
+    --gold: #e5b45c;
+    --shadow: 0 1px 0 rgba(155, 89, 255, .14), 0 18px 40px rgba(0, 0, 0, .45);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -27,7 +28,9 @@
     margin: 0;
     color: var(--ink);
     background:
-      linear-gradient(90deg, var(--ink) 0 62%, var(--gold) 62% 100%) top / 100% 8px no-repeat,
+      linear-gradient(90deg, #9b59ff 0 62%, var(--gold) 62% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+      radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
       var(--paper);
     font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 16px;
@@ -128,20 +131,20 @@
     text-align: left;
     cursor: pointer;
   }
-  .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .row:hover, .row[aria-current="true"] { background: rgba(155, 89, 255, .16); }
   .who { display: flex; flex-direction: column; min-width: 0; }
   .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .who small { color: var(--muted); font-size: 12px; }
-  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .track { height: 14px; background: rgba(155, 89, 255, .10); position: relative; }
   .bar { height: 100%; display: block; min-width: 2px; }
   .bar.欧洲 { background: var(--eu); }
   .bar.东亚 { background: var(--asia); }
   .bar.海湾 { background: var(--gulf); }
   .bar.其他 { background: var(--other); }
-  .bar.est.欧洲 { background: repeating-linear-gradient(135deg, var(--eu) 0 6px, #6e8eb3 6px 8px); }
-  .bar.est.东亚 { background: repeating-linear-gradient(135deg, var(--asia) 0 6px, #c4a574 6px 8px); }
-  .bar.est.海湾 { background: repeating-linear-gradient(135deg, var(--gulf) 0 6px, #7eae96 6px 8px); }
-  .bar.est.其他 { background: repeating-linear-gradient(135deg, var(--other) 0 6px, #a89b8e 6px 8px); }
+  .bar.est.欧洲 { background: repeating-linear-gradient(135deg, var(--eu) 0 6px, #1d3a63 6px 8px); }
+  .bar.est.东亚 { background: repeating-linear-gradient(135deg, var(--asia) 0 6px, #4a3510 6px 8px); }
+  .bar.est.海湾 { background: repeating-linear-gradient(135deg, var(--gulf) 0 6px, #144234 6px 8px); }
+  .bar.est.其他 { background: repeating-linear-gradient(135deg, var(--other) 0 6px, #322c44 6px 8px); }
   .num {
     font-family: "IBM Plex Mono", monospace;
     font-size: 13px;
@@ -152,7 +155,7 @@
   .empty-bar { color: var(--muted); font-size: 13px; }
   .mix { display: grid; gap: 8px; }
   .mix-row { display: grid; grid-template-columns: 168px 1fr; gap: 10px; align-items: center; }
-  .stack { display: flex; height: 16px; width: 100%; background: rgba(34,28,22,.06); }
+  .stack { display: flex; height: 16px; width: 100%; background: rgba(155, 89, 255, .10); }
   .stack span { display: block; height: 100%; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
   .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
@@ -243,19 +246,19 @@
 <script src="data.js"></script>
 <script>
 const TONE = {
-  eq: ["#1d4e89", "股票"],
-  fi: ["#8a5a12", "债券与信用"],
-  real: ["#3f6b4a", "房地产与基建"],
-  alt: ["#6b4c7a", "私募与另类"],
-  cash: ["#8d8376", "现金与国库"],
-  home: ["#9d2c2c", "本国"],
-  foreign: ["#6e8eb3", "海外"],
-  other: ["#c3b49f", "其他"]
+  eq: ["#5aa9ff", "股票"],
+  fi: ["#e5b45c", "债券与信用"],
+  real: ["#6fce8f", "房地产与基建"],
+  alt: ["#b98ad0", "私募与另类"],
+  cash: ["#a89cb8", "现金与国库"],
+  home: ["#ff6b6b", "本国"],
+  foreign: ["#8fc4ff", "海外"],
+  other: ["#cbbfd8", "其他"]
 };
 const MIX = { actual: "公布", overseas: "境外组合", target: "目标", reference: "参考组合" };
 const FUNDS = window.SWF.funds;
 const KIND = { equity: "股票", bond: "债券", pool: "投资池", company: "公司" };
-const KIND_COLOR = { equity: "#1d4e89", bond: "#8a5a12", pool: "#1f6b4a", company: "#9d2c2c" };
+const KIND_COLOR = { equity: "#5aa9ff", bond: "#e5b45c", pool: "#4ade80", company: "#ff6b6b" };
 let filter = "all";
 let holdFilter = "all";
 let query = "";
@@ -397,7 +400,7 @@ function renderHolds() {
   document.getElementById("holds").innerHTML = rows.map(h => {
     const width = logWidth(h.v, min, max);
     const extra = h.own ? h.own : "";
-    return `<button class="row" data-id="${h.fund.id}"><span class="who"><b>${esc(h.n)}</b><small>${esc(h.fund.zh)} · ${esc(KIND[h.kind] || "")}${h.place ? " · " + esc(h.place) : ""}</small></span><span class="track"><i class="bar" style="width:${width}%;background:${KIND_COLOR[h.kind] || "#5c5348"}"></i></span><span class="num"><i>${esc(extra)}</i>${esc(money(h.v))}</span></button>`;
+    return `<button class="row" data-id="${h.fund.id}"><span class="who"><b>${esc(h.n)}</b><small>${esc(h.fund.zh)} · ${esc(KIND[h.kind] || "")}${h.place ? " · " + esc(h.place) : ""}</small></span><span class="track"><i class="bar" style="width:${width}%;background:${KIND_COLOR[h.kind] || "#a89cc4"}"></i></span><span class="num"><i>${esc(extra)}</i>${esc(money(h.v))}</span></button>`;
   }).join("") || `<p class="note">没有符合筛选的持仓。</p>`;
 }
 
@@ -412,7 +415,7 @@ function renderMix() {
     }
     const segs = f.amounts.map(a => `<span title="${esc(a.k)} ${a.v}%" style="width:${a.v}%;background:${toneColor(a.tone)}"></span>`).join("");
     const tag = MIX[f.mixKind] || "";
-    return `<div class="mix-row"><b>${esc(f.short)} <span style="color:#6f6458;font-weight:400">${esc(tag)}</span></b><div class="stack">${segs}</div></div>`;
+    return `<div class="mix-row"><b>${esc(f.short)} <span style="color:#8a79ab;font-weight:400">${esc(tag)}</span></b><div class="stack">${segs}</div></div>`;
   }).join("") || `<p class="note">当前筛选里没有基金。</p>`;
 }
 
@@ -432,7 +435,7 @@ function spark(series, unit) {
     ? (n => trim(n / 10000) + "万亿克朗")
     : money;
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="序列">
-    <polyline fill="none" stroke="#221c16" stroke-width="1.6" points="${pts}"></polyline>
+    <polyline fill="none" stroke="#efe7ff" stroke-width="1.6" points="${pts}"></polyline>
     <text x="8" y="${h - 6}">${first.y} ${esc(label(first.v))}</text>
     <text x="${w - 8}" y="${h - 6}" text-anchor="end">${last.y} ${esc(label(last.v))}</text>
   </svg>`;

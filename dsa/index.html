@@ -9,14 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f3eadb;
-    --sheet: #faf6ee;
-    --ink: #221c16;
-    --muted: #6f6458;
-    --line: #d9cbb6;
-    --rose: #9c2b3a;
-    --gold: #8a5a12;
-    --shadow: 0 1px 0 rgba(34,28,22,.06);
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --ink: #efe7ff;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --rose: #ff6f88;
+    --gold: #e5b45c;
+    --shadow: 0 1px 0 rgba(155, 89, 255, .14), 0 18px 40px rgba(0, 0, 0, .45);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -24,7 +25,9 @@
     margin: 0;
     color: var(--ink);
     background:
-      linear-gradient(90deg, var(--rose) 0 62%, var(--ink) 62% 100%) top / 100% 8px no-repeat,
+      linear-gradient(90deg, var(--rose) 0 62%, #9b59ff 62% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+      radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
       var(--paper);
     font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 16px;
@@ -125,11 +128,11 @@
     text-align: left;
     cursor: pointer;
   }
-  .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .row:hover, .row[aria-current="true"] { background: rgba(155, 89, 255, .16); }
   .who { display: flex; flex-direction: column; min-width: 0; }
   .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .who small { color: var(--muted); font-size: 12px; }
-  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .track { height: 14px; background: rgba(155, 89, 255, .10); position: relative; }
   .bar { height: 100%; display: block; min-width: 2px; }
   .num {
     font-family: "IBM Plex Mono", monospace;
@@ -141,7 +144,7 @@
   .empty-bar { color: var(--muted); font-size: 13px; }
   .mix { display: grid; gap: 8px; }
   .mix-row { display: grid; grid-template-columns: 168px 1fr; gap: 10px; align-items: center; }
-  .stack { display: flex; height: 16px; width: 100%; background: rgba(34,28,22,.06); }
+  .stack { display: flex; height: 16px; width: 100%; background: rgba(155, 89, 255, .10); }
   .stack button {
     display: block; height: 100%; padding: 0; border: 0; min-width: 2px; cursor: pointer;
   }

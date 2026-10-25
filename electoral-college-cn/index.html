@@ -18,14 +18,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f3eadb;
-    --sheet: #faf6ee;
-    --ink: #221c16;
-    --body: #3a3128;
-    --muted: #6f6458;
-    --line: #d9cbb6;
-    --rose: #9c2b3a;
-    --gold: #8a5a12;
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --ink: #efe7ff;
+    --body: #cbbfe6;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --rose: #ff6f88;
+    --gold: #e5b45c;
     --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
     --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     --serif: "Noto Serif SC", "Songti SC", serif;
@@ -36,7 +37,9 @@
     margin: 0;
     color: var(--ink);
     background:
-      linear-gradient(90deg, var(--rose) 0 52.8%, var(--ink) 52.8% 100%) top / 100% 8px no-repeat,
+      linear-gradient(90deg, var(--rose) 0 52.8%, #9b59ff 52.8% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+      radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
       var(--paper);
     font-family: var(--sans);
     font-size: 16px;
@@ -160,16 +163,16 @@
     background: transparent; text-align: left; cursor: default;
   }
   .row:last-child { border-bottom: 0; }
-  .row:hover { background: rgba(255, 255, 255, .5); }
+  .row:hover { background: rgba(155, 89, 255, .16); }
   .row .who { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
   .row .who b { font-weight: 500; font-size: 15px; white-space: nowrap; }
   .row .who small { font-size: 10px; color: var(--muted); font-family: var(--mono); }
-  .track { height: 18px; background: rgba(34, 28, 22, .05); position: relative; }
+  .track { height: 18px; background: rgba(155, 89, 255, .10); position: relative; }
   .bar {
     display: block; height: 100%; background: var(--rose); min-width: 2px;
     transition: width .35s cubic-bezier(.4, 0, .2, 1);
   }
-  .row.dim .bar { background: #b98b8f; }
+  .row.dim .bar { background: #4a2b3a; }
   .num { font-family: var(--mono); text-align: right; font-size: 15px; }
   .num.small { font-size: 12px; color: var(--muted); }
   .dev { font-family: var(--mono); text-align: right; font-size: 12px; }
@@ -223,9 +226,9 @@
     border-bottom: 1px solid var(--line);
   }
   .dgrid .n { font-family: var(--mono); }
-  .dbar { height: 9px; background: rgba(34, 28, 22, .07); position: relative; }
+  .dbar { height: 9px; background: rgba(155, 89, 255, .10); position: relative; }
   .dbar i { position: absolute; left: 0; top: 0; bottom: 0; display: block; }
-  .dbar i.a { background: #c8a9ad; }
+  .dbar i.a { background: #8a3a52; }
   .dbar i.b { background: var(--rose); }
   .dgrid .v { font-family: var(--mono); text-align: right; }
 
@@ -248,8 +251,8 @@
     white-space: nowrap;
   }
   .chip b { font-weight: 500; margin-left: 3px; }
-  .chip.in { background: var(--rose); border-color: var(--rose); color: #fdf7ec; }
-  .chip.in b { color: #fdf7ec; }
+  .chip.in { background: var(--rose); border-color: var(--rose); color: #0d0a1a; }
+  .chip.in b { color: #0d0a1a; }
   .cutline {
     flex-basis: 100%; border-top: 1px dashed var(--rose); margin: 6px 0 2px;
     font-family: var(--mono); font-size: 10px; color: var(--rose);
@@ -279,7 +282,7 @@
     font-family: var(--mono); font-size: 12px; padding: 3px 7px;
     border: 1px solid var(--line); background: var(--sheet);
   }
-  .gainline.up span { border-color: #cfa9ae; }
+  .gainline.up span { border-color: #8a3a52; }
   .gainline.up span b { color: var(--rose); font-weight: 500; }
   .gainline.down span b { color: var(--muted); font-weight: 500; }
 
@@ -324,22 +327,22 @@
   }
   #cnMap { width: 100%; height: auto; display: block; }
   .pv {
-    stroke: #f7f0e3; stroke-width: 1.1;
+    stroke: #0d0a1a; stroke-width: 1.1;
     transition: fill .3s ease, stroke .15s;
     cursor: pointer;
   }
-  .pv:hover { stroke: #221c16; stroke-width: 1.6; }
+  .pv:hover { stroke: #efe7ff; stroke-width: 1.6; }
   .pv.na { cursor: default; }
   .pv-lbl {
-    font-family: var(--mono); font-size: 12px; text-anchor: middle;
+    font-family: var(--mono); font-size: 12px; text-anchor: middle; fill: var(--ink);
     dominant-baseline: middle; pointer-events: none;
-    paint-order: stroke; stroke: rgba(247, 240, 227, .7); stroke-width: 2.6;
+    paint-order: stroke; stroke: rgba(13, 10, 26, .95); stroke-width: 3.2;
     stroke-linejoin: round;
   }
   .pv-num {
     font-family: var(--mono); font-size: 10px; text-anchor: middle;
     dominant-baseline: middle; pointer-events: none; display: none;
-    paint-order: stroke; stroke: rgba(247, 240, 227, .6); stroke-width: 2.2;
+    paint-order: stroke; stroke: rgba(13, 10, 26, .95); stroke-width: 2.8;
     stroke-linejoin: round;
   }
   #cnMap.show-num .pv-num { display: block; }
@@ -349,7 +352,7 @@
   }
   .map-tip {
     position: absolute; z-index: 5; pointer-events: none;
-    background: #221c16; color: #f3eadb; font-size: 12px; line-height: 1.55;
+    background: #efe7ff; color: #0d0a1a; font-size: 12px; line-height: 1.55;
     padding: 6px 9px; opacity: 0; transition: opacity .12s; white-space: nowrap;
     font-family: var(--mono);
   }
@@ -364,7 +367,7 @@
   .prow .grow { flex: 1 1 420px; min-width: 260px; }
   .tnums { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; margin-top: 8px; }
   .tnums .a { color: var(--rose); }
-  .tnums .b { color: #2f4a63; }
+  .tnums .b { color: #7fb4e8; }
   .tnums .mut { color: var(--muted); }
   .ranks { display: flex; gap: 8px 22px; flex-wrap: wrap; font-size: 13px; color: var(--body); }
   .ranks i { font-style: normal; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .1em; margin-right: 4px; }
@@ -373,17 +376,17 @@
     font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
     text-transform: uppercase; color: var(--muted); margin: 0 0 10px; font-weight: 500;
   }
-  .tally { position: relative; display: flex; height: 20px; background: #e8dfcf; margin-bottom: 9px; }
+  .tally { position: relative; display: flex; height: 20px; background: #241d3d; margin-bottom: 9px; }
   .tally i { display: block; height: 100%; transition: width .3s ease; }
   .tally i.a { background: var(--rose); }
-  .tally i.b { background: #2f4a63; }
-  .tally u { position: absolute; top: -4px; bottom: -4px; width: 1px; background: #221c16; }
+  .tally i.b { background: #7fb4e8; }
+  .tally u { position: absolute; top: -4px; bottom: -4px; width: 1px; background: #efe7ff; }
   .trow {
     display: flex; justify-content: space-between; gap: 8px;
     font-family: var(--mono); font-size: 12px; margin-bottom: 4px;
   }
   .trow.a { color: var(--rose); }
-  .trow.b { color: #2f4a63; }
+  .trow.b { color: #7fb4e8; }
   .trow.mut { color: var(--muted); margin-bottom: 10px; }
   .panel .pbtns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
   .panel .pbtns button {
@@ -400,15 +403,15 @@
   .legend .ramp {
     height: 10px; width: 88px; border: 1px solid var(--line);
   }
-  .legend .ramp.red { background: linear-gradient(90deg, #e8cfd2, #8f2231); }
-  .legend .ramp.ev { background: linear-gradient(90deg, #f0e3cc, #8f2231); width: 150px; }
-  .legend .ramp.blue { background: linear-gradient(90deg, #2b435c, #cfd8e2); }
+  .legend .ramp.red { background: linear-gradient(90deg, #2a1a28, #ff5c76); }
+  .legend .ramp.ev { background: linear-gradient(90deg, #241d3d, #ff5c76); width: 150px; }
+  .legend .ramp.blue { background: linear-gradient(90deg, #7fb4e8, #1a2436); }
   .split {
     border-left: 3px solid var(--rose); margin: 14px 0 0;
     padding: 2px 0 2px 13px; font-size: 14px; line-height: 1.8; color: var(--body);
   }
   .split b { font-family: var(--mono); color: var(--rose); font-weight: 500; }
-  .legend .sw { width: 12px; height: 12px; border: 1px solid var(--line); background: #e4dac8; }
+  .legend .sw { width: 12px; height: 12px; border: 1px solid var(--line); background: #241d3d; }
   .legend span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .legend .sep { width: 1px; height: 14px; background: var(--line); }
 
@@ -963,9 +966,9 @@
   var seed = 20261019, simNo = 1;
   var simCache = {}, mcCache = {};
 
-  var C_RED = [143, 34, 49], C_BLUE = [43, 67, 92];
-  var C_RED_L = [232, 207, 210], C_BLUE_L = [207, 216, 226];
-  var C_NONE = [236, 225, 207], C_NA = [228, 218, 200], C_SAND = [240, 227, 204];
+  var C_RED = [255, 92, 118], C_BLUE = [127, 180, 232];
+  var C_RED_L = [42, 26, 40], C_BLUE_L = [26, 36, 54];
+  var C_NONE = [36, 29, 61], C_NA = [26, 20, 42], C_SAND = [23, 18, 37];
 
   function rgb(c) { return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")"; }
   function mixc(a, b, t) {
@@ -1090,10 +1093,10 @@
     var nh = MAP.nh, ox = 975, oy = 560;
     h += '<g transform="translate(' + ox + "," + oy + ')">';
     h += '<rect x="-8" y="-8" width="' + (nh.w + 16) + '" height="' + (nh.h + 16) +
-         '" fill="#faf6ee" stroke="#d9cbb6"></rect>';
-    nh.islands.forEach(function (d) { h += '<path d="' + d + '" fill="#c4b8a6"></path>'; });
+         '" fill="#16112b" stroke="#3a3256"></rect>';
+    nh.islands.forEach(function (d) { h += '<path d="' + d + '" fill="#241d3d"></path>'; });
     nh.lines.forEach(function (d) {
-      h += '<path d="' + d + '" fill="none" stroke="#60544a" stroke-width="1.8"></path>';
+      h += '<path d="' + d + '" fill="none" stroke="#4a3f66" stroke-width="1.8"></path>';
     });
     h += '<text class="nh-lbl" x="' + (nh.w / 2) + '" y="' + (nh.h + 15) + '">南海诸岛</text>';
     h += "</g>";
@@ -1194,13 +1197,28 @@
       }
     });
 
+    var pvByName = {};
+    var cellInk = function (p) {
+      if (!p) return "#efe7ff";
+      var mm = /rgb\(([^)]+)\)/.exec(p.style.fill || "");
+      if (!mm) return "#efe7ff";
+      var v = mm[1].split(",").map(Number);
+      return (.299 * v[0] + .587 * v[1] + .114 * v[2]) / 255 > .55 ? "#150f28" : "#efe7ff";
+    };
+    Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv"), function (el) {
+      pvByName[el.getAttribute("data-n")] = el;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv-lbl"), function (el) {
+      el.style.fill = cellInk(pvByName[el.textContent.trim()]);
+    });
+
     if (svg.classList && svg.classList.toggle) svg.classList.toggle("show-num", mode === "ev");
     Array.prototype.forEach.call(document.querySelectorAll("#cnMap .pv-num"), function (el) {
       var n = el.getAttribute("data-n");
       var r = idx[n];
       if (!r) { el.textContent = ""; return; }
       el.textContent = r.ev;
-      el.style.fill = evT(r.ev, lo, hi) > 0.55 ? "#fdf7ec" : "#3a3128";
+      el.style.fill = cellInk(pvByName[n]);
     });
 
     var thr = document.getElementById("thrInline");
@@ -1227,8 +1245,8 @@
         "<span class=\"ramp blue\"></span><span>乙</span>" +
         "<span class=\"sep\"></span><span class=\"sw\"></span><span>未定</span>";
     } else {
-      el.innerHTML = "<span class=\"sw\" style=\"background:#9c2b3a\"></span><span>甲</span>" +
-        "<span class=\"sw\" style=\"background:#2f4a63\"></span><span>乙</span>" +
+      el.innerHTML = "<span class=\"sw\" style=\"background:#ff6f88\"></span><span>甲</span>" +
+        "<span class=\"sw\" style=\"background:#7fb4e8\"></span><span>乙</span>" +
         "<span class=\"sw\"></span><span>未定</span>";
     }
   }

@@ -10,20 +10,24 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f3eadb;
-    --sheet: #faf6ee;
-    --ink: #221c16;
-    --muted: #6f6458;
-    --line: #d9cbb6;
-    --accent: #8a3a2a;
-    --gold: #8a5a12;
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --ink: #efe7ff;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --accent: #ff8a5c;
+    --gold: #e5b45c;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
     color: var(--ink);
-    background: linear-gradient(90deg, var(--accent) 0 50%, #1d4e89 50% 100%) top / 100% 8px no-repeat, var(--paper);
+    background: linear-gradient(90deg, var(--accent) 0 50%, #5aa9ff 50% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+      radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
+      var(--paper);
     font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 16px;
     line-height: 1.55;

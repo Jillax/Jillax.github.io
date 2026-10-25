@@ -1,21 +1,22 @@
 /* 世界的一半 · 60 国女性发展指标
-   独立视觉：纸质图集 + 编辑部版面。章节各有一种颜料色，图表全为原生 SVG / HTML。 */
+   独立视觉：暗底图集 + 编辑部版面。章节各有一种颜料色，图表全为原生 SVG / HTML。 */
 
 :root {
-  --paper: #f2efe9;
-  --sheet: #fbf9f4;
-  --ink: #171a1f;
-  --body: #363b43;
-  --muted: #6f6a5e;
-  --line: #dbd4c6;
-  --geo: #e6e0d3;
+  color-scheme: dark;
+  --paper: #0d0a1a;
+  --sheet: #16112b;
+  --ink: #efe7ff;
+  --body: #cbbfe6;
+  --muted: #8a79ab;
+  --line: rgba(155, 89, 255, .22);
+  --geo: #241d3d;
 
-  --edu: #2f5d8a;
-  --econ: #14524f;
-  --pol: #6b2f5b;
-  --health: #9b2242;
-  --tech: #a4671b;
-  --claim: #9b2242;
+  --edu: #5fa8ea;
+  --econ: #3fd0b5;
+  --pol: #c98ae0;
+  --health: #ff5c86;
+  --tech: #f0a94a;
+  --claim: #ff5c86;
 
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -30,6 +31,8 @@ body {
   background:
     linear-gradient(90deg, var(--edu) 0 20%, var(--econ) 20% 40%, var(--pol) 40% 60%,
       var(--health) 60% 80%, var(--tech) 80% 100%) top / 100% 8px no-repeat,
+    radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+    radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
     var(--paper);
   font-family: var(--sans);
   font-size: 16px;
@@ -69,7 +72,7 @@ section { scroll-margin-top: 20px; }
   max-width: 78ch; margin: 22px 0 30px; font-size: 17.5px; color: var(--body);
 }
 .masthead .deck b { font-family: var(--mono); color: var(--claim); font-weight: 500; }
-.masthead .deck em { font-style: normal; border-bottom: 2px solid rgba(155, 34, 66, .28); }
+.masthead .deck em { font-style: normal; border-bottom: 2px solid rgba(255, 92, 134, .28); }
 
 /* ---------- 地图 ---------- */
 .map-panel {
@@ -88,7 +91,7 @@ section { scroll-margin-top: 20px; }
 .country.out { fill: var(--geo); }
 .country.nodata { fill: url(#hatch); }
 .country.dot { stroke: var(--sheet); stroke-width: 1; }
-.country.out:hover { fill: #d8d1c1; }
+.country.out:hover { fill: #2a2340; }
 .map-svg svg g[data-iso] { cursor: pointer; }
 .map-svg svg g.sel path, .map-svg svg g.sel { stroke: var(--ink); stroke-width: 1.6; }
 .map-switch { margin-top: 14px; }
@@ -114,13 +117,13 @@ section { scroll-margin-top: 20px; }
   max-width: 250px; line-height: 1.5; z-index: 3;
 }
 .tip b { font-family: var(--mono); font-weight: 500; color: #f0c9a8; }
-.tip .tsub { color: #b9b3a6; font-family: var(--mono); font-size: 11px; }
+.tip .tsub { color: #a89cc4; font-family: var(--mono); font-size: 11px; }
 
 /* 国家卡 */
 .map-card {
   position: absolute; left: 12px; bottom: 12px; width: min(330px, calc(100% - 24px));
   background: var(--sheet); border: 1px solid var(--ink); padding: 12px 14px 14px;
-  box-shadow: 6px 6px 0 rgba(23, 26, 31, .12); z-index: 2;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, .55); z-index: 2;
 }
 .map-card h3 { margin: 0; font-family: var(--serif); font-size: 20px; }
 .map-card .mc-sub { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin: 2px 0 10px; }
@@ -155,7 +158,7 @@ section { scroll-margin-top: 20px; }
 .page-nav a b { font-family: var(--mono); font-weight: 500; font-size: 11.5px; color: var(--claim); margin-right: 6px; }
 .page-nav a:hover { color: var(--ink); box-shadow: inset 0 -2px 0 var(--claim); }
 
-.noscript { background: #fff5e8; border: 1px solid var(--tech); padding: 12px 14px; font-size: 14px; margin-top: 20px; }
+.noscript { background: #16112b; border: 1px solid var(--tech); padding: 12px 14px; font-size: 14px; margin-top: 20px; }
 
 /* ---------- 章节骨架 ---------- */
 .chapter { margin: 52px 0 0; padding-top: 6px; border-top: 1px solid var(--ink); }
@@ -180,12 +183,12 @@ section { scroll-margin-top: 20px; }
   align-items: center; padding: 3px 4px; border-bottom: 1px dotted var(--line);
   font-size: 13px; cursor: pointer;
 }
-.rrow:hover, .rrow:focus-visible { background: rgba(23, 26, 31, .045); outline: none; }
-.rrow.sel { background: rgba(155, 34, 66, .09); box-shadow: inset 2px 0 0 var(--claim); }
+.rrow:hover, .rrow:focus-visible { background: rgba(155, 89, 255, .10); outline: none; }
+.rrow.sel { background: rgba(255, 92, 134, .09); box-shadow: inset 2px 0 0 var(--claim); }
 .rname { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rval { text-align: right; font-size: 12.5px; }
 .ryear { text-align: right; font-size: 11px; color: var(--muted); }
-.rtrack { position: relative; height: 15px; background: rgba(23, 26, 31, .05); }
+.rtrack { position: relative; height: 15px; background: rgba(155, 89, 255, .10); }
 .rtrack .fill { position: absolute; inset: 0 auto 0 0; background: var(--bar, var(--ink)); }
 .rtrack .mid { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--ink); }
 .rtrack .neg { position: absolute; top: 0; bottom: 0; background: var(--bar, var(--ink)); }
@@ -248,7 +251,7 @@ section { scroll-margin-top: 20px; }
 .method b { display: block; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--claim); margin-bottom: 8px; }
 .method p { margin: 0 0 10px; font-size: 14.5px; color: var(--body); }
 .method p:last-child { margin-bottom: 0; }
-.method em { font-style: normal; background: rgba(164, 103, 27, .16); padding: 0 2px; }
+.method em { font-style: normal; background: rgba(240, 169, 74, .16); padding: 0 2px; }
 .method b[data-stat], .method strong { font-family: var(--mono); }
 .tbl-title { font-family: var(--serif); font-size: 20px; margin: 34px 0 10px; }
 .tbl-scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--sheet); }
@@ -261,7 +264,7 @@ section { scroll-margin-top: 20px; }
 
 footer { margin-top: 56px; border-top: 1px solid var(--ink); padding: 20px 0 60px; font-size: 13px; color: var(--muted); }
 footer p { margin: 0 0 8px; line-height: 1.75; }
-footer a { color: var(--claim); text-decoration: none; border-bottom: 1px solid rgba(155, 34, 66, .3); }
+footer a { color: var(--claim); text-decoration: none; border-bottom: 1px solid rgba(255, 92, 134, .3); }
 footer code { font-family: var(--mono); font-size: 12px; background: var(--sheet); padding: 1px 5px; border: 1px solid var(--line); }
 footer b { font-family: var(--mono); color: var(--ink); font-weight: 500; }
 
@@ -274,6 +277,13 @@ footer b { font-family: var(--mono); color: var(--ink); font-weight: 500; }
 }
 
 @media print {
+  /* 纸面打印：把暗色 token 退回油墨值 */
+  :root {
+    --paper: #f2efe9; --sheet: #fbf9f4; --ink: #171a1f; --body: #363b43;
+    --muted: #6f6a5e; --line: #dbd4c6; --geo: #e6e0d3;
+    --edu: #2f5d8a; --econ: #14524f; --pol: #6b2f5b; --health: #9b2242;
+    --tech: #a4671b; --claim: #9b2242;
+  }
   body { background: #fff; color: #000; }
   .switch, .page-nav, .pick, .map-card, .tip { display: none; }
 }

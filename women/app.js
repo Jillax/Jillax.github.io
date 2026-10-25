@@ -20,18 +20,18 @@
   };
 
   var REGION_COLOR = {
-    "北美": "#2f5d8a",
-    "拉美": "#7a8a3c",
-    "欧洲与中亚": "#14524f",
-    "东亚与太平洋": "#9b2242",
-    "南亚": "#a4671b",
-    "中东与北非": "#6b2f5b",
-    "撒哈拉以南非洲": "#8c5a3c",
+    "北美": "#5fa8ea",
+    "拉美": "#b5d05a",
+    "欧洲与中亚": "#3fd0b5",
+    "东亚与太平洋": "#ff5c86",
+    "南亚": "#f0a94a",
+    "中东与北非": "#c98ae0",
+    "撒哈拉以南非洲": "#d99a6e",
   };
-  var SERIES_COLORS = ["#9b2242", "#2f5d8a", "#14524f", "#a4671b", "#6b2f5b", "#7a8a3c", "#8c5a3c"];
-  var RAMP = ["#f8f2e7", "#eecfab", "#dda274", "#c46448", "#9b2242"];
-  var DIV = ["#14524f", "#7fada4", "#f2efe9", "#dfa7b6", "#9b2242"];
-  var WORLD_COLOR = "#6f6a5e";
+  var SERIES_COLORS = ["#ff5c86", "#5fa8ea", "#3fd0b5", "#f0a94a", "#c98ae0", "#b5d05a", "#d99a6e"];
+  var RAMP = ["#171225", "#4a2334", "#8c2f4c", "#d9466e", "#ff7ba0"];
+  var DIV = ["#3fd0b5", "#266f68", "#171225", "#a8455f", "#ff5c86"];
+  var WORLD_COLOR = "#5d5183";
 
   // ---------- 取数 ----------
   function series(iso, id) {
@@ -140,7 +140,7 @@
     var out = [];
     out.push('<svg viewBox="0 0 ' + MAP.width + " " + MAP.height + '" role="img" aria-label="60 国女性指标世界地图">');
     out.push('<defs><pattern id="hatch" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">' +
-      '<rect width="5" height="5" fill="#efe8db"></rect><line x1="0" y1="0" x2="0" y2="5" stroke="#cfc7b6" stroke-width="1.6"></line></pattern></defs>');
+      '<rect width="5" height="5" fill="#16112b"></rect><line x1="0" y1="0" x2="0" y2="5" stroke="#3a3256" stroke-width="1.6"></line></pattern></defs>');
     out.push('<g class="bg">');
     MAP.other.forEach(function (d) { out.push('<path class="country out" d="' + d + '"></path>'); });
     Object.keys(MAP.countries).forEach(function (iso) {
@@ -190,8 +190,8 @@
       '<span class="ramp" style="background:linear-gradient(90deg,' + stops.join(",") + ')"></span>' +
       fmt(id, ex.hi) + "</span>" +
       '<span>' + esc(dirNote) + "</span>" +
-      '<span class="legend-key"><i class="swatch" style="background:url(#hatch) ' + "#efe8db" + ';background-image:repeating-linear-gradient(45deg,#cfc7b6 0 1px,transparent 1px 5px)"></i>样本内但无该指标数据</span>' +
-      '<span class="legend-key"><i class="swatch" style="background:#e6e0d3"></i>样本外国家（不着色）</span>' +
+      '<span class="legend-key"><i class="swatch" style="background:url(#hatch) ' + "#16112b" + ';background-image:repeating-linear-gradient(45deg,#3a3256 0 1px,transparent 1px 5px)"></i>样本内但无该指标数据</span>' +
+      '<span class="legend-key"><i class="swatch" style="background:#241d3d"></i>样本外国家（不着色）</span>' +
       '<span>· 60 国中 ' + n + ' 国有数；新加坡以圆点标出</span>';
     $("map-name").textContent = IND[id].zh + "（" + IND[id].short + "）";
   }
@@ -351,7 +351,7 @@
     el.innerHTML = twoCol(undataBlock(id), list, render) +
       '<p class="rank-foot">右侧数字：女性值与男性值之差（百分点）。横轴 0–100%。</p>';
   }
-  function regionColorOf(r) { return REGION_COLOR[r.region] || "#8c5a3c"; }
+  function regionColorOf(r) { return REGION_COLOR[r.region] || "#d99a6e"; }
 
   function niceMax(vals) {
     var m = Math.max.apply(null, vals);
@@ -477,7 +477,7 @@
     out.push("</g>");
     pts.forEach(function (p) {
       out.push('<circle class="dot-p" data-iso="' + p.iso + '" cx="' + X(p.x).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="' + R(p.pop).toFixed(1) +
-        '" fill="' + (REGION_COLOR[p.region] || "#8c5a3c") + '" fill-opacity=".62"><title>' +
+        '" fill="' + (REGION_COLOR[p.region] || "#d99a6e") + '" fill-opacity=".62"><title>' +
         esc(p.zh) + "：" + fmt(xId, p.x) + " / " + fmt(id, p.y) + "（" + p.year + "）</title></circle>");
     });
     // 只标注两端与几个常被误读的位置
@@ -614,7 +614,7 @@
     $("econ-note").innerHTML = esc(IND[item.id].zh) + "：" + esc(IND[item.id].note || "") +
       (v ? " 世界平均 " + n("", fmt(item.id, v[1])) + "（" + v[0] + " 年）。" : "");
     $("econ-legend").innerHTML = item.kind === "bell"
-      ? '<span class="k"><i class="ring"></i>男性</span><span class="k"><i class="pt" style="background:#14524f"></i>女性（按区域着色）</span><span class="k">连线 = 性别差</span>'
+      ? '<span class="k"><i class="ring"></i>男性</span><span class="k"><i class="pt" style="background:#3fd0b5"></i>女性（按区域着色）</span><span class="k">连线 = 性别差</span>'
       : '<span class="k">横轴 0–100%，条形长度即该值</span>';
     econReads();
   }
@@ -819,7 +819,7 @@
     $("tech-note").innerHTML = esc(IND[id].note || "") +
       " 世界：女性 " + n("", fmt(id, f[1])) + "（" + f[0] + "），男性 " + n("", fmt("IT.NET.USER.MA.ZS", m[1])) + "（" + m[0] + "）。" +
       " " + list.length + " 个有男女可比数据的国家里，" + n("", lower.length + " 国") + "女性低于男性。右侧数字为女减男。";
-    $("tech-legend").innerHTML = '<span class="k"><i class="ring"></i>男性</span><span class="k"><i class="pt" style="background:#a4671b"></i>女性</span><span class="k">按女性上网率从高到低排</span>';
+    $("tech-legend").innerHTML = '<span class="k"><i class="ring"></i>男性</span><span class="k"><i class="pt" style="background:#f0a94a"></i>女性</span><span class="k">按女性上网率从高到低排</span>';
     var worst = list.slice().sort(function (a, b) { return a.gap - b.gap; }).slice(0, 3);
     var best = list.slice().sort(function (a, b) { return b.gap - a.gap; }).slice(0, 3);
     var gpiOver = ranked("SE.ENR.TERT.FM.ZS").filter(function (r) { return r.value > 1; }).length;

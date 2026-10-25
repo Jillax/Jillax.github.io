@@ -9,16 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f3eadb;
-    --sheet: #faf6ee;
-    --ink: #221c16;
-    --muted: #6f6458;
-    --line: #d9cbb6;
-    --rep: #9d2c2c;
-    --dem: #1d4e89;
-    --ind: #1f6b4a;
-    --gold: #8a5a12;
-    --shadow: 0 1px 0 rgba(34,28,22,.06);
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --ink: #efe7ff;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --rep: #ff6b6b;
+    --dem: #5aa9ff;
+    --ind: #4ade80;
+    --gold: #e5b45c;
+    --shadow: 0 1px 0 rgba(155, 89, 255, .14), 0 18px 40px rgba(0, 0, 0, .45);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -27,6 +28,8 @@
     color: var(--ink);
     background:
       linear-gradient(90deg, var(--rep) 0 50%, var(--dem) 50% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 15% 0%, rgba(155, 89, 255, .12) 0%, transparent 60%) 0 0 / 100% 1200px no-repeat,
+      radial-gradient(ellipse at 85% 100%, rgba(0, 229, 255, .07) 0%, transparent 60%) 0 100% / 100% 1000px no-repeat,
       var(--paper);
     font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     font-size: 16px;
@@ -127,22 +130,22 @@
     text-align: left;
     cursor: pointer;
   }
-  .row:hover, .row[aria-current="true"] { background: rgba(255,255,255,.45); }
+  .row:hover, .row[aria-current="true"] { background: rgba(155, 89, 255, .16); }
   .who { display: flex; flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
   .who .meta { display: flex; flex-direction: column; min-width: 0; }
   .who b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .who small { color: var(--muted); font-size: 12px; }
   .mini {
     width: 36px; height: 36px; object-fit: cover; object-position: center 18%;
-    background: #e5d9c6; flex: none; border: 1px solid var(--line);
+    background: #241d3d; flex: none; border: 1px solid var(--line);
   }
-  .track { height: 14px; background: rgba(34,28,22,.06); position: relative; }
+  .track { height: 14px; background: rgba(155, 89, 255, .10); position: relative; }
   .bar { height: 100%; display: block; min-width: 2px; }
   .bar.R { background: var(--rep); }
   .bar.D { background: var(--dem); }
   .bar.I { background: var(--ind); }
-  .bar.floor.D { background: repeating-linear-gradient(135deg, var(--dem) 0 6px, #6e8eb3 6px 8px); }
-  .bar.floor.R { background: repeating-linear-gradient(135deg, var(--rep) 0 6px, #c47a7a 6px 8px); }
+  .bar.floor.D { background: repeating-linear-gradient(135deg, var(--dem) 0 6px, #1d3a63 6px 8px); }
+  .bar.floor.R { background: repeating-linear-gradient(135deg, var(--rep) 0 6px, #6b2020 6px 8px); }
   .num {
     font-family: "IBM Plex Mono", monospace;
     font-size: 13px;
@@ -153,7 +156,7 @@
   .empty-bar { color: var(--muted); font-size: 13px; }
   .mix { display: grid; gap: 8px; }
   .mix-row { display: grid; grid-template-columns: 148px 1fr; gap: 10px; align-items: center; }
-  .stack { display: flex; height: 16px; width: 100%; background: rgba(34,28,22,.06); }
+  .stack { display: flex; height: 16px; width: 100%; background: rgba(155, 89, 255, .10); }
   .stack span { display: block; height: 100%; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 8px 0 14px; font-size: 12px; color: var(--muted); }
   .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
@@ -168,7 +171,7 @@
   }
   .idcard .avatar {
     width: 96px; height: 96px; object-fit: cover; object-position: center top;
-    background: #e5d9c6; display: block;
+    background: #241d3d; display: block;
     border: 1px solid var(--line);
   }
   .party {
@@ -180,7 +183,7 @@
     font-size: 12px;
     letter-spacing: .08em;
   }
-  .party.J { color: #5c5348; }
+  .party.J { color: #a89cc4; }
   .idcard .intro { font-size: 14.5px; line-height: 1.7; margin: 10px 0 0; }
   .idcard .duty { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
   .party.R { color: var(--rep); }
@@ -250,16 +253,16 @@
 <script src="data.js"></script>
 <script>
 const COLORS = {
-  "个股": "#1d4e89",
-  "基金与ETF": "#6e8eb3",
-  "期权": "#6b4c7a",
-  "存款": "#8d8376",
-  "政府债券": "#8a5a12",
-  "企业股权与私募": "#9d2c2c",
-  "房地产与农场": "#3f6b4a",
-  "加密货币": "#b87333",
-  "养老金与年金": "#5c5348",
-  "其他": "#c3b49f"
+  "个股": "#5aa9ff",
+  "基金与ETF": "#8fc4ff",
+  "期权": "#b98ad0",
+  "存款": "#a89cb8",
+  "政府债券": "#e5b45c",
+  "企业股权与私募": "#ff6b6b",
+  "房地产与农场": "#6fce8f",
+  "加密货币": "#f0975a",
+  "养老金与年金": "#a89cc4",
+  "其他": "#cbbfd8"
 };
 const PARTY = { R: "共和党", D: "民主党", I: "独立" };
 const PEOPLE = window.PORTFOLIOS.people;
@@ -428,7 +431,7 @@ function spark(nw) {
   }).join(" ");
   const first = nw[0], last = nw[nw.length - 1];
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="申报中位走势">
-    <polyline fill="none" stroke="#221c16" stroke-width="1.6" points="${pts}"></polyline>
+    <polyline fill="none" stroke="#efe7ff" stroke-width="1.6" points="${pts}"></polyline>
     <text x="8" y="${h - 2}">${first.y} ${esc(money(first.v))}</text>
     <text x="${w - 8}" y="${h - 2}" text-anchor="end">${last.y} ${esc(money(last.v))}</text>
   </svg>`;
@@ -442,7 +445,7 @@ function renderDetail() {
     const total = p.amounts.reduce((s, x) => s + x.v, 0) || 1;
     return `<tr><td>${esc(a.k)}</td><td class="r">${esc(money(a.v))}</td><td class="r">${((a.v / total) * 100).toFixed(0)}%</td></tr>`;
   }).join("");
-  const holds = (p.top || []).map(h => `<tr><td>${esc(h.n)}${h.t ? ` <span style="color:#6f6458">${esc(h.t)}</span>` : ""}</td><td>${esc(h.owner)}</td><td>${esc(h.range)}</td><td class="r">${h.v ? esc(money(h.v)) : "—"}</td></tr>`).join("");
+  const holds = (p.top || []).map(h => `<tr><td>${esc(h.n)}${h.t ? ` <span style="color:#8a79ab">${esc(h.t)}</span>` : ""}</td><td>${esc(h.owner)}</td><td>${esc(h.range)}</td><td class="r">${h.v ? esc(money(h.v)) : "—"}</td></tr>`).join("");
   const live = (p.live || []).map(h => `<tr><td>${esc(h.t)}</td><td class="r">${esc(moneyFull(h.v))}</td><td class="r">${h.w}%</td></tr>`).join("");
   const trusts = (p.trusts || []).map(t => `<tr><td>${esc(t.n)}</td><td>${esc(t.range)}</td><td class="r">${t.nAssets}</td></tr>`).join("");
   const debts = (p.liabilities || []).map(d => `<tr><td>${esc(d.n)}</td><td>${esc(d.range)}</td><td>${esc(d.since)}</td></tr>`).join("");
