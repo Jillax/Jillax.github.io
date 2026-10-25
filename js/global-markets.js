@@ -11,6 +11,7 @@
         loaded: false,
         loading: false,
         data: null,
+        cities: null,
         map: null,
         selectedId: null,
         mapLibPromise: null
@@ -109,6 +110,48 @@
         });
     }
 
+    // 一个金融中心一个节点：纽约同处有标普500、纳指100、道琼斯，散开只会糊成一坨
+    function buildCities(markets) {
+        var cities = [];
+        var index = {};
+        markets.forEach(function(m) {
+            var key = m.cityId || (m.lat + ',' + m.lng);
+            if (!index[key]) {
+                index[key] = {
+                    id: key,
+                    city: m.city,
+                    country: m.country,
+                    region: m.region,
+                    lat: Number(m.lat),
+                    lng: Number(m.lng),
+                    markets: []
+                };
+                cities.push(index[key]);
+            }
+            index[key].markets.push(m);
+        });
+        cities.forEach(function(city, i) {
+            city.index = i;
+            city.markets.sort(function(a, b) { return b.changePct - a.changePct; });
+            city.markets.forEach(function(m) { m.cityIndex = i; });
+        });
+        return cities;
+    }
+
+    function cityAvgPct(city) {
+        return city.markets.reduce(function(sum, m) { return sum + m.changePct; }, 0) / city.markets.length;
+    }
+
+    function cityMaxAbs(city) {
+        return city.markets.reduce(function(max, m) { return Math.max(max, Math.abs(m.changePct)); }, 0);
+    }
+
+    function cityMover(city) {
+        return city.markets.slice().sort(function(a, b) {
+            return Math.abs(b.changePct) - Math.abs(a.changePct);
+        })[0];
+    }
+
     function renderSummary(data) {
         var markets = data.markets;
         var up = markets.filter(function(m) { return m.changePct > 0; }).length;
@@ -191,18 +234,44 @@
             els.detail.innerHTML = '<span class="gm-detail-empty">点击地图节点或右侧榜单，读取单个指数详情。</span>';
             return;
         }
+        var city = state.cities[market.cityIndex];
+        var timeLine = '<div class="gm-detail-time">数据时间 ' + esc(utcTime(market.asOf)) +
+            ' · ' + esc(state.data.source || '公开行情') + '</div>';
+
+        if (!city || city.markets.length < 2) {
+            els.detail.innerHTML = '' +
+                '<div class="gm-detail-head">' +
+                    '<span class="gm-detail-name">' + esc(market.name) + '</span>' +
+                    '<span class="gm-detail-place">' + esc(market.city) + ' · ' + esc(market.country) + ' · ' + esc(market.region) + '</span>' +
+                '</div>' +
+                '<div class="gm-detail-quote">' +
+                    '<span>' + fmtNum(market.close) + '</span>' +
+                    '<span class="gm-detail-change ' + pctClass(market.changePct) + '">' +
+                        (market.change > 0 ? '+' : '') + fmtNum(market.change) + ' · ' + pctText(market.changePct) +
+                    '</span>' +
+                '</div>' + timeLine;
+            return;
+        }
+
         els.detail.innerHTML = '' +
             '<div class="gm-detail-head">' +
-                '<span class="gm-detail-name">' + esc(market.name) + '</span>' +
-                '<span class="gm-detail-place">' + esc(market.city) + ' · ' + esc(market.country) + ' · ' + esc(market.region) + '</span>' +
+                '<span class="gm-detail-name">' + esc(city.city) + ' ' + esc(city.country) + '</span>' +
+                '<span class="gm-detail-place">' + esc(city.region) + ' · ' + city.markets.length + ' 个指数</span>' +
             '</div>' +
-            '<div class="gm-detail-quote">' +
-                '<span>' + fmtNum(market.close) + '</span>' +
-                '<span class="gm-detail-change ' + pctClass(market.changePct) + '">' +
-                    (market.change > 0 ? '+' : '') + fmtNum(market.change) + ' · ' + pctText(market.changePct) +
-                '</span>' +
-            '</div>' +
-            '<div class="gm-detail-time">数据时间 ' + esc(utcTime(market.asOf)) + ' · ' + esc(state.data.source || '公开行情') + '</div>';
+            '<div class="gm-city-rows">' + city.markets.map(function(m) {
+                return '<button type="button" class="gm-city-row' + (m.id === market.id ? ' is-sel' : '') +
+                    '" data-id="' + esc(m.id) + '">' +
+                    '<span class="gm-city-name">' + esc(m.name) + '</span>' +
+                    '<span class="gm-city-close">' + fmtNum(m.close) + '</span>' +
+                    '<span class="gm-city-pct ' + pctClass(m.changePct) + '">' + pctText(m.changePct) + '</span>' +
+                    '</button>';
+            }).join('') + '</div>' + timeLine;
+
+        els.detail.querySelectorAll('.gm-city-row').forEach(function(row) {
+            row.addEventListener('click', function() {
+                selectMarket(row.getAttribute('data-id'), { scrollList: true });
+            });
+        });
     }
 
     function highlightMarker(market) {
@@ -211,13 +280,13 @@
         Object.keys(markers).forEach(function(key) {
             var element = markers[key] && markers[key].element;
             if (!element || typeof element.select !== 'function') return;
-            var on = Number(key) === market.markerIndex;
+            var on = Number(key) === market.cityIndex;
             if (!!element.isSelected !== on) element.select(on);
         });
         var circles = els.map.querySelectorAll('#jvm-markers-group circle[data-index]');
         Array.prototype.forEach.call(circles, function(circle) {
             circle.classList.toggle('is-active',
-                Number(circle.getAttribute('data-index')) === market.markerIndex);
+                Number(circle.getAttribute('data-index')) === market.cityIndex);
         });
     }
 
@@ -247,27 +316,14 @@
             '<div class="gm-tip-city">' + esc(market.city) + ' · ' + esc(market.country) + '</div>';
     }
 
-    function spreadMarkers(markets) {
-        var groups = {};
-        markets.forEach(function(m) {
-            var key = Number(m.lat).toFixed(3) + ',' + Number(m.lng).toFixed(3);
-            if (!groups[key]) groups[key] = [];
-            groups[key].push(m);
-        });
-        Object.keys(groups).forEach(function(key) {
-            var group = groups[key];
-            group.forEach(function(m, i) {
-                if (group.length === 1) {
-                    m.mapLat = m.lat;
-                    m.mapLng = m.lng;
-                    return;
-                }
-                var angle = (Math.PI * 2 * i) / group.length - Math.PI / 2;
-                var radius = 0.55;
-                m.mapLat = m.lat + Math.sin(angle) * radius;
-                m.mapLng = m.lng + Math.cos(angle) * radius * 1.25;
-            });
-        });
+    function cityTooltipHTML(city) {
+        if (city.markets.length === 1) return mapTooltipHTML(city.markets[0]);
+        return '<div class="gm-tip-name">' + esc(city.city) + ' · ' + city.markets.length + ' 个指数</div>' +
+            city.markets.map(function(m) {
+                return '<div class="gm-tip-row gm-tip-multi"><span>' + esc(m.name) + '</span>' +
+                    '<span class="' + pctClass(m.changePct) + '">' + pctText(m.changePct) + '</span></div>';
+            }).join('') +
+            '<div class="gm-tip-city">' + esc(city.country) + ' · ' + esc(city.region) + '</div>';
     }
 
     function createMap() {
@@ -277,8 +333,7 @@
             window.setTimeout(createMap, 150);
             return;
         }
-        var markets = state.data.markets;
-        spreadMarkers(markets);
+        var cities = state.cities;
 
         mapEl.querySelectorAll('.gm-map-loading').forEach(function(node) { node.remove(); });
         if (state.map) return;
@@ -335,12 +390,12 @@
                     strokeOpacity: 0.6
                 }
             },
-            markers: markets.map(function(m) {
-                var color = pctColor(m.changePct);
-                var radius = Math.min(8.5, 4.2 + Math.abs(m.changePct) * 1.7);
+            markers: cities.map(function(city) {
+                var color = pctColor(cityAvgPct(city));
+                var radius = Math.min(9, 4.6 + cityMaxAbs(city) * 1.6);
                 return {
-                    name: m.name,
-                    coords: [m.mapLat, m.mapLng],
+                    name: city.city,
+                    coords: [city.lat, city.lng],
                     style: {
                         initial: {
                             r: radius,
@@ -364,12 +419,12 @@
                 };
             }),
             onMarkerTooltipShow: function(event, tooltip, index) {
-                var market = markets[index];
-                if (market) tooltip.text(mapTooltipHTML(market), true);
+                var city = cities[index];
+                if (city) tooltip.text(cityTooltipHTML(city), true);
             },
             onMarkerClick: function(event, index) {
-                var market = markets[index];
-                if (market) selectMarket(market.id, { scrollList: true });
+                var city = cities[index];
+                if (city) selectMarket(cityMover(city).id, { scrollList: true });
             }
         });
 
@@ -395,7 +450,7 @@
             .then(function(data) {
                 state.data = data;
                 state.loaded = true;
-                data.markets.forEach(function(m, i) { m.markerIndex = i; });
+                state.cities = buildCities(data.markets);
 
                 renderSummary(data);
                 renderList(data);

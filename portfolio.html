@@ -248,7 +248,7 @@
                 <section class="pf-panel" id="panel-global" role="tabpanel" aria-labelledby="tab-global" tabindex="0" hidden>
                     <div class="pf-panel-head">
                         <div class="pf-panel-title">GLOBAL // 全球股市</div>
-                        <p class="pf-panel-desc">15 个主要指数最近一个交易时段的收盘。地图节点按涨跌着色，越亮代表波动越大；点击节点或右侧榜单查看详情。</p>
+                        <p class="pf-panel-desc">15 个主要指数最近一个交易时段的收盘。地图按金融中心合并节点，同城的指数在节点与详情里并列；点击节点或右侧榜单查看详情。</p>
                     </div>
 
                     <div class="gm-summary" id="gmSummary">
@@ -258,7 +258,7 @@
                     <div class="gm-grid">
                         <div class="gm-map-wrap">
                             <div class="terminal-header">
-                                <span class="terminal-prompt">$</span> map --world --nodes=15 --color=change
+                                <span class="terminal-prompt">$</span> map --world --by=financial-center --color=change
                             </div>
                             <div class="gm-map-stage">
                                 <div class="gm-map" id="gmMap" role="img" aria-label="全球主要股指分布地图"></div>

@@ -407,6 +407,45 @@ body.pf-focus .pf-console-bar {
     color: var(--text-faint);
     letter-spacing: 0.04em;
 }
+.gm-city-rows {
+    display: flex;
+    flex: 1;
+    min-width: 240px;
+    flex-direction: column;
+    gap: 3px;
+    margin-left: auto;
+}
+.gm-city-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: baseline;
+    gap: 14px;
+    width: 100%;
+    padding: 4px 9px;
+    border: 1px solid transparent;
+    border-left: 2px solid rgba(155, 89, 255, 0.35);
+    background: rgba(155, 89, 255, 0.05);
+    font: inherit;
+    text-align: left;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+.gm-city-row:hover {
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 229, 255, 0.06);
+}
+.gm-city-row.is-sel {
+    border-color: rgba(0, 229, 255, 0.32);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 229, 255, 0.09);
+}
+.gm-city-name {
+    font-family: var(--font-chinese);
+    font-size: 0.74rem;
+    color: var(--text);
+}
+.gm-city-close { font-size: 0.72rem; }
+.gm-city-pct { min-width: 62px; text-align: right; }
 
 /* ---- Global rank list ---- */
 .gm-list {
@@ -533,6 +572,15 @@ body.pf-focus .pf-console-bar {
 }
 .gm-tip-row .up { color: var(--green); }
 .gm-tip-row .down { color: var(--red); }
+.gm-tip-multi { gap: 16px; }
+.gm-tip-multi span:first-child {
+    font-family: var(--font-chinese);
+    color: var(--text-muted);
+}
+.gm-tip-multi span:last-child {
+    margin-left: auto;
+    text-align: right;
+}
 .gm-tip-city {
     margin-top: 2px;
     font-size: 0.55rem;
@@ -813,6 +861,9 @@ body.pf-focus .pf-console-bar {
     }
     .gm-detail-quote { margin-left: 0; font-size: 0.92rem; }
     .gm-detail-time { display: none; }
+    .gm-city-rows { min-width: 0; margin-left: 0; }
+    .gm-city-row { gap: 10px; padding: 6px 8px; }
+    .gm-city-pct { min-width: 54px; }
     .gm-row { padding: 9px 12px; gap: 8px; }
     .gm-row::before { opacity: 0.11; }
     .gm-pct { min-width: 50px; }
