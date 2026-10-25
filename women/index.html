@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>世界的一半 · 60 国女性发展指标</title>
+<meta name="description" content="用世界银行的可比数据，把 60 个国家的女性处境摊开：教育、经济、政治、健康与安全、数字五个维度，19 个指标，1997 年到最新年份。">
+<meta property="og:title" content="世界的一半 · 60 国女性发展指标">
+<meta property="og:description" content="样本里多数国家的女性高等教育已超过男性，同一批国家里议会女性席位过四成的仍是少数。60 个国家、19 个可比指标的横向图景。">
+<meta name="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/women/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="世界的一半 · 60 国女性发展指标">
+<meta name="twitter:description" content="教育、经济、政治、健康、数字——60 个国家、19 个可比指标的横向图景。">
+<link rel="canonical" href="https://jillax.github.io/women/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="women.css">
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ---------- 报头 ---------- -->
+  <header class="masthead">
+    <div class="kicker">
+      <a href="https://jillax.github.io/">← Jillax</a>
+      <a href="../projects.html">全部作品</a>
+      <span>60 国样本</span>
+      <span>19 个可比指标</span>
+      <span data-stat="snapshotLabel">数据快照</span>
+    </div>
+    <h1>世界的一半</h1>
+    <p class="sub">60 个国家的女性发展指标 · 教育 / 经济 / 政治 / 健康与安全 / 数字</p>
+    <p class="deck">
+      样本里 <strong><b data-stat="gpiOver">—</b> 个国家</strong>的女性高等教育毛入学率已经高于男性，
+      <em>世界均值 <b data-stat="gpiWorld">—</b></em>；同一批国家里，国民议会女性席位过四成的只有
+      <strong><b data-stat="parl40">—</b> 个</strong>，不足一成的 <strong><b data-stat="parlUnder10">—</b> 个</strong>。
+      女性劳动参与率的世界均值是 <b data-stat="lfF">—</b>，男性 <b data-stat="lfM">—</b>；
+      孕产妇死亡率最低的国家是 <b data-stat="mmrMin">—</b>，最高的是
+      <strong><b data-stat="mmrMaxCountry">—</b> <b data-stat="mmrMax">—</b></strong>。
+      这一页不做综合指数，只把每一项摊开看：谁在前面、差距是从哪一头来的、以及哪些事情全球统计根本没在记。
+    </p>
+  </header>
+
+  <!-- ---------- 地图 ---------- -->
+  <div class="map-panel" aria-label="60 国女性指标世界地图">
+    <div class="map-cap">
+      <span>可着色指标 <b id="map-name">—</b></span>
+      <span>悬停看数 · 点击固定国家卡</span>
+    </div>
+    <div class="map-stage" id="map-stage">
+      <div class="map-svg" id="map"></div>
+      <div class="tip" id="map-tip" role="status" aria-live="polite"></div>
+      <div class="map-card" id="map-card" hidden></div>
+    </div>
+    <div class="switch map-switch" id="map-switch" role="group" aria-label="切换地图着色指标"></div>
+    <div class="map-legend" id="map-legend"></div>
+  </div>
+
+  <section class="stats" id="stats" aria-label="总览"></section>
+
+  <nav class="page-nav" aria-label="章节导航">
+    <a href="#s01"><b>01</b>教育</a>
+    <a href="#s02"><b>02</b>经济</a>
+    <a href="#s03"><b>03</b>政治</a>
+    <a href="#s04"><b>04</b>健康与安全</a>
+    <a href="#s05"><b>05</b>数字与科技</a>
+    <a href="#s06"><b>06</b>二十年</a>
+    <a href="#s07"><b>07</b>读法</a>
+  </nav>
+
+  <noscript>
+    <p class="noscript">这一页的地图、排名与趋势图由 JavaScript 生成。原始数据完整地放在
+      <a href="data.js">data.js</a>（指标、国家、逐年序列）里，可以直接读。</p>
+  </noscript>
+
+  <!-- ---------- 01 教育 ---------- -->
+  <section class="chapter c-edu" id="s01">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">01 / 教育</div><h2>教室里先到的是女生</h2></div>
+      <div class="sec-lead">
+        <p>把性别平等指数（女性毛入学率 ÷ 男性毛入学率）按国家排开，中线是 1.00。
+          右侧是女性多于男性，左侧是女性少于男性。</p>
+      </div>
+    </div>
+    <div class="switch" id="edu-switch" role="group" aria-label="切换教育指标"></div>
+    <p class="note" id="edu-note"></p>
+    <div id="edu-rank"></div>
+    <div class="reads" id="edu-reads"></div>
+  </section>
+
+  <!-- ---------- 02 经济 ---------- -->
+  <section class="chapter c-econ" id="s02">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">02 / 经济</div><h2>参与率的两端都不算意外</h2></div>
+      <div class="sec-lead">
+        <p>空心点是男性，实心点是女性，两点之间是同一国家里的性别差。
+          按女性数值从高到低排。</p>
+      </div>
+    </div>
+    <div class="switch" id="econ-switch" role="group" aria-label="切换经济指标"></div>
+    <p class="note" id="econ-note"></p>
+    <div id="econ-rank"></div>
+    <div class="legend" id="econ-legend"></div>
+    <div class="reads" id="econ-reads"></div>
+  </section>
+
+  <!-- ---------- 03 政治 ---------- -->
+  <section class="chapter c-pol" id="s03">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">03 / 政治</div><h2>最慢的一栏</h2></div>
+      <div class="sec-lead">
+        <p>政治代表是四个维度里唯一按"份额"直接可数的：议会席位、部长职位。
+          其余三项都在往上走的时候，这一项的形状最像台阶。</p>
+      </div>
+    </div>
+    <div class="switch" id="pol-switch" role="group" aria-label="切换政治指标"></div>
+    <p class="note" id="pol-note"></p>
+    <div class="pol-grid">
+      <div id="pol-rank"></div>
+      <figure class="chart">
+        <figcaption>世界平均值，1997 年至最新<span data-pol-line-year> 年</span></figcaption>
+        <div id="pol-line"></div>
+      </figure>
+    </div>
+    <div class="reads" id="pol-reads"></div>
+  </section>
+
+  <!-- ---------- 04 健康与安全 ---------- -->
+  <section class="chapter c-health" id="s04">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">04 / 健康与安全</div><h2>生与死的距离</h2></div>
+      <div class="sec-lead">
+        <p>横轴是女性出生时预期寿命，纵轴是孕产妇死亡率（对数刻度），气泡大小是人口。
+          一个国家活得久，不代表生得安全。</p>
+      </div>
+    </div>
+    <figure class="chart">
+      <figcaption>女性预期寿命 × 孕产妇死亡率（每 10 万活产，2023 年模型估计）</figcaption>
+      <div id="health-scatter"></div>
+      <div class="legend" id="health-legend"></div>
+    </figure>
+    <div class="switch" id="health-switch" role="group" aria-label="切换健康指标"></div>
+    <p class="note" id="health-note"></p>
+    <div id="health-rank"></div>
+    <div class="reads" id="health-reads"></div>
+  </section>
+
+  <!-- ---------- 05 数字与科技 ---------- -->
+  <section class="chapter c-tech" id="s05">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">05 / 数字与科技</div><h2>数据最薄的一栏</h2></div>
+      <div class="sec-lead">
+        <p>「科技行业里有多少女性」——全球没有一套可比统计在回答这个问题。
+          能取到的最近似指标是互联网使用率的性别差，其次是女性受高等教育与管理岗的占比。</p>
+      </div>
+    </div>
+    <p class="note" id="tech-note"></p>
+    <div id="tech-rank"></div>
+    <div class="legend" id="tech-legend"></div>
+    <div class="reads" id="tech-reads"></div>
+  </section>
+
+  <!-- ---------- 06 二十年 ---------- -->
+  <section class="chapter c-trend" id="s06">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">06 / 二十年</div><h2>同一条时间轴</h2></div>
+      <div class="sec-lead">
+        <p>换指标、换国家，看形状：入学率与上网率是连续爬坡，议会席位随选举跳一级再持平，
+          孕产妇死亡率是一条慢降的线。</p>
+      </div>
+    </div>
+    <div class="switch" id="trend-switch" role="group" aria-label="切换趋势指标"></div>
+    <div class="pick">
+      <div class="pick-chips" id="trend-chips"></div>
+      <label class="pick-add">
+        <span class="sr-only">添加国家</span>
+        <select id="trend-select" aria-label="添加对比国家"></select>
+      </label>
+    </div>
+    <figure class="chart">
+      <figcaption id="trend-cap"></figcaption>
+      <div id="trend-line"></div>
+    </figure>
+    <div class="reads" id="trend-reads"></div>
+  </section>
+
+  <!-- ---------- 07 读法 ---------- -->
+  <section class="chapter c-method" id="s07">
+    <div class="sec-head">
+      <div class="sec-title"><div class="secno">07 / 读法</div><h2>这张表能说什么，不能说什么</h2></div>
+      <div class="sec-lead">
+        <p>本页全部数字来自世界银行世界发展指标与性别数据门户，按国家逐年取原始值，
+          缺失不插值、不补齐、不折算。</p>
+      </div>
+    </div>
+
+    <div class="method">
+      <b>口径</b>
+      <p>每个指标取<em>该指标窗口内的最新可得年份</em>，不是统一年份。排名条右侧的年份就是该国这一项的实际年份：
+        议会席位多为 2025 年，账户与上网率多为 2024 年，女性识字率可能停在 2010 年代。</p>
+      <p>劳动参与率与管理岗是<em>国际劳工组织模型估计</em>，孕产妇死亡率是<em>联合国机构联合模型估计</em>，
+        上网率是<em>国际电信联盟估计</em>——都不是各国自己的登记数。它们可比，但不是实测。</p>
+      <p><em>15–64 岁</em>是劳动参与率的年龄口径；失业率的口径是 15 岁以上。两栏不能直接相减。</p>
+      <p>本页<em>不自造综合指数</em>。四个维度之间没有可加的换算关系，合成一个分数只会把口径分歧藏进权重里。
+        外部综合指数另有一套方法（世界经济论坛《全球性别差距报告》、联合国开发计划署性别不平等指数），
+        本站不代替它们发布数值。</p>
+      <p>地图边界取自 Natural Earth 110m（world-atlas），<em>仅作位置示意，不表示任何边界立场</em>。
+        样本外的国家不着色；新加坡等面积过小的国家以圆点标出。</p>
+    </div>
+
+    <div class="method">
+      <b>这套指标看不见什么</b>
+      <p>无酬家务与照护劳动的时间、同工同酬的薪酬差、财产与继承权、生育自主权、
+        以及针对女性的人身暴力——绝大多数国家没有年度可比序列。
+        「18 岁前结婚」只有 <b data-stat="nChildMarriage">—</b> 个样本国有数，
+        「过去 12 个月遭受伴侣暴力」只有 <b data-stat="nVaw">—</b> 个。
+        缺口最集中在两类国家：已经不再调查的高收入国家，和长期没有调查的部分中东与非洲国家。</p>
+      <p>反过来的例子也成立：女性劳动参与率最高的国家里，既有瑞典、荷兰（八成二），也有坦桑尼亚（八成二）。
+        同样是"在业"，一边是带薪、有社保、可申诉的岗位，一边是非正规农业与家庭帮工。
+        <em>参与率衡量的是有没有被算进经济统计，不是有没有得到体面工作。</em></p>
+    </div>
+
+    <h3 class="tbl-title">指标表</h3>
+    <div class="tbl-scroll">
+      <table class="tbl" id="indicator-table">
+        <thead>
+          <tr><th>指标</th><th>世界银行代码</th><th>单位</th><th>有数国家</th><th>年份范围</th><th>口径提示</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <footer>
+      <p>数据源：World Bank World Development Indicators / Gender Data Portal。
+        接口最近一次更新 <b data-stat="lastUpdated">—</b>，本页快照生成于 <b data-stat="generated">—</b>，
+        抓取与投影脚本 <code>scripts/fetch-women.mjs</code>（无第三方运行时依赖，图表为原生 SVG）。</p>
+      <p class="src">
+        <a href="https://data.worldbank.org/topic/gender" target="_blank" rel="noopener">世界银行性别数据门户</a> ·
+        <a href="https://datatopics.worldbank.org/gender/" target="_blank" rel="noopener">Gender 指标说明</a> ·
+        <a href="../projects.html">全部作品</a> ·
+        <a href="https://jillax.github.io/">返回首页</a>
+      </p>
+      <p>原始数据是公开的，结论不是。看到任何一句话不确定，回到 <a href="data.js">data.js</a> 里核对该国的逐年序列。</p>
+    </footer>
+  </section>
+</div>
+
+<script src="data.js"></script>
+<script src="world.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
