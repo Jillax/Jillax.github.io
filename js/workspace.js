@@ -132,6 +132,21 @@
         focusBtn = byId('pfFocusBtn');
         focusExit = byId('pfFocusExit');
 
+        // 双击打开的 file:// 页面里 fetch('data/*.json') 会被浏览器一律拒绝，
+        // 各面板只会显示“加载失败”，这里把真正原因说清楚。
+        if (window.location.protocol === 'file:') {
+            setStatus('FILE:// RESTRICTED', true);
+            var warn = document.createElement('div');
+            warn.className = 'pf-filewarn';
+            warn.innerHTML =
+                '<b>file:// 预览受限</b> 浏览器禁止本地页面读取 data/*.json，' +
+                '持仓、行情与时间轴都会显示加载失败。' +
+                '在本目录起一个服务：<code>python -m http.server 8000</code> → ' +
+                '<code>http://127.0.0.1:8000/portfolio.html</code>；' +
+                '或看线上版 <a href="https://jillax.github.io/portfolio.html">jillax.github.io/portfolio.html</a>。';
+            workspace.insertBefore(warn, tablist);
+        }
+
         tabs.forEach(function(tab) {
             tab.addEventListener('click', function() {
                 activate(tab.getAttribute('data-panel'));
