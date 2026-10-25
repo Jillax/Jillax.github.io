@@ -125,7 +125,32 @@
             <div class="update-note" id="updateNote"></div>
         </div>
 
-
+        <!-- ===== Look-through ===== -->
+        <div class="section" id="lookthrough">
+            <div class="pf-section-title">&gt; LOOK-THROUGH // 资金穿透</div>
+            <p class="lt-lead" id="ltLead">正在按指数权重重算底层持仓…</p>
+            <div class="terminal-table-wrap">
+                <div class="terminal-header">
+                    <span class="terminal-prompt">$</span> expose --source=sp500,nasdaq100 --depth=holding
+                </div>
+                <div class="lt-scroll">
+                    <table class="portfolio-table lt-table">
+                        <thead>
+                            <tr>
+                                <th>股票</th>
+                                <th>标普权重</th>
+                                <th>纳指权重</th>
+                                <th>隐含敞口</th>
+                                <th>占总资产</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lookthroughBody"></tbody>
+                    </table>
+                </div>
+                <div class="lt-scroll-hint">← 左右滑动查看全部列 →</div>
+            </div>
+            <div class="lt-note" id="ltNote"></div>
+        </div>
 
         <!-- ===== Projection ===== -->
         <div class="section">
@@ -169,6 +194,7 @@
 
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/lookthrough.js"></script>
     <script src="js/portfolio.js"></script>
 
 </body>

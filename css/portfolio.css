@@ -506,6 +506,76 @@
     font-family: var(--font-mono);
 }
 
+/* ---- 资金穿透 ---- */
+.lt-lead {
+    margin: 0 0 20px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    font-family: var(--font-chinese);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+.lt-lead strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    margin: 0 2px;
+    text-shadow: 0 0 12px var(--neon-cyan-soft);
+}
+.lt-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.lt-table { min-width: 580px; }
+.lt-table td:first-child { white-space: nowrap; }
+.lt-table .num {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+.lt-ticker {
+    display: inline-block;
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+.lt-weight-miss { color: var(--text-faint); }
+.lt-scroll-hint {
+    display: none;
+    padding: 8px 14px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-align: center;
+    color: var(--text-faint);
+    border-top: 1px solid var(--border);
+}
+.lt-residual td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+.lt-residual td:first-child { font-family: var(--font-chinese); }
+.lt-note {
+    margin-top: 14px;
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+}
+.lt-note a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--border-glow);
+}
+.lt-note a:hover { color: var(--neon-cyan); }
+
 /* ---- 预测区块 ---- */
 .projection-blended {
     text-align: center;
@@ -627,6 +697,7 @@
     .pf-hero-stat-value { font-size: 1.4rem; }
     .portfolio-table { font-size: 0.8rem; }
     .portfolio-table th, .portfolio-table td { padding: 8px 6px; }
+    .lt-scroll-hint { display: block; }
     .sub-row td:first-child { padding-left: 24px; }
     .allocation-grid { grid-template-columns: 1fr; }
     .projection-grid { grid-template-columns: 1fr; }

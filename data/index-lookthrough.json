@@ -1,0 +1,54 @@
+{
+  "updated": "2026-10-25",
+  "assumption": "按指数基金 100% 复制成分股穿透，未扣除现金仓位、费用与跟踪误差",
+  "indices": {
+    "sp500": {
+      "label": "标普500",
+      "portfolioItem": "标普500",
+      "source": "SPY holdings",
+      "sourceUrl": "https://stockanalysis.com/etf/spy/holdings/",
+      "asOf": "2026-10-22",
+      "holdings": [
+        { "ticker": "NVDA", "name": "英伟达", "weight": 7.78 },
+        { "ticker": "AAPL", "name": "苹果", "weight": 7.70 },
+        { "ticker": "MSFT", "name": "微软", "weight": 5.86 },
+        { "ticker": "AMZN", "name": "亚马逊", "weight": 3.72 },
+        { "ticker": "GOOGL", "name": "Alphabet", "weight": 2.88, "group": "GOOGL" },
+        { "ticker": "AVGO", "name": "博通", "weight": 2.33 },
+        { "ticker": "GOOG", "name": "Alphabet", "weight": 2.31, "group": "GOOGL" },
+        { "ticker": "META", "name": "Meta", "weight": 2.17 },
+        { "ticker": "TSLA", "name": "特斯拉", "weight": 1.60 },
+        { "ticker": "LLY", "name": "礼来", "weight": 1.58 },
+        { "ticker": "BRK.B", "name": "伯克希尔·哈撒韦", "weight": 1.54 },
+        { "ticker": "MU", "name": "美光科技", "weight": 1.46 },
+        { "ticker": "JPM", "name": "摩根大通", "weight": 1.35 },
+        { "ticker": "AMD", "name": "超威半导体", "weight": 1.26 },
+        { "ticker": "XOM", "name": "埃克森美孚", "weight": 1.11 }
+      ]
+    },
+    "ndx": {
+      "label": "纳斯达克100",
+      "portfolioItem": "纳斯达克100",
+      "source": "QQQ holdings",
+      "sourceUrl": "https://stockanalysis.com/etf/qqq/holdings/",
+      "asOf": "2026-10-23",
+      "holdings": [
+        { "ticker": "NVDA", "name": "英伟达", "weight": 8.09 },
+        { "ticker": "AAPL", "name": "苹果", "weight": 8.07 },
+        { "ticker": "MSFT", "name": "微软", "weight": 6.19 },
+        { "ticker": "MU", "name": "美光科技", "weight": 4.35 },
+        { "ticker": "AMZN", "name": "亚马逊", "weight": 4.25 },
+        { "ticker": "AMD", "name": "超威半导体", "weight": 3.70 },
+        { "ticker": "TSLA", "name": "特斯拉", "weight": 3.11 },
+        { "ticker": "META", "name": "Meta", "weight": 3.04 },
+        { "ticker": "GOOGL", "name": "Alphabet", "weight": 2.99, "group": "GOOGL" },
+        { "ticker": "GOOG", "name": "Alphabet", "weight": 2.79, "group": "GOOGL" },
+        { "ticker": "SPCX", "name": "SpaceX", "weight": 2.78 },
+        { "ticker": "WMT", "name": "沃尔玛", "weight": 2.56 },
+        { "ticker": "AVGO", "name": "博通", "weight": 2.43 },
+        { "ticker": "INTC", "name": "英特尔", "weight": 2.01 },
+        { "ticker": "PLTR", "name": "Palantir", "weight": 1.99 }
+      ]
+    }
+  }
+}

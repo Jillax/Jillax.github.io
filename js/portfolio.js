@@ -15,10 +15,76 @@ document.addEventListener('DOMContentLoaded', function() {
             var updateDateEl = document.getElementById('updateDate');
             if (updateDateEl) updateDateEl.textContent = data.updated;
             document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
+            loadLookThrough(data);
         })
         .catch(function() {
             document.getElementById('totalValue').textContent = '加载失败';
         });
+
+    function loadLookThrough(portfolio) {
+        var body = document.getElementById('lookthroughBody');
+        if (!body) return;
+        fetch('data/index-lookthrough.json')
+            .then(function(r) { return r.json(); })
+            .then(function(weights) {
+                renderLookThrough(window.LookThrough.aggregateLookthrough(portfolio, weights));
+            })
+            .catch(function() {
+                document.getElementById('ltLead').textContent = '穿透数据加载失败。';
+            });
+    }
+
+    function renderLookThrough(result) {
+        var fmtPct = function(v) { return (v * 100).toFixed(1) + '%'; };
+        var fmtWeight = function(v) { return v.toFixed(2) + '%'; };
+        var miss = '<span class="lt-weight-miss">—</span>';
+        var largest = result.rows[0];
+        var top10Share = result.usEquity > 0 ? result.top10Value / result.usEquity : 0;
+
+        document.getElementById('ltLead').innerHTML =
+            '最大单一敞口 <strong>' + largest.name + '</strong> ' + fmt(largest.value) +
+            '，占总资产 ' + fmtPct(largest.share) +
+            '；前十大个股合计 ' + fmt(result.top10Value) +
+            '，占美股权益 ' + fmtPct(top10Share) +
+            '。标普与纳指重叠的 ' + result.overlapCount + ' 只已合并计算。';
+
+        var html = '';
+        result.rows.forEach(function(row) {
+            html += '<tr>' +
+                '<td>' + row.name + '<span class="lt-ticker">' + row.tickers + '</span></td>' +
+                '<td class="num">' + (row.weights.sp500 ? fmtWeight(row.weights.sp500) : miss) + '</td>' +
+                '<td class="num">' + (row.weights.ndx ? fmtWeight(row.weights.ndx) : miss) + '</td>' +
+                '<td class="num">' + fmt(row.value) + '</td>' +
+                '<td class="num">' + fmtPct(row.share) + '</td></tr>';
+        });
+        result.residuals.forEach(function(res) {
+            html += '<tr class="lt-residual">' +
+                '<td>' + res.name + '</td>' +
+                '<td class="num">' + (res.key === 'sp500' ? '余 ' + fmtWeight(res.residualWeight) : miss) + '</td>' +
+                '<td class="num">' + (res.key === 'ndx' ? '余 ' + fmtWeight(res.residualWeight) : miss) + '</td>' +
+                '<td class="num">' + fmt(res.value) + '</td>' +
+                '<td class="num">' + fmtPct(res.share) + '</td></tr>';
+        });
+
+        var equityShare = result.totalAssets > 0 ? result.usEquity / result.totalAssets : 0;
+        html += '<tr class="total-row">' +
+            '<td>美股指数基金合计</td>' +
+            '<td class="num">' + miss + '</td>' +
+            '<td class="num">' + miss + '</td>' +
+            '<td class="num">' + fmt(result.usEquity) + '</td>' +
+            '<td class="num">' + fmtPct(equityShare) + '</td></tr>';
+
+        document.getElementById('lookthroughBody').innerHTML = html;
+
+        var sources = result.indices.map(function(index) {
+            return index.source + ' ' + index.asOf;
+        }).join(' · ');
+        document.getElementById('ltNote').innerHTML =
+            '权重：' + sources + '（来源：<a href="' + result.indices[0].sourceUrl +
+            '" target="_blank" rel="noopener">stockanalysis.com</a>）。' +
+            '按 100% 复制指数穿透，未扣除基金现金仓位、费用与跟踪误差；' +
+            '标普与纳指重叠的个股按两只基金分别计算后相加；金额为人民币口径，未做汇率拆分。';
+    }
 
     function calcItem(item) {
         if (item.subItems) {
