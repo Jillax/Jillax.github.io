@@ -1,0 +1,209 @@
+{
+  "updated": "2026-10-25",
+  "note": "只收录可公开核验的节点；计划项会随任务与监管调整。价格为发布时口径，不构成投资建议。",
+  "tracks": [
+    {
+      "id": "ai",
+      "label": "AI 进程",
+      "en": "ARTIFICIAL INTELLIGENCE",
+      "tagline": "从聊天框走向能自己干活的代理",
+      "metrics": [
+        {
+          "label": "前沿上下文",
+          "value": "1.05M",
+          "unit": "tokens",
+          "note": "GPT-6 Astra"
+        },
+        {
+          "label": "共享输出窗口",
+          "value": "1M",
+          "unit": "tokens",
+          "note": "Gemini 4 Argon"
+        },
+        {
+          "label": "Opus 5.5 成本",
+          "value": "-40%",
+          "unit": "vs Opus 5",
+          "note": "官方典型负载口径"
+        },
+        {
+          "label": "开源旗舰规模",
+          "value": "1.6T",
+          "unit": "MoE 总参数",
+          "note": "DeepSeek V4-Pro"
+        }
+      ],
+      "milestones": [
+        {
+          "date": "2026-10-13",
+          "title": "Gemini 4 Argon 全面开放",
+          "org": "Google DeepMind",
+          "status": "released",
+          "detail": "9 月 30 日公布、10 月中旬扩至 Gemini 应用与 API。输入、思考、输出共享 100 万 token 窗口；单次输出通过续写协议逐段拼到上限。介绍价 $2 / $10 每百万 token。",
+          "sourceLabel": "Google",
+          "source": "https://blog.google/"
+        },
+        {
+          "date": "2026-09-22",
+          "title": "Claude Opus 5.5 发布",
+          "org": "Anthropic",
+          "status": "released",
+          "detail": "主打代理式编码与知识工作，官方称典型负载下运行成本比 Opus 5 低 40%。",
+          "sourceLabel": "Anthropic",
+          "source": "https://www.anthropic.com/news/claude-opus-5-5"
+        },
+        {
+          "date": "2026-09-03",
+          "title": "GPT-6 Astra 限量开放",
+          "org": "OpenAI",
+          "status": "released",
+          "detail": "新旗舰支持约 105 万 token 上下文与计算机操作，先面向企业小范围开放，9 月 4 日扩展到公开版本。",
+          "sourceLabel": "OpenAI",
+          "source": "https://platform.openai.com/docs/changelog"
+        },
+        {
+          "date": "2026-04-24",
+          "title": "DeepSeek V4 预览版开源",
+          "org": "DeepSeek",
+          "status": "released",
+          "detail": "V4-Pro 为 1.6T 总参数、49B 激活的 MoE，V4-Flash 为 284B / 13B；百万上下文与开放权重同时给到。",
+          "sourceLabel": "DeepSeek",
+          "source": "https://api-docs.deepseek.com/news/news260424/"
+        },
+        {
+          "date": "2026-03-25",
+          "title": "Claude Code 自动模式",
+          "org": "Anthropic",
+          "status": "released",
+          "detail": "用分类器实时评估每次工具调用，减少逐条授权，同时拦截高风险操作。编码代理开始从「每一步都问」转向「先干活、遇险再停」。",
+          "sourceLabel": "Anthropic",
+          "source": "https://www.anthropic.com/news/claude-code-auto-mode"
+        },
+        {
+          "date": "2025-01-20",
+          "title": "DeepSeek-R1 开源推理模型",
+          "org": "DeepSeek",
+          "status": "released",
+          "detail": "用强化学习复现 o1 级推理，权重与论文同步公开，把「推理能力」拉进开源阵营。",
+          "sourceLabel": "DeepSeek",
+          "source": "https://github.com/deepseek-ai/DeepSeek-R1"
+        },
+        {
+          "date": "2024-08-01",
+          "title": "欧盟《人工智能法案》生效",
+          "org": "European Union",
+          "status": "released",
+          "detail": "按风险分级监管：禁止性条款 2025 年起适用，通用模型义务 2025 年 8 月生效，高风险系统规则随后分阶段落地。",
+          "sourceLabel": "欧盟委员会",
+          "source": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+        }
+      ]
+    },
+    {
+      "id": "space",
+      "label": "航天进程",
+      "en": "AEROSPACE & LAUNCH",
+      "tagline": "星舰从「能飞」走到「能送卫星入轨」",
+      "metrics": [
+        {
+          "label": "星舰累计试飞",
+          "value": "14",
+          "unit": "次",
+          "note": "截至 Flight 14"
+        },
+        {
+          "label": "SpaceX 2026 发射",
+          "value": "100",
+          "unit": "次",
+          "note": "8 月 19 日破百"
+        },
+        {
+          "label": "单次部署 V3",
+          "value": "26",
+          "unit": "颗",
+          "note": "Flight 14"
+        },
+        {
+          "label": "载人登月目标",
+          "value": "2028",
+          "unit": "年",
+          "note": "NASA 现行架构"
+        }
+      ],
+      "milestones": [
+        {
+          "date": "2026-11-08",
+          "title": "Flight 15：挑战两级同时回收",
+          "org": "SpaceX",
+          "status": "planned",
+          "detail": "计划首次同时用发射塔机械臂接住超重助推器与返回的飞船。日期与回收方案仍可能随测试与 FAA 审批调整。",
+          "sourceLabel": "SpaceX",
+          "source": "https://www.spacex.com/updates/"
+        },
+        {
+          "date": "2026-09-28",
+          "title": "星舰首次入轨",
+          "org": "SpaceX",
+          "status": "released",
+          "detail": "Flight 14 从 Starbase 二号台升空，首次进入稳定地球轨道并部署 26 颗 Starlink V3。飞行中一台发动机提前关机，飞船约 3 小时后溅落。",
+          "sourceLabel": "SpaceX",
+          "source": "https://www.spacex.com/updates/"
+        },
+        {
+          "date": "2026-08-19",
+          "title": "SpaceX 年度第 100 次发射",
+          "org": "SpaceX",
+          "status": "released",
+          "detail": "范登堡的猎鹰 9 送 24 颗星链入轨，2026 年轨道发射数破百；猎鹰九号当年保持全胜。",
+          "sourceLabel": "Spaceflight Now",
+          "source": "https://spaceflightnow.com/"
+        },
+        {
+          "date": "2026-07-24",
+          "title": "Flight 13：首次部署真实 V3 卫星",
+          "org": "SpaceX",
+          "status": "released",
+          "detail": "V3 构型第二次飞行，20 颗 Starlink V3 随飞船走亚轨道弧线，其中 6 颗带相机拍摄隔热瓦；飞船在印度洋溅落。",
+          "sourceLabel": "SpaceX",
+          "source": "https://www.spacex.com/updates/"
+        },
+        {
+          "date": "2026-05-22",
+          "title": "Flight 12：V3 首飞",
+          "org": "SpaceX",
+          "status": "released",
+          "detail": "新版星舰、超重助推器、猛禽 3 发动机与 Starbase 二号台首次合体飞行，部署 20 颗星链模拟器与 2 颗改装测试星。",
+          "sourceLabel": "SpaceX",
+          "source": "https://www.spacex.com/updates/"
+        },
+        {
+          "date": "2026-04-01",
+          "title": "Artemis II 载人绕月",
+          "org": "NASA",
+          "status": "released",
+          "detail": "4 名宇航员乘猎户座绕月飞行，4 月 10 日溅落圣迭戈外海，全程 9 天 1 小时 32 分。这是 1972 年后首次载人飞离近地轨道。",
+          "sourceLabel": "NASA",
+          "source": "https://www.nasa.gov/mission/artemis-ii/"
+        },
+        {
+          "date": "2026-03-03",
+          "title": "NASA 重排 Artemis 架构",
+          "org": "NASA",
+          "status": "released",
+          "detail": "新增 2027 年近地轨道着陆器演练，把首次载人登月顺延到 2028 年，并目标此后每年一次月面任务。",
+          "sourceLabel": "NASA",
+          "source": "https://www.nasa.gov/directorates/esdmd/nasa-strengthens-artemis-adds-mission-refines-overall-architecture/"
+        },
+        {
+          "date": "2024-10-13",
+          "title": "星舰首次「筷子」回收",
+          "org": "SpaceX",
+          "status": "released",
+          "detail": "Flight 5 中发射塔机械臂首次夹住返回的超重助推器，轨道级助推器回收从溅落进入塔捕时代。",
+          "sourceLabel": "SpaceX",
+          "source": "https://www.spacex.com/updates/"
+        }
+      ]
+    }
+  ]
+}

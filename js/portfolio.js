@@ -3,23 +3,86 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', function() {
+    var chartRefs = { allocation: null, projection: null };
+    var portfolioData = null;
+    var lastProjectionTotals = null;
+    var holdingsChartsDrawn = false;
+    var chartsDeferred = false;
+
+    function isHoldingsActive() {
+        if (window.PortfolioWorkspace) {
+            return window.PortfolioWorkspace.getActive() === 'holdings';
+        }
+        var panel = document.getElementById('panel-holdings');
+        return !panel || !panel.hidden;
+    }
+
+    function resizeCharts() {
+        [chartRefs.allocation, chartRefs.projection].forEach(function(chart) {
+            if (chart) chart.resize();
+        });
+    }
+
+    document.addEventListener('portfolio:tabchange', function(e) {
+        if (!e.detail || e.detail.id !== 'holdings') return;
+        if (portfolioData && chartsDeferred) {
+            drawHoldingsCharts(portfolioData);
+            chartsDeferred = false;
+        } else {
+            window.setTimeout(resizeCharts, 60);
+        }
+    });
+
+    document.addEventListener('portfolio:focuschange', function() {
+        window.setTimeout(resizeCharts, 380);
+    });
+
     fetch('data/portfolio.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
+            portfolioData = data;
             renderStats(data);
             renderPctBars(data);
             renderTable(data);
-            renderProjection(data);
+            renderProjectionTable(data);
             if (document.getElementById('lineChart')) renderLineChart(data);
-            renderChart(data);
+
+            if (isHoldingsActive()) {
+                drawHoldingsCharts(data);
+            } else {
+                chartsDeferred = true;
+            }
+
             var updateDateEl = document.getElementById('updateDate');
             if (updateDateEl) updateDateEl.textContent = data.updated;
             document.getElementById('updateNote').textContent = '更新于 ' + data.updated;
+
+            var total = totalAssets(data);
+            var itemCount = countItems(data);
+            var holdingsMeta = document.getElementById('tabMetaHoldings');
+            if (holdingsMeta) {
+                holdingsMeta.textContent = itemCount + ' 项 · ' + (total / 10000).toFixed(2) + ' 万';
+            }
+
+            if (window.PortfolioWorkspace) window.PortfolioWorkspace.setStatus('SYNC OK');
             loadLookThrough(data);
         })
         .catch(function() {
             document.getElementById('totalValue').textContent = '加载失败';
+            if (window.PortfolioWorkspace) {
+                window.PortfolioWorkspace.setStatus('DATA ERR', true);
+            }
         });
+
+    function drawHoldingsCharts(data) {
+        if (holdingsChartsDrawn) {
+            resizeCharts();
+            return;
+        }
+        holdingsChartsDrawn = true;
+        renderChart(data);
+        drawProjectionChart(lastProjectionTotals);
+    }
 
     function loadLookThrough(portfolio) {
         var body = document.getElementById('lookthroughBody');
@@ -27,10 +90,18 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('data/index-lookthrough.json')
             .then(function(r) { return r.json(); })
             .then(function(weights) {
-                renderLookThrough(window.LookThrough.aggregateLookthrough(portfolio, weights));
+                var result = window.LookThrough.aggregateLookthrough(portfolio, weights);
+                renderLookThrough(result);
+                var meta = document.getElementById('tabMetaLookthrough');
+                if (meta && result.rows.length) {
+                    meta.textContent = '最大 ' + result.rows[0].tickers.split(' / ')[0] +
+                        ' ' + (result.rows[0].share * 100).toFixed(1) + '%';
+                }
             })
             .catch(function() {
                 document.getElementById('ltLead').textContent = '穿透数据加载失败。';
+                var meta = document.getElementById('tabMetaLookthrough');
+                if (meta) meta.textContent = '数据读取失败';
             });
     }
 
@@ -95,6 +166,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return totalValue;
         }
         return item.value || 0;
+    }
+
+    function totalAssets(data) {
+        var total = 0;
+        data.categories.forEach(function(cat) {
+            cat.items.forEach(function(item) {
+                total += calcItem(item);
+            });
+        });
+        return total;
+    }
+
+    function countItems(data) {
+        var count = 0;
+        data.categories.forEach(function(cat) {
+            count += cat.items.length;
+        });
+        return count;
     }
 
     function fmt(n) { return '¥' + Math.round(n).toLocaleString(); }
@@ -241,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         var ctx = document.getElementById('allocationChart').getContext('2d');
-        new Chart(ctx, {
+        chartRefs.allocation = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: labels,
@@ -372,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function renderProjection(data) {
+    function renderProjectionTable(data) {
         var returnRates = {
             '定期存款': 0.0125,
             '货币基金': 0.015,
@@ -401,6 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             return sum;
         });
+        lastProjectionTotals = projTotals;
 
         var weightedSum = 0;
         items.forEach(function(item) {
@@ -432,9 +522,16 @@ document.addEventListener('DOMContentLoaded', function() {
             '<td class="num">' + fmt(projTotals[3]) + '</td>' +
             '<td class="num">' + fmt(projTotals[5]) + '</td></tr>';
         tbody.innerHTML = html;
+    }
 
+    function drawProjectionChart(projTotals) {
+        if (!projTotals) return;
         var canvas = document.getElementById('projectionChart');
         if (!canvas) return;
+        if (chartRefs.projection) {
+            chartRefs.projection.resize();
+            return;
+        }
         var ctx = canvas.getContext('2d');
         var parent = canvas.parentElement;
         canvas.width = parent.offsetWidth;
@@ -443,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var labelColor = 'rgba(212, 200, 239, 0.5)';
         var gridColor = 'rgba(155, 89, 255, 0.06)';
 
-        new Chart(ctx, {
+        chartRefs.projection = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['现在', '1年', '2年', '3年', '4年', '5年'],

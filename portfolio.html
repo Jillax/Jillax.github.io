@@ -16,6 +16,8 @@
     <title>投资 · Jillax</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/portfolio.css">
+    <link rel="stylesheet" href="js/vendor/jsvectormap.min.css">
+    <link rel="stylesheet" href="css/portfolio-dashboard.css">
     <script src="js/vendor/chart.umd.js"></script>
 </head>
 <body data-page="portfolio">
@@ -55,146 +57,253 @@
             </div>
         </div>
 
-        <!-- ===== Allocation ===== -->
-        <div class="section">
-            <div class="pf-section-title">&gt; ALLOCATION // 资产配置</div>
-            <div class="allocation-grid">
-                <div class="chart-box">
-                    <div class="chart-canvas-wrap">
-                        <canvas id="allocationChart"></canvas>
-                    </div>
+        <!-- ===== Terminal Workspace ===== -->
+        <div class="pf-workspace" id="pfWorkspace">
+            <div class="pf-console-bar">
+                <div class="pf-console-left">
+                    <span class="pf-console-led" aria-hidden="true"></span>
+                    <span class="pf-console-path">jillax@frontier:~/portfolio</span>
+                    <span class="pf-console-sep">//</span>
+                    <span class="pf-console-cmd" id="pfCmd">open holdings</span>
                 </div>
-                <div class="pct-bars" id="pctBars">
-                    <div class="pct-row">
-                        <div class="pct-header">
-                            <div class="pct-label">
-                                <span class="pct-dot" style="background:var(--neon-cyan)"></span>
-                                <span class="pct-name">现金类</span>
+                <div class="pf-console-right">
+                    <span class="pf-console-status" id="pfStatus"><span class="pf-console-dot" aria-hidden="true"></span>DATA SYNC</span>
+                    <span class="pf-console-clock" id="pfClock" aria-hidden="true">--:--:--</span>
+                    <span class="pf-console-keys" aria-hidden="true">← → 切换 · F 全屏 · ESC 退出</span>
+                    <button type="button" class="pf-focus-btn" id="pfFocusBtn" aria-pressed="false">[ 全屏 ]</button>
+                    <button type="button" class="pf-focus-exit" id="pfFocusExit">[ 退出全屏 ]</button>
+                </div>
+            </div>
+
+            <div class="pf-tabs" role="tablist" aria-label="投资面板">
+                <button type="button" class="pf-tab is-active" id="tab-holdings" role="tab"
+                        aria-selected="true" aria-controls="panel-holdings" tabindex="0" data-panel="holdings">
+                    <span class="pf-tab-top"><span class="pf-tab-idx">01</span><span class="pf-tab-label">持仓</span></span>
+                    <span class="pf-tab-sub">HOLDINGS</span>
+                    <span class="pf-tab-meta" id="tabMetaHoldings">资产快照</span>
+                </button>
+                <button type="button" class="pf-tab" id="tab-lookthrough" role="tab"
+                        aria-selected="false" aria-controls="panel-lookthrough" tabindex="-1" data-panel="lookthrough">
+                    <span class="pf-tab-top"><span class="pf-tab-idx">02</span><span class="pf-tab-label">穿透</span></span>
+                    <span class="pf-tab-sub">LOOK-THROUGH</span>
+                    <span class="pf-tab-meta" id="tabMetaLookthrough">指数 → 个股</span>
+                </button>
+                <button type="button" class="pf-tab" id="tab-global" role="tab"
+                        aria-selected="false" aria-controls="panel-global" tabindex="-1" data-panel="global">
+                    <span class="pf-tab-top"><span class="pf-tab-idx">03</span><span class="pf-tab-label">全球</span></span>
+                    <span class="pf-tab-sub">GLOBAL MARKETS</span>
+                    <span class="pf-tab-meta" id="tabMetaGlobal">15 个指数</span>
+                </button>
+                <button type="button" class="pf-tab" id="tab-frontier" role="tab"
+                        aria-selected="false" aria-controls="panel-frontier" tabindex="-1" data-panel="frontier">
+                    <span class="pf-tab-top"><span class="pf-tab-idx">04</span><span class="pf-tab-label">前沿</span></span>
+                    <span class="pf-tab-sub">FRONTIER TECH</span>
+                    <span class="pf-tab-meta" id="tabMetaFrontier">AI / 航天</span>
+                </button>
+            </div>
+
+            <div class="pf-panels">
+                <!-- ===== 01 Holdings ===== -->
+                <section class="pf-panel is-active" id="panel-holdings" role="tabpanel" aria-labelledby="tab-holdings" tabindex="0">
+                    <div class="pf-panel-head">
+                        <div class="pf-panel-title">PORTFOLIO // 持仓总览</div>
+                        <p class="pf-panel-desc">资产配置、逐项持仓与五年保守推演。点击带箭头的一行可以展开子项。</p>
+                    </div>
+
+                    <div class="section">
+                        <div class="pf-section-title">&gt; ALLOCATION // 资产配置</div>
+                        <div class="allocation-grid">
+                            <div class="chart-box">
+                                <div class="chart-canvas-wrap">
+                                    <canvas id="allocationChart"></canvas>
+                                </div>
                             </div>
-                            <span class="pct-value">--</span>
-                        </div>
-                        <div class="pct-track">
-                            <div class="pct-fill" style="background:var(--neon-cyan)"></div>
-                        </div>
-                    </div>
-                    <div class="pct-row">
-                        <div class="pct-header">
-                            <div class="pct-label">
-                                <span class="pct-dot" style="background:var(--amber)"></span>
-                                <span class="pct-name">债券类</span>
+                            <div class="pct-bars" id="pctBars">
+                                <div class="pct-row">
+                                    <div class="pct-header">
+                                        <div class="pct-label">
+                                            <span class="pct-dot" style="background:var(--neon-cyan)"></span>
+                                            <span class="pct-name">现金类</span>
+                                        </div>
+                                        <span class="pct-value">--</span>
+                                    </div>
+                                    <div class="pct-track">
+                                        <div class="pct-fill" style="background:var(--neon-cyan)"></div>
+                                    </div>
+                                </div>
+                                <div class="pct-row">
+                                    <div class="pct-header">
+                                        <div class="pct-label">
+                                            <span class="pct-dot" style="background:var(--amber)"></span>
+                                            <span class="pct-name">债券类</span>
+                                        </div>
+                                        <span class="pct-value">--</span>
+                                    </div>
+                                    <div class="pct-track">
+                                        <div class="pct-fill" style="background:var(--amber)"></div>
+                                    </div>
+                                </div>
+                                <div class="pct-row">
+                                    <div class="pct-header">
+                                        <div class="pct-label">
+                                            <span class="pct-dot" style="background:var(--purple)"></span>
+                                            <span class="pct-name">权益类</span>
+                                        </div>
+                                        <span class="pct-value">--</span>
+                                    </div>
+                                    <div class="pct-track">
+                                        <div class="pct-fill" style="background:var(--purple)"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="pct-value">--</span>
-                        </div>
-                        <div class="pct-track">
-                            <div class="pct-fill" style="background:var(--amber)"></div>
                         </div>
                     </div>
-                    <div class="pct-row">
-                        <div class="pct-header">
-                            <div class="pct-label">
-                                <span class="pct-dot" style="background:var(--purple)"></span>
-                                <span class="pct-name">权益类</span>
+
+                    <div class="section">
+                        <div class="pf-section-title">&gt; HOLDINGS // 持仓明细</div>
+                        <div class="terminal-table-wrap">
+                            <div class="terminal-header">
+                                <span class="terminal-prompt">$</span> portfolio.list --updated <span id="updateDate">--</span>
                             </div>
-                            <span class="pct-value">--</span>
+                            <table class="portfolio-table">
+                                <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>现值</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody"></tbody>
+                            </table>
                         </div>
-                        <div class="pct-track">
-                            <div class="pct-fill" style="background:var(--purple)"></div>
+                        <div class="update-note" id="updateNote"></div>
+                    </div>
+
+                    <div class="section">
+                        <div class="pf-section-title">&gt; PROJECTION // 未来预测</div>
+                        <div class="projection-blended" id="projectionBlended"></div>
+                        <div class="projection-grid">
+                            <div class="projection-table-wrap">
+                                <div class="terminal-header">
+                                    <span class="terminal-prompt">$</span> simulate --years=5 --conservative
+                                </div>
+                                <table class="projection-table">
+                                    <thead>
+                                        <tr>
+                                            <th>资产</th>
+                                            <th>当前市值</th>
+                                            <th>预计年化</th>
+                                            <th>1年后</th>
+                                            <th>3年后</th>
+                                            <th>5年后</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="projectionTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="projection-chart-box">
+                                <div class="chart-canvas-wrap" style="height:200px">
+                                    <canvas id="projectionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="projection-note">
+                            注：年化收益率为保守估算，基于各类资产长期历史表现（近5-10年）。<br>
+                            定投中的资产按当前市值计算，未考虑未来追加投入。实际收益因市场波动可能显著不同。
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </section>
 
-        <!-- ===== Holdings ===== -->
-        <div class="section">
-            <div class="pf-section-title">&gt; HOLDINGS // 持仓明细</div>
-            <div class="terminal-table-wrap">
-                <div class="terminal-header">
-                    <span class="terminal-prompt">$</span> portfolio.list --updated <span id="updateDate">--</span>
-                </div>
-                <table class="portfolio-table">
-                    <thead>
-                        <tr>
-                            <th>名称</th>
-                            <th>现值</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-            <div class="update-note" id="updateNote"></div>
-        </div>
-
-        <!-- ===== Look-through ===== -->
-        <div class="section" id="lookthrough">
-            <div class="pf-section-title">&gt; LOOK-THROUGH // 资金穿透</div>
-            <p class="lt-lead" id="ltLead">正在按指数权重重算底层持仓…</p>
-            <div class="terminal-table-wrap">
-                <div class="terminal-header">
-                    <span class="terminal-prompt">$</span> expose --source=sp500,nasdaq100 --depth=holding
-                </div>
-                <div class="lt-scroll">
-                    <table class="portfolio-table lt-table">
-                        <thead>
-                            <tr>
-                                <th>股票</th>
-                                <th>标普权重</th>
-                                <th>纳指权重</th>
-                                <th>隐含敞口</th>
-                                <th>占总资产</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lookthroughBody"></tbody>
-                    </table>
-                </div>
-                <div class="lt-scroll-hint">← 左右滑动查看全部列 →</div>
-            </div>
-            <div class="lt-note" id="ltNote"></div>
-        </div>
-
-        <!-- ===== Projection ===== -->
-        <div class="section">
-            <div class="pf-section-title">&gt; PROJECTION // 未来预测</div>
-            <div class="projection-blended" id="projectionBlended"></div>
-            <div class="projection-grid">
-                <div class="projection-table-wrap">
-                    <div class="terminal-header">
-                        <span class="terminal-prompt">$</span> simulate --years=5 --conservative
+                <!-- ===== 02 Look-through ===== -->
+                <section class="pf-panel" id="panel-lookthrough" role="tabpanel" aria-labelledby="tab-lookthrough" tabindex="0" hidden>
+                    <div class="pf-panel-head">
+                        <div class="pf-panel-title">EXPOSURE // 资金穿透</div>
+                        <p class="pf-panel-desc">把标普 500 与纳指 100 的基金市值按成分权重拆回个股。你以为买的是指数，实际最大单一敞口可能更集中。</p>
                     </div>
-                    <table class="projection-table">
-                        <thead>
-                            <tr>
-                                <th>资产</th>
-                                <th>当前市值</th>
-                                <th>预计年化</th>
-                                <th>1年后</th>
-                                <th>3年后</th>
-                                <th>5年后</th>
-                            </tr>
-                        </thead>
-                        <tbody id="projectionTableBody"></tbody>
-                    </table>
-                </div>
-                <div class="projection-chart-box">
-                    <div class="chart-canvas-wrap" style="height:200px">
-                        <canvas id="projectionChart"></canvas>
+
+                    <p class="lt-lead" id="ltLead">正在按指数权重重算底层持仓…</p>
+                    <div class="terminal-table-wrap">
+                        <div class="terminal-header">
+                            <span class="terminal-prompt">$</span> expose --source=sp500,nasdaq100 --depth=holding
+                        </div>
+                        <div class="lt-scroll">
+                            <table class="portfolio-table lt-table">
+                                <thead>
+                                    <tr>
+                                        <th>股票</th>
+                                        <th>标普权重</th>
+                                        <th>纳指权重</th>
+                                        <th>隐含敞口</th>
+                                        <th>占总资产</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lookthroughBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="lt-scroll-hint">← 左右滑动查看全部列 →</div>
                     </div>
-                </div>
-            </div>
-            <div class="projection-note">
-                注：年化收益率为保守估算，基于各类资产长期历史表现（近5-10年）。<br>
-                定投中的资产按当前市值计算，未考虑未来追加投入。实际收益因市场波动可能显著不同。
+                    <div class="lt-note" id="ltNote"></div>
+                </section>
+
+                <!-- ===== 03 Global markets ===== -->
+                <section class="pf-panel" id="panel-global" role="tabpanel" aria-labelledby="tab-global" tabindex="0" hidden>
+                    <div class="pf-panel-head">
+                        <div class="pf-panel-title">GLOBAL // 全球股市</div>
+                        <p class="pf-panel-desc">15 个主要指数最近一个交易时段的收盘。地图节点按涨跌着色，越亮代表波动越大；点击节点或右侧榜单查看详情。</p>
+                    </div>
+
+                    <div class="gm-summary" id="gmSummary">
+                        <span class="gm-loading">正在读取全球行情…</span>
+                    </div>
+
+                    <div class="gm-grid">
+                        <div class="gm-map-wrap">
+                            <div class="terminal-header">
+                                <span class="terminal-prompt">$</span> map --world --nodes=15 --color=change
+                            </div>
+                            <div class="gm-map-stage">
+                                <div class="gm-map" id="gmMap" role="img" aria-label="全球主要股指分布地图"></div>
+                                <div class="gm-map-hint" id="gmMapHint">拖动可平移 · 悬停查看指数</div>
+                            </div>
+                            <div class="gm-detail" id="gmDetail">
+                                <span class="gm-detail-empty">点击地图节点或右侧榜单，读取单个指数详情。</span>
+                            </div>
+                        </div>
+
+                        <div class="gm-list-wrap">
+                            <div class="terminal-header">
+                                <span class="terminal-prompt">$</span> rank --by=change --desc
+                            </div>
+                            <div class="gm-list" id="gmList">
+                                <div class="gm-loading">加载中…</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gm-note" id="gmNote"></div>
+                </section>
+
+                <!-- ===== 04 Frontier tech ===== -->
+                <section class="pf-panel" id="panel-frontier" role="tabpanel" aria-labelledby="tab-frontier" tabindex="0" hidden>
+                    <div class="pf-panel-head">
+                        <div class="pf-panel-title">FRONTIER // 前沿科技</div>
+                        <p class="pf-panel-desc">只记录能公开核验的节点。两条线：AI 模型与代理能力，星舰与载人登月。计划项会随任务调整。</p>
+                    </div>
+
+                    <div class="ft-tracks" id="ftTracks">
+                        <div class="ft-loading">正在解析前沿科技时间轴…</div>
+                    </div>
+                    <div class="ft-note" id="ftNote"></div>
+                </section>
             </div>
         </div>
-
-
     </div>
-
     </main>
 
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
     <script src="js/lookthrough.js"></script>
+    <script src="js/workspace.js"></script>
+    <script src="js/global-markets.js"></script>
+    <script src="js/frontier.js"></script>
     <script src="js/portfolio.js"></script>
 
 </body>
