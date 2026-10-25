@@ -92,15 +92,6 @@
       "featured": false
     },
     {
-      "id": "timeline",
-      "title": "大学编年",
-      "blurb": "1,777 局 Dota、811 条豆瓣标记、5,012 条 B站收藏和 110 条投稿，按学期对齐；再单列易方达与摩根的账户收益。",
-      "href": "timeline.html",
-      "tags": ["学期", "2026"],
-      "group": "记录",
-      "featured": false
-    },
-    {
       "id": "portfolio",
       "title": "投资组合",
       "blurb": "自己的持仓。总资产走势、现金债券权益的配置，以及可以展开的明细。",
