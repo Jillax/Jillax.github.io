@@ -216,7 +216,7 @@
       <span>按披露金额从大到小</span>
     </div>
     <h1>披露上的国家资本</h1>
-    <p class="deck">下面这张表是各家<strong>自己披露、而且标了金额</strong>的持仓，按金额从大到小排。挪威用官网的全球持仓，最大的一笔是美国国债，然后是英伟达、台积电、三星。淡马锡用年报里的主要投资。沙特年报给的是投资池，不是单一公司。</p>
+    <p class="deck">下面这张表是各家<strong>自己披露、而且标了金额</strong>的持仓，按金额从大到小排。挪威用的是 2026 年 6 月 30 日那张股票表，7077 家，最大的是英伟达，后面有台积电、三星和阿斯麦。淡马锡用年报里的主要投资。沙特年报给的是投资池，不是单一公司。</p>
   </header>
   <p class="method">没有标金额的不进这张表。GIC、中投、韩国投资公社、澳大利亚未来基金和阿拉斯加公布的是资产类别，穆巴达拉也是。阿布扎比只有区间。外管局投资公司、科威特和卡塔尔没有这样的名单。类别比例仍留在每只基金的卡片里，不拿来和单一公司比大小。</p>
   <section class="stats" id="stats"></section>
@@ -332,7 +332,7 @@ function renderStats() {
 
 function renderStories() {
   const items = [
-    ["nbim", "最大一笔是国债", "官网持仓里，美国国债排在英伟达前面。台积电和三星也在前十。"],
+    ["nbim", "股票表第一是英伟达", "7077 家，2026 年 6 月 30 日。台积电、三星、阿斯麦都在前十。"],
     ["temasek", "星展第一", "年报点名最大三笔：星展、新加坡电信、PSA。"],
     ["pif", "池，不是个股", "年报最大的一筐是沙特公司股权，没有单独给沙特阿美标价。"],
     ["gic", "没有公司名单", "只公布股票 56%、固收 22%、实物资产 22%。"]
@@ -384,7 +384,7 @@ function positions() {
     .sort((a, b) => b.v - a.v);
 }
 function renderHolds() {
-  const chips = [["all", "全部"], ["equity", "股票与公司"], ["bond", "债券"], ["pool", "投资池"]];
+  const chips = [["all", "全部"], ["equity", "股票与公司"], ["pool", "投资池"]];
   document.getElementById("hold-filters").innerHTML = chips.map(([id, label]) =>
     `<button class="chip" data-hold="${id}" aria-pressed="${holdFilter === id}">${label}</button>`).join("");
   const rows = positions();
@@ -478,9 +478,35 @@ function renderDetail() {
         </div>
       </div>
       ${holds ? `<h3 style="font-family:Noto Serif SC,serif">披露持仓，按金额排序</h3><p class="note">${esc(f.topNote || "")}</p><table><thead><tr><th>持仓</th><th>类型</th><th class="r">说明</th><th class="r">金额</th></tr></thead><tbody>${holds}</tbody></table>` : `<p class="note">${esc(f.topNote || "没有标金额的单笔持仓。")}</p>`}
+      ${f.id === "nbim" ? `<h3 style="font-family:Noto Serif SC,serif">全部股票</h3><input id="nbim-q" type="search" placeholder="按英文搜公司、国家或行业" aria-label="搜挪威股票" style="background:var(--sheet);border:1px solid var(--line);padding:8px 10px;width:min(320px,100%);margin:8px 0"><div id="nbim-full"></div>` : ""}
       <div class="links">${(f.sources || []).map(s => `<a href="${esc(s.u)}" target="_blank" rel="noreferrer">${esc(s.t)}</a>`).join("")}</div>
     </div>`;
   if (location.hash !== "#" + f.id) history.replaceState(null, "", "#" + f.id);
+  if (f.id === "nbim") loadNbimTable("");
+}
+
+let NBIM_EQ = null;
+function loadNbimTable(q) {
+  const box = document.getElementById("nbim-full");
+  if (!box) return;
+  const draw = (rows) => {
+    const query = q.trim().toLowerCase();
+    const hit = query ? rows.filter(r => (r[0] + " " + r[1] + " " + r[2]).toLowerCase().includes(query)) : rows;
+    const show = hit.slice(0, 40);
+    if (query && !hit.length) {
+      box.innerHTML = `<p class="note">名单用的是英文注册名，中文名搜不到。试试 Apple、Taiwan Semiconductor、Pharmaceuticals 这样的词。</p>`;
+      return;
+    }
+    box.innerHTML = `<p class="note">${query ? "匹配 " + hit.length + " 家，显示前 " + show.length + " 家" : "按市值排序，先显示前 40 家，一共 " + rows.length + " 家"}。</p><table><thead><tr><th>公司</th><th>国家</th><th>行业</th><th class="r">持股</th><th class="r">市值</th></tr></thead><tbody>${
+      show.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="r">${esc(r[4])}</td><td class="r">${esc(money(r[3]))}</td></tr>`).join("")
+    }</tbody></table>`;
+  };
+  if (NBIM_EQ) { draw(NBIM_EQ); return; }
+  box.textContent = "正在读取股票表。";
+  fetch("nbim-eq-2026-06-30.json").then(r => r.json()).then(rows => {
+    NBIM_EQ = rows;
+    if (document.getElementById("nbim-full")) draw(rows);
+  }).catch(() => { if (box.isConnected) box.textContent = "股票表没有载入。"; });
 }
 
 function render() {
@@ -518,6 +544,7 @@ document.body.addEventListener("input", (event) => {
     renderHolds();
     renderMix();
   }
+  if (event.target.id === "nbim-q") loadNbimTable(event.target.value);
 });
 
 if (location.hash && fund(location.hash.slice(1))) selected = location.hash.slice(1);

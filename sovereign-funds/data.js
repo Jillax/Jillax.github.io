@@ -18,7 +18,7 @@ window.SWF = {
       native: "22,683 亿克朗",
       book: 1000000000000,
       bookKind: "13F",
-      bookNote: "Norges Bank 2026 年 6 月 30 日的 13F，8 月 12 日提交，1,617 只美国上市证券，合计约 1.00 万亿美元。全球股票、债券和房地产在 NBIM 官网，一年更新两次，这一版没有把那八千多家公司逐行抄进来。",
+      bookNote: "Norges Bank 2026 年 6 月 30 日的 13F，8 月 12 日提交，1,617 只美国上市证券，合计约 1.00 万亿美元。NBIM 官网那份全球股票表已经整份抄进这张卡片底部，7077 家可以搜；债券和房地产仍按资产类别给。",
       nPositions: 1617,
       disclosure: "full",
       tags: ["石油"],
@@ -40,31 +40,31 @@ window.SWF = {
         { y: "2026H1", v: 226830 }
       ],
       top: [
-        { n: "美国国债", v: 209985074689, kind: "bond", place: "美国" },
         { n: "英伟达", v: 61847326779, kind: "equity", place: "美国", own: "1.28%" },
         { n: "苹果", v: 52718798466, kind: "equity", place: "美国", own: "1.24%" },
         { n: "字母表", v: 50466058081, kind: "equity", place: "美国", own: "1.17%" },
         { n: "微软", v: 35113298063, kind: "equity", place: "美国", own: "1.27%" },
-        { n: "台积电", v: 33525417924, kind: "equity", place: "台湾", own: "1.70%" },
+        { n: "台积电", v: 33525417924, kind: "equity", place: "台湾", own: "1.7%" },
         { n: "亚马逊", v: 31867316197, kind: "equity", place: "美国", own: "1.24%" },
-        { n: "日本国债", v: 25499399054, kind: "bond", place: "日本" },
-        { n: "博通", v: 23402660001, kind: "equity", place: "美国", own: "1.30%" },
+        { n: "博通", v: 23402660001, kind: "equity", place: "美国", own: "1.3%" },
         { n: "三星电子", v: 22511513484, kind: "equity", place: "韩国", own: "1.88%" },
-        { n: "英国国债", v: 19677079635, kind: "bond", place: "英国" },
         { n: "阿斯麦", v: 17686252280, kind: "equity", place: "荷兰", own: "2.32%" },
         { n: "SK 海力士", v: 17592727909, kind: "equity", place: "韩国", own: "1.44%" },
         { n: "Meta", v: 17047898622, kind: "equity", place: "美国", own: "1.19%" },
-        { n: "德国国债", v: 16427777915, kind: "bond", place: "德国" },
         { n: "美光", v: 16241304702, kind: "equity", place: "美国", own: "1.25%" },
-        { n: "特斯拉", v: 15720016270, kind: "equity", place: "美国", own: "1.00%" },
-        { n: "礼来", v: 13118943141, kind: "equity", place: "美国", own: "1.16%" }
+        { n: "特斯拉", v: 15720016270, kind: "equity", place: "美国", own: "1%" },
+        { n: "礼来", v: 13118943141, kind: "equity", place: "美国", own: "1.16%" },
+        { n: "超威", v: 12356895031, kind: "equity", place: "美国", own: "1.3%" },
+        { n: "伯克希尔", v: 11758288942, kind: "equity", place: "美国", own: "0.59%" },
+        { n: "摩根大通", v: 11659697545, kind: "equity", place: "美国", own: "1.34%" },
+        { n: "埃克森美孚", v: 7972622950, kind: "equity", place: "美国", own: "1.41%" }
       ],
-      topNote: "NBIM 自己公布的 2026 年 6 月 30 日持仓，按市值排序。股票和政府债放在一起。字母表的 A 类和 C 类已经合并。后面还有七千多家公司，这里只列最大的 18 笔。",
-      blurb: "最大的一笔不是股票，是美国国债，约 2100 亿美元。股票里英伟达、苹果、字母表、微软之后，是台积电和三星。官网把全部持仓挂出来，半年报的基金回报是 9.4%。",
+      topNote: "NBIM 2026 年 6 月 30 日的股票表，按美元市值排序。一共 7077 家，合计约 1.661 万亿美元。字母表已合并。卡片底部可以搜全部公司。这张表不含国债。",
+      blurb: "股票表里最大的是英伟达，618 亿美元，持股 1.28%。后面是苹果、字母表、微软，然后是台积电和三星。7077 家股票合计约 1.661 万亿美元。",
       sources: [
+        { t: "股票持仓表，2026-06-30", u: "https://www.nbim.no/api/investments/v2/report/?assetType=eq&date=2026-06-30&fileType=csv" },
         { t: "NBIM 2026 半年报", u: "https://www.nbim.no/en/news-and-insights/reports/2026/half-year-report-2026/" },
-        { t: "基金价值", u: "https://www.nbim.no/en/investments/the-funds-value/" },
-        { t: "全部投资，2026-06-30", u: "https://www.nbim.no/en/investments/all-investments/" }
+        { t: "全部投资", u: "https://www.nbim.no/en/investments/all-investments/" }
       ]
     },
     {
