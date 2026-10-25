@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>山东的十六本账 · 地市生产总值与一般公共预算收入</title>
-<meta name="description" content="山东省 16 个地级市 2023—2025 年的地区生产总值与一般公共预算收入：谁大、谁的钱更实、两年间位次有没有变。">
+<meta name="description" content="山东省 16 个地级市 2021—2025 年的地区生产总值与一般公共预算收入：五年怎么走、谁大、谁的钱更实、位次变没变。附十六市交互地图与五年时间轴。">
 <meta property="og:title" content="山东的十六本账 · 地市生产总值与一般公共预算收入">
 <meta property="og:description" content="GDP 名义增长 12.09%，财政收入只增 5.35%。十六个市的位次，三年一个都没换过。">
 <meta name="og:type" content="article">
@@ -50,9 +50,13 @@
   a { color: var(--claim); }
   .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
   button { font: inherit; color: inherit; }
+  section { scroll-margin-top: 20px; }
 
-  /* ---------- header ---------- */
-  header { padding: 40px 0 0; }
+  /* ---------- masthead：左文右图 ---------- */
+  .masthead { display: grid; gap: 4px 48px; padding: 40px 0 0; }
+  @media (min-width: 1000px) {
+    .masthead { grid-template-columns: minmax(0, 7fr) minmax(0, 6fr); align-items: start; }
+  }
   .kicker {
     display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
     font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
@@ -69,12 +73,12 @@
     font-family: var(--serif); font-size: clamp(17px, 2vw, 22px);
     color: var(--muted); margin: 12px 0 0; line-height: 1.5;
   }
-  .deck { max-width: 74ch; font-size: 17px; line-height: 1.78; margin: 20px 0 0; }
+  .deck { max-width: 60ch; font-size: 17px; line-height: 1.78; margin: 20px 0 0; }
   .deck strong { font-weight: 700; }
   .deck em { font-style: normal; border-bottom: 2px solid var(--claim); padding-bottom: 1px; }
   .method {
     background: var(--sheet); border: 1px solid var(--line);
-    padding: 16px 18px; margin: 24px 0 0; font-size: 14px; line-height: 1.72; color: var(--muted);
+    padding: 16px 18px; margin: 26px 0 0; font-size: 14px; line-height: 1.72; color: var(--muted);
   }
   .method b {
     display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
@@ -83,6 +87,63 @@
   .method p { margin: 0 0 7px; }
   .method p:last-child { margin-bottom: 0; }
   .method em { color: var(--ink); font-style: normal; font-weight: 500; }
+
+  /* ---------- map panel ---------- */
+  .map-panel {
+    background: var(--sheet); border: 1px solid var(--line);
+    padding: 13px 15px 13px; margin-top: 26px;
+  }
+  .map-cap {
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .map-svg { margin-top: 8px; }
+  .map-svg svg { width: 100%; height: auto; display: block; }
+  .map-svg .region {
+    cursor: pointer; transition: fill .3s;
+    stroke: var(--sheet); stroke-width: 1.2; outline: none;
+  }
+  .map-svg .region:hover, .map-svg .region.focus { stroke: var(--ink); stroke-width: 2; }
+  .map-svg .region.pinned { stroke: var(--claim); stroke-width: 2.4; }
+  .map-svg .region:focus-visible { stroke: var(--ink); stroke-width: 2.4; }
+  .map-svg text { font-family: var(--sans); pointer-events: none; }
+  .map-svg.mode-circle text { fill: #f6f3ea; }
+  .map-svg.mode-metric text {
+    fill: var(--ink); paint-order: stroke;
+    stroke: var(--sheet); stroke-width: 3px; stroke-linejoin: round;
+  }
+  .map-switch { margin-top: 10px; }
+  .switch { display: flex; flex-wrap: wrap; gap: 7px; }
+  .switch button {
+    background: transparent; border: 1px solid var(--line);
+    padding: 5px 11px; cursor: pointer; font-size: 13.5px;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .switch button:hover { border-color: var(--ink); }
+  .switch button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+  .map-legend {
+    display: flex; align-items: center; gap: 8px 12px; flex-wrap: wrap;
+    margin-top: 10px; font-size: 12px; color: var(--muted); min-height: 16px;
+  }
+  .map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .map-legend i { width: 10px; height: 10px; display: inline-block; }
+  .map-legend .grad { flex: 1 1 110px; min-width: 90px; height: 8px; }
+  .map-legend .lv { font-family: var(--mono); letter-spacing: -0.02em; white-space: nowrap; }
+  .map-hint { font-size: 11.5px; color: var(--muted); margin: 8px 0 0; }
+  .map-card { border-top: 1px solid var(--line); margin-top: 11px; padding-top: 10px; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .card-name { font-family: var(--serif); font-weight: 700; font-size: 19px; }
+  .card-circle { font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .card-circle i { width: 8px; height: 8px; display: inline-block; }
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px 14px; margin-top: 9px; }
+  .card-grid span { display: block; font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .card-grid b {
+    display: block; font-family: var(--mono); font-weight: 500; font-size: 14.5px;
+    letter-spacing: -0.02em; margin-top: 2px; white-space: nowrap;
+  }
+  .card-grid b i { font-style: normal; color: var(--muted); font-size: 11px; font-weight: 400; }
+  @media (max-width: 560px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 
   /* ---------- stats ---------- */
   .stats {
@@ -97,8 +158,20 @@
   .stat b.accent { color: var(--claim); }
   .stat span { display: block; font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
 
-  /* ---------- sections ---------- */
-  section { padding-top: 48px; }
+  /* ---------- page nav ---------- */
+  .page-nav {
+    display: flex; flex-wrap: wrap; gap: 4px 26px;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line);
+    padding: 11px 0; margin-top: 26px;
+  }
+  .page-nav a {
+    font-size: 14px; color: var(--body); text-decoration: none; white-space: nowrap;
+  }
+  .page-nav a b { font-family: var(--mono); font-weight: 500; font-size: 11.5px; color: var(--claim); margin-right: 6px; }
+  .page-nav a:hover { color: var(--ink); box-shadow: inset 0 -2px 0 var(--claim); }
+
+  /* ---------- sections：左标题右内容 ---------- */
+  section.chapter { padding-top: 52px; }
   .secno {
     font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
     color: var(--claim); text-transform: uppercase;
@@ -107,18 +180,12 @@
     font-family: var(--serif); font-size: clamp(25px, 3.2vw, 32px);
     line-height: 1.4; margin: 7px 0 0; font-weight: 700; letter-spacing: -0.02em;
   }
+  @media (min-width: 920px) {
+    .sec-head { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 12px 40px; }
+  }
+  .sec-head { border-top: 1px solid var(--ink); padding-top: 14px; }
   .note { color: var(--muted); font-size: 14px; line-height: 1.75; margin: 10px 0 0; max-width: 84ch; }
   .note em { font-style: normal; color: var(--body); font-weight: 500; }
-
-  /* ---------- toggle ---------- */
-  .switch { display: flex; flex-wrap: wrap; gap: 7px; margin: 18px 0 0; }
-  .switch button {
-    background: transparent; border: 1px solid var(--line);
-    padding: 6px 12px; cursor: pointer; font-size: 14px;
-    transition: background .15s, color .15s, border-color .15s;
-  }
-  .switch button:hover { border-color: var(--ink); }
-  .switch button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
 
   /* ---------- bar chart ---------- */
   .bars { border-top: 1px solid var(--ink); margin: 14px 0 0; padding-right: 4px; }
@@ -145,6 +212,20 @@
   .chart-box text { font-family: var(--mono); }
   .swipe { display: none; font-size: 12px; color: var(--muted); margin: 8px 0 0; letter-spacing: .04em; }
 
+  /* ---------- timeline 五年轨迹 ---------- */
+  .tl-prov { border: 1px solid var(--line); background: var(--sheet); padding: 12px 12px 8px; }
+  .tl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tl-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); margin: 14px 0 0;
+  }
+  .tl-cell { background: var(--sheet); padding: 9px 9px 5px; }
+  .tl-cell svg { width: 100%; height: auto; display: block; }
+  @media (max-width: 1000px) { .tl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) {
+    .tl-grid { grid-template-columns: repeat(2, minmax(224px, 1fr)); min-width: 560px; }
+  }
+
   /* ---------- dumbbell ---------- */
   .dumb svg { width: 100%; height: auto; display: block; }
 
@@ -168,7 +249,7 @@
   }
   .tbl-controls button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
 
-  /* ---------- readings ---------- */
+  /* ---------- readings：宽屏双栏 ---------- */
   .reads { display: grid; gap: 0; margin: 18px 0 0; border-top: 1px solid var(--ink); }
   .read {
     display: grid; grid-template-columns: 54px 1fr; gap: 18px;
@@ -184,6 +265,10 @@
   .read .caution {
     font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--line);
     padding-left: 12px; margin-top: 10px;
+  }
+  @media (min-width: 1000px) {
+    .reads { display: block; columns: 2; column-gap: 48px; column-rule: 1px solid var(--line); }
+    .read { break-inside: avoid; }
   }
 
   footer { margin-top: 56px; border-top: 1px solid var(--ink); padding: 20px 0 56px; font-size: 13px; color: var(--muted); }
@@ -213,30 +298,44 @@
   }
   @media print {
     body { background: #fff; }
-    .switch, .tbl-controls { display: none; }
+    .switch, .tbl-controls, .page-nav { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header>
-    <div class="kicker">
-      <a href="https://jillax.github.io/">← Jillax</a>
-      <a href="../projects.html">全部作品</a>
-      <span>2025 年度</span>
-      <span>16 个地级市</span>
+  <!-- ---------- 报头：左文右图 ---------- -->
+  <div class="masthead">
+    <header>
+      <div class="kicker">
+        <a href="https://jillax.github.io/">← Jillax</a>
+        <a href="../projects.html">全部作品</a>
+        <span>2025 年度</span>
+        <span>16 个地级市</span>
+      </div>
+      <h1>山东的十六本账</h1>
+      <p class="sub">地区生产总值与一般公共预算收入，2021 — 2025</p>
+      <p class="deck">
+        2025 年山东全省生产总值 <strong>103197.50 亿元</strong>，一般公共预算收入 <strong>7864.26 亿元</strong>。
+        把十六个市分开看，最有意思的不是谁排第几，而是两张榜之间的距离：从 2023 到 2025 年，
+        <em>全省 GDP 名义增长 12.09%，财政收入只增长 5.35%</em>。
+        分市看这道缝更整齐——GDP 前四的青岛、济南、烟台、潍坊，财政收入对 GDP 的弹性都没有超过
+        <strong>0.34</strong>；其余十二市，没有一个低于 <strong>0.50</strong>。而位次，一个都没动。
+      </p>
+    </header>
+
+    <div class="map-panel" aria-label="山东省十六市交互地图">
+      <div class="map-cap">
+        <span>山东省 · 十六市</span>
+        <span>悬停看数 · 点击固定</span>
+      </div>
+      <div class="map-svg" id="map"></div>
+      <div class="switch map-switch" id="map-switch" role="group" aria-label="地图着色指标"></div>
+      <div class="map-legend" id="map-legend"></div>
+      <div class="map-card" id="map-card" aria-live="polite"></div>
     </div>
-    <h1>山东的十六本账</h1>
-    <p class="sub">地区生产总值与一般公共预算收入，2023 — 2025</p>
-    <p class="deck">
-      2025 年山东全省生产总值 <strong>103197.50 亿元</strong>，一般公共预算收入 <strong>7864.26 亿元</strong>。
-      把十六个市分开看，最有意思的不是谁排第几，而是两张榜之间的距离：从 2023 到 2025 年，
-      <em>全省 GDP 名义增长 12.09%，财政收入只增长 5.35%</em>。
-      分市看这道缝更整齐——GDP 前四的青岛、济南、烟台、潍坊，财政收入对 GDP 的弹性都没有超过
-      <strong>0.34</strong>；其余十二市，没有一个低于 <strong>0.50</strong>。而位次，一个都没动。
-    </p>
-  </header>
+  </div>
 
   <div class="method">
     <b>口径</b>
@@ -247,125 +346,201 @@
 
   <section class="stats" id="stats" aria-label="全省概览"></section>
 
+  <nav class="page-nav" aria-label="章节导航">
+    <a href="#s01"><b>01</b>总量</a>
+    <a href="#s02"><b>02</b>轨迹</a>
+    <a href="#s03"><b>03</b>结构</a>
+    <a href="#s04"><b>04</b>位次</a>
+    <a href="#s05"><b>05</b>明细</a>
+    <a href="#s06"><b>06</b>读法</a>
+  </nav>
+
   <noscript>
-    <p class="noscript">这一页的图表与表格由 JavaScript 生成。如需阅读数据，可另开 <a href="data.js">data.js</a>，其中十六市三年的原始数字是完整的。</p>
+    <p class="noscript">这一页的地图、图表与表格由 JavaScript 生成。如需阅读数据，可另开 <a href="data.js">data.js</a>，其中十六市三年的原始数字是完整的。</p>
   </noscript>
 
   <!-- ---------- 01 ---------- -->
-  <section>
-    <div class="secno">01 / 总量</div>
-    <h2>谁更大</h2>
-    <p class="note" id="bars-note"></p>
-    <div class="switch" id="bars-switch" role="group" aria-label="切换指标"></div>
-    <div class="bars" id="bars"></div>
-    <div class="legend" id="bars-legend"></div>
+  <section class="chapter" id="s01">
+    <div class="sec-head">
+      <div class="sec-title">
+        <div class="secno">01 / 总量</div>
+        <h2>谁更大</h2>
+      </div>
+      <div class="sec-main">
+        <p class="note" id="bars-note"></p>
+        <div class="switch" id="bars-switch" role="group" aria-label="切换指标" style="margin-top:16px"></div>
+        <div class="bars" id="bars"></div>
+        <div class="legend" id="bars-legend"></div>
+      </div>
+    </div>
   </section>
 
-  <!-- ---------- 02 ---------- -->
-  <section>
-    <div class="secno">02 / 结构</div>
-    <h2>谁的钱更实</h2>
-    <p class="note">
-      横轴是经济规模（对数刻度，否则小市会挤成一团），纵轴是财政收入占 GDP 的比重。
-      如果「经济越大、财政汲取能力越强」成立，点应当向右上倾斜。实际并没有，甚至略偏反向：
-      GDP 前五市平均 7.17%，后五市平均 7.93%。
-      全省平均 7.62%，滨州最高 8.94%，烟台最低 6.17%，相差 2.78 个百分点；而体量最大的青岛是 7.63%，恰好就在平均线上。
-    </p>
-    <div class="chart-box" id="scatter"></div>
-    <p class="swipe">图表宽于屏幕，左右滑动查看完整横轴。</p>
-    <p class="note">
-      排在前面的滨州、淄博、济宁、聊城、枣庄，重化工业与建材在工业中的分量都不轻；排在后面的几市类型并不一致——
-      烟台是万亿级工业市，威海以医疗器械、轮胎、渔业与旅游见长，德州、菏泽的农业占比更高。
-      同一侧的城市并不共享同一种成因，这个比值单独拿出来不足以解释任何一市。
-    </p>
+  <!-- ---------- 02 轨迹 ---------- -->
+  <section class="chapter" id="s02">
+    <div class="sec-head">
+      <div class="sec-title">
+        <div class="secno">02 / 轨迹</div>
+        <h2>五年增长的形状</h2>
+      </div>
+      <div class="sec-main">
+        <p class="note" id="tl-note">
+          每个市一张小图：纵轴是指数，<em>2021 年 = 100</em>，十六张小图共用同一根标尺。
+          黑线是 GDP，红线是一般公共预算收入，右端数字是 2025 年的指数，两张线张开的口子就是五年的弹性。
+          小图右上角的弹性按 2021→2025 五年算，与 01 节按 2023→2025 算的 0.44 不是同一个区间。
+        </p>
+        <div class="legend" id="tl-legend" style="margin-top:12px"></div>
+        <div class="chart-box tl-prov" id="tl-province"></div>
+        <p class="note">
+          两条线值得先看。其一，<em>2022 年红线几乎全线回落</em>——留抵退税大年，青岛、潍坊、滨州、威海
+          直到 2025 年财政收入仍未回到 2021 年的水平。其二，黑线几乎全部上行，唯独威海 2022 年 GDP
+          名义负增长。红线趴着、黑线照走，就是这页说的那道缝，拉长到五年看得更清楚。
+        </p>
+        <div class="tl-scroll">
+          <div class="tl-grid" id="tl-grid"></div>
+        </div>
+        <p class="swipe">小图阵列宽于屏幕时，左右滑动查看。</p>
+        <p class="note tl-caution">
+          口径：2021、2022 两年为各市当年公布的统计公报数（GDP 年报核算数、一般公共预算收入自然口径决算数），
+          未按后续经济普查修订回溯；2023—2025 年与主表同为中诚信整理口径。最明显的断点是威海：
+          2022 年 GDP 名义负增长有相当部分来自基数修订，跨期比较请保留这一余量。
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- ---------- 03 ---------- -->
-  <section>
-    <div class="secno">03 / 位次</div>
-    <h2>两张榜错开了四位</h2>
-    <p class="note">
-      每一行是一个城市，横轴是位次——1 在最左，16 在最右。空心点是 GDP 位次，实心点是财政收入位次；
-      实心点落在空心点左侧，说明这座城市的财政收入位次比经济总量位次更靠前。
-      <em>两点重合时只看得见一个点，那说明两张榜给它的名次一样</em>。
-      十六市里八个完全重合，五个差一位，只有三个差两位以上：滨州（第 13 对第 9）、聊城（第 14 对第 12）、威海（第 11 对第 14）。
-      2023 到 2025 年，没有任何一市的位次发生变动，所以这张图在三年里是同一张。
-    </p>
-    <div class="dumb" id="dumbbell"></div>
-    <p class="swipe">图表宽于屏幕，左右滑动查看完整位次轴。</p>
+  <section class="chapter" id="s03">
+    <div class="sec-head">
+      <div class="sec-title">
+        <div class="secno">03 / 结构</div>
+        <h2>谁的钱更实</h2>
+      </div>
+      <div class="sec-main">
+        <p class="note">
+          横轴是经济规模（对数刻度，否则小市会挤成一团），纵轴是财政收入占 GDP 的比重。
+          如果「经济越大、财政汲取能力越强」成立，点应当向右上倾斜。实际并没有，甚至略偏反向：
+          GDP 前五市平均 7.17%，后五市平均 7.93%。
+          全省平均 7.62%，滨州最高 8.94%，烟台最低 6.17%，相差 2.78 个百分点；而体量最大的青岛是 7.63%，恰好就在平均线上。
+        </p>
+        <div class="chart-box" id="scatter"></div>
+        <p class="swipe">图表宽于屏幕，左右滑动查看完整横轴。</p>
+        <p class="note">
+          排在前面的滨州、淄博、济宁、聊城、枣庄，重化工业与建材在工业中的分量都不轻；排在后面的几市类型并不一致——
+          烟台是万亿级工业市，威海以医疗器械、轮胎、渔业与旅游见长，德州、菏泽的农业占比更高。
+          同一侧的城市并不共享同一种成因，这个比值单独拿出来不足以解释任何一市。
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- ---------- 04 ---------- -->
-  <section>
-    <div class="secno">04 / 明细</div>
-    <h2>全部数字</h2>
-    <p class="note">点上面的按钮换排序。「弹性」是财政收入名义增速除以 GDP 名义增速，小于 1 表示收入增长慢于产出增长。</p>
-    <div class="tbl-controls" id="tbl-controls">
-      <span>排序</span>
-      <button data-sort="gdp" aria-pressed="true">按 GDP</button>
-      <button data-sort="rev" aria-pressed="false">按财政收入</button>
-      <button data-sort="rate" aria-pressed="false">按财政负担率</button>
-      <button data-sort="elast" aria-pressed="false">按弹性</button>
-    </div>
-    <div class="table-wrap">
-      <table id="tbl">
-        <caption>山东省 16 个地级市，2023—2025 年。金额单位：亿元；人均 GDP 单位：万元。</caption>
-        <thead>
-          <tr>
-            <th scope="col">城市</th>
-            <th scope="col">经济圈</th>
-            <th scope="col" class="n">GDP<br>2025</th>
-            <th scope="col" class="n">位次</th>
-            <th scope="col" class="n">财政收入<br>2025</th>
-            <th scope="col" class="n">位次</th>
-            <th scope="col" class="n">负担率</th>
-            <th scope="col" class="n">人均<br>GDP</th>
-            <th scope="col" class="n">GDP<br>名义增速</th>
-            <th scope="col" class="n">财政收入<br>名义增速</th>
-            <th scope="col" class="n">弹性</th>
-          </tr>
-        </thead>
-        <tbody id="tbl-body"></tbody>
-        <tfoot>
-          <tr>
-            <td>全省</td>
-            <td>—</td>
-            <td class="n">103197.50</td>
-            <td class="n">—</td>
-            <td class="n">7864.26</td>
-            <td class="n">—</td>
-            <td class="n">7.62%</td>
-            <td class="n">10.28</td>
-            <td class="n">+12.09%</td>
-            <td class="n">+5.35%</td>
-            <td class="n">0.44</td>
-          </tr>
-        </tfoot>
-      </table>
+  <section class="chapter" id="s04">
+    <div class="sec-head">
+      <div class="sec-title">
+        <div class="secno">04 / 位次</div>
+        <h2>两张榜错开了四位</h2>
+      </div>
+      <div class="sec-main">
+        <p class="note">
+          每一行是一个城市，横轴是位次——1 在最左，16 在最右。空心点是 GDP 位次，实心点是财政收入位次；
+          实心点落在空心点左侧，说明这座城市的财政收入位次比经济总量位次更靠前。
+          <em>两点重合时只看得见一个点，那说明两张榜给它的名次一样</em>。
+          十六市里八个完全重合，五个差一位，只有三个差两位以上：滨州（第 13 对第 9）、聊城（第 14 对第 12）、威海（第 11 对第 14）。
+          2023 到 2025 年，没有任何一市的位次发生变动，所以这张图在三年里是同一张。
+        </p>
+        <div class="dumb" id="dumbbell"></div>
+        <p class="swipe">图表宽于屏幕，左右滑动查看完整位次轴。</p>
+      </div>
     </div>
   </section>
 
   <!-- ---------- 05 ---------- -->
-  <section>
-    <div class="secno">05 / 读法</div>
-    <h2>五条可以说的事</h2>
-    <div class="reads" id="reads"></div>
+  <section class="chapter" id="s05">
+    <div class="sec-head">
+      <div class="sec-title">
+        <div class="secno">05 / 明细</div>
+        <h2>全部数字</h2>
+      </div>
+      <div class="sec-main">
+        <p class="note">点下面的按钮换排序。「弹性」是财政收入名义增速除以 GDP 名义增速，小于 1 表示收入增长慢于产出增长。</p>
+        <div class="tbl-controls" id="tbl-controls">
+          <span>排序</span>
+          <button data-sort="gdp" aria-pressed="true">按 GDP</button>
+          <button data-sort="rev" aria-pressed="false">按财政收入</button>
+          <button data-sort="rate" aria-pressed="false">按财政负担率</button>
+          <button data-sort="elast" aria-pressed="false">按弹性</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl">
+            <caption>山东省 16 个地级市，2023—2025 年。金额单位：亿元；人均 GDP 单位：万元。</caption>
+            <thead>
+              <tr>
+                <th scope="col">城市</th>
+                <th scope="col">经济圈</th>
+                <th scope="col" class="n">GDP<br>2025</th>
+                <th scope="col" class="n">位次</th>
+                <th scope="col" class="n">财政收入<br>2025</th>
+                <th scope="col" class="n">位次</th>
+                <th scope="col" class="n">负担率</th>
+                <th scope="col" class="n">人均<br>GDP</th>
+                <th scope="col" class="n">GDP<br>名义增速</th>
+                <th scope="col" class="n">财政收入<br>名义增速</th>
+                <th scope="col" class="n">弹性</th>
+              </tr>
+            </thead>
+            <tbody id="tbl-body"></tbody>
+            <tfoot>
+              <tr>
+                <td>全省</td>
+                <td>—</td>
+                <td class="n">103197.50</td>
+                <td class="n">—</td>
+                <td class="n">7864.26</td>
+                <td class="n">—</td>
+                <td class="n">7.62%</td>
+                <td class="n">10.28</td>
+                <td class="n">+12.09%</td>
+                <td class="n">+5.35%</td>
+                <td class="n">0.44</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 06 ---------- -->
+  <section class="chapter" id="s06">
+    <div class="sec-head">
+      <div class="sec-title">
+        <div class="secno">06 / 读法</div>
+        <h2>五条可以说的事</h2>
+      </div>
+      <div class="sec-main">
+        <div class="reads" id="reads"></div>
+      </div>
+    </div>
   </section>
 
   <footer>
-    <p>整理于 2026 年 10 月。数据为 2023、2024、2025 三个年度的决算数。</p>
+    <p>整理于 2026 年 10 月。主表数据为 2023、2024、2025 三个年度的决算数；02 节时间轴另含 2021、2022 两年各市当年公布数，口径见该节说明。</p>
     <p class="src">
       来源：山东省统计局、山东省财政厅年度公开数据；各市数值取自中诚信国际在山东各市城投债跟踪评级报告（2024—2026 年度）中整理的「山东省下属地市经济财政概况」表，三年同一口径。
       GDP 与人均 GDP 另与山东省发改委、光大证券研究所引用的省统计局数据交叉核对，两处一致。
     </p>
     <p class="src">
-      本页不做预测，也不对成因下判断。图表与表格可由 <a href="data.js">data.js</a> 中的原始数字复算。
+      地图边界取自阿里云 DataV.GeoAtlas 的山东省市级边界（370000），经抽稀简化绘制，仅作示意，不作为权威划界依据。
+    </p>
+    <p class="src">
+      本页不做预测，也不对成因下判断。图表与表格可由 <a href="data.js">data.js</a> 中的原始数字复算，地图路径由 <a href="map-data.js">map-data.js</a> 提供。
     </p>
   </footer>
 
 </div>
 
 <script src="data.js"></script>
+<script src="map-data.js"></script>
 <script>
 (function () {
   "use strict";
@@ -419,6 +594,16 @@
   });
   var PROV_RATE = PROV.rev[2] / PROV.gdp[2] * 100;
   var PROV_ELAST = ((PROV.rev[2] / PROV.rev[0] - 1) / (PROV.gdp[2] / PROV.gdp[0] - 1));
+  var BY_ID = {};
+  CITIES.forEach(function (c) { BY_ID[c.id] = c; });
+
+  /* ---------- metrics（地图与条形图共用） ---------- */
+  var METRICS = {
+    gdp:  { label: "地区生产总值", unit: "亿元", base: 0,    get: function (c) { return c.g25; }, fmt: function (v) { return n2(v); } },
+    rev:  { label: "一般公共预算收入", unit: "亿元", base: 0, get: function (c) { return c.r25; }, fmt: function (v) { return n2(v); } },
+    pc:   { label: "人均 GDP", unit: "万元", base: 0,        get: function (c) { return c.pc; }, fmt: function (v) { return v.toFixed(2); } },
+    rate: { label: "财政负担率", unit: "%", base: 6.0,       get: function (c) { return c.rate; }, fmt: function (v) { return v.toFixed(2) + "%"; } }
+  };
 
   /* ---------- stats ---------- */
   (function renderStats() {
@@ -438,13 +623,316 @@
     }).join("");
   })();
 
+  /* ---------- map：十六市交互地图 ---------- */
+  (function renderMap() {
+    var M = window.SDMAP;
+    var mapEl = document.getElementById("map");
+    if (!M || !M.cities || !mapEl) return;
+
+    var MODES = [
+      { key: "circle", label: "经济圈" },
+      { key: "gdp", label: "GDP" },
+      { key: "rev", label: "财政收入" },
+      { key: "pc", label: "人均 GDP" },
+      { key: "rate", label: "财政负担率" }
+    ];
+    var mode = "circle";
+    var pinned = null;    // 点选固定的城市 id，null = 全省
+    var hoverId = null;   // 正在悬停的城市 id
+
+    // 着色标尺：纸色 → 赭 → 深红（与 --claim 同族）
+    var RAMP = [[236, 229, 209], [198, 136, 82], [140, 35, 20]];
+    function ramp(t) {
+      t = Math.max(0, Math.min(1, t));
+      var seg = t < .5 ? 0 : 1;
+      var f = seg === 0 ? t / .5 : (t - .5) / .5;
+      var a = RAMP[seg], b = RAMP[seg + 1];
+      return "rgb(" + Math.round(a[0] + (b[0] - a[0]) * f) + "," +
+        Math.round(a[1] + (b[1] - a[1]) * f) + "," +
+        Math.round(a[2] + (b[2] - a[2]) * f) + ")";
+    }
+
+    var svg = ['<svg viewBox="' + M.viewBox.join(" ") + '" class="mode-circle" role="group" aria-label="山东省十六市地图">'];
+    Object.keys(M.cities).forEach(function (id) {
+      var c = M.cities[id];
+      svg.push('<path class="region" data-id="' + esc(id) + '" d="' + c.d + '" tabindex="0" role="img" aria-label="' + esc(id) + '市"/>');
+    });
+    Object.keys(M.cities).forEach(function (id) {
+      var c = M.cities[id];
+      svg.push('<text x="' + c.cx + '" y="' + c.cy + '" text-anchor="middle" font-size="19" class="map-label">' + esc(id) + "</text>");
+    });
+    svg.push("</svg>");
+    mapEl.innerHTML = svg.join("");
+
+    var svgEl = mapEl.querySelector("svg");
+    var regions = {};
+    mapEl.querySelectorAll(".region").forEach(function (p) { regions[p.dataset.id] = p; });
+
+    function rangeOf(key) {
+      var get = METRICS[key].get;
+      var vs = CITIES.map(get);
+      return { min: Math.min.apply(null, vs), max: Math.max.apply(null, vs) };
+    }
+
+    function paint() {
+      svgEl.setAttribute("class", mode === "circle" ? "mode-circle" : "mode-metric");
+      if (mode === "circle") {
+        CITIES.forEach(function (c) { regions[c.id].style.fill = COLOR[c.circle]; });
+      } else {
+        var r = rangeOf(mode), get = METRICS[mode].get, span = r.max - r.min || 1;
+        CITIES.forEach(function (c) {
+          regions[c.id].style.fill = ramp((get(c) - r.min) / span);
+        });
+      }
+      renderLegend();
+    }
+
+    function renderLegend() {
+      var el = document.getElementById("map-legend");
+      if (mode === "circle") {
+        el.innerHTML = ["胶东", "省会", "鲁南"].map(function (k) {
+          return '<span><i style="background:' + COLOR[k] + '"></i>' + k + "经济圈</span>";
+        }).join("") + '<span style="color:#8a8578">2020 年官方划分</span>';
+      } else {
+        var m = METRICS[mode], r = rangeOf(mode);
+        var lo = CITIES.slice().sort(function (a, b) { return m.get(a) - m.get(b); })[0];
+        var hi = CITIES.slice().sort(function (a, b) { return m.get(b) - m.get(a); })[0];
+        var stops = [0, .25, .5, .75, 1].map(function (t) { return ramp(t) + " " + (t * 100) + "%"; }).join(",");
+        el.innerHTML =
+          '<span class="lv">低 ' + esc(lo.id) + " " + m.fmt(m.get(lo)) + "</span>" +
+          '<i class="grad" style="background:linear-gradient(90deg,' + stops + ')"></i>' +
+          '<span class="lv">高 ' + esc(hi.id) + " " + m.fmt(m.get(hi)) + "</span>";
+      }
+    }
+
+    function cardHTML(id) {
+      if (!id || !BY_ID[id]) {
+        return '<div class="card-head"><span class="card-name">山东省 · 全省</span>' +
+          '<span class="card-circle"><i style="background:' + INK + '"></i>16 市合计口径</span></div>' +
+          '<div class="card-grid">' +
+          cell("GDP 2025", n2(PROV.gdp[2]) + " <i>亿元</i>") +
+          cell("财政收入 2025", n2(PROV.rev[2]) + " <i>亿元</i>") +
+          cell("弹性", PROV_ELAST.toFixed(2)) +
+          cell("财政负担率", PROV_RATE.toFixed(2) + "%") +
+          cell("人均 GDP", PROV.pc.toFixed(2) + " <i>万元</i>") +
+          cell("GDP 名义增速", pct((PROV.gdp[2] / PROV.gdp[0] - 1) * 100)) +
+          "</div>";
+      }
+      var c = BY_ID[id];
+      return '<div class="card-head"><span class="card-name">' + esc(c.zh) + "</span>" +
+        '<span class="card-circle"><i style="background:' + COLOR[c.circle] + '"></i>' + esc(c.circle) + "经济圈 · GDP 第 " + c.gRank + " 位 / 财政收入第 " + c.rRank + " 位</span></div>" +
+        '<div class="card-grid">' +
+        cell("GDP 2025", n2(c.g25) + " <i>亿元 · 第 " + c.gRank + " 位</i>") +
+        cell("财政收入 2025", n2(c.r25) + " <i>亿元 · 第 " + c.rRank + " 位</i>") +
+        cell("弹性", c.elast.toFixed(2)) +
+        cell("财政负担率", c.rate.toFixed(2) + "%") +
+        cell("人均 GDP", c.pc.toFixed(2) + " <i>万元</i>") +
+        cell("GDP 名义增速", pct(c.gGrowth)) +
+        "</div>";
+      function cell(k, v) {
+        return "<div><span>" + k + "</span><b>" + v + "</b></div>";
+      }
+    }
+
+    function refresh() {
+      var show = hoverId || pinned;
+      document.getElementById("map-card").innerHTML = cardHTML(show);
+      Object.keys(regions).forEach(function (id) {
+        regions[id].classList.toggle("pinned", id === pinned);
+      });
+    }
+
+    document.getElementById("map-switch").innerHTML = MODES.map(function (m) {
+      return '<button data-mode="' + m.key + '" aria-pressed="' + (m.key === mode) + '">' + m.label + "</button>";
+    }).join("");
+
+    document.getElementById("map-switch").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-mode]");
+      if (!b) return;
+      mode = b.dataset.mode;
+      Array.prototype.forEach.call(this.querySelectorAll("button"), function (x) {
+        x.setAttribute("aria-pressed", String(x.dataset.mode === mode));
+      });
+      paint();
+    });
+
+    mapEl.addEventListener("mouseover", function (e) {
+      var r = e.target.closest(".region");
+      if (r) { hoverId = r.dataset.id; refresh(); }
+    });
+    mapEl.addEventListener("mouseout", function (e) {
+      if (e.target.closest(".region")) { hoverId = null; refresh(); }
+    });
+    mapEl.addEventListener("focusin", function (e) {
+      var r = e.target.closest(".region");
+      if (r) { hoverId = r.dataset.id; refresh(); }
+    });
+    mapEl.addEventListener("focusout", function () {
+      hoverId = null; refresh();
+    });
+    mapEl.addEventListener("click", function (e) {
+      var r = e.target.closest(".region");
+      pinned = r && r.dataset.id !== pinned ? r.dataset.id : null;
+      refresh();
+    });
+    mapEl.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var r = e.target.closest(".region");
+      if (r) { e.preventDefault(); pinned = r.dataset.id !== pinned ? r.dataset.id : null; refresh(); }
+    });
+
+    paint();
+    refresh();
+  })();
+
+  /* ---------- timeline：五年轨迹（2021—2025） ---------- */
+  (function renderTimeline() {
+    var T = D.tl5;
+    if (!T || !T.cities || !T.province) return;
+    var N = T.years.length;                     // 5
+    var FIRST = T.years[0], LAST = T.years[N - 1];
+
+    function idx(arr) { return arr.map(function (v) { return v / arr[0] * 100; }); }
+
+    // 全局指数范围：十六市 + 全省共用一根标尺
+    var lo = Infinity, hi = -Infinity;
+    var panels = [{ name: "全省", gdp: T.province.gdp, rev: T.province.rev, isProv: true }];
+    T.cities.forEach(function (c) { panels.push({ name: c.id, gdp: c.gdp, rev: c.rev }); });
+    panels.forEach(function (p) {
+      p.gi = idx(p.gdp);
+      p.ri = idx(p.rev);
+      p.elast = (p.gi[N - 1] - 100) === 0 ? null : (p.ri[N - 1] - 100) / (p.gi[N - 1] - 100);
+      p.gi.concat(p.ri).forEach(function (v) { if (v < lo) lo = v; if (v > hi) hi = v; });
+    });
+    var ymin = Math.floor((lo - 3) / 5) * 5;
+    var ymax = Math.ceil((hi + 3) / 5) * 5;
+
+    // 右端指数标签：按 y 排序后保证最小间距，避免压字
+    function placeEnds(items) {
+      items.sort(function (a, b) { return a.y - b.y; });
+      for (var i = 1; i < items.length; i++) {
+        if (items[i].y - items[i - 1].y < 11) items[i].y = items[i - 1].y + 11;
+      }
+    }
+
+    function dot(x, y, color, title) {
+      return '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.2" fill="' + color +
+        '"><title>' + esc(title) + "</title></circle>";
+    }
+    function pointTitle(p, i, isGdp) {
+      var arr = isGdp ? p.gdp : p.rev;
+      var ix = isGdp ? p.gi : p.ri;
+      return T.years[i] + " · " + (isGdp ? "GDP " : "财政收入 ") + n2(arr[i]) +
+        " 亿元 · 指数 " + ix[i].toFixed(1);
+    }
+
+    /* ---- 全省大图 ---- */
+    (function provPanel() {
+      var W = 1000, H = 320;
+      var L = 46, R = 122, Tp = 22, B = 30;
+      var pw = W - L - R, ph = H - Tp - B;
+      var p = panels[0];
+      function X(i) { return L + i / (N - 1) * pw; }
+      function Y(v) { return Tp + (ymax - v) / (ymax - ymin) * ph; }
+
+      var s = [];
+      s.push('<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="全省 GDP 与财政收入五年指数（2021=100）">');
+
+      [90, 100, 110, 120, 130].forEach(function (v) {
+        if (v < ymin || v > ymax) return;
+        var base = v === 100;
+        s.push('<line x1="' + L + '" y1="' + Y(v).toFixed(1) + '" x2="' + (L + pw) + '" y2="' + Y(v).toFixed(1) +
+          '" stroke="' + (base ? "#a9a396" : LINE) + '" stroke-width="' + (base ? 1.4 : 1) +
+          '" stroke-dasharray="' + (base ? "5 4" : "2 5") + '"/>');
+        s.push('<text x="' + (L - 8) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" text-anchor="end" font-size="11" fill="' +
+          MUTED + '">' + v + "</text>");
+      });
+
+      T.years.forEach(function (yr, i) {
+        s.push('<text x="' + X(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11.5" fill="' +
+          MUTED + '">' + yr + "</text>");
+      });
+
+      // 留抵退税大年标注（收入线 2022 年的低点）
+      s.push('<circle cx="' + X(1).toFixed(1) + '" cy="' + Y(p.ri[1]).toFixed(1) + '" r="3.6" fill="' + CLAIM + '"/>');
+      s.push('<text x="' + (X(1) + 9).toFixed(1) + '" y="' + (Y(p.ri[1]) + 15).toFixed(1) +
+        '" font-size="12" fill="' + CLAIM + '" font-family="Noto Sans SC, sans-serif">留抵退税大年</text>');
+
+      [["g", p.gi, INK, p.gdp, true], ["r", p.ri, CLAIM, p.rev, false]].forEach(function (it) {
+        var key = it[0], ix = it[1], color = it[2], arr = it[3], isGdp = it[4];
+        var d = "";
+        for (var i = 0; i < N; i++) d += (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(ix[i]).toFixed(1);
+        s.push('<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>');
+        for (var j = 0; j < N; j++) s.push(dot(X(j), Y(ix[j]), color, pointTitle(p, j, isGdp)));
+        s.push('<text x="' + (L + pw + 8) + '" y="' + (Y(ix[N - 1]) + 4).toFixed(1) +
+          '" font-size="12" fill="' + color + '" font-family="IBM Plex Mono, monospace">' +
+          (isGdp ? "GDP " : "收入 ") + ix[N - 1].toFixed(1) + "</text>");
+      });
+
+      s.push("</svg>");
+      document.getElementById("tl-province").innerHTML = s.join("");
+    })();
+
+    /* ---- 十六市小图阵列 ---- */
+    (function cellPanels() {
+      var W = 260, H = 152;
+      var L = 14, R = 46, Tp = 30, B = 20;
+      var pw = W - L - R, ph = H - Tp - B;
+      function X(i) { return L + i / (N - 1) * pw; }
+      function Y(v) { return Tp + (ymax - v) / (ymax - ymin) * ph; }
+
+      var html = panels.slice(1).map(function (p) {
+        var s = [];
+        s.push('<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(p.name) + '五年指数（2021=100）">');
+
+        // 100 基准线（含义见图例与注记，不再单独标注数字）
+        s.push('<line x1="' + L + '" y1="' + Y(100).toFixed(1) + '" x2="' + (L + pw) + '" y2="' + Y(100).toFixed(1) +
+          '" stroke="' + LINE + '" stroke-width="1" stroke-dasharray="4 4"/>');
+
+        s.push('<text x="' + L + '" y="' + (Tp - 11) + '" font-size="14" font-weight="700" fill="' + INK +
+          '" font-family="Noto Serif SC, Songti SC, serif">' + esc(p.name) + "</text>");
+        s.push('<text x="' + (W - 6) + '" y="' + (Tp - 11) + '" text-anchor="end" font-size="10" fill="' + MUTED +
+          '" font-family="IBM Plex Mono, monospace">弹性 ' + (p.elast == null ? "—" : p.elast.toFixed(2)) + "</text>");
+
+        [["g", p.gi, INK, p.gdp, true], ["r", p.ri, CLAIM, p.rev, false]].forEach(function (it) {
+          var ix = it[1], color = it[2], arr = it[3], isGdp = it[4];
+          var d = "";
+          for (var i = 0; i < N; i++) d += (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(ix[i]).toFixed(1);
+          s.push('<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>');
+          for (var j = 0; j < N; j++) s.push(dot(X(j), Y(ix[j]), color, pointTitle(p, j, isGdp)));
+        });
+
+        // 右端指数标签（避让）
+        var ends = [
+          { y: Y(p.gi[N - 1]), t: p.gi[N - 1].toFixed(1), c: INK },
+          { y: Y(p.ri[N - 1]), t: p.ri[N - 1].toFixed(1), c: CLAIM }
+        ];
+        placeEnds(ends);
+        ends.forEach(function (e) {
+          s.push('<text x="' + (L + pw + 5) + '" y="' + (e.y + 3).toFixed(1) + '" font-size="9.5" fill="' + e.c +
+            '" font-family="IBM Plex Mono, monospace">' + e.t + "</text>");
+        });
+
+        // 首末年份
+        s.push('<text x="' + X(0).toFixed(1) + '" y="' + (H - 4) + '" text-anchor="middle" font-size="9.5" fill="' +
+          MUTED + '" font-family="IBM Plex Mono, monospace">' + String(FIRST).slice(2) + "</text>");
+        s.push('<text x="' + X(N - 1).toFixed(1) + '" y="' + (H - 4) + '" text-anchor="middle" font-size="9.5" fill="' +
+          MUTED + '" font-family="IBM Plex Mono, monospace">' + String(LAST).slice(2) + "</text>");
+
+        s.push("</svg>");
+        return '<div class="tl-cell">' + s.join("") + "</div>";
+      }).join("");
+
+      document.getElementById("tl-grid").innerHTML = html;
+
+      document.getElementById("tl-legend").innerHTML =
+        '<span><i style="background:' + INK + '"></i>GDP（黑线）</span>' +
+        '<span><i style="background:' + CLAIM + '"></i>一般公共预算收入（红线）</span>' +
+        '<span style="color:#8a8578">虚线 = 2021 年 = 100，十六张小图共用同一纵轴</span>';
+    })();
+  })();
+
   /* ---------- bar chart ---------- */
-  var METRICS = {
-    gdp:  { label: "地区生产总值", unit: "亿元", base: 0,    get: function (c) { return c.g25; }, fmt: function (v) { return n2(v); } },
-    rev:  { label: "一般公共预算收入", unit: "亿元", base: 0, get: function (c) { return c.r25; }, fmt: function (v) { return n2(v); } },
-    pc:   { label: "人均 GDP", unit: "万元", base: 0,        get: function (c) { return c.pc; }, fmt: function (v) { return v.toFixed(2); } },
-    rate: { label: "财政负担率", unit: "%", base: 6.0,       get: function (c) { return c.rate; }, fmt: function (v) { return v.toFixed(2) + "%"; } }
-  };
   var metric = "gdp";
 
   function renderBars() {
@@ -660,7 +1148,6 @@
     var qd = CITIES.filter(function (c) { return c.id === "青岛"; })[0];
     var bz = CITIES.filter(function (c) { return c.id === "滨州"; })[0];
     var yt = CITIES.filter(function (c) { return c.id === "烟台"; })[0];
-    var wh = CITIES.filter(function (c) { return c.id === "威海"; })[0];
     var top4 = CITIES.slice().sort(function (a, b) { return b.g25 - a.g25; }).slice(0, 4);
     var rest = CITIES.slice().sort(function (a, b) { return b.g25 - a.g25; }).slice(4);
     var top4max = Math.max.apply(null, top4.map(function (c) { return c.elast; }));
@@ -698,7 +1185,7 @@
         h: "三年零变动，动的是两张榜之间的距离",
         p: ["2023 与 2025 相比，十六个市的 GDP 位次一个没变，财政收入位次也一个没变。山东地市的格局在这两年是冻结的。"],
         p2: ["真正在动的是同一座城市在两个榜上的落差：滨州 GDP 第 13、财政收入第 9，差 <span class=\"num\">4</span> 位；威海 GDP 第 11、财政收入第 14，差 <span class=\"num\">3</span> 位。这两个错位在 2023 年就已经存在，两年没有收敛，说明它不是短期波动。"],
-        caution: "位次是序数，看不出绝对差距的扩大或缩小。要看差距，得回到 04 节的金额列。"
+        caution: "位次是序数，看不出绝对差距的扩大或缩小。要看差距，得回到 05 节的金额列。"
       },
       {
         h: "省本级那 263 亿元不属于任何一市",
