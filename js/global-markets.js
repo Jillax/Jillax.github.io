@@ -61,13 +61,23 @@
         return d.toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
     }
 
-    function loadScript(src) {
+    function loadScript(src, left) {
+        left = left || 2;
         return new Promise(function(resolve, reject) {
             var script = document.createElement('script');
             script.src = src;
             script.async = true;
-            script.onload = resolve;
-            script.onerror = function() { reject(new Error('加载失败：' + src)); };
+            script.onload = function() { resolve(); };
+            script.onerror = function() {
+                script.remove();
+                if (left <= 1) {
+                    reject(new Error('脚本加载失败：' + src));
+                    return;
+                }
+                window.setTimeout(function() {
+                    loadScript(src, left - 1).then(resolve, reject);
+                }, 700);
+            };
             document.head.appendChild(script);
         });
     }
@@ -77,6 +87,7 @@
         if (!state.mapLibPromise) {
             state.mapLibPromise = loadScript('js/vendor/jsvectormap.min.js')
                 .then(function() { return loadScript('js/vendor/jsvectormap-world.js'); });
+            state.mapLibPromise.catch(function() { state.mapLibPromise = null; });
         }
         return state.mapLibPromise;
     }
@@ -380,11 +391,7 @@
             els.map.innerHTML = '<div class="gm-map-loading">正在载入地图与节点…</div>';
         }
 
-        fetch(DATA_URL, { cache: 'no-cache' })
-            .then(function(response) {
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                return response.json();
-            })
+        window.PortfolioWorkspace.fetchJSON(DATA_URL)
             .then(function(data) {
                 state.data = data;
                 state.loaded = true;

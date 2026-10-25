@@ -16,6 +16,24 @@
 
     function byId(id) { return document.getElementById(id); }
 
+    // 本机网络偶发 TLS 中断，一次抖动不该把整块面板钉死在“加载失败”
+    function fetchJSON(url, left) {
+        left = left || 3;
+        return fetch(url, { cache: 'no-cache' })
+            .then(function(response) {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.json();
+            })
+            .catch(function(err) {
+                if (left <= 1) throw err;
+                return new Promise(function(resolve) {
+                    window.setTimeout(resolve, 700 * (4 - left));
+                }).then(function() {
+                    return fetchJSON(url, left - 1);
+                });
+            });
+    }
+
     function normalizeHash() {
         var hash = (window.location.hash || '').replace(/^#/, '');
         if (!hash) return null;
@@ -174,6 +192,7 @@
         getActive: function() { return active; },
         setStatus: setStatus,
         setFocus: setFocus,
+        fetchJSON: fetchJSON,
         isLoaded: function(id) { return !!loaded[id]; }
     };
 

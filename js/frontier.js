@@ -116,11 +116,7 @@
         if (state.loaded || state.loading) return;
         state.loading = true;
 
-        fetch(DATA_URL, { cache: 'no-cache' })
-            .then(function(response) {
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                return response.json();
-            })
+        window.PortfolioWorkspace.fetchJSON(DATA_URL)
             .then(function(data) {
                 state.loaded = true;
                 render(data);

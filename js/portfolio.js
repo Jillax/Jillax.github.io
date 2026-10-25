@@ -37,8 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.setTimeout(resizeCharts, 380);
     });
 
-    fetch('data/portfolio.json')
-        .then(function(r) { return r.json(); })
+    window.PortfolioWorkspace.fetchJSON('data/portfolio.json')
         .then(function(data) {
             portfolioData = data;
             renderStats(data);
@@ -87,8 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadLookThrough(portfolio) {
         var body = document.getElementById('lookthroughBody');
         if (!body) return;
-        fetch('data/index-lookthrough.json')
-            .then(function(r) { return r.json(); })
+        window.PortfolioWorkspace.fetchJSON('data/index-lookthrough.json')
             .then(function(weights) {
                 var result = window.LookThrough.aggregateLookthrough(portfolio, weights);
                 renderLookThrough(result);
