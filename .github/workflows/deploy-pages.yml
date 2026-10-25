@@ -11,6 +11,7 @@ on:
       - "同步豆瓣书影音数据"
       - "同步知乎想法"
       - "同步译制作品数据"
+      - "同步女性指标数据"
     types: [ completed ]
     branches: [ main ]
   workflow_dispatch:

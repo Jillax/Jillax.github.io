@@ -1,0 +1,48 @@
+name: 同步女性指标数据
+
+on:
+  schedule:
+    # 每月 5 日 UTC 04:00（北京时间 12:00）。世界银行 WDI 一年更新数次，月度足够。
+    - cron: '0 4 5 * *'
+  workflow_dispatch:
+    inputs:
+      rebuild_map:
+        description: 同时重建地图路径（默认只更数据）
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 设置 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 运行同步脚本
+        run: |
+          if [ "${{ inputs.rebuild_map }}" = "true" ]; then
+            node scripts/fetch-women.mjs
+          else
+            node scripts/fetch-women.mjs --data-only
+          fi
+
+      - name: 提交更新
+        run: |
+          git config user.name "women-data-sync[bot]"
+          git config user.email "women-data-sync[bot]@users.noreply.github.com"
+          git add women/data.js women/world.js
+          if git diff --cached --quiet; then
+            echo "无数据变更，跳过提交"
+          else
+            git commit -m "chore: 同步女性指标数据 $(date +'%Y-%m-%d')"
+            git push
+          fi

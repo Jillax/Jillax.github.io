@@ -26,6 +26,7 @@
 | `dsa/` | 帐篷里的派系：美国民主社会主义者的架构与内部派系 |
 | `sovereign-funds/` | 披露上的国家资本：各国主权基金公开持仓 |
 | `ai-investment/` | 账本上的中美 AI：私人资本与国家资本 |
+| `women/` | 世界的一半：60 国女性发展指标，世界银行 19 个可比指标，地图 + 五章拆解 |
 | `dota/` | Dota 2 数据战报：OpenDota 个人战绩，英雄池 / 作息热力图 / 开黑搭子 / 聊天词云，每周自动同步 |
 | `portfolio.html` | 投资组合：Chart.js 可视化（总资产走势、资产配置、持仓明细）。从作品页进入，不占顶栏 |
 | `translations.html` | 译制作品清单：Bilibili 视频译制作品管理与展示 |
@@ -74,6 +75,15 @@
 - **更新**：GitHub Actions 每周一 UTC 03:17 自动同步，也可本地 `node scripts/fetch_dota.mjs`
 - **测试**：`node dota/analysis.test.mjs`、`node dota/charts.test.mjs`
 - **页面**：`dota/index.html` + `dota.css` + `dota.js`（控制器）+ `analysis.js`（纯函数分析）+ `charts.js`（纯函数 SVG 图表）
+
+## 世界的一半（women/）
+
+60 个主要国家的女性发展指标对比：教育、经济、政治、健康与安全、数字五个维度，19 个世界银行可比指标，1997 年到最新年份。首屏是可切指标的世界地图，往下每章一张排名图加三到四张读数卡。纯静态，图表全部是原生 SVG。
+
+- **数据**：`scripts/fetch-women.mjs` 抓世界银行公开 API（无需 Key），产出 `women/data.js`；地图路径同脚本预投影成 SVG path 写入 `women/world.js`（Equal Earth 投影，无运行时依赖）
+- **口径**：每个国家取指标定义窗口内最新的一年，页面上把年份一并标出；缺数不补、不插值、不自建合成指数
+- **更新**：GitHub Actions 每月 5 日 UTC 04:00 只重跑数据；`node scripts/fetch-women.mjs`（加 `--data-only` / `--map-only`）可本地跑
+- **页面**：`women/index.html` + `women.css` + `women/app.js`
 
 ## 投资组合（portfolio.html）
 
@@ -163,6 +173,7 @@ VA-11 Hall-A 式赛博朋克：深色底、霓虹紫与品红点缀。作品子�
 | 同步知乎想法 | 定时 (UTC 6:00) / 手动 | 用知乎官方 CLI 抓取想法和文章 |
 | 同步译制作品数据 | 手动 | 更新 Bilibili 译制作品列表 |
 | 同步 Dota 2 数据 | 定时 (周一 UTC 03:17) / 手动 | 用 OpenDota 公开 API 抓取个人战绩快照 |
+| 同步女性指标数据 | 定时 (每月 5 日 UTC 04:00) / 手动 | 用世界银行公开 API 更新 `women/data.js` |
 
 ## AI 文本（thesis/）
 
