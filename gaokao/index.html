@@ -210,6 +210,15 @@
   .pos-s { background: rgba(56,197,224,.16); color: var(--cyan); }
   .pos-b { background: rgba(125,216,165,.16); color: var(--ok); }
   .pos-x { background: rgba(138,121,171,.12); color: var(--muted); }
+  /* 表格横向滚动时把「定位」钉在右边缘：它是整页的结论，不该藏在滑动后面 */
+  @media (max-width: 780px) {
+    .major-table th.pos-col, .major-table td.pos-col {
+      position: sticky; right: 0; z-index: 1;
+      background: var(--sheet); border-left: 1px solid var(--line);
+      box-shadow: -7px 0 9px -7px rgba(13, 10, 26, .95);
+    }
+    .major-table tr:hover td.pos-col { background: #1e1538; }
+  }
   .more-btn {
     display: block; width: 100%; background: transparent; border: 0;
     border-top: 1px dashed var(--line); color: var(--muted);
@@ -763,7 +772,7 @@
     var end = Math.min(shown + M_PAGE, currentMajor.length);
     var h = '<article class="school"><div class="major-table-wrap"><table class="major-table"><thead><tr><th>院校</th><th>专业</th>';
     YEARS.forEach(function (y) { h += "<th>" + String(y).slice(2) + "年</th>"; });
-    h += "<th>走势</th>" + (R ? "<th>定位</th>" : "") + "</tr></thead><tbody>";
+    h += "<th>走势</th>" + (R ? '<th class="pos-col">定位</th>' : "") + "</tr></thead><tbody>";
     for (var i = shown; i < end; i++) {
       var s = currentMajor[i].school, rec = currentMajor[i].rec;
       var best = null, worst = null;
@@ -783,7 +792,7 @@
         h += "<td class='" + cls + "'><span class='sc'>" + d.score + "</span><span class='rk'>" + fmtR(d.rank) + "</span></td>";
       });
       h += "<td>" + sparkHTML(rec) + "</td>";
-      if (R) h += "<td>" + posBadge(posOf(rec, R)) + "</td>";
+      if (R) h += '<td class="pos-col">' + posBadge(posOf(rec, R)) + "</td>";
       h += "</tr>";
     }
     h += "</tbody></table></div></article>";
@@ -875,7 +884,7 @@
     var show = expanded ? majors : majors.slice(0, CARD_LIMIT);
     var h = '<table class="major-table"><thead><tr><th>专业</th>';
     YEARS.forEach(function (y) { h += "<th>" + String(y).slice(2) + "年</th>"; });
-    h += "<th>五年走势</th>" + (R ? "<th>定位</th>" : "") + "</tr></thead><tbody>";
+    h += "<th>五年走势</th>" + (R ? '<th class="pos-col">定位</th>' : "") + "</tr></thead><tbody>";
     show.forEach(function (rec) {
       var best = null, worst = null;
       rec.ranks.forEach(function (p) {
@@ -892,7 +901,7 @@
         h += "<td class='" + cls + "'><span class='sc'>" + d.score + "</span><span class='rk'>" + fmtR(d.rank) + "</span></td>";
       });
       h += "<td>" + sparkHTML(rec) + "</td>";
-      if (R) h += "<td>" + posBadge(posOf(rec, R)) + "</td>";
+      if (R) h += '<td class="pos-col">' + posBadge(posOf(rec, R)) + "</td>";
       h += "</tr>";
     });
     h += "</tbody></table>";
