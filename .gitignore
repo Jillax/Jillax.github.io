@@ -32,6 +32,9 @@ playwright-report/
 test-results/
 tmp/
 
+# 高考原始数据（sdzk.cn 官方 XLS，约 12MB，不入库；构建脚本可 --download 重新获取）
+scripts/data/gaokao/
+
 # Logs
 *.log
 
