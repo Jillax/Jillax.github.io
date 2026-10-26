@@ -284,10 +284,14 @@
       <p><em>数据来源</em>：山东省教育招生考试院官网历年《普通类常规批第 1 次志愿投档情况表》与《夏季高考文化成绩一分一段表》官方 XLS 附件，逐行解析、未做增删。</p>
       <p><em>最低分怎么来的</em>：官方投档表只公布投档最低位次；同一分数对应同一段位次区间，用当年一分一段表把位次反推为分数（如 2026 年位次 355637 ↔ 一段线 442 分，与官方一致）。</p>
       <p><em>只含常规批第 1 次志愿</em>：不含提前批、艺术类、体育类，也不含第 2、3 次志愿征集补录；个别中外合作、走读、专项计划单列的专业以表内名称为准。官方表里同一院校同一年偶尔出现两条名称完全相同的专业（如哈尔滨理工大学「计算机科学与技术」分列 13 / S5 两个专业代码），页面各自成条，并按最近一年的招生代码 / 专业代码标注区分。</p>
-      <p><em>官网补充（提前批等）</em>：部属师范大学的公费师范、优师专项、重点马院在提前批录取，省考试院不公布提前批投档表，这些数据逐校取自各校本科招生网的历年分数查询系统（目前已收录西南大学 2023—2025 年，含本研衔接公费师范）。页面以金色「官网补充」标注，在院校卡分区与「按专业」视图中出现；官方查询系统见来源链接。更多学校可在仓库 scripts/data/gaokao/site/ 按同格式扩充。</p>
+      <p><em>官网补充（提前批等）</em>：公费师范、优师专项、重点马院在提前批录取，而省考试院只公布常规批第 1 次志愿投档表，从不公布提前批的逐专业线。这部分只能逐校取自各校本科招生网的「历年分数查询」系统，现收录 7 所 1,405 条（2022—2026）：西南大学、东北师范大学、华东师范大学、山东师范大学、曲阜师范大学、青岛大学、聊城大学。页面以金色「官网补充」标注，来源与抓取日期写在院校卡的补充分区标题上。</p>
+      <p><em>补充数据的位次</em>：除东北师大官网直接给位次外，其余院校只公布录取最高 / 最低 / 平均分，位次由最低分查当年山东一分一段表得到。一分一段表本身就是位次的定义，所以换算值与考试院口径一致，不是近似——2025 年 645 分对应 4,673 名，华东师大官网院校行原值同样是 4,673。</p>
+      <p><em>「录取 N 人」不是计划数</em>：官网查询系统给的是当年实际录取人数，与招生计划是两回事，页面分开标注，只有西南大学等提供计划数的院校才显示「计划」。</p>
+      <p><em>省属公费按「专业 + 定向就业市」成条</em>：「汉语言文学（省属公费师范生面向烟台市就业）」这类每一条就是一个志愿单位，填报时确实要选到具体定向市，所以不合并、不取全校最低。</p>
+      <p><em>补充数据不含</em>：高校专项、地方专项、综合评价招生、定向西藏就业等有单独报名资格的特殊类型；以及体育类、艺术类——它们的「位次」按综合分排序，与综合改革类位次不在同一尺度，并列做冲稳保会给出错误结论。</p>
       <p><em>冲稳保怎么算</em>：取该专业近三年（2024—2026，缺年顺延）位次的中位数 r，你的位次 R ≤ 0.85r 为「保」，≤ r 为「稳」，≤ 1.10r 为「冲」，其余为「悬」。仅是历史位次的粗略分档，请结合当年计划增减与选科要求使用。</p>
       <p><em>选科</em>：仅 2026 年官方表带「选考科目要求」列，页面以此为准；其他年份未公布。</p>
-      <p><em>已知缺口</em>：2026 年官方表无计划数，计划取 2025 年；2022 年有 1 个专业计划未投出（无位次），未收录；清华个别专业官方仅公布「前 50 名」，按 50 计。</p>
+      <p><em>已知缺口</em>：2026 年官方表无计划数，计划取 2025 年；2022 年有 1 个专业计划未投出（无位次），未收录；清华个别专业官方仅公布「前 50 名」，按 50 计。提前批目前只覆盖 7 所：在山东招收公费师范生但官网不共用这套查询系统的院校（济南大学、鲁东大学、临沂大学、北京师范大学、华中师范大学、陕西师范大学）尚未接入。曲阜师范大学官网尚未发布 2026 年山东任何维度的分数，青岛大学 2026 年只查到 9 条。</p>
     </div>
   </header>
 
@@ -494,23 +498,50 @@
   Object.keys(SITE).forEach(function (sn) {
     var s = schoolByNameMap[sn];
     var conf = SITE[sn];
+    // 同一院校的官网数据按「专业 + 类型 + 校区」合并，一个专业一行，各年填进对应列，
+    // 这样才有「五年走势」和基于近三年中位数的定位，而不是把每年拆成独立结论。
+    var byKey = {};
     var recs = [];
     conf.rows.forEach(function (r) {
       var y = r[0];
-      var rec = { name: r[1], site: true, type: r[2], batch: r[3], campus: r[4], years: {}, ranks: [] };
-      var d = { rank: r[6], score: r[5], plan: r[7], xk: r[10] || "" };
-      rec.years[y] = d;
-      if (d.rank != null) rec.ranks.push([y, d.rank]);
-      rec.avg = r[8]; rec.max = r[9];
-      rec.plan = r[7]; rec.planYear = y; rec.xk = d.xk;
+      var k = r[1] + "|" + r[2] + "|" + r[4];
+      var rec = byKey[k];
+      if (!rec) {
+        rec = byKey[k] = {
+          name: r[1], site: true, type: r[2], batch: r[3], campus: r[4],
+          years: {}, ranks: [], avg: null, max: null, plan: null, planYear: null, adm: null, xk: "",
+        };
+        recs.push(rec);
+      }
+      rec.years[y] = {
+        rank: r[6], score: r[5], plan: r[7], xk: r[10] || "",
+        avg: r[8], max: r[9], adm: r.length > 11 ? r[11] : null,
+      };
+      siteTotal++;
+    });
+    recs.forEach(function (rec) {
+      for (var i = 0; i < YEARS.length; i++) {
+        var d = rec.years[YEARS[i]];
+        if (!d) continue;
+        if (d.rank != null) rec.ranks.push([YEARS[i], d.rank]);
+      }
+      // 摘要取最近一年，而不是最早那年
+      for (var j = YEARS.length - 1; j >= 0; j--) {
+        var e = rec.years[YEARS[j]];
+        if (!e) continue;
+        if (!rec.xk && e.xk) rec.xk = e.xk;
+        if (rec.avg == null && e.avg != null) rec.avg = e.avg;
+        if (rec.max == null && e.max != null) rec.max = e.max;
+        if (rec.plan == null && e.plan != null) { rec.plan = e.plan; rec.planYear = YEARS[j]; }
+        if (rec.adm == null && e.adm != null) { rec.adm = e.adm; if (rec.planYear == null) rec.planYear = YEARS[j]; }
+      }
       rec.median3 = medianOf(rec.ranks.slice(-3).map(function (p) { return p[1]; }));
       rec.rank2026 = null;
-      for (var i = YEARS.length - 1; i >= 0; i--) {
-        if (rec.years[YEARS[i]]) { rec.rank2026 = rec.years[YEARS[i]].rank; break; }
+      for (var j = YEARS.length - 1; j >= 0; j--) {
+        var e = rec.years[YEARS[j]];
+        if (e && e.rank != null) { rec.rank2026 = e.rank; break; }
       }
       rec.latest = rec.ranks.length ? rec.ranks[rec.ranks.length - 1][1] : null;
-      recs.push(rec);
-      siteTotal++;
     });
     recs.sort(function (a, b) {
       var ra = a.rank2026 == null ? Infinity : a.rank2026;
@@ -830,6 +861,7 @@
     }
     if (rec.xk) parts.push("选科 " + esc(rec.xk));
     if (rec.plan != null) parts.push(String(rec.planYear).slice(2) + "年计划 " + rec.plan);
+    else if (rec.adm != null) parts.push(String(rec.planYear).slice(2) + "年录取 " + rec.adm + " 人");
     if (rec.avg != null) parts.push("均 " + rec.avg + " / 高 " + rec.max);
     return parts.length ? "<span class='xk'>" + parts.join(" · ") + "</span>" : "";
   }

@@ -514,6 +514,7 @@ def load_site_files(main_keys):
                     r.get("batch", ""), r.get("campus", ""),
                     int(r["min"]), int(r["minRank"]),
                     r.get("plan"), r.get("avg"), r.get("max"), r.get("xk", ""),
+                    r.get("adm"),
                 ]
             except (KeyError, TypeError, ValueError):
                 skipped += 1
