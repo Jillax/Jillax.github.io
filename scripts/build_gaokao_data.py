@@ -490,6 +490,10 @@ def norm_key(name: str) -> str:
     return re.sub(r"[^0-9A-Za-z\u3400-\u9fff]", "", name)
 
 
+SITE_SCOPE = re.compile(r"提前批|公费师范|优师|马院|委培师范|师范类")
+SITE_EXCLUDE = re.compile(r"高校专项|地方专项|中外合作|综合评价|定向西藏|体育类|艺术类")
+
+
 def load_site_files(main_keys):
     """读取 scripts/data/gaokao/site/*.json（高校官网补充数据，提前批等），
     与常规批主数据按（年份+专业名）去重后返回 GAOKAO_SITE 结构。"""
@@ -506,7 +510,7 @@ def load_site_files(main_keys):
         if not school:
             continue
         keys = main_keys.get(school, set())
-        rows, skipped = [], 0
+        rows, skipped, dropped_scope = [], 0, 0
         for r in d.get("records", []):
             try:
                 row = [
@@ -520,15 +524,20 @@ def load_site_files(main_keys):
                 skipped += 1
                 continue
             y, major, typ, batch = row[0], row[1], row[2], row[3]
-            k_plain = (str(y), norm_key(major))
+            # 官网补充只收「提前批 + 师范类」口径：公费师范/优师专项/重点马院/委培师范/师范类。
+            # 各校招生网同一页往往也挂常规批、高校专项、中外合作、综合评价与艺体类，
+            # 那些要么主数据已有，要么位次口径不可比（艺体按综合分），这里统一挡掉。
+            scope = typ + batch
+            if not SITE_SCOPE.search(scope) or SITE_EXCLUDE.search(scope):
+                dropped_scope += 1
+                continue
+            # 只按「专业+类型」判重：提前批的公费师范常常与常规批同名专业并存，
+            # 那是两条不同的投档线，不能按专业名并掉。
             k_typed = (str(y), norm_key(major) + norm_key(typ))
-            regular = typ in ("普通类", "中外合作办学") or batch == "常规批"
-            # 常规批同名专业 → 主数据已有，跳过；专项类若主数据以「XX(高校专项计划)」
-            # 命名也视为重复；公费师范/优师/马院等提前批线与常规批同名专业并存，保留。
-            if (regular and k_plain in keys) or k_typed in keys:
+            if k_typed in keys:
                 skipped += 1
                 continue
-            keys.add(k_plain)
+            keys.add(k_typed)
             rows.append(row)
         rows.sort(key=lambda x: (-x[0], x[6]))
         out[school] = {
@@ -536,7 +545,8 @@ def load_site_files(main_keys):
             "fetched": d.get("fetched", ""), "note": d.get("note", ""),
             "rows": rows,
         }
-        print(f"官网补充 {school}: 收录 {len(rows)} 条（跳过与主数据重复 {skipped} 条）")
+        print(f"官网补充 {school}: 收录 {len(rows)} 条（跳过与主数据重复 {skipped} 条"
+              + (f"，挡掉口径外 {dropped_scope} 条" if dropped_scope else "") + "）")
     return out
 
 

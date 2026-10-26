@@ -256,6 +256,199 @@ async function fetchNenu(school) {
   return records;
 }
 
+/* ---------------- 华中师范大学：普通表单 POST，服务端渲染表格 ---------------- */
+// http://zsxt.ccnu.edu.cn/apply/index.php?g=apply&m=index&a=admit
+// 字段 year + pro 必填；表头逐年会变（2022—2024 是「最高/最低/平均分」，2025 起才有「对应省排名」），
+// 所以一律按表头文字取列，不按下标。
+async function fetchCcnu(school) {
+  const headers = {
+    "User-Agent": UA,
+    "Content-Type": "application/x-www-form-urlencoded",
+    Referer: school.srcUrl,
+  };
+  const records = [];
+  const typesSeen = new Set();
+  for (const y of YEARS) {
+    const res = await fetch(school.srcUrl, {
+      method: "POST",
+      headers,
+      body: new URLSearchParams({ year: String(y), pro: "山东", ici: "", subj: "" }).toString(),
+    });
+    const html = await res.text();
+    const tb = (html.match(/<table[\s\S]*?<\/table>/g) || [])[0];
+    if (!tb) {
+      console.log(`  ${y}：无表格（http ${res.status}）`);
+      continue;
+    }
+    const rows = [...tb.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((tr) =>
+      [...tr[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/g)].map((c) =>
+        c[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()
+      )
+    );
+    const head = rows[0] || [];
+    const col = (re) => head.findIndex((h) => re.test(h));
+    const iBatch = col(/批次/), iKl = col(/科类/);
+    // 「批次/专业组」也含「专业」二字，必须整格精确匹配才能拿到真正的专业列
+    const iMajor = col(/^专业$/);
+    const iMin = col(/最低分/), iMax = col(/最高分/), iAvg = col(/平均分/), iRank = col(/排名|位次/);
+    if (iMajor < 0 || iMin < 0) {
+      console.log(`  ${y}：表头认不出 ${JSON.stringify(head)}`);
+      continue;
+    }
+    let kept = 0;
+    rows.slice(1).forEach((c) => {
+      if (c.length < 5) return;
+      if (c[iKl] && c[iKl] !== "综合改革") return;
+      const batch = c[iBatch] || "";
+      const major = clean(c[iMajor]);
+      if (!/提前批|公费师范/.test(batch)) return;
+      // 「提前批」里也有非师范专业（如外国语言文学类），批次或专业至少一处点明公费师范
+      if (!/公费师范|优师|马院/.test(batch + major)) return;
+      const min = num(c[iMin]);
+      const rank = iRank >= 0 ? num(c[iRank]) : null;
+      // 该校「批次」列的写法每年改名（提前批 / 提前批--公费师范 / 公费师范 / 提前批公费师范），
+      // 而页面按「专业+类型+校区」合并五年，所以类型要归一，年度原文放进批次列留着显示；
+      // 专业名里的「（公费师范）」与类型重复，且只有部分年份带，去掉才能跨年对齐。
+      const type = /优师/.test(batch + major) ? "优师专项"
+        : /马院|马克思主义理论/.test(batch + major) ? "重点马院" : "公费师范";
+      records.push({
+        y,
+        major: major.replace(/[（(](公费师范|优师专项)[)）]$/, ""),
+        type,
+        batch: clean(batch),
+        campus: "",
+        min,
+        minRank: rank ?? rankOf(y, min),
+        plan: null,
+        adm: null,
+        avg: iAvg >= 0 ? num(c[iAvg]) : null,
+        max: iMax >= 0 ? num(c[iMax]) : null,
+        xk: "",
+      });
+      kept++;
+    });
+    if (kept) typesSeen.add(`${y} ${[...new Set(records.filter((r) => r.y === y).map((r) => r.batch))].join("/")}`);
+  }
+  console.log(`  类型：${[...typesSeen].sort().join("；") || "无"}`);
+  return records;
+}
+
+/* ---------------- 临沂大学：LindaZhaoSheng 单页应用的录取分数汇总接口 ---------------- */
+// 页面 zhaosheng.lyu.edu.cn/xxcx/list.htm 内嵌 front-views/index.html#/old-score；
+// 接口一次返回全部分省记录，无位次/平均分/人数字段，位次由一分一段换算。
+// 官网科类字段对山东综合改革：2025 及以前标「普通类」，2026 起标「综合改革」。
+async function fetchLyu(school) {
+  const api = school.api;
+  const body = new URLSearchParams({
+    page: "1",
+    limit: "2000",
+    "param.adjcProvince": "山东",
+    "param.adjcMajName": "",
+    "param.adjcYear": "",
+    orderItem: "adjc_year",
+    orderType: "desc",
+  }).toString();
+  const res = await fetch(api, {
+    method: "POST",
+    headers: {
+      "User-Agent": UA,
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      Referer: school.srcUrl,
+    },
+    body,
+  });
+  const j = await res.json();
+  if (!j.success) throw new Error(`接口未成功：${j.failReason || res.status}`);
+  const records = [];
+  const typesSeen = new Set();
+  (j.root || []).forEach((x) => {
+    const y = Number(x.adjcYear);
+    if (!YEARS.includes(y)) return;
+    if (x.adjcLevel !== "本科") return;
+    if (x.adjcStream !== "普通类" && x.adjcStream !== "综合改革") return;
+    const nm = clean(x.adjcMajName);
+    if (!/省属公费师范生|委培|公费师范生|优师/.test(nm)) return;
+    // 该校 2024 年把「体育教育（省属公费师范生）」也标成普通类，给出的 651 分是体育综合分，
+    // 与综合改革一分一段不在同一尺度；艺体类专业一律按专业名挡掉。
+    if (/体育|音乐|美术|舞蹈|播音|书法|表演|艺术/.test(nm)) return;
+    records.push({
+      y,
+      major: nm,
+      type: "省属公费师范生",
+      batch: "",
+      campus: "",
+      min: num(x.adjcMinScore),
+      minRank: rankOf(y, x.adjcMinScore),
+      plan: null,
+      adm: null,
+      avg: null,
+      max: num(x.adjcMaxScore),
+      xk: "",
+    });
+  });
+  records.forEach((r) => typesSeen.add(`${r.y}`));
+  console.log(`  科类：普通类/综合改革；年份：${[...typesSeen].sort().join(",")}`);
+  return records;
+}
+
+/* ---------------- 济南大学：统计子站，每年一页、一页一个数据文件 ---------------- */
+// http://map.adm.ujn.edu.cn/<年>zstj/ 页面里 <script src> 指向 gfsfs_data*.js（文件名带版本时间戳，
+// 同名不带时间戳的那份是旧文件，页面并不引用它）。数据结构 {专业: [[定向市, 最高分, 最低分], …]}，
+// 只有分数、没有位次/人数/平均分。
+async function fetchUjn(school) {
+  const records = [];
+  const typesSeen = new Set();
+  for (const y of YEARS) {
+    const dir = `${school.base}${y}zstj/`;
+    const res = await fetch(dir, { signal: AbortSignal.timeout(30000) });
+    if (!res.ok) {
+      console.log(`  ${y}：无统计页（http ${res.status}）`);
+      continue;
+    }
+    const html = await res.text();
+    const files = [...new Set((html.match(/gfsfs_data[^"'()\s]*\.js/g) || []))];
+    if (!files.length) {
+      console.log(`  ${y}：页面未引用 gfsfs 数据文件`);
+      continue;
+    }
+    const seen = new Set();
+    let kept = 0;
+    for (const f of files) {
+      const t = await (await fetch(dir + f, { signal: AbortSignal.timeout(30000) })).text();
+      const s = t.indexOf("{");
+      const e = t.lastIndexOf("}");
+      if (s < 0 || e < s) continue;
+      const data = JSON.parse(t.slice(s, e + 1));
+      Object.keys(data).forEach((maj) => {
+        data[maj].forEach((row) => {
+          const [city, max, min] = row;
+          const key = `${maj}|${city}|${min}`;
+          if (seen.has(key)) return; // 同页重复行（如济南市出现两次且同值）
+          seen.add(key);
+          records.push({
+            y,
+            major: `${clean(maj)}（面向${clean(city)}就业）`,
+            type: "山东省属公费师范生",
+            batch: "",
+            campus: "",
+            min: num(min),
+            minRank: rankOf(y, min),
+            plan: null,
+            adm: null,
+            avg: null,
+            max: num(max),
+            xk: "",
+          });
+          kept++;
+        });
+      });
+    }
+    if (kept) typesSeen.add(`${y} ${kept}条/${files.length}个数据文件`);
+  }
+  console.log(`  取数：${[...typesSeen].sort().join("；") || "无"}`);
+  return records;
+}
+
 function num(v) {
   if (v === null || v === undefined || v === "") return null;
   const n = Number(v);
@@ -330,9 +523,45 @@ const SCHOOLS = [
     note:
       "山东省属公费师范生（含市属委培师范生）。官网逐专业给录取最高/最低/平均分与录取人数，位次按山东一分一段表由最低分换算。体育类、艺术类公费师范不在本页——它们的「位次」按综合分排序，与综合改革位次不可比。",
   },
+  {
+    name: "鲁东大学",
+    adapter: "zf",
+    host: "zscx.ldu.edu.cn",
+    code: "ldu",
+    src: "鲁东大学本科招生网·历年分数查询",
+    srcUrl: "https://zscx.ldu.edu.cn/static/front/ldu/basic/html_web/lnfs.html",
+    note:
+      "山东省属公费师范生（2022 年另有市属委培师范生）。官网逐专业给录取最高/最低/平均分与录取人数，位次按山东一分一段表由最低分换算。公费农科生不在师范口径内，未取；2026 年综合改革科类尚未公布公费师范生投档数据。",
+  },
+  {
+    name: "华中师范大学",
+    adapter: "ccnu",
+    src: "华中师范大学招生信息系统·普通类分专业录取",
+    srcUrl: "http://zsxt.ccnu.edu.cn/apply/index.php?g=apply&m=index&a=admit",
+    note:
+      "教育部直属师范大学公费师范生。官网自 2025 年起在表内给出「对应省排名」，2022—2024 年只有最高/最低/平均分，位次由山东一分一段表换算。同校「提前批」里的非师范专业（如外国语言文学类）不在本页口径内，未取。",
+  },
+  {
+    name: "济南大学",
+    adapter: "ujn",
+    base: "http://map.adm.ujn.edu.cn/",
+    src: "济南大学本科招生网·招生录取情况统计",
+    srcUrl: "http://map.adm.ujn.edu.cn/2025zstj/",
+    note:
+      "山东省属公费师范生，按「专业+定向就业市」逐条投档，仅汉语言文学、特殊教育两个专业投放。官网统计页只给各专业各定向市的录取最高/最低分，无位次、平均分与人数，位次按山东一分一段表由最低分换算。2026 年录取统计官网尚未发布。",
+  },
+  {
+    name: "临沂大学",
+    adapter: "lyu",
+    api: "http://211.64.240.198/LindaZhaoSheng/front/admissionsGradesCollect/selectByExample",
+    src: "临沂大学招生网·往年分数查询",
+    srcUrl: "http://211.64.240.198/LindaZhaoSheng/front-views/index.html",
+    note:
+      "山东省属公费师范生，按「专业+定向就业市」逐条投档。官网该表只给录取最高/最低分，无位次、平均分与人数，位次按山东一分一段表由最低分换算。官网「批次」列对省属公费标注不一致（2022 标「常规批」、2023—2024 标「提前批」、2025 标「普通类提前批B类」），故批次留空、以专业名中的「省属公费师范生」为准。2024 年官网把「体育教育（省属公费师范生）」也列在普通类下，其分数是体育综合分，已按专业名剔除。2026 年山东未公布公费师范生逐专业数据。",
+  },
 ];
 
-const byName = { nenu: fetchNenu, zf: fetchZhengfang };
+const byName = { nenu: fetchNenu, zf: fetchZhengfang, ccnu: fetchCcnu, lyu: fetchLyu, ujn: fetchUjn };
 
 async function run(school) {
   console.log(`\n== ${school.name} ==`);
