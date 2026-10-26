@@ -196,6 +196,7 @@
   .major-name { max-width: 330px; }
   .major-name .nm { font-weight: 500; }
   .major-name .xk { font-family: var(--mono); font-size: 11px; color: var(--muted); display: block; }
+  .major-name .code-tag { color: var(--claim); font-weight: 500; }
   .ycell { font-family: var(--mono); white-space: nowrap; }
   .ycell .sc { font-weight: 600; font-size: 14px; }
   .ycell .rk { color: var(--muted); font-size: 11px; display: block; }
@@ -282,7 +283,7 @@
       <b>METHOD · 口径与方法</b>
       <p><em>数据来源</em>：山东省教育招生考试院官网历年《普通类常规批第 1 次志愿投档情况表》与《夏季高考文化成绩一分一段表》官方 XLS 附件，逐行解析、未做增删。</p>
       <p><em>最低分怎么来的</em>：官方投档表只公布投档最低位次；同一分数对应同一段位次区间，用当年一分一段表把位次反推为分数（如 2026 年位次 355637 ↔ 一段线 442 分，与官方一致）。</p>
-      <p><em>只含常规批第 1 次志愿</em>：不含提前批、艺术类、体育类，也不含第 2、3 次志愿征集补录；个别中外合作、走读、专项计划单列的专业以表内名称为准。</p>
+      <p><em>只含常规批第 1 次志愿</em>：不含提前批、艺术类、体育类，也不含第 2、3 次志愿征集补录；个别中外合作、走读、专项计划单列的专业以表内名称为准。官方表里同一院校同一年偶尔出现两条名称完全相同的专业（如哈尔滨理工大学「计算机科学与技术」分列 13 / S5 两个专业代码），页面各自成条，并按最近一年的招生代码 / 专业代码标注区分。</p>
       <p><em>官网补充（提前批等）</em>：部属师范大学的公费师范、优师专项、重点马院在提前批录取，省考试院不公布提前批投档表，这些数据逐校取自各校本科招生网的历年分数查询系统（目前已收录西南大学 2023—2025 年，含本研衔接公费师范）。页面以金色「官网补充」标注，在院校卡分区与「按专业」视图中出现；官方查询系统见来源链接。更多学校可在仓库 scripts/data/gaokao/site/ 按同格式扩充。</p>
       <p><em>冲稳保怎么算</em>：取该专业近三年（2024—2026，缺年顺延）位次的中位数 r，你的位次 R ≤ 0.85r 为「保」，≤ r 为「稳」，≤ 1.10r 为「冲」，其余为「悬」。仅是历史位次的粗略分档，请结合当年计划增减与选科要求使用。</p>
       <p><em>选科</em>：仅 2026 年官方表带「选考科目要求」列，页面以此为准；其他年份未公布。</p>
@@ -405,17 +406,13 @@
         var key = name.replace(/[\s，、]/g, "");
         var rec = s.majorMap[key];
         if (rec && rec.years[y] && rec.years[y].rank !== r[2]) {
-          // 同名专业同年但位次不同 → 另一个招生代码单元，加代码后缀区分
-          var alt = key + code;
-          if (!(s.majorMap[alt] && !s.majorMap[alt].years[y])) {
-            rec = s.majorMap[alt] = { name: name + "（" + code + "）", mcode: r[0], years: {} };
-          } else {
-            rec = s.majorMap[alt];
-          }
+          // 官方表里同名专业有多行（不同招生代码，或同代码下不同专业代码），各自成条，稍后统一标注
+          var alt = key + "#" + code + "-" + r[0];
+          rec = s.majorMap[alt] || (s.majorMap[alt] = { name: name, mcode: r[0], scode: code, years: {} });
         } else if (!rec) {
-          rec = s.majorMap[key] = { name: name, mcode: r[0], years: {} };
+          rec = s.majorMap[key] = { name: name, mcode: r[0], scode: code, years: {} };
         }
-        rec.years[y] = { rank: r[2], score: r[4], plan: r[3], xk: r[5] || "" };
+        rec.years[y] = { rank: r[2], score: r[4], plan: r[3], xk: r[5] || "", mc: r[0], sc: code };
       });
     });
   });
@@ -428,6 +425,28 @@
   var schools = Object.keys(schoolByName).map(function (k) {
     var s = schoolByName[k];
     var majors = Object.keys(s.majorMap).map(function (n) { return s.majorMap[n]; });
+    // 官方表里同名专业可能有多行，代码逐年会变，标注取最近一年
+    majors.forEach(function (rec) {
+      for (var i = YEARS.length - 1; i >= 0; i--) {
+        var d = rec.years[YEARS[i]];
+        if (d) { rec.mcode = d.mc; rec.scode = d.sc; break; }
+      }
+    });
+    var sameName = {};
+    majors.forEach(function (rec) { (sameName[rec.name] || (sameName[rec.name] = [])).push(rec); });
+    Object.keys(sameName).forEach(function (nm) {
+      var g = sameName[nm];
+      if (g.length < 2) return;
+      var sc = {}, mc = {};
+      g.forEach(function (r) { sc[r.scode] = 1; mc[r.mcode] = 1; });
+      var showS = Object.keys(sc).length > 1, showM = Object.keys(mc).length > 1;
+      g.forEach(function (r) {
+        var parts = [];
+        if (showS) parts.push("招生代码 " + r.scode);
+        if (showM) parts.push("专业代码 " + r.mcode);
+        r.label = parts.join(" · ");
+      });
+    });
     majors.forEach(function (rec) {
       var ranks = [];
       YEARS.forEach(function (y) {
@@ -805,6 +824,7 @@
 
   function majorSubHTML(rec) {
     var parts = [];
+    if (rec.label) parts.push('<b class="code-tag">' + esc(rec.label) + "</b>");
     if (rec.site) {
       parts.push("<span class='site-tag'>" + esc(rec.type) + (rec.batch ? " · " + esc(rec.batch) : "") + (rec.campus ? " · " + esc(rec.campus) : "") + "</span>");
     }
