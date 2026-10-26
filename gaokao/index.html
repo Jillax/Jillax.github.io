@@ -530,8 +530,8 @@
         var e = rec.years[YEARS[j]];
         if (!e) continue;
         if (!rec.xk && e.xk) rec.xk = e.xk;
-        if (rec.avg == null && e.avg != null) rec.avg = e.avg;
-        if (rec.max == null && e.max != null) rec.max = e.max;
+        // 平均分和最高分必须取自同一年，否则会拼出「22 年均 606 / 高 616」这种跨年摘要
+        if (rec.avg == null && e.avg != null) { rec.avg = e.avg; rec.max = e.max; rec.avgYear = YEARS[j]; }
         if (rec.plan == null && e.plan != null) { rec.plan = e.plan; rec.planYear = YEARS[j]; }
         if (rec.adm == null && e.adm != null) { rec.adm = e.adm; if (rec.planYear == null) rec.planYear = YEARS[j]; }
       }
@@ -862,7 +862,7 @@
     if (rec.xk) parts.push("选科 " + esc(rec.xk));
     if (rec.plan != null) parts.push(String(rec.planYear).slice(2) + "年计划 " + rec.plan);
     else if (rec.adm != null) parts.push(String(rec.planYear).slice(2) + "年录取 " + rec.adm + " 人");
-    if (rec.avg != null) parts.push("均 " + rec.avg + " / 高 " + rec.max);
+    if (rec.avg != null) parts.push(String(rec.avgYear).slice(2) + "年均 " + rec.avg + (rec.max != null ? " / 高 " + rec.max : ""));
     return parts.length ? "<span class='xk'>" + parts.join(" · ") + "</span>" : "";
   }
 

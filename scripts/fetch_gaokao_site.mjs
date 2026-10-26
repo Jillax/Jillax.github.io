@@ -235,6 +235,8 @@ async function fetchNenu(school) {
       typesSeen.push(`${y} ${t}`);
       j.scores.forEach((s) => {
         const min = num(s.min_admission_score);
+        const max = num(s.max_admission_score);
+        const avg = num(s.avg_admission_score);
         records.push({
           y,
           major: clean(s.major),
@@ -245,8 +247,9 @@ async function fetchNenu(school) {
           minRank: num(s.min_rank) ?? rankOf(y, min),
           plan: null,
           adm: null,
-          avg: num(s.avg_admission_score),
-          max: num(s.max_admission_score),
+          // 2024 年该校把「平均位次」填进了平均分列（物理是 8574），按 min≤avg≤max 挡掉
+          avg: avg != null && min != null && max != null && avg >= min && avg <= max ? avg : null,
+          max,
           xk: "",
         });
       });
