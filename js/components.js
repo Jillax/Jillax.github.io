@@ -18,7 +18,7 @@
         { href: 'index.html',    label: '首页',       pages: ['index'] },
         { href: 'about.html',    label: '关于',       pages: ['about'] },
         { href: 'timeline.html', label: '编年',       pages: ['timeline'] },
-        { href: 'projects.html', label: '作品',       pages: ['projects', 'portfolio'] },
+        { href: 'projects.html', label: '作品',       pages: ['projects', 'portfolio', 'rights'] },
         { href: 'reading.html',  label: '阅读与译制', pages: ['reading', 'bookshelf', 'translations'] },
         { href: 'blog.html',     label: '随笔 / 联系', pages: ['blog', 'contact'] },
     ];

@@ -1,0 +1,426 @@
+/* ============================================
+   rights.html — 「要依据」日常速查
+   依赖 main.css 的 token，不引入新色板
+   ============================================ */
+
+body[data-page="rights"] {
+    font-size: 0.98rem;
+}
+
+.rights-wrap {
+    max-width: 1180px;
+    padding-bottom: 20px;
+}
+
+/* ===== Hero：三句话 ===== */
+.r-hero {
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--purple);
+    background:
+        linear-gradient(160deg, rgba(155, 89, 255, 0.10), rgba(0, 229, 255, 0.03) 55%, transparent);
+    padding: 26px 30px 24px;
+    margin-bottom: 30px;
+}
+
+.r-hero-lead {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    font-weight: 300;
+}
+
+.r-lines {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+}
+
+.r-lines li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 1.04rem;
+    color: var(--text);
+    line-height: 1.7;
+}
+
+.r-num {
+    font-family: var(--font-mono);
+    color: var(--purple-bright);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    padding-top: 5px;
+    flex-shrink: 0;
+}
+
+.r-hero-note {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(255, 107, 138, 0.25);
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.r-hero-note b {
+    color: var(--red);
+    font-weight: 400;
+}
+
+/* ===== 检索 ===== */
+.r-search {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.r-search input {
+    flex: 1 1 320px;
+    min-width: 0;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.r-search input::placeholder {
+    color: var(--text-faint);
+}
+
+.r-search input:focus {
+    border-color: var(--border-glow);
+    box-shadow: 0 0 12px rgba(155, 89, 255, 0.15);
+}
+
+.r-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ===== 布局 ===== */
+.r-layout {
+    display: grid;
+    grid-template-columns: 186px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+}
+
+/* ===== 侧栏目录 ===== */
+.r-toc {
+    position: sticky;
+    top: calc(var(--nav-offset, 68px) + 26px);
+    border-left: 1px solid var(--border);
+    padding-left: 16px;
+}
+
+.r-toc a {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    padding: 6px 0;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.r-toc a:hover {
+    color: var(--purple-bright);
+}
+
+.r-toc a.active {
+    color: var(--purple-bright);
+    text-shadow: 0 0 12px var(--purple-glow);
+}
+
+/* ===== 分节 ===== */
+.r-sec {
+    margin-bottom: 46px;
+    scroll-margin-top: calc(var(--nav-offset, 68px) + 24px);
+}
+
+.r-sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.r-sec-no {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 1px;
+}
+
+.r-sec-head h2 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text);
+}
+
+.r-sec-desc {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-weight: 300;
+}
+
+/* ===== 卡片 ===== */
+.r-card {
+    border: 1px solid var(--border);
+    border-left: 2px solid rgba(155, 89, 255, 0.35);
+    background: var(--bg-card);
+    padding: 18px 22px 16px;
+    margin-bottom: 12px;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.r-card:hover {
+    border-color: var(--border-glow);
+    box-shadow: 0 0 15px rgba(155, 89, 255, 0.08);
+}
+
+.r-card h3 {
+    font-family: var(--font-display);
+    font-size: 0.96rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.r-row {
+    display: grid;
+    grid-template-columns: 74px minmax(0, 1fr);
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px dashed rgba(155, 89, 255, 0.10);
+}
+
+.r-row:first-of-type {
+    border-top: none;
+}
+
+.r-row dt {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    padding-top: 4px;
+    white-space: nowrap;
+}
+
+.r-row dd {
+    color: var(--text-soft);
+    font-size: 0.93rem;
+    line-height: 1.78;
+}
+
+.r-row dd strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.r-row dd em {
+    font-style: normal;
+    color: var(--neon-cyan);
+}
+
+/* 可以这样说 */
+.r-say {
+    background: rgba(74, 222, 128, 0.07);
+    border-left: 2px solid var(--green);
+    padding: 9px 14px;
+    margin: 6px 0 2px;
+    color: #cdf5db;
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+/* 注意 / 边界 */
+.r-warn {
+    background: rgba(255, 170, 64, 0.07);
+    border-left: 2px solid var(--amber);
+    padding: 9px 14px;
+    margin: 6px 0 2px;
+    color: #ffdcae;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* 别说 */
+.r-never {
+    background: rgba(255, 107, 138, 0.07);
+    border-left: 2px solid var(--red);
+    padding: 9px 14px;
+    margin: 6px 0 2px;
+    color: #ffc4cf;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* 条文标记 */
+.r-cite {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.4px;
+    color: var(--neon-cyan);
+    border: 1px solid rgba(0, 229, 255, 0.22);
+    background: rgba(0, 229, 255, 0.06);
+    padding: 1px 7px;
+    margin: 2px 4px 2px 0;
+    white-space: nowrap;
+}
+
+.r-cite.flag {
+    color: var(--amber);
+    border-color: rgba(255, 170, 64, 0.28);
+    background: rgba(255, 170, 64, 0.08);
+}
+
+/* ===== 时效表 ===== */
+.r-table-wrap {
+    overflow-x: auto;
+}
+
+.r-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.r-table th,
+.r-table td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+
+.r-table th {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.r-table td {
+    color: var(--text-soft);
+}
+
+.r-table td:first-child {
+    color: var(--text);
+}
+
+.r-table td:last-child {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--neon-cyan);
+    white-space: nowrap;
+}
+
+/* ===== 页脚注 ===== */
+.r-foot {
+    margin-top: 10px;
+    padding: 18px 22px;
+    border: 1px dashed var(--border-glow);
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.r-foot b {
+    color: var(--amber);
+    font-weight: 400;
+}
+
+/* ===== 检索隐藏 ===== */
+.r-card.is-hidden,
+.r-sec.is-hidden,
+.r-toc a.is-hidden {
+    display: none;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 1000px) {
+    .r-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .r-toc {
+        position: static;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        border-left: none;
+        border-bottom: 1px solid var(--border);
+        padding: 0 0 10px;
+        scrollbar-width: none;
+    }
+
+    .r-toc::-webkit-scrollbar {
+        display: none;
+    }
+
+    .r-toc a {
+        white-space: nowrap;
+        border: 1px solid var(--border);
+        padding: 5px 10px;
+    }
+
+    .r-toc a.active {
+        border-color: var(--border-glow);
+    }
+}
+
+@media (max-width: 620px) {
+    .r-hero {
+        padding: 20px 16px;
+    }
+
+    .r-card {
+        padding: 16px 14px 14px;
+    }
+
+    .r-row {
+        grid-template-columns: 1fr;
+        gap: 3px;
+        padding: 9px 0;
+    }
+
+    .r-row dt {
+        padding-top: 0;
+    }
+
+    .r-table {
+        font-size: 0.8rem;
+    }
+
+    .r-table th,
+    .r-table td {
+        padding: 8px 6px;
+    }
+
+    .r-table td:last-child {
+        white-space: normal;
+    }
+}
