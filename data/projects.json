@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26",
+  "updated": "2026-10-27",
   "items": [
     {
       "id": "rights",
@@ -97,6 +97,15 @@
       "blurb": "中美人工智能投资：私人资本按同一口径并排，国家资本按出处分开。",
       "href": "ai-investment/",
       "tags": ["可视化", "AI", "2026"],
+      "group": "可视化",
+      "featured": false
+    },
+    {
+      "id": "billionaires-cn-us",
+      "title": "榜上的一百人",
+      "blurb": "Forbes 实时榜上中美各取前 100 名并排：进榜门槛 127 亿对 37.5 亿，第 1 名差 11.0 倍、第 100 名只差 3.4 倍。位次可以拖，行业结构与三年趋势在同一页，口径标在旁边。",
+      "href": "billionaires-cn-us/",
+      "tags": ["可视化", "富豪榜", "2026"],
       "group": "可视化",
       "featured": false
     },

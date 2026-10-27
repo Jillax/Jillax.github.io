@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>榜上的一百人 · 中美前 100 富豪对照</title>
+<meta name="description" content="用 Forbes 实时亿万富豪榜快照算出中美各自前 100 名的门槛、中位、集中度与行业结构：同一个位次上，美国人身家是中国人的 3.3 到 11 倍。">
+<meta property="og:title" content="榜上的一百人 · 中美前 100 富豪对照">
+<meta property="og:description" content="第 1 名差 11.0 倍，第 100 名差 3.4 倍。门槛、中位、基尼、行业结构与三年趋势，口径全部标在旁边。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/billionaires-cn-us/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://jillax.github.io/billionaires-cn-us/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --inset: #100c20;
+    --ink: #efe7ff;
+    --body: #cbbfe6;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --us: #ff6f88;
+    --cn: #4fd8e8;
+    --gold: #e5b45c;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --serif: "Noto Serif SC", "Songti SC", serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--us) 0 50%, var(--cn) 50% 100%) top / 100% 8px no-repeat,
+      radial-gradient(ellipse at 12% 0%, rgba(255, 111, 136, .10) 0%, transparent 58%),
+      radial-gradient(ellipse at 88% 20%, rgba(79, 216, 232, .07) 0%, transparent 55%),
+      var(--paper);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  a { color: var(--us); }
+  .wrap { width: min(1140px, calc(100% - 32px)); margin: 0 auto; }
+  button, input { font: inherit; color: inherit; }
+  b, strong { font-weight: 500; }
+
+  header { padding: 40px 0 0; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(44px, 7.2vw, 78px); line-height: .98;
+    letter-spacing: -0.035em; margin: 16px 0 0;
+  }
+  .sub {
+    font-family: var(--serif); font-size: clamp(17px, 2vw, 23px);
+    color: var(--muted); margin: 10px 0 0; line-height: 1.5;
+  }
+  .deck { max-width: 74ch; font-size: 17px; line-height: 1.75; margin: 18px 0 0; }
+  .deck strong { font-weight: 700; color: var(--ink); }
+  .method {
+    background: var(--sheet); border: 1px solid var(--line);
+    padding: 16px 18px; margin: 22px 0 0; font-size: 14px; line-height: 1.7; color: var(--muted);
+  }
+  .method b {
+    display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
+    color: var(--us); text-transform: uppercase; margin-bottom: 6px; font-weight: 500;
+  }
+  .method em { color: var(--ink); font-style: normal; font-weight: 500; }
+
+  h2 {
+    font-family: var(--serif); font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.5; margin: 6px 0 0; font-weight: 700;
+  }
+  .secno {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
+    color: var(--us); text-transform: uppercase; margin-top: 46px;
+  }
+  .note { color: var(--muted); font-size: 14px; line-height: 1.75; margin: 8px 0 0; max-width: 88ch; }
+  .note em { font-style: normal; color: var(--body); }
+
+  .ctl { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 18px 0 4px; }
+  .ctl span { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; }
+  .ctl button {
+    background: var(--inset); border: 1px solid var(--line); cursor: pointer;
+    padding: 7px 13px; font-size: 14px; line-height: 1.2;
+  }
+  .ctl button:hover { border-color: var(--muted); }
+  .ctl button[aria-pressed="true"] { background: var(--us); border-color: var(--us); color: #17091a; font-weight: 500; }
+  .ctl button[aria-pressed="true"].alt { background: var(--cn); border-color: var(--cn); color: #04222a; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .14em;
+    color: var(--muted); text-transform: uppercase; border-bottom: 1px solid var(--ink); white-space: nowrap;
+  }
+  td { font-size: 14px; line-height: 1.6; }
+  td.r, th.r { text-align: right; font-family: var(--mono); white-space: nowrap; }
+  td.num { font-family: var(--mono); font-size: 14px; }
+  td.lab { color: var(--body); }
+  .col-us { color: var(--ink); }
+  .col-cn { color: var(--ink); }
+  .ratio { color: var(--gold); font-family: var(--mono); white-space: nowrap; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .panel { background: var(--sheet); border: 1px solid var(--line); padding: 18px; margin-top: 14px; }
+
+  /* rank slider */
+  .slider { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; margin: 16px 0 2px; }
+  input[type="range"] { width: 100%; accent-color: var(--us); }
+  .slider output { font-family: var(--mono); font-size: 15px; color: var(--ink); white-space: nowrap; }
+  .pair { display: grid; gap: 10px; margin-top: 14px; }
+  .prow { display: grid; grid-template-columns: 78px minmax(0, 1fr) 112px; gap: 12px; align-items: center; }
+  .prow .who { font-size: 15px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .prow .who i { display: block; font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .track { height: 15px; background: rgba(155, 89, 255, .10); }
+  .bar { height: 100%; display: block; min-width: 2px; }
+  .bar.us { background: var(--us); }
+  .bar.cn { background: var(--cn); }
+  .prow .val { font-family: var(--mono); font-size: 14px; text-align: right; white-space: nowrap; }
+  .verdict {
+    font-family: var(--mono); font-size: 13px; color: var(--gold);
+    border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px;
+  }
+  .verdict span { color: var(--muted); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 12px 0 6px; font-size: 13px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: 0; }
+  .irow { display: grid; grid-template-columns: 108px 1fr; gap: 12px; align-items: center; padding: 7px 0; border-bottom: 1px solid rgba(155,89,255,.13); }
+  .irow .nm { font-size: 14px; color: var(--body); }
+  .stack { display: grid; gap: 4px; }
+  .sline { display: grid; grid-template-columns: 1fr 84px; gap: 10px; align-items: center; }
+  .sbar { height: 11px; background: rgba(155, 89, 255, .10); }
+  .sbar b { display: block; height: 100%; min-width: 1px; }
+  .sbar.us b { background: var(--us); }
+  .sbar.cn b { background: var(--cn); }
+  .sline em { font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: right; white-space: nowrap; }
+
+  .roster-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 14px; }
+  .roster h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  .scroll { max-height: 420px; overflow: auto; border: 1px solid var(--line); background: var(--inset); }
+  .scroll table { font-size: 13px; }
+  .scroll th { position: sticky; top: 0; background: var(--inset); }
+  .scroll td { padding: 6px 8px; }
+  .scroll td.p { font-family: var(--mono); color: var(--muted); width: 34px; }
+  .tag { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--ink); padding: 20px 0 46px; color: var(--muted); font-size: 13px; margin-top: 46px; line-height: 1.8; }
+  footer p { margin: 8px 0; }
+
+  @media (max-width: 860px) {
+    .grid2, .roster-wrap { grid-template-columns: 1fr; }
+    .prow { grid-template-columns: 66px 1fr; }
+    .prow .val { grid-column: 2; text-align: left; }
+    .irow { grid-template-columns: 1fr; gap: 6px; }
+    .slider { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">
+      <a href="https://jillax.github.io/">← Jillax</a>
+      <a href="../congress-portfolios/">申报上的美国</a>
+      <a href="../sovereign-funds/">披露上的国家资本</a>
+      <span>Forbes 实时榜 · 2026-10-27</span>
+      <span>单位：亿美元</span>
+    </div>
+    <h1>榜上的一百人</h1>
+    <p class="sub">中美各自前 100 名富豪：门槛、同位次身家、行业结构与三年趋势</p>
+    <p class="deck">拉到底部的位次滑块可以看到：第 1 名之间差 <strong>11.0 倍</strong>，第 100 名之间只差 <strong>3.4 倍</strong>。但美国前 100 名的合计财富是中国内地前 100 名的 <strong>4.9 倍</strong>，而马斯克一个人的身家就相当于中国内地前 100 名合计的 <strong>八成</strong>。榜尾差距小、榜头差距大——集中度本身也是差别的一部分。</p>
+  </header>
+
+  <p class="method"><b>怎么算的</b>
+    结构类指标（门槛、中位、均值、前 10 占比、基尼、行业、同位次对照）来自 <em>2026-10-27 从 Forbes 官方接口抓取的实时亿万富豪榜快照</em>，按公民身份各取前 100，两国是同一天、同一把尺子。人数与总财富的量级只引用 <em>Forbes 年度全球榜</em>（财富分别截至每年 3 月初），因为实时接口最多返回 3,000 条，用它报"全国共多少人"会低估。中国口径分两栏：<em>内地</em>与<em>含港澳</em>，切换按钮在下面。
+  </p>
+
+  <div class="ctl" id="scope-ctl">
+    <span>中国口径</span>
+    <button type="button" data-scope="cn" aria-pressed="true">中国内地前 100</button>
+    <button type="button" data-scope="hk" aria-pressed="false" class="alt">含港澳前 100</button>
+  </div>
+
+  <div class="secno">01 / 门槛与集中度</div>
+  <h2>同样一百个位置，两种量级</h2>
+  <p class="note" id="s1-note"></p>
+  <div style="margin-top:14px;overflow-x:auto">
+    <table id="cmp">
+      <thead><tr><th>指标</th><th class="r">美国前 100</th><th class="r" id="cn-head">中国内地前 100</th><th class="r">美国 / 中国</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="secno">02 / 同一名次对照</div>
+  <h2>把两国榜单按位次叠在一起</h2>
+  <p class="note">同一个数字是两国榜单上的同一个位置。左边红色是美国，右边青色是中国。身家以亿美元计，行业取 Forbes 的主行业。</p>
+  <div class="panel">
+    <div class="slider">
+      <input type="range" id="rank" min="1" max="100" step="1" value="1" aria-label="位次，1 到 100">
+      <output id="rank-out" for="rank">第 1 名</output>
+    </div>
+    <div class="pair" id="pair" aria-live="polite"></div>
+    <p class="verdict" id="verdict"></p>
+  </div>
+  <div class="grid2">
+    <div>
+      <h3 style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500">美国前 10</h3>
+      <table id="top-us"><tbody></tbody></table>
+    </div>
+    <div>
+      <h3 id="top-cn-title" style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500">中国内地前 10</h3>
+      <table id="top-cn"><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div class="secno">03 / 行业结构</div>
+  <h2>美国的钱在科技与金融，中国的钱在制造与食品</h2>
+  <p class="note" id="s3-note"></p>
+  <div class="ctl" id="metric-ctl">
+    <span>排序与条长</span>
+    <button type="button" data-metric="w" aria-pressed="true">按财富占比</button>
+    <button type="button" data-metric="c" aria-pressed="false">按人数</button>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--us)"></i>美国前 100</span>
+    <span><i style="background:var(--cn)"></i><b id="legend-cn">中国内地前 100</b></span>
+    <span id="metric-unit">条长按占本国前 100 合计财富的比例</span>
+  </div>
+  <div id="ind-rows"></div>
+
+  <div class="secno">04 / 三年趋势</div>
+  <h2>人数在涨，差距涨得更快</h2>
+  <p class="note">年度人数与总财富取自 Forbes 年度全球榜；财富数值取当年全球榜（截至每年 3 月初），最后一行是 2026-10-27 的实时快照，人数与总量在实时口径下不可比，所以留空。右侧两列固定追踪同一个人，方便跨年比。<em>2024 年福布斯中国内地榜首是钟睒睒（508 亿美元，2024 年 11 月中国内地榜），张一鸣以 456 亿美元排第三</em>；若按当年榜首算，2024 年的差距是 3.8×，不是下表的 4.5×。张一鸣从 2025 年榜起才坐到中国第一的位置。</p>
+  <div style="margin-top:14px;overflow-x:auto">
+    <table id="trend">
+      <thead><tr>
+        <th>榜单</th><th class="r">美国人数</th><th class="r">美国全体合计</th>
+        <th class="r">中国大陆人数</th><th class="r">含港澳</th>
+        <th class="r">马斯克</th><th class="r">张一鸣</th><th class="r">马斯克 / 张一鸣</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="grid2" style="margin-top:22px">
+    <div>
+      <h3 style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500">年度全球榜上榜人数（人）</h3>
+      <div class="legend"><span><i style="background:var(--us)"></i>美国</span><span><i style="background:var(--cn)"></i>中国大陆</span></div>
+      <div id="count-bars"></div>
+    </div>
+    <div>
+      <h3 style="font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500">同一人跨年身家（亿美元）</h3>
+      <div class="legend"><span><i style="background:var(--us)"></i>马斯克</span><span><i style="background:var(--cn)"></i>张一鸣</span></div>
+      <div id="rich-bars"></div>
+    </div>
+  </div>
+
+  <div class="secno">05 / 两份名单</div>
+  <h2>前 100 名逐个摊开</h2>
+  <p class="note" id="s5-note"></p>
+  <div class="roster-wrap">
+    <div class="roster">
+      <h3>美国前 100</h3>
+      <div class="scroll"><table><thead><tr><th class="p">#</th><th>姓名</th><th class="r">亿</th><th>行业</th></tr></thead><tbody id="roster-us"></tbody></table></div>
+    </div>
+    <div class="roster">
+      <h3 id="roster-cn-title">中国内地前 100</h3>
+      <div class="scroll"><table><thead><tr><th class="p">#</th><th>姓名</th><th class="r">亿</th><th>行业</th></tr></thead><tbody id="roster-cn"></tbody></table></div>
+    </div>
+  </div>
+
+  <footer>
+    <p><b>口径提醒。</b>"中国"在富豪榜上有两套数：Forbes 按公民身份统计，胡润按居住地与企业关系统计，两套的头部人选和总量都能差出很多。本页只用 Forbes。美国一侧同理——按公民身份算，不含居住在美国的非美籍富豪。</p>
+    <p><b>已知的坑。</b>实时接口单次最多返回 3,000 条，所以本页不用它报全国总人数；接口里的 <span class="tag">archivedWorth</span> 是每个人上一次登榜时的数值，跨年跨榜混在一起，不能拿来重建年度榜，本页未使用。年榜的个人明细已从公开接口下架，中文转载之间数字互相矛盾，趋势部分只引用官方发布的汇总值。</p>
+    <p><b>整理日期。</b>2026 年 10 月 27 日。身家随市场每天变动，前 100 名的位次和倍数会变，量级关系不会。</p>
+    <p>来源：<a href="https://www.forbes.com/real-time-billionaires/">Forbes Real-Time Billionaires</a>（接口 forbesapi/person/rtb，2026-10-27 抓取）；Forbes 2024、2025、2026 年度全球榜公告。</p>
+    <p><a href="https://jillax.github.io/">← 回首页</a> · <a href="../projects.html">全部作品</a></p>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  var D = window.RTB;
+  var ZH = D.indZh;
+  var state = { scope: 'cn', rank: 1, metric: 'w' };
+
+  function q(sel) { return document.querySelector(sel); }
+  function cnRank() { return state.scope === 'cn' ? D.rank.cn : D.rank.hk; }
+  function cnStat() { return state.scope === 'cn' ? D.stat.cn : D.stat.hk; }
+  function cnInd() { return state.scope === 'cn' ? D.ind.cn : D.ind.hk; }
+  function cnName() { return state.scope === 'cn' ? '中国内地' : '含港澳'; }
+  function total(list) { var t = 0; list.forEach(function (x) { t += x.w; }); return t; }
+  function yi(w) { return (w * 10).toLocaleString('en-US', { maximumFractionDigits: 0 }); }
+  function share(a, b) { return (a / b * 100).toFixed(1) + '%'; }
+  function ind2(en) { return ZH[en] || en; }
+  function nm(p) { return p.z || p.n; }
+
+  /* ---------- 01 ---------- */
+  function renderCmp() {
+    var u = D.stat.us, c = cnStat(), U = D.rank.us, C = cnRank();
+    var tu = total(U), tc = total(C);
+    var t10u = U.slice(0, 10).reduce(function (a, x) { return a + x.w; }, 0);
+    var t10c = C.slice(0, 10).reduce(function (a, x) { return a + x.w; }, 0);
+    var rows = [
+      ['前 100 名合计', yi(tu) + ' 亿', yi(tc) + ' 亿', (tu / tc).toFixed(1) + '×'],
+      ['进榜门槛（第 100 名）', yi(u.thr), yi(c.thr), (u.thr / c.thr).toFixed(1) + '×'],
+      ['中位身家', yi(u.med), yi(c.med), (u.med / c.med).toFixed(1) + '×'],
+      ['均值身家', yi(u.mean), yi(c.mean), (u.mean / c.mean).toFixed(1) + '×'],
+      ['前 10 名占前 100', share(t10u, tu), share(t10c, tc), (t10u / tu / (t10c / tc)).toFixed(2) + '×'],
+      ['前 100 名内部基尼', u.gini.toFixed(3), c.gini.toFixed(3), (u.gini / c.gini).toFixed(2) + '×'],
+      ['身家超 1,000 亿', u.cent + ' 人', c.cent + ' 人', '—'],
+      ['白手起家比例', u.self + '%', c.self + '%', (u.self / c.self).toFixed(2) + '×'],
+      ['首富占前 100 合计', share(U[0].w, tu), share(C[0].w, tc), (U[0].w / tu / (C[0].w / tc)).toFixed(2) + '×']
+    ];
+    q('#cmp tbody').innerHTML = rows.map(function (r) {
+      return '<tr><td class="lab">' + r[0] + '</td><td class="r num col-us">' + r[1] +
+        '</td><td class="r num col-cn">' + r[2] + '</td><td class="r ratio">' + r[3] + '</td></tr>';
+    }).join('');
+    q('#cn-head').textContent = cnName() + '前 100';
+    q('#s1-note').innerHTML = '同一时点、同一算法。美国一侧的科技与金融把头部抬得极高，所以合计与中位差出 <em>' +
+      (tu / tc).toFixed(1) + ' 倍</em>，而门槛只差 <em>' + (u.thr / c.thr).toFixed(1) + ' 倍</em>：' + cnName() + '第 100 名是 ' + yi(c.thr) +
+      ' 亿，美国第 100 名是 ' + yi(u.thr) + ' 亿。基尼栏里美国是 ' + u.gini.toFixed(3) + '、中国是 ' + c.gini.toFixed(3) +
+      '，榜内财富在美国更集中。';
+  }
+
+  /* ---------- 02 ---------- */
+  function renderRank() {
+    var i = state.rank - 1, u = D.rank.us[i], c = cnRank()[i];
+    var max = Math.max(u.w, c.w);
+    q('#rank-out').textContent = '第 ' + u.r + ' 名';
+    function line(p, cls) {
+      return '<div class="prow"><div class="who">' + nm(p) + '<i>' + ind2(p.i) + '</i></div>' +
+        '<div class="track"><span class="bar ' + cls + '" style="width:' + (p.w / max * 100).toFixed(2) + '%"></span></div>' +
+        '<div class="val">' + yi(p.w) + ' 亿</div></div>';
+    }
+    q('#pair').innerHTML = line(u, 'us') + line(c, 'cn');
+    q('#verdict').innerHTML = '同一位次差 <b>' + (u.w / c.w).toFixed(1) + ' 倍</b>' +
+      '<span>　美国：' + u.n + '　中国：' + c.n + '</span>';
+  }
+
+  function renderTop10() {
+    function tbl(list) {
+      return list.slice(0, 10).map(function (p) {
+        return '<tr><td class="p">' + p.r + '</td><td>' + nm(p) + '</td><td><span class="tag">' + ind2(p.i) +
+          '</span></td><td class="r num">' + yi(p.w) + '</td></tr>';
+      }).join('');
+    }
+    q('#top-us tbody').innerHTML = tbl(D.rank.us);
+    q('#top-cn tbody').innerHTML = tbl(cnRank());
+    q('#top-cn-title').textContent = cnName() + '前 10';
+  }
+
+  /* ---------- 03 ---------- */
+  function renderInd() {
+    var us = D.ind.us, ci = cnInd(), mi = state.metric === 'w' ? 2 : 1;
+    function get(arr, k) {
+      for (var j = 0; j < arr.length; j++) { if (arr[j][0] === k) return arr[j]; }
+      return [k, 0, 0];
+    }
+    var keys = [];
+    us.concat(ci).forEach(function (r) {
+      if (keys.indexOf(r[0]) < 0 && (r[2] > 1 || r[1] >= 3)) keys.push(r[0]);
+    });
+    keys.sort(function (a, b) { return get(us, b)[mi] - get(us, a)[mi] || get(ci, b)[mi] - get(ci, a)[mi]; });
+    if (keys.length > 12) keys = keys.slice(0, 12);
+    var max = 0;
+    keys.forEach(function (k) { max = Math.max(max, get(us, k)[mi], get(ci, k)[mi]); });
+    q('#ind-rows').innerHTML = keys.map(function (k) {
+      var a = get(us, k), b = get(ci, k);
+      function ln(arr, cls) {
+        var v = arr[mi];
+        return '<div class="sline"><div class="sbar ' + cls + '"><b style="width:' +
+          (max ? v / max * 100 : 0).toFixed(2) + '%"></b></div><em>' +
+          (state.metric === 'w' ? v.toFixed(1) + '%' : v + ' 人') + '</em></div>';
+      }
+      return '<div class="irow"><div class="nm">' + ind2(k) + '</div><div class="stack">' +
+        ln(a, 'us') + ln(b, 'cn') + '</div></div>';
+    }).join('');
+    q('#legend-cn').textContent = cnName() + '前 100';
+    q('#metric-unit').textContent = state.metric === 'w'
+      ? '条长按占本国前 100 合计财富的比例'
+      : '条长按占本国前 100 的人数';
+    q('#s3-note').innerHTML = '每人只算进 Forbes 的<em>主行业</em>，所以一栏一个归属，两侧各自合计接近 100%。' +
+      '美国科技占前 100 财富的 ' + get(us, 'Technology')[2].toFixed(1) + '%（' + get(us, 'Technology')[1] + ' 人），' + cnName() +
+      '科技占 ' + get(ci, 'Technology')[2].toFixed(1) + '%（' + get(ci, 'Technology')[1] + ' 人）；金融与投资在美国是 ' +
+      get(us, 'Finance & Investments')[2].toFixed(1) + '%、在' + cnName() + '只有 ' + get(ci, 'Finance & Investments')[2].toFixed(1) +
+      '%。美国前 100 里没有一个制造业，' + cnName() + '一侧制造 ' + get(ci, 'Manufacturing')[1] + ' 人、占 ' +
+      get(ci, 'Manufacturing')[2].toFixed(1) + '%。';
+  }
+
+  /* ---------- 04 ---------- */
+  function renderTrend() {
+    var T = D.trend;
+    q('#trend tbody').innerHTML = T.map(function (r) {
+      function cell(v, suf) { return v === null ? '<td class="r num">—</td>' : '<td class="r num">' + v.toLocaleString('en-US') + (suf || '') + '</td>'; }
+      return '<tr><td class="lab">' + r.y + '</td>' + cell(r.us) +
+        (r.usw === null ? '<td class="r num">—</td>' : '<td class="r num">' + r.usw.toFixed(1) + ' 万亿</td>') +
+        cell(r.cn) + cell(r.hk) + cell(r.mk, ' 亿') + cell(r.zy, ' 亿') +
+        '<td class="r ratio">' + r.gap.toFixed(1) + '×</td></tr>';
+    }).join('');
+
+    function groupRows(items, unit) {
+      var max = 0;
+      items.forEach(function (r) { max = Math.max(max, r.a, r.b); });
+      function ln(v, cls) {
+        return '<div class="sline"><div class="sbar ' + cls + '"><b style="width:' +
+          (max ? v / max * 100 : 0).toFixed(2) + '%"></b></div><em>' +
+          v.toLocaleString('en-US') + unit + '</em></div>';
+      }
+      return items.map(function (r) {
+        return '<div class="irow"><div class="nm">' + r.k + '</div><div class="stack">' +
+          ln(r.a, 'us') + ln(r.b, 'cn') + '</div></div>';
+      }).join('');
+    }
+    var counts = [], rich = [];
+    D.trend.forEach(function (r) {
+      if (r.us === null) return;
+      counts.push({ k: r.y.replace(' 年榜', ''), a: r.us, b: r.cn });
+    });
+    D.trend.forEach(function (r) { rich.push({ k: r.y.replace(' 年榜', '').replace('实时 ', '实时 '), a: r.mk, b: r.zy }); });
+    q('#count-bars').innerHTML = groupRows(counts, ' 人');
+    q('#rich-bars').innerHTML = groupRows(rich, ' 亿');
+  }
+
+  /* ---------- 05 ---------- */
+  function renderRoster() {
+    function tbl(list) {
+      return list.map(function (p) {
+        return '<tr><td class="p">' + p.r + '</td><td>' + nm(p) + '</td><td class="r num">' + yi(p.w) +
+          '</td><td><span class="tag">' + ind2(p.i) + '</span></td></tr>';
+      }).join('');
+    }
+    q('#roster-us').innerHTML = tbl(D.rank.us);
+    q('#roster-cn').innerHTML = tbl(cnRank());
+    q('#roster-cn-title').textContent = cnName() + '前 100';
+    q('#s5-note').innerHTML = '姓名只在本页常用译法有把握的位置写中文，其余按 Forbes 的原始拼写显示（中国人的拼音名也来自 Forbes），位次是' + cnName() +
+      '口径下的国内位次，不是全球位次。' + yi(D.rank.us[0].w) + ' 亿（马斯克）与 ' + yi(cnRank()[0].w) +
+      ' 亿（' + nm(cnRank()[0]) + '）之间差 ' + (D.rank.us[0].w / cnRank()[0].w).toFixed(1) + ' 倍。';
+  }
+
+  /* ---------- wiring ---------- */
+  function paintScope() {
+    renderCmp(); renderRank(); renderTop10(); renderInd(); renderRoster();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#scope-ctl button'), function (b) {
+    b.addEventListener('click', function () {
+      state.scope = b.dataset.scope;
+      Array.prototype.forEach.call(document.querySelectorAll('#scope-ctl button'), function (x) {
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      paintScope();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#metric-ctl button'), function (b) {
+    b.addEventListener('click', function () {
+      state.metric = b.dataset.metric;
+      Array.prototype.forEach.call(document.querySelectorAll('#metric-ctl button'), function (x) {
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      renderInd();
+    });
+  });
+  q('#rank').addEventListener('input', function (e) {
+    state.rank = Number(e.target.value) || 1;
+    renderRank();
+  });
+
+  paintScope();
+  renderTrend();
+})();
+</script>
+</body>
+</html>
