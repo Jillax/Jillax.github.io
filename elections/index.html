@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>下一次投票 · 七个国家的选举日历</title>
-<meta name="description" content="美国、巴西、法国、意大利、德国、日本、韩国，从 2026 年美国中期选举排到 2030 年巴西大选的投票日历。哪些日子已经定死，哪些还只受法定期限约束。">
-<meta property="og:title" content="下一次投票 · 七个国家的选举日历">
-<meta property="og:description" content="2026 年还剩一场美国中期选举；2027 年法国和意大利；2028 年日本、韩国、美国；2029 年德国；2030 年巴西和韩国。日期有的写死在法律里，有的由总理一句话决定。">
+<title>下一次投票 · 十八个国家的选举日历</title>
+<meta name="description" content="美国、巴西、墨西哥、阿根廷、加拿大、英国、法国、德国、意大利、西班牙、波兰、土耳其、印度、印尼、日本、韩国、澳大利亚、南非，从 2026 年美国中期选举排到 2030 年巴西大选的投票日历。哪些日子已经定死，哪些还只受法定期限约束。">
+<meta property="og:title" content="下一次投票 · 十八个国家的选举日历">
+<meta property="og:description" content="2026 年 11 月美国中期选举、西班牙提前大选；2027 年法国、意大利、墨西哥、阿根廷、波兰；2028 年日本、韩国、美国、土耳其、澳大利亚；2029 年德国、英国、印度、印尼、南非、加拿大；2030 年巴西、韩国、日本、美国、墨西哥、波兰。日期有的写死在法律里，有的由首相一句话决定。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://jillax.github.io/elections/">
 <meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
@@ -176,6 +176,10 @@
   .three h4 { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
   .three p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
 
+  .three ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+  .three li { font-size: 13px; color: var(--body); }
+  .three li i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: 1px; }
+
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
   .card { background: var(--sheet); border: 1px solid var(--line); border-left-width: 3px; padding: 18px 20px 16px; scroll-margin-top: 24px; }
   .card.flash { animation: flash 1.4s ease-out; }
@@ -202,24 +206,19 @@
   td.num, th.num { font-family: var(--mono); white-space: nowrap; }
   td.yr { font-family: var(--mono); color: var(--muted); }
   .tw { margin-top: 16px; overflow-x: auto; }
-  .cell-ev { font-size: 13px; line-height: 1.55; color: var(--ink); }
-  .cell-ev + .cell-ev { margin-top: 6px; }
-  .cell-ev span { display: block; font-family: var(--mono); font-size: 10px; color: var(--muted); }
-  .cell-ev.past { color: var(--muted); }
-  .cell-ev.local { color: var(--body); }
-  .cell-ev.local span { color: #6b5a8a; }
-  .yrtab td { min-width: 96px; }
 
-  .yrmob { display: none; margin-top: 16px; }
-  .yrmob section { border-top: 1px solid var(--line); padding: 12px 0 8px; }
-  .yrmob h3 { margin: 0 0 8px; font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .12em; color: var(--ink); }
-  .yrmob .row { display: grid; grid-template-columns: 10px 46px 1fr auto; gap: 10px; align-items: baseline; padding: 5px 0; }
-  .yrmob .row i { width: 8px; height: 8px; border-radius: 50%; display: block; }
-  .yrmob .row .cn { font-size: 13px; color: var(--body); white-space: nowrap; }
-  .yrmob .row .nm { font-size: 14px; color: var(--ink); }
-  .yrmob .row .nm em { font-style: normal; font-size: 11px; color: var(--muted); margin-left: 4px; }
-  .yrmob .row .dt { font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; }
-  .yrmob .row.past .nm, .yrmob .row.past .dt { color: var(--muted); }
+  /* year board */
+  .yrboard { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+  .ycol { border-top: 1px solid var(--ink); padding-top: 10px; }
+  .ycol h3 { margin: 0 0 6px; font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .12em; color: var(--ink); }
+  .ycol h3 span { color: var(--muted); font-weight: 400; margin-left: 4px; letter-spacing: .04em; }
+  .ycol .row { padding: 7px 0; border-bottom: 1px solid rgba(155, 89, 255, .1); }
+  .ycol .row:last-child { border-bottom: 0; }
+  .ycol .cn { display: block; font-size: 12px; color: var(--muted); }
+  .ycol .nm { font-size: 13px; line-height: 1.5; color: var(--ink); }
+  .ycol .nm em { font-style: normal; font-family: var(--mono); font-size: 9px; color: var(--muted); border: 1px solid var(--line); padding: 0 4px; margin-left: 4px; }
+  .ycol .dt { display: block; font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .ycol .row.past .nm, .ycol .row.past .dt { color: var(--muted); }
 
   footer { border-top: 1px solid var(--ink); padding: 20px 0 46px; color: var(--muted); font-size: 13px; margin-top: 52px; line-height: 1.85; }
   footer p { margin: 9px 0; }
@@ -231,10 +230,10 @@
     .three, .cards { grid-template-columns: 1fr; }
     .card dl { grid-template-columns: 1fr; gap: 2px; }
     .card dt { padding-top: 6px; }
+    .yrboard { grid-template-columns: 1fr 1fr; }
   }
-  @media (max-width: 700px) {
-    #yrtabwrap { display: none; }
-    .yrmob { display: block; }
+  @media (max-width: 560px) {
+    .yrboard { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -244,9 +243,12 @@
 </head>
 <body>
 <div class="stripe" aria-hidden="true">
-  <i style="background:#ff6f88"></i><i style="background:#a3e635"></i><i style="background:#6ea8ff"></i>
-  <i style="background:#4fd8e8"></i><i style="background:#e5b45c"></i><i style="background:#ff9ecd"></i>
-  <i style="background:#b48cff"></i>
+  <i style="background:#ff6f88"></i><i style="background:#a3e635"></i><i style="background:#2dd4bf"></i>
+  <i style="background:#7dd3fc"></i><i style="background:#ff8a66"></i><i style="background:#5eead4"></i>
+  <i style="background:#6ea8ff"></i><i style="background:#e5b45c"></i><i style="background:#4fd8e8"></i>
+  <i style="background:#facc15"></i><i style="background:#f472b6"></i><i style="background:#ff9f7a"></i>
+  <i style="background:#ffb020"></i><i style="background:#ff5c5c"></i><i style="background:#ff9ecd"></i>
+  <i style="background:#b48cff"></i><i style="background:#b9d96b"></i><i style="background:#e879f9"></i>
 </div>
 
 <div class="wrap">
@@ -258,8 +260,8 @@
       <span>整理于 2026-10-28</span>
     </div>
     <h1>下一次投票</h1>
-    <p class="sub">美国、巴西、法国、意大利、德国、日本、韩国的选举日历，2026 到 2030</p>
-    <p class="deck">2026 年还没过完：2 月日本解散众议院，6 月韩国地方选举，10 月巴西投了两轮总统，<strong>11 月 3 日轮到美国中期选举</strong>。再往后，2027 年法国和意大利，2028 年日本、韩国、美国，2029 年德国，2030 年巴西和韩国。七个国家的投票日长短不一：美国的写在联邦法律里，日本的由首相一句话决定。</p>
+    <p class="sub">十八个国家的选举日历，2026 到 2030</p>
+    <p class="deck">2026 年还没过完：2 月日本解散众议院，6 月韩国地方选举，10 月巴西投了两轮总统——卢拉 51.79% 翻盘。<strong>11 月 3 日美国中期选举，11 月 29 日西班牙提前大选</strong>：桑切斯的两项住房法令 10 月 2 日被否决，三天后就宣布解散。再往后，2027 年法国、意大利、墨西哥、阿根廷、波兰，2028 年日本、韩国、美国、土耳其、澳大利亚，2029 年德国、英国、印度、印尼、南非、加拿大，2030 年巴西、韩国、日本、美国、墨西哥、波兰。十八个国家的日期长短不一：美国的写在联邦法律里，英国的由首相随时提前，澳大利亚三年就得选一次。</p>
 
     <div class="next" id="next-box">
       <div class="next-num" id="cd-num">—</div>
@@ -272,10 +274,10 @@
     </div>
 
     <div class="chips">
+      <span class="chip"><b>18</b> 国</span>
       <span class="chip">收录 <b id="chip-total">0</b> 个投票日</span>
       <span class="chip">未来 12 个月 <b id="chip-next">0</b> 场</span>
       <span class="chip">已经投完 <b id="chip-past">0</b> 场</span>
-      <span class="chip">日期来自 <b>3</b> 种机制</span>
     </div>
 
     <p class="method"><b>怎么读这张表</b>
@@ -284,8 +286,8 @@
   </header>
 
   <div class="secno">01 / 时间轴</div>
-  <h2>五年，十九个投票日</h2>
-  <p class="note">横轴 2026 年 1 月到 2030 年 12 月。实心是已定日期，空心是待定，长条是法定期限内的窗口，灰点是已经投完的票。点圆点看详情，再点一次跳到下面的国家卡片。窄屏上时间轴可以横向滑动，也可以直接看第四节的年份表。</p>
+  <h2>五年，三十四个投票日</h2>
+  <p class="note">横轴 2026 年 1 月到 2030 年 12 月。实心是已定日期，空心是待定或最迟，长条是法定期限内的窗口，灰点是已经投完的票。泳道按下一场投票的先后排，所以最上面是最近要投票的国家。点圆点看详情，再点一次跳到下面的国家卡片。窄屏上时间轴可以横向滑动，也可以直接看第四节的年份板。</p>
 
   <div class="legend">
     <span><i class="glyph fixed"></i>已定</span>
@@ -310,28 +312,15 @@
 
   <div class="secno">02 / 制度</div>
   <h2>日期是怎么定下来的</h2>
-  <p class="note">同样是「大选年」，七个国家的日期来自三种完全不同的机制。看懂这一层，表上哪些日子会变、为什么会变就清楚了。</p>
+  <p class="note">同样是「大选年」，十八个国家的投票日来自三种完全不同的机制。看懂这一层，表上哪些日子会变、为什么会变就清楚了。三类并不互斥：加拿大写了固定日也能提前解散，印度和澳大利亚的总理同样可以突袭。下面的卡片也按下一场投票的先后排列。</p>
 
-  <div class="three">
-    <div>
-      <h4>写死在法律里</h4>
-      <p>美国、巴西。联邦或选举法直接规定「几月第几个星期几」，政府没有改期的空间。</p>
-    </div>
-    <div>
-      <h4>由解散权决定</h4>
-      <p>日本、法国、意大利。议会或首相握有解散权，选前一年的任何一天都可能提前。</p>
-    </div>
-    <div>
-      <h4>从任期倒推</h4>
-      <p>德国、韩国、法国总统。任期长度写死，投票日落在届满前后的一段窗口里，具体日子再公告。</p>
-    </div>
-  </div>
+  <div class="three" id="mech"></div>
 
   <div class="cards" id="cards"></div>
 
   <div class="secno">03 / 美国</div>
   <h2>中期选举：两年一次，不选总统</h2>
-  <p class="note">美国是这七国里唯一每两年就改选一次全国立法机构的国家：众议院 435 席的任期只有两年，这条写在宪法第一条里，所以两次总统选举之间必定夹着一场中期选举。</p>
+  <p class="note">美国是这十八国里唯一每两年就改选一次全国立法机构的国家：众议院 435 席的任期只有两年，这条写在宪法第一条里，所以两次总统选举之间必定夹着一场中期选举。</p>
 
   <div class="tw">
     <table>
@@ -352,21 +341,13 @@
   <h2>同一年，谁在投票</h2>
   <p class="note" id="year-note"></p>
 
-  <div class="tw" id="yrtabwrap">
-    <table class="yrtab" id="yrtab">
-      <thead>
-        <tr><th>年份</th><th>美国</th><th>巴西</th><th>法国</th><th>意大利</th><th>德国</th><th>日本</th><th>韩国</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <div class="yrmob" id="yrmob"></div>
+  <div class="yrboard" id="yrboard"></div>
 
   <footer>
-    <p><b>口径。</b>日期都是投票地当地时间。美国、巴西跨多个时区，本页按各自法定的投票日记，不换算成北京时间。「法定窗口」只表示这一天必须落在区间内，不代表区间内每天都可以投。地方选举（韩国 6 月 3 日、巴西 2028 年市政选举）标了「地方」，可以从时间轴里过滤掉。</p>
-    <p><b>已知的不确定。</b>意大利 2027 年是否提前到春季仍未定，媒体提过 4 月 4 日、4 月 11 日，选举法改革还在参议院审议，本页只给窗口；德国 2029 年的具体周日要等联邦总统公告，本页按第 46 至 48 个月的法定窗口给；日本众议院可以随时解散，2030 年 2 月只是任期届满日，不是预测的投票日；韩国 2028 年国会选举日是惯例推算，以中央选举管理委员会公告为准。法国立法选举、巴西 2030 年第二轮同理。</p>
-    <p><b>已经投完的。</b>日本 2026 年 2 月 8 日（第 51 届众议院，465 席，执政联盟获 352 席）、韩国 6 月 3 日（第九届地方选举）、巴西 10 月 4 日与 25 日（总统第二轮卢拉 51.79% 对 48.21%，2027 年 1 月 5 日就任）。美国 11 月 3 日尚未投票。</p>
-    <p>来源：法国总统选举日期由 2026 年 7 月 1 日部长会议确定；巴西高等选举法院（TSE）计票结果；日本总务省第 51 回众议院议员总选举；韩国中央选举管理委员会；德国联邦选举专员与《基本法》第 39 条；意大利宪法与两院任期规定；美国 2 U.S.C. § 7。</p>
+    <p><b>口径。</b>日期都是投票地当地时间。美国、巴西、墨西哥、阿根廷跨多个时区，本页按各自法定的投票日记，不换算成北京时间。「法定窗口」只表示这一天必须落在区间内，不代表区间里每天都可以投。地方选举（韩国 6 月 3 日、南非 11 月 4 日、巴西 2028 年市政选举）标了「地方」，可以从时间轴里过滤掉。英国、澳大利亚、印度、印尼、南非的圆点画在法定最迟日上，那是「必须在此之前投完」，不是预期的投票日。</p>
+    <p><b>已知的不确定。</b>英国最迟 2029 年 8 月中旬，取决于议会解散时点（2029 年 7 月 9 日自动解散后 25 个工作日内投票）；加拿大 2029 年 10 月 15 日是法定日，少数政府可能提前；澳大利亚两院同时改选最迟 2028 年 6 月 30 日，实际日子由总理定，2027 年也可能突袭；印度选举委员会尚未公告，最迟 2029 年 6 月 23 日，惯例在 4 至 5 月分阶段投票；印尼大选委员会尚未定日，最迟 2029 年 9 月 30 日，预计 2029 年上半年；南非最迟 2029 年 9 月中旬，惯例在 5 月。土耳其正常日期在 2028 年 5 月，提前到 4 月 16 日需议会 360 票，执政联盟尚未凑够。阿根廷 2027 年 10 月 24 日、2029 年 10 月 28 日是法定周日，国家选举委员会尚未公告，初选（PASO）是否保留也未定。墨西哥 2030 年 6 月 2 日按「6 月第一个星期日」推算，INE 尚未公告。意大利 2027 年是否提前到春季仍未定；德国 2029 年的具体周日要等联邦总统公告；日本众议院可以随时解散，2030 年 2 月只是任期届满日；韩国 2028 年国会选举日是惯例推算。法国立法选举、巴西 2030 年第二轮同理。</p>
+    <p><b>已经投完的。</b>日本 2026 年 2 月 8 日（第 51 届众议院，465 席，执政联盟获 352 席）、韩国 6 月 3 日（第九届地方选举）、巴西 10 月 4 日与 25 日（总统第二轮卢拉 51.79% 对 48.21%，2027 年 1 月 5 日就任）。美国 11 月 3 日、西班牙 11 月 29 日均尚未投票。</p>
+    <p>来源：英国《2022 年解散与召集议会法》与 legislation.gov.uk；加拿大《选举法》第 56.1 条；澳大利亚宪法第 28 条与议会图书馆；印度宪法第 83 条与选举委员会；印尼 2017 年第 7 号选举法与大选委员会；墨西哥宪法第 41 条与 INE 程序启动公告；阿根廷第 26.571 号法与国家选举委员会；南非宪法第 49 条、选举法第 17 条与 IEC；土耳其宪法第 77、116 条与最高选举委员会；西班牙宪法第 115 条、选举法第 42 条与皇家法令 806/2026（BOE 2026-10-06）；波兰宪法第 98、128 条；法国总统选举日期由 2026 年 7 月 1 日部长会议确定；巴西高等选举法院（TSE）计票结果；日本总务省第 51 回众议院议员总选举；韩国中央选举管理委员会；德国联邦选举专员与《基本法》第 39 条；意大利宪法与两院任期规定；美国 2 U.S.C. § 7。</p>
     <p><a href="https://jillax.github.io/">← 回首页</a> · <a href="../projects.html">全部作品</a> · <a href="../electoral-college-cn/">假如有选举人团</a></p>
   </footer>
 </div>
@@ -395,10 +376,6 @@
     var p = d.split('-');
     return p[0] + ' 年 ' + Number(p[1]) + ' 月 ' + Number(p[2]) + ' 日';
   }
-  function fmtShort(d) {
-    var p = d.split('-');
-    return p[0] + '.' + p[1] + '.' + p[2];
-  }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   function color(c) { return BY[c].color; }
 
@@ -415,6 +392,16 @@
   var state = { scope: 'all' };
 
   function visible(ev) { return state.scope === 'all' || !ev.local; }
+
+  function nextStart(c) {
+    var evs = EV.filter(function (e) { return e.c === c.code; });
+    for (var i = 0; i < evs.length; i++) if (!evs[i].past) return evs[i].start;
+    return evs.length ? evs[evs.length - 1].start : '9999-12-31';
+  }
+  var ORDER = D.countries.slice().sort(function (a, b) {
+    var x = nextStart(a), y = nextStart(b);
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
 
   /* ---------- hero ---------- */
   function renderHero() {
@@ -468,7 +455,7 @@
 
   function renderLanes() {
     var host = document.getElementById('lanes');
-    var html = D.countries.map(function (c) {
+    var html = ORDER.map(function (c) {
       var evs = EV.filter(function (e) { return e.c === c.code && visible(e); }).sort(function (a, b) {
         return a.start < b.start ? -1 : 1;
       });
@@ -522,7 +509,7 @@
   /* ---------- cards ---------- */
   function renderCards() {
     var host = document.getElementById('cards');
-    host.innerHTML = D.countries.map(function (c) {
+    host.innerHTML = ORDER.map(function (c) {
       return '<article class="card" id="card-' + c.code + '" style="border-left-color:' + c.color + '">' +
         '<div class="card-top"><span class="code" style="color:' + c.color + '">' + c.code + '</span>' +
         '<h3>' + c.zh + '</h3><span class="tag">' + c.tag + '</span></div>' +
@@ -539,57 +526,62 @@
     }).join('');
   }
 
-  /* ---------- year table ---------- */
-  function renderYearTable() {
-    var years = [2026, 2027, 2028, 2029, 2030];
-    var cols = D.countries;
-    var body = years.map(function (y) {
-      var cells = cols.map(function (c) {
-        var evs = EV.filter(function (e) { return e.c === c.code && e.start.slice(0, 4) === String(y); });
-        if (!evs.length) return '<td><span style="color:#4a3d63">—</span></td>';
-        return '<td>' + evs.map(function (e) {
-          var cls = 'cell-ev' + (e.past ? ' past' : '') + (e.local ? ' local' : '');
-          var when = e.date ? fmtShort(e.date) : fmtShort(e.from) + '–' + fmtShort(e.to).slice(5);
-          return '<div class="' + cls + '">' + esc(e.name) + (e.local ? '（地方）' : '') +
-            '<span>' + when + '</span></div>';
-        }).join('') + '</td>';
-      }).join('');
-      return '<tr><td class="yr">' + y + '</td>' + cells + '</tr>';
-    }).join('');
-    document.querySelector('#yrtab tbody').innerHTML = body;
+  /* ---------- mechanisms ---------- */
+  var MECHS = [
+    { k: 'fixed', h: '写死在法律里', p: '宪法或选举法直接规定「几月第几个星期几」，政府几乎没有改期的空间。' },
+    { k: 'window', h: '从任期倒推出一段窗口', p: '任期长度写死，投票必须落在届满前后的一段区间里，具体日子由选举机构、总统或总理在窗口内挑。' },
+    { k: 'dissolve', h: '由解散权决定', p: '议会或首相可以在任期内解散，投票日跟着政治危机走——西班牙 2026 年 10 月就把原定 2027 年的大选提前到了 11 月 29 日。' }
+  ];
 
-    document.getElementById('yrmob').innerHTML = years.map(function (y) {
-      var items = EV.filter(function (e) { return e.start.slice(0, 4) === String(y); }).map(function (e) {
-        var when = e.date ? fmtShort(e.date) : fmtShort(e.from);
-        return '<div class="row' + (e.past ? ' past' : '') + '">' +
-          '<i style="background:' + BY[e.c].color + '"></i>' +
-          '<span class="cn">' + BY[e.c].zh + '</span>' +
-          '<span class="nm">' + esc(e.name) + (e.local ? '<em>地方</em>' : '') + '</span>' +
-          '<span class="dt">' + when + '</span></div>';
-      }).join('');
-      return '<section><h3>' + y + '</h3>' + items + '</section>';
+  function renderMech() {
+    document.getElementById('mech').innerHTML = MECHS.map(function (m) {
+      var cs = ORDER.filter(function (c) { return c.mech === m.k; });
+      return '<div><h4>' + m.h + '</h4><p>' + m.p + '</p><ul>' +
+        cs.map(function (c) {
+          return '<li><i style="background:' + c.color + '"></i>' + c.zh + '</li>';
+        }).join('') + '</ul></div>';
+    }).join('');
+  }
+
+  /* ---------- year board ---------- */
+  function whenShort(e) {
+    if (e.date) {
+      var p = e.date.split('-');
+      return Number(p[1]) + ' 月 ' + Number(p[2]) + ' 日';
+    }
+    var a = e.from.split('-'), b = e.to.split('-');
+    return Number(a[1]) + ' 月 ' + Number(a[2]) + ' 日 – ' + Number(b[1]) + ' 月 ' + Number(b[2]) + ' 日';
+  }
+
+  function renderYearBoard() {
+    var years = [2026, 2027, 2028, 2029, 2030];
+    document.getElementById('yrboard').innerHTML = years.map(function (y) {
+      var evs = EV.filter(function (e) { return Number(e.start.slice(0, 4)) === y; });
+      return '<section class="ycol"><h3>' + y + '<span>' + evs.length + ' 场</span></h3>' +
+        evs.map(function (e) {
+          return '<div class="row' + (e.past ? ' past' : '') + '">' +
+            '<span class="cn" style="color:' + BY[e.c].color + '">' + BY[e.c].zh + '</span>' +
+            '<span class="nm">' + esc(e.name) + (e.local ? '<em>地方</em>' : '') + '</span>' +
+            '<span class="dt">' + whenShort(e) + '</span></div>';
+        }).join('') + '</section>';
     }).join('');
 
     var byYear = {};
-    years.forEach(function (y) {
-      byYear[y] = { national: 0, local: 0, countries: {} };
-    });
+    years.forEach(function (y) { byYear[y] = {}; });
     EV.forEach(function (e) {
       var y = Number(e.start.slice(0, 4));
-      if (!byYear[y]) return;
-      if (e.local) byYear[y].local++; else byYear[y].national++;
-      byYear[y].countries[e.c] = true;
+      if (byYear[y]) byYear[y][e.c] = true;
     });
+    function countriesIn(y) { return Object.keys(byYear[y]).length; }
 
-    function countriesIn(y) { return Object.keys(byYear[y].countries).length; }
-    var most = Math.max.apply(null, years.map(countriesIn));
-    var busiest = years.filter(function (y) { return countriesIn(y) === most; });
-    var busiestTxt = busiest.join('、') + (busiest.length > 1 ? ' 这 ' + busiest.length + ' 年' : ' 年');
-
+    var top = Math.max.apply(null, years.map(countriesIn));
+    var topTxt = years.filter(function (y) { return countriesIn(y) === top; }).join('、');
+    var topPhrase = topTxt.indexOf('、') > -1
+      ? topTxt + ' 这几年最挤，各有 ' + top + ' 国投票'
+      : topTxt + ' 年最挤，有 ' + top + ' 国投票';
     document.getElementById('year-note').innerHTML =
-      '按年份摊开，<em>' + busiestTxt + '各有 ' + most +
-      ' 个国家投票</em>。2027 年只有法国和意大利，2029 年只有德国。2028 年最全：美国选总统、日本改选参议院、韩国改选国会，巴西选市长和市议员。' +
-      '把地方选举去掉，2030 年反而最挤——美、巴、日、韩四国都是全国性投票。' +
+      '按国家数排，<em>' + topPhrase + '</em>；' +
+      years.map(function (y) { return y + ' 年 ' + countriesIn(y) + ' 国'; }).join('、') + '。' +
       '五年里共 <em>' + EV.length + ' 个投票日</em>，其中地方选举 ' +
       EV.filter(function (e) { return e.local; }).length + ' 个。';
   }
@@ -653,7 +645,7 @@
   /* ---------- wiring ---------- */
   function paint() {
     renderLanes();
-    renderYearTable();
+    renderYearBoard();
     renderHero();
   }
   Array.prototype.forEach.call(document.querySelectorAll('#scope-ctl button'), function (b) {
@@ -668,6 +660,7 @@
   });
 
   renderGrid();
+  renderMech();
   renderCards();
   paint();
 })();
