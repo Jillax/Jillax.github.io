@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中学历史教研体系图 · 从教育部到山东省</title>
+<meta name="description" content="国家、省、市、县、校五级教研体系里，中学历史学科的机构谱系与人物名录：教育部基础教育教学指导委员会历史教学指导专委会 25 人、中国教育学会历史教学专委会第十届理事会、课标修订组、统编教材编写、全国历史教师教育专委会，下钻到山东省教科院与地市历史教研员。每个人都带可点开的公开出处。">
+<meta property="og:title" content="中学历史教研体系图 · 从教育部到山东省">
+<meta property="og:description" content="从教育部历史教学指导专委会的 25 人名单，到山东省 16 个地市中只核到 4 个的公开教研员名录。机构谱系 + 人物名单 + 每一条出处。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/jiaoyan/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://jillax.github.io/jiaoyan/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --inset: #100c20;
+    --ink: #efe7ff;
+    --body: #cbbfe6;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --gold: #e5b45c;
+    --purple: #b47aff;
+    --sd: #4fd8e8;
+    --green: #5ee0a8;
+    --orange: #f0a860;
+    --pink: #ff6f88;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --serif: "Noto Serif SC", "Songti SC", serif;
+    --t1: var(--gold); --t2: var(--purple); --t3: var(--sd);
+    --t4: var(--green); --t5: var(--orange); --t6: var(--muted);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; color: var(--body); background:
+      radial-gradient(ellipse at 8% -6%, rgba(229, 180, 92, .10) 0%, transparent 52%),
+      radial-gradient(ellipse at 96% 8%, rgba(79, 216, 232, .07) 0%, transparent 48%),
+      var(--paper);
+    font-family: var(--sans); font-size: 16px; line-height: 1.65;
+  }
+  a { color: var(--gold); }
+  a:hover, a:focus-visible { color: var(--ink); }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  .wrap { width: min(1180px, calc(100% - 30px)); margin: 0 auto; }
+  .stripe { position: fixed; top: 0; left: 0; right: 0; height: 4px; display: flex; z-index: 40; }
+  .stripe i { flex: 1; }
+
+  header { padding: 42px 0 0; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 12px 18px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: var(--serif); font-weight: 700; font-size: clamp(34px, 6vw, 62px);
+    line-height: 1.06; letter-spacing: -.03em; margin: 18px 0 0; color: var(--ink);
+  }
+  .sub {
+    font-family: var(--serif); font-size: clamp(16px, 2vw, 21px); color: var(--muted);
+    margin: 12px 0 0; line-height: 1.5; max-width: 62ch;
+  }
+  .lede { max-width: 74ch; margin: 20px 0 0; font-size: 16.5px; }
+  .lede b { color: var(--ink); font-weight: 500; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+    gap: 1px; margin: 30px 0 0; background: var(--line);
+    border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+  }
+  .stat { background: var(--inset); padding: 13px 14px; }
+  .stat b { display: block; font-family: var(--serif); font-size: 25px; color: var(--gold); font-weight: 700; line-height: 1.1; }
+  .stat span { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+
+  nav.jump {
+    position: sticky; top: 0; z-index: 30; margin: 30px 0 0;
+    background: rgba(13, 10, 26, .94); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  nav.jump .wrap { display: flex; gap: 4px; overflow-x: auto; padding: 9px 0; scrollbar-width: thin; }
+  nav.jump a {
+    flex: 0 0 auto; font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
+    color: var(--muted); text-decoration: none; padding: 5px 11px; border: 1px solid transparent; border-radius: 2px;
+  }
+  nav.jump a:hover, nav.jump a.on { color: var(--ink); border-color: var(--line); background: var(--inset); }
+
+  main { padding: 0 0 70px; }
+  section { margin-top: 58px; scroll-margin-top: 58px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; border-bottom: 2px solid var(--line); padding-bottom: 10px; }
+  .sec-no { font-family: var(--mono); font-size: 12px; color: var(--pink); letter-spacing: .1em; }
+  h2 { font-family: var(--serif); font-size: clamp(23px, 3.2vw, 34px); font-weight: 700; color: var(--ink); margin: 0; letter-spacing: -.015em; }
+  .sec-note { font-size: 14px; color: var(--muted); max-width: 70ch; margin: 12px 0 0; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 18px 0 0; }
+  .ctl {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .04em; padding: 7px 12px;
+    border: 1px solid var(--line); border-radius: 2px; color: var(--muted); background: var(--inset);
+  }
+  .ctl:hover { color: var(--ink); }
+  .ctl.on { color: var(--paper); background: var(--gold); border-color: var(--gold); font-weight: 500; }
+  .ctl.on.sd { background: var(--sd); border-color: var(--sd); }
+  input.search {
+    font: inherit; font-size: 14px; padding: 8px 12px; width: min(340px, 100%);
+    background: var(--inset); color: var(--ink); border: 1px solid var(--line); border-radius: 2px;
+  }
+  input.search:focus { outline: none; border-color: var(--gold); }
+
+  /* ---- 五级泳道 ---- */
+  .tier { margin-top: 26px; border-left: 3px solid var(--tc, var(--line)); padding-left: 0; }
+  .tier-head { background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 13%, var(--sheet)), var(--sheet) 62%); border: 1px solid var(--line); border-left: 0; padding: 13px 16px; }
+  .tier-code { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--tc); }
+  .tier-head h3 { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin: 3px 0 0; }
+  .tier-head p { font-size: 14px; margin: 8px 0 0; max-width: 82ch; }
+  .tier-spine { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin: 8px 0 0; }
+  .tier-body { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 14px; padding: 14px 0 4px; }
+
+  .org { min-width: 0; background: var(--sheet); border: 1px solid var(--line); border-radius: 3px; padding: 15px 16px 14px; display: flex; flex-direction: column; }
+  .org.wide { grid-column: 1 / -1; }
+  .org-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+  .org h4 { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); margin: 0; line-height: 1.3; }
+  .org .kind { font-family: var(--mono); font-size: 11px; color: var(--tc); letter-spacing: .04em; margin-top: 5px; }
+  .badge {
+    flex: 0 0 auto; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
+    border: 1px solid var(--line); border-radius: 2px; padding: 3px 7px; color: var(--muted); white-space: nowrap;
+  }
+  .badge.sd { color: var(--sd); border-color: rgba(79, 216, 232, .4); }
+  .badge.stale { color: var(--pink); border-color: rgba(255, 111, 136, .4); }
+  .org .founded, .org .duty, .org .status { font-size: 14px; margin: 9px 0 0; }
+  .org .founded { color: var(--body); font-family: var(--mono); font-size: 12px; }
+  .org .status { color: var(--muted); font-size: 13px; border-top: 1px dashed var(--line); padding-top: 9px; margin-top: 11px; }
+  .org .status b { color: var(--pink); font-weight: 500; }
+
+  .roster { margin: 12px 0 0; }
+  .roster-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+  .roster-h button { font: inherit; color: var(--gold); }
+  .p { display: flex; gap: 9px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid rgba(155, 89, 255, .10); flex-wrap: wrap; }
+  .p:last-child { border-bottom: 0; }
+  .p .nm { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--ink); flex: 0 0 auto; }
+  .p .nm button { font: inherit; color: inherit; padding: 0; text-decoration: underline; text-decoration-color: rgba(229,180,92,.35); text-underline-offset: 3px; }
+  .p .rl { flex: 0 1 auto; min-width: 0; max-width: 100%; font-size: 12px; font-family: var(--mono); color: var(--tc); border: 1px solid color-mix(in srgb, var(--tc) 32%, transparent); border-radius: 2px; padding: 1px 6px; }
+  .p .rl.lead { background: color-mix(in srgb, var(--tc) 20%, transparent); }
+  .p .un { font-size: 13.5px; color: var(--body); min-width: 0; }
+  .p .ex { font-size: 13px; color: var(--muted); flex-basis: 100%; }
+  .p.gap { border-left: 2px solid rgba(255, 111, 136, .5); padding-left: 10px; background: rgba(255, 111, 136, .05); }
+  .p.gap .un { color: var(--muted); }
+  .p .sdot { font-size: 11px; font-family: var(--mono); color: var(--muted); }
+  .p .sdot a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+  .p.warn .nm::after { content: " ⚠"; color: var(--pink); font-size: 12px; }
+  .role-group { margin-top: 10px; }
+  .role-group > .rg-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
+
+  .srcs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .src {
+    display: inline-block; vertical-align: top;
+    font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none;
+    border: 1px solid var(--line); border-radius: 2px; padding: 3px 7px; max-width: 100%;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .src:hover { color: var(--ink); }
+  .src i { font-style: normal; color: var(--gold); margin-right: 5px; }
+  .mini .src, .tl-s .src { white-space: normal; text-overflow: clip; }
+  .src[data-g="gov"] i { color: var(--green); }
+  .src[data-g="soc"] i { color: var(--gold); }
+  .src[data-g="uni"] i { color: var(--purple); }
+  .src[data-g="media"] i { color: var(--sd); }
+  .src[data-g="ref"] i { color: var(--orange); }
+  .src[data-g="wiki"] i { color: var(--pink); }
+
+  .mini { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; table-layout: fixed; }
+  .mini th { text-align: left; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; font-weight: 400; padding: 0 8px 6px 0; border-bottom: 1px solid var(--line); }
+  .mini td { padding: 8px 8px 8px 0; border-bottom: 1px solid rgba(155, 89, 255, .10); vertical-align: top; overflow-wrap: anywhere; }
+  .mini td:first-child { color: var(--ink); font-family: var(--mono); font-size: 12.5px; }
+  .mini td a { color: var(--muted); font-size: 12px; }
+
+  /* ---- 枢纽人物 ---- */
+  .hub { border: 1px solid var(--line); border-radius: 3px; background: var(--sheet); padding: 13px 15px; margin-top: 12px; }
+  .hub-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .hub .nm { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); }
+  .hub .un { font-size: 13.5px; color: var(--body); }
+  .hub .cnt { margin-left: auto; font-family: var(--mono); font-size: 11.5px; color: var(--gold); }
+  .bar { display: flex; gap: 2px; margin: 10px 0 0; }
+  .bar i { height: 5px; flex: 0 0 auto; background: var(--bc); border-radius: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font-size: 12.5px; border: 1px solid var(--line); border-radius: 2px; padding: 3px 8px; color: var(--body); background: var(--inset); }
+  .chip b { color: var(--ink); font-weight: 500; }
+  .chip em { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--cc); }
+
+  /* ---- 人物索引 ---- */
+  .idx { border: 1px solid var(--line); border-radius: 3px; background: var(--sheet); padding: 11px 14px; margin-top: 10px; }
+  .idx.hit { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .idx-top { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .idx .nm { font-family: var(--serif); font-size: 17.5px; font-weight: 700; color: var(--ink); }
+  .idx .un { font-size: 13.5px; color: var(--body); }
+  .idx .tags { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+  .idx ul { margin: 8px 0 0; padding-left: 0; list-style: none; }
+  .idx li { font-size: 13.5px; padding: 3px 0; color: var(--body); }
+  .idx li b { color: var(--gold); font-weight: 400; }
+  .idx li .tn { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .idx li .note { color: var(--muted); }
+  .idx .srcs { margin-top: 8px; padding-top: 8px; }
+  .empty { font-family: var(--mono); font-size: 13px; color: var(--muted); padding: 22px 0; }
+
+  /* ---- 时间轴 ---- */
+  .tl { margin-top: 14px; border-left: 1px solid var(--line); padding-left: 0; }
+  .tl-row { display: grid; grid-template-columns: 96px 1fr; gap: 0 14px; padding: 12px 0 12px 0; position: relative; }
+  .tl-row::before { content: ""; position: absolute; left: -4px; top: 19px; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+  .tl-y { font-family: var(--mono); font-size: 12.5px; color: var(--gold); padding-top: 2px; }
+  .tl-t { font-size: 15.5px; color: var(--ink); font-weight: 500; }
+  .tl-d { font-size: 13.5px; color: var(--body); margin-top: 4px; max-width: 74ch; }
+  .tl-s { font-family: var(--mono); font-size: 11px; margin-top: 4px; }
+  .tl-s a { color: var(--muted); }
+
+  /* ---- 缺口 ---- */
+  .gap-list { margin-top: 14px; display: grid; gap: 10px; }
+  .gap-item { border: 1px solid rgba(255, 111, 136, .28); border-left: 3px solid var(--pink); border-radius: 2px; background: rgba(255, 111, 136, .045); padding: 12px 15px; }
+  .gap-item b { display: block; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--pink); text-transform: uppercase; margin-bottom: 5px; }
+  .gap-item p { margin: 0; font-size: 14.5px; }
+
+  .callout { border: 1px solid var(--line); border-left: 3px solid var(--gold); background: var(--sheet); border-radius: 2px; padding: 14px 16px; margin-top: 18px; font-size: 14.5px; }
+  .callout p { margin: 0 0 8px; }
+  .callout p:last-child { margin: 0; }
+  .callout b { color: var(--ink); font-weight: 500; }
+
+  footer { margin-top: 60px; border-top: 1px solid var(--line); padding: 24px 0 0; font-size: 13.5px; color: var(--muted); }
+  footer h3 { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--body); text-transform: uppercase; margin: 0 0 10px; }
+  footer ul { padding-left: 18px; margin: 0 0 14px; }
+  footer li { margin: 4px 0; }
+
+  @media (max-width: 640px) {
+    .tl-row { grid-template-columns: 72px 1fr; gap: 0 10px; }
+    .hub .cnt { margin-left: 0; flex-basis: 100%; }
+    .idx .tags { margin-left: 0; flex-basis: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"><i style="background:var(--gold)"></i><i style="background:var(--purple)"></i><i style="background:var(--sd)"></i><i style="background:var(--green)"></i><i style="background:var(--orange)"></i><i style="background:#3d2f5c"></i></div>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">
+      <span>教研体系 · 机构谱系与人物名录 · 整理于 <span id="updated"></span></span>
+      <span><a href="../">← Jillax 首页</a> · <a href="../projects.html">全部作品</a></span>
+    </div>
+    <h1>中学历史教研<br>体系图</h1>
+    <div class="sub">从教育部到山东省</div>
+    <p class="lede">同一门历史课，上面有 <b>三套性质完全不同的全国性名录</b>：教育部直属的非常设专家组织、中国教育学会的分支机构、师范院校之间的学术共同体；下面接 <b>国家、省、市、县、校五级教研机构</b>。这一页把机构关系画清楚，把能公开核到的人名一个个列出来，<b>每个人后面都挂着他的出处和来源日期</b>——核不到的地方留着空白，并写进缺口清单。</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<nav class="jump">
+  <div class="wrap">
+    <a href="#ladder">① 五级体系</a>
+    <a href="#hub">② 枢纽人物</a>
+    <a href="#people">③ 人物索引</a>
+    <a href="#press">④ 期刊与年会</a>
+    <a href="#tl">⑤ 沿革</a>
+    <a href="#gaps">⑥ 查不到的</a>
+    <a href="#reading">⑦ 原始文件</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="ladder">
+    <div class="sec-head"><span class="sec-no">01 / LADDER</span><h2>五级体系：机构卡就是名录</h2></div>
+    <p class="sec-note">从上往下读：决策端定教材和课标，专家组织定「谁的话算数」，省一级统筹，地市一级才是主力，县区最贴近课堂，学校是最小单元。每张卡片里的名单就是该机构的公开名录，卡片右下角的彩色短条是可点开的原始出处。</p>
+    <div class="controls">
+      <button class="ctl" id="toggleAll">折叠全部名单</button>
+      <button class="ctl sd" id="toggleSd">只看山东相关</button>
+      <span class="ctl" style="cursor:default;color:var(--muted)">⚠ = 该条来源之间有分歧或已过期</span>
+    </div>
+    <div id="tiers"></div>
+  </section>
+
+  <section id="hub">
+    <div class="sec-head"><span class="sec-no">02 / HUBS</span><h2>同一个人，出现在几张名录里</h2></div>
+    <p class="sec-note">这是看懂这套体系最快的一个视图。中学历史圈的资金与话语权不在单个机构里，而在<b style="color:var(--ink);font-weight:500">同时坐在两三张桌子上的少数人</b>身上：课标修订组、教材编写、教育部专委会、学会理事会、师范院校专委会——交叉点越多，越接近「定调的人」。</p>
+    <div id="hubs"></div>
+  </section>
+
+  <section id="people">
+    <div class="sec-head"><span class="sec-no">03 / INDEX</span><h2>人物索引</h2></div>
+    <p class="sec-note">全量可检索。搜人名、搜单位、搜机构都可以；每个人名下带他出现过的机构、职务、以及该条记录的来源与日期。</p>
+    <div class="controls">
+      <input class="search" id="q" type="search" placeholder="搜索人名 / 单位 / 机构…" aria-label="搜索人物">
+      <button class="ctl sd" data-f="sd">山东</button>
+      <button class="ctl" data-f="lead">负责人</button>
+      <button class="ctl" data-f="jy">教研员</button>
+      <button class="ctl" data-f="xq">高校 · 教材 · 课标</button>
+      <button class="ctl" data-f="warn">有分歧</button>
+      <button class="ctl" data-f="clear">清除</button>
+      <span class="ctl" style="cursor:default;color:var(--muted)" id="count"></span>
+    </div>
+    <div id="index"></div>
+  </section>
+
+  <section id="press">
+    <div class="sec-head"><span class="sec-no">04 / PRESS</span><h2>期刊与年会：人从这里被看见，再进到上面那些名录</h2></div>
+    <p class="sec-note">这一层不是机构，是<b style="color:var(--ink);font-weight:500">通道</b>。四本头部刊物定下「什么算研究成果」，年会与赛课定下「谁有脸熟」——教指委委员、学会理事长、课标组长，几乎都在同一批刊物和同一批会场上反复出现。年会承办地也能读出权力地理：2026 年学术年会落在山东烟台。</p>
+    <div id="support"></div>
+  </section>
+
+  <section id="tl">
+    <div class="sec-head"><span class="sec-no">05 / CHRONOLOGY</span><h2>这套体系是怎么长出来的</h2></div>
+    <p class="sec-note">1990 年立起教研室，2001 年开课改，2017 年一年之内把教材收归国家统编，2019 年写入五级教研体系，2020 年成立教指委，2022 年落地新课标，2024 年首届聘期届满、2025 年学会换届、第二届推荐启动。<b style="color:var(--ink);font-weight:500">每一条都挂着文件号或日期</b>。</p>
+    <div class="tl" id="timeline"></div>
+  </section>
+
+  <section id="gaps">
+    <div class="sec-head"><span class="sec-no">06 / GAPS</span><h2>查不到的部分</h2></div>
+    <p class="sec-note">一个不写缺口的体系图，等于在暗示它全都对。以下十一条是这页数据的真实边界。</p>
+    <div class="gap-list" id="gapList"></div>
+  </section>
+
+  <section id="reading">
+    <div class="sec-head"><span class="sec-no">07 / SOURCES</span><h2>想自己查，就从这几份原文开始</h2></div>
+    <div id="readingTable"></div>
+  </section>
+
+  <footer>
+    <h3>数据说明</h3>
+    <ul id="notes"></ul>
+    <p style="margin-top:6px">本页是公开资料的整理，不代表任何机构的官方表述。名单以官方公布文本为准，如发现与原始文件不符，请以原文为准并告知我更正。<br>本页属于 <a href="../projects.html">Jillax 的作品</a> · <a href="../">jillax.github.io</a></p>
+  </footer>
+</main>
+
+<div id="flash" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--paper);font-family:var(--mono);font-size:12px;padding:8px 14px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50"></div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  var D = window.JIAOYAN;
+  var SRC = D.src;
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+
+  /* 组织按层级归堆 */
+  var tierOrgs = {};
+  D.orgs.forEach(function (o) { if (!o.support) (tierOrgs[o.tier] = tierOrgs[o.tier] || []).push(o); });
+
+  /* 人 → 出现过的机构（用于枢纽与索引） */
+  var byName = {};
+  var order = 0;
+  D.orgs.forEach(function (o) {
+    (o.people || []).forEach(function (p) {
+      if (!p.n) return;
+      var rec = byName[p.n] || (byName[p.n] = { n: p.n, units: [], memberships: [], warn: false, sd: false, order: order++ });
+      rec.memberships.push({ org: o, p: p });
+      if (p.u && p.u !== '—' && p.u !== '-') rec.units.push(p.u);
+      if (p.warn) rec.warn = true;
+      if (p.sd) rec.sd = true;
+    });
+  });
+  var people = Object.keys(byName).map(function (k) { return byName[k]; });
+  people.forEach(function (r) {
+    r.best = r.units.slice().sort(function (a, b) { return b.length - a.length; })[0] || '';
+    /* 同一机构内多条记录（如齐健）合并显示 */
+    var seen = {};
+    r.merged = [];
+    r.memberships.forEach(function (m) {
+      var id = m.org.id;
+      if (seen[id]) { seen[id].p.push(m.p); return; }
+      seen[id] = { org: m.org, p: [m.p] };
+      r.merged.push(seen[id]);
+    });
+    r.srcList = [];
+    r.memberships.forEach(function (m) {
+      var key = m.p.s || m.org.defaultSrc || (m.org.s && m.org.s[0]);
+      if (key && SRC[key] && r.srcList.indexOf(key) < 0) r.srcList.push(key);
+    });
+  });
+
+  var srcCount = 0, srcSeen = {};
+  people.forEach(function (r) { r.srcList.forEach(function (k) { if (!srcSeen[k]) { srcSeen[k] = 1; srcCount++; } }); });
+
+  var gCount = 0, gSeen = {};
+  D.orgs.forEach(function (o) { (o.people || []).forEach(function (p) { if (p.n && !gSeen[p.n]) { gSeen[p.n] = 1; gCount++; } }); });
+
+  /* ---- 顶栏统计 ---- */
+  document.getElementById('updated').textContent = D.updated;
+  var stats = [
+    [D.orgs.filter(function (o) { return !o.kind.match(/缺口|支撑/); }).length, '个机构 · 名录'],
+    [gCount, '位可核到的人'],
+    [srcCount, '条独立出处'],
+    ['4/16', '山东地市有具名教研员'],
+    [D.gaps.length, '条明确缺口']
+  ];
+  document.getElementById('stats').innerHTML = stats.map(function (s) {
+    return '<div class="stat"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>';
+  }).join('');
+
+  /* ---- 出处小工具 ---- */
+  var GSHORT = { gov: '官方', soc: '学会', uni: '高校', media: '媒体', ref: '论文', wiki: '百科' };
+  function srcChips(keys, max) {
+    if (!keys || !keys.length) return '';
+    var uniq = [];
+    keys.forEach(function (k) { if (SRC[k] && uniq.indexOf(k) < 0) uniq.push(k); });
+    if (!uniq.length) return '';
+    var out = uniq.slice(0, max || uniq.length).map(function (k) {
+      var s = SRC[k];
+      var label = (GSHORT[s.g] || '?') + ' · ' + s.d;
+      return '<a class="src" data-g="' + esc(s.g) + '" href="' + esc(s.u) + '" target="_blank" rel="noopener noreferrer" title="' + esc(s.t) + (s.note ? '（' + esc(s.note) + '）' : '') + '"><i>▪</i>' + esc(label) + '</a>';
+    }).join('');
+    if (uniq.length > (max || uniq.length)) out += '<span class="src">+' + (uniq.length - max) + '</span>';
+    return '<div class="srcs">' + out + '</div>';
+  }
+
+  var ROLE_RANK = { 1: '主任委员', 2: '副主任委员', 3: '委员' };
+
+  /* ---- 泳道 ---- */
+  function rosterHTML(o) {
+    var ps = o.people || [];
+    var body = '';
+    var ranks = ps.filter(function (p) { return p.g; });
+    if (ranks.length) {
+      [1, 2, 3].forEach(function (r) {
+        var sub = ranks.filter(function (p) { return p.g === r; });
+        if (!sub.length) return;
+        body += '<div class="role-group"><div class="rg-label">' + ROLE_RANK[r] + ' · ' + sub.length + ' 人</div>' + sub.map(function (p) { return line(p, o, ROLE_RANK[r]); }).join('') + '</div>';
+      });
+    } else {
+      body = ps.map(function (p) { return line(p, o, ''); }).join('');
+    }
+    if (o.count) body += '<p style="font-size:13px;color:var(--muted);margin:11px 0 0">' + esc(o.count) + '</p>';
+    return '<div class="roster"><div class="roster-h"><span>公开名录 · ' + ps.filter(function (p) { return p.n; }).length + ' 人</span>' +
+      '<button data-collapse>收起</button></div><div class="roster-body">' + (body || '<p class="empty">该机构无公开具名人员</p>') + '</div></div>';
+  }
+
+  function line(p, o, rank) {
+    if (p.gap) {
+      return '<div class="p gap"><span class="rl">缺</span><span class="un"><b style="color:var(--pink);font-weight:500">' + esc(p.r) + '</b>' +
+        (p.note ? ' — ' + esc(p.note) : '') + '</span></div>';
+    }
+    var cls = 'p' + (p.warn ? ' warn' : '');
+    var rlCls = 'rl' + (rank && p.g === 1 ? ' lead' : '');
+    return '<div class="' + cls + '">' +
+      '<span class="nm"><button data-jump="' + esc(p.n) + '">' + esc(p.n) + '</button></span>' +
+      (rank ? '' : '<span class="' + rlCls + '">' + esc(p.r) + '</span>') +
+      (p.u && p.u !== '—' ? '<span class="un">' + esc(p.u) + '</span>' : '') +
+      (p.note ? '<span class="ex">' + esc(p.note) + '</span>' : '') +
+      '</div>';
+  }
+
+  function orgCard(o, tc) {
+    var stale = /届满|未公布|待核实|只采到|未公开|不列|偶然|三例/.test(o.status || '');
+    var wide = (o.people && o.people.length > 8) || o.journals || o.events;
+    var h = '<article class="org' + (wide ? ' wide' : '') + '" id="org-' + esc(o.id) + '" style="--tc:' + tc + '" data-sd="' + (o.id.indexOf('sd') === 0 || o.people.some(function (p) { return p.sd; }) ? 1 : 0) + '">';
+    h += '<div class="org-top"><div><h4>' + esc(o.name) + '</h4><div class="kind">' + esc(o.kind) + '</div></div>';
+    h += '<span class="badge' + (o.tier === 'province' || o.tier === 'city' || o.tier === 'county' ? ' sd' : '') + '">' + esc(o.short) + '</span>';
+    if (stale) h += '<span class="badge stale">时效待核</span>';
+    h += '</div>';
+    if (o.founded && o.founded !== '—') h += '<div class="founded">' + esc(o.founded) + '</div>';
+    if (o.duty) h += '<p class="duty">' + esc(o.duty) + '</p>';
+    if (o.people && o.people.length) h += rosterHTML(o);
+    if (o.journals) {
+      h += '<div class="roster"><div class="roster-h"><span>期刊</span><button data-collapse>收起</button></div><div class="roster-body"><table class="mini"><colgroup><col style="width:23%"><col style="width:50%"><col style="width:27%"></colgroup><thead><tr><th>刊名</th><th>主管 · 主办</th><th>刊号</th></tr></thead><tbody>' +
+        o.journals.map(function (j) {
+          return '<tr><td>' + esc(j.name) + '<br><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">' + esc(j.born) + '</span></td><td>' + esc(j.host) +
+            (j.note ? '<br><span style="color:var(--muted);font-size:12.5px">' + esc(j.note) + '</span>' : '') +
+            (j.s ? '<br><span style="font-size:11.5px">' + srcLink(j.s) + '</span>' : '') + '</td><td>' + esc(j.cn) + (j.warn ? ' ⚠' : '') + '</td></tr>';
+        }).join('') + '</tbody></table></div></div>';
+    }
+    if (o.events) {
+      h += '<div class="roster"><div class="roster-h"><span>赛事与年会</span><button data-collapse>收起</button></div><div class="roster-body"><table class="mini"><colgroup><col style="width:21%"><col style="width:79%"></colgroup><thead><tr><th>时间</th><th>活动</th></tr></thead><tbody>' +
+        o.events.map(function (e) {
+          return '<tr><td>' + esc(e.y) + '</td><td><b style="color:var(--ink);font-weight:500">' + esc(e.t) + '</b><br>' + esc(e.d) + (e.s ? '<br>' + srcLink(e.s) : '') + '</td></tr>';
+        }).join('') + '</tbody></table></div></div>';
+    }
+    if (o.status) h += '<div class="status">状态 · <b>' + esc(o.status) + '</b>　<span style="font-family:var(--mono);font-size:11.5px">截至 ' + esc(o.asOf) + '</span></div>';
+    var keys = (o.s || []).concat(o.people.filter(function (p) { return p.s; }).map(function (p) { return p.s; }));
+    h += srcChips(keys, 4);
+    h += '</article>';
+    return h;
+  }
+  function srcLink(k) {
+    var s = SRC[k];
+    if (!s) return '';
+    return '<a class="src" data-g="' + esc(s.g) + '" href="' + esc(s.u) + '" target="_blank" rel="noopener noreferrer"><i>▪</i>' + esc((GSHORT[s.g] || '?') + ' · ' + s.d) + '</a>';
+  }
+
+  var tcMap = { central: 'var(--t1)', expert: 'var(--t2)', province: 'var(--t3)', city: 'var(--t4)', county: 'var(--t5)', school: 'var(--t6)' };
+  document.getElementById('tiers').innerHTML = D.tiers.map(function (t) {
+    var orgs = tierOrgs[t.id] || [];
+    if (!orgs.length) return '';
+    return '<div class="tier" style="--tc:' + tcMap[t.id] + '">' +
+      '<div class="tier-head"><div class="tier-code">' + esc(t.code) + ' · ' + orgs.length + ' 个机构</div><h3>' + esc(t.name) + '</h3><p>' + esc(t.desc) + '</p><div class="tier-spine">' + esc(t.spine) + '</div></div>' +
+      '<div class="tier-body">' + orgs.map(function (o) { return orgCard(o, tcMap[t.id]); }).join('') + '</div></div>';
+  }).join('');
+
+  /* ---- 支撑层：期刊与年会 ---- */
+  var support = D.orgs.filter(function (o) { return o.support; });
+  document.getElementById('support').innerHTML = '<div class="tier" style="--tc:' + tcMap.expert + '">' +
+    '<div class="tier-head"><div class="tier-code">T2 · 支撑层 ' + support.length + ' 类</div><h3>刊物与会场</h3>' +
+    '<p>它们不任命任何人，也不发工资，但一个人能不能进入上面那三张国家级名录，基本要经过这里。</p>' +
+    '<div class="tier-spine">依据：各刊版权页与主管主办单位信息、中国教育学会分支机构年会通知</div></div>' +
+    '<div class="tier-body">' + support.map(function (o) { return orgCard(o, tcMap.expert); }).join('') + '</div></div>';
+
+  /* ---- 枢纽 ---- */
+  var hubs = people.filter(function (r) { return r.merged.length >= 2; })
+    .sort(function (a, b) { return b.merged.length - a.merged.length || a.order - b.order; });
+  var tcOf = {}; D.tiers.forEach(function (t) { tcOf[t.id] = tcMap[t.id]; });
+  document.getElementById('hubs').innerHTML = hubs.map(function (r, i) {
+    var c = r.merged.length;
+    var w = Math.min(c, 6);
+    var col = r.sd ? 'var(--sd)' : (c >= 4 ? 'var(--gold)' : 'var(--purple)');
+    var bars = '';
+    for (var k = 0; k < w; k++) bars += '<i style="width:' + (k === w - 1 ? '40px' : '22px') + '"></i>';
+    return '<div class="hub" style="--bc:' + col + '" id="hub-' + esc(r.n) + '">' +
+      '<div class="hub-top"><span class="nm">' + esc(r.n) + '</span><span class="un">' + esc(r.best) + '</span>' +
+      '<span class="cnt">' + c + ' 张名录' + (r.sd ? ' · 山东' : '') + '</span></div>' +
+      '<div class="bar">' + bars + '</div>' +
+      '<div class="chips">' + r.merged.map(function (m) {
+        return '<span class="chip" style="--cc:' + tcOf[m.org.tier] + '"><b>' + esc(m.org.short) + '</b> <em>' + esc(m.p.map(function (p) { return p.r; }).join(' / ')) + '</em></span>';
+      }).join('') + '</div></div>';
+  }).join('') +
+  '<div class="callout"><p><b>读法。</b>把交叉数从多到少排下来，会发现三件事。第一，课标与教材的组长同时坐在两张国家名录上，这是「谁定调」最直白的一条线。第二，学会和出版社是同一批人——历史教学专委会历任理事长由人教社历史编辑室主任出任，联系电话和地址也挂在人教社同一间办公室。第三，山东在这张交叉表里几乎不存在：省内没有一个同时进入两张以上国家级历史名录的人，唯一的例外是齐健，而他靠的是师范院校那条线，不是课堂教学那条线。</p></div>';
+
+  /* ---- 人物索引 ---- */
+  var idxHTML = people.slice().sort(function (a, b) { return b.merged.length - a.merged.length || a.order - b.order; }).map(function (r) {
+    var isLead = r.memberships.some(function (m) { return /理事长|主任委员|秘书长|院长|会长/.test(m.p.r || ''); });
+    var isJY = (r.best + r.memberships.map(function (m) { return (m.p.r || '') + (m.p.u || ''); }).join('')).indexOf('教研') >= 0;
+    var isXQ = r.memberships.some(function (m) { return /高校|师范|教材|课标|出版社|研究/.test(m.org.name + (r.best || '')); });
+    var tags = '<span class="badge">×' + r.merged.length + '</span>' + (r.sd ? '<span class="badge sd">山东</span>' : '');
+    return '<div class="idx" data-n="' + esc(r.n) + '" data-sd="' + (r.sd ? 1 : 0) + '" data-lead="' + (isLead ? 1 : 0) + '" data-jy="' + (isJY ? 1 : 0) + '" data-xq="' + (isXQ ? 1 : 0) + '" data-warn="' + (r.warn ? 1 : 0) + '" data-search="' + esc((r.n + ' ' + r.units.join(' ') + ' ' + r.merged.map(function (m) { return m.org.name + m.org.short + m.p.map(function (p) { return p.r + (p.note || ''); }).join(''); }).join(' ')).toLowerCase()) + '">' +
+      '<div class="idx-top"><span class="nm">' + esc(r.n) + (r.warn ? ' <span style="color:var(--pink);font-size:12px">⚠</span>' : '') + '</span>' +
+      '<span class="un">' + esc(r.best || '—') + '</span><span class="tags">' + tags + '</span></div>' +
+      '<ul>' + r.merged.map(function (m) {
+        return '<li><span class="tn">[' + esc(m.org.short) + ']</span> <b>' + esc(m.p.map(function (p) { return p.r; }).join(' / ')) + '</b>' +
+          (m.p[0].note ? ' <span class="note">— ' + esc(m.p[0].note) + '</span>' : '') + '</li>';
+      }).join('') + '</ul>' + srcChips(r.srcList, 4) + '</div>';
+  }).join('');
+  document.getElementById('index').innerHTML = idxHTML;
+  document.getElementById('count').textContent = people.length + ' 人';
+
+  var filter = { sd: 0, lead: 0, jy: 0, xq: 0, warn: 0 }, q = '';
+  function applyFilter() {
+    var shown = 0;
+    document.querySelectorAll('#index .idx').forEach(function (el) {
+      var ok = (!q || el.dataset.search.indexOf(q) >= 0) &&
+        (!filter.sd || el.dataset.sd === '1') && (!filter.lead || el.dataset.lead === '1') &&
+        (!filter.jy || el.dataset.jy === '1') && (!filter.xq || el.dataset.xq === '1') &&
+        (!filter.warn || el.dataset.warn === '1');
+      el.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    document.getElementById('count').textContent = shown + ' / ' + people.length + ' 人';
+  }
+  document.getElementById('q').addEventListener('input', function () { q = this.value.trim().toLowerCase(); applyFilter(); });
+  document.querySelectorAll('[data-f]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.dataset.f;
+      if (f === 'clear') { filter = { sd: 0, lead: 0, jy: 0, xq: 0, warn: 0 }; q = ''; document.getElementById('q').value = ''; }
+      else filter[f] = filter[f] ? 0 : 1;
+      document.querySelectorAll('[data-f]').forEach(function (x) {
+        if (x.dataset.f === 'clear') return;
+        x.classList.toggle('on', !!filter[x.dataset.f]);
+      });
+      applyFilter();
+    });
+  });
+
+  /* ---- 名单折叠 ---- */
+  document.getElementById('toggleAll').addEventListener('click', function () {
+    var collapse = this.textContent.indexOf('折叠') === 0;
+    document.querySelectorAll('.roster-body').forEach(function (b) { b.style.display = collapse ? 'none' : ''; });
+    document.querySelectorAll('[data-collapse]').forEach(function (b) { b.textContent = collapse ? '展开' : '收起'; });
+    this.textContent = collapse ? '展开全部名单' : '折叠全部名单';
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-collapse]');
+    if (!b) return;
+    var body = b.closest('.roster').querySelector('.roster-body');
+    var hide = body.style.display !== 'none';
+    body.style.display = hide ? 'none' : '';
+    b.textContent = hide ? '展开' : '收起';
+    if (hide) {
+      var t = document.getElementById('toggleAll');
+      if (t.textContent.indexOf('展开') === 0) t.textContent = '折叠全部名单';
+    }
+  });
+
+  /* ---- 只看山东 ---- */
+  var sdOn = false;
+  document.getElementById('toggleSd').addEventListener('click', function () {
+    sdOn = !sdOn;
+    this.classList.toggle('on', sdOn);
+    document.querySelectorAll('.org').forEach(function (el) {
+      el.style.display = (!sdOn || el.dataset.sd === '1') ? '' : 'none';
+    });
+    document.querySelectorAll('.tier').forEach(function (t) {
+      var any = [].slice.call(t.querySelectorAll('.org')).some(function (o) { return o.style.display !== 'none'; });
+      t.style.display = any ? '' : 'none';
+    });
+  });
+
+  /* ---- 人名跳转 ---- */
+  var flash = document.getElementById('flash');
+  document.addEventListener('click', function (e) {
+    var j = e.target.closest('[data-jump]');
+    if (!j) return;
+    var n = j.dataset.jump;
+    q = ''; document.getElementById('q').value = '';
+    filter = { sd: 0, lead: 0, jy: 0, xq: 0, warn: 0 };
+    document.querySelectorAll('[data-f]').forEach(function (x) { x.classList.remove('on'); });
+    applyFilter();
+    var target = document.querySelector('#index .idx[data-n="' + n + '"]');
+    if (!target) return;
+    target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    document.querySelectorAll('.idx.hit').forEach(function (x) { x.classList.remove('hit'); });
+    target.classList.add('hit');
+    flash.textContent = n + ' · 共出现在 ' + target.querySelectorAll('li').length + ' 张名录';
+    flash.style.opacity = '1';
+    setTimeout(function () { flash.style.opacity = '0'; }, 1800);
+  });
+
+  /* ---- 时间轴 ---- */
+  document.getElementById('timeline').innerHTML = D.timeline.map(function (t) {
+    return '<div class="tl-row"><div class="tl-y">' + esc(t.y) + '</div><div><div class="tl-t">' + esc(t.t) + '</div>' +
+      '<div class="tl-d">' + esc(t.d) + '</div>' + (t.s ? '<div class="tl-s">' + srcLink(t.s) + '</div>' : '') + '</div></div>';
+  }).join('');
+
+  /* ---- 缺口 ---- */
+  document.getElementById('gapList').innerHTML = D.gaps.map(function (g) {
+    return '<div class="gap-item"><b>' + esc(g.area) + '</b><p>' + esc(g.text) + '</p></div>';
+  }).join('');
+
+  /* ---- 原文 ---- */
+  document.getElementById('readingTable').innerHTML =
+    '<table class="mini"><colgroup><col style="width:40%"><col style="width:60%"></colgroup><thead><tr><th>文件</th><th>为什么是它</th></tr></thead><tbody>' +
+    D.reading.map(function (r) {
+      return '<tr><td><a href="' + esc(r.u) + '" target="_blank" rel="noopener noreferrer">' + esc(r.t) + '</a></td><td>' + esc(r.why) + '</td></tr>';
+    }).join('') + '</tbody></table>';
+
+  /* ---- 说明 ---- */
+  document.getElementById('notes').innerHTML = [
+    '收录原则：只收有公开出处的机构与人名。核不到的岗位在卡片里保留为「缺」，并汇总进「查不到的部分」，不用推测填空。',
+    '来源等级分六档：官方文件 · 学会与出版社官网 · 高校官网 · 媒体报道 · 论文与期刊库 · 百科词条。百科只用于「查不到更高档来源」或「顺着它去找原文」，凡只靠百科支撑的记录都标了 ⚠。',
+    '「最近一份公开名录」与「现任」是两件事。教育部历史教学指导专委会的 25 人名单是 2021 年 1 月公布的，首届聘期 2024 年 10 月已届满、第二届截至本页整理日仍未公布，所以这 25 人的准确身份是「上一届成员」，不是「现任委员」。',
+    '同一人在不同报道里的单位与职务写法可能不一致（如邢凤珍在区、市两级之间漂移，高怀举的院内职务有三个写法），本页保留原始写法并注明出处日期，不做归一。',
+    '整理日期 ' + D.updated + '；数据与出处在 <code>jiaoyan/data.js</code>，全部可对照原始链接复核。'
+  ].map(function (t) { return '<li>' + t + '</li>'; }).join('');
+
+  /* ---- 顶栏高亮 ---- */
+  var links = [].slice.call(document.querySelectorAll('nav.jump a'));
+  var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if ('IntersectionObserver' in window && secs.length) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.intersectionRatio > .04) {
+          links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id); });
+        }
+      });
+    }, { rootMargin: '-58px 0px -70% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
