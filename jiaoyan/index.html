@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>中学历史教研体系图 · 从教育部到山东省</title>
-<meta name="description" content="国家、省、市、县、校五级教研体系里，中学历史学科的机构谱系与人物名录：教育部基础教育教学指导委员会历史教学指导专委会 25 人、中国教育学会历史教学专委会第十届理事会、课标修订组、统编教材编写、全国历史教师教育专委会，下钻到山东省教科院与地市历史教研员。每个人都带可点开的公开出处。">
+<meta name="description" content="国家、省、市、县、校五级教研体系里，中学历史学科的机构谱系与人物名录：教育部基础教育教学指导委员会历史教学指导专委会 25 人、中国教育学会历史教学专委会第十届理事会、课标修订组、统编教材编写、全国历史教师教育专委会，下钻到山东省教科院、省级学科基地首席教师与地市历史教研员。每个人都带可点开的公开出处。">
 <meta property="og:title" content="中学历史教研体系图 · 从教育部到山东省">
-<meta property="og:description" content="从教育部历史教学指导专委会的 25 人名单，到山东省 16 个地市中只核到 4 个的公开教研员名录。机构谱系 + 人物名单 + 每一条出处。">
+<meta property="og:description" content="从教育部历史教学指导专委会的 25 人名单，到山东省 16 个地市中只核到 5 个的公开教研员名录，再加一条不经过教研员的省级通道：学科基地与首席教师。机构谱系 + 人物名单 + 每一条出处。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://jillax.github.io/jiaoyan/">
 <meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
@@ -254,7 +254,7 @@
     </div>
     <h1>中学历史教研<br>体系图</h1>
     <div class="sub">从教育部到山东省</div>
-    <p class="lede">同一门历史课，上面有 <b>三套性质完全不同的全国性名录</b>：教育部直属的非常设专家组织、中国教育学会的分支机构、师范院校之间的学术共同体；下面接 <b>国家、省、市、县、校五级教研机构</b>。这一页把机构关系画清楚，把能公开核到的人名一个个列出来，<b>每个人后面都挂着他的出处和来源日期</b>——核不到的地方留着空白，并写进缺口清单。</p>
+    <p class="lede">同一门历史课，上面有 <b>三套性质完全不同的全国性名录</b>：教育部直属的非常设专家组织、中国教育学会的分支机构、师范院校之间的学术共同体；下面接 <b>国家、省、市、县、校五级教研机构</b>。山东还多出一条不在五级文件里的通道——<b>省级学科基地与首席教师</b>，牌直接发给学校和中学老师，绕过教研员。这一页把机构关系画清楚，把能公开核到的人名一个个列出来，<b>每个人后面都挂着他的出处和来源日期</b>——核不到的地方留着空白，并写进缺口清单。</p>
     <div class="stats" id="stats"></div>
   </div>
 </header>
@@ -314,13 +314,13 @@
 
   <section id="tl">
     <div class="sec-head"><span class="sec-no">05 / CHRONOLOGY</span><h2>这套体系是怎么长出来的</h2></div>
-    <p class="sec-note">1990 年立起教研室，2001 年开课改，2017 年一年之内把教材收归国家统编，2019 年写入五级教研体系，2020 年成立教指委，2022 年落地新课标，2024 年首届聘期届满、2025 年学会换届、第二届推荐启动。<b style="color:var(--ink);font-weight:500">每一条都挂着文件号或日期</b>。</p>
+    <p class="sec-note">1990 年立起教研室，2001 年开课改，2017 年一年之内把教材收归国家统编，2019 年写入五级教研体系，2020 年成立教指委，2021 年山东开出省级学科基地这条旁路，2022 年落地新课标，2024 年首届聘期届满、2025 年学会换届、第二届推荐启动。<b style="color:var(--ink);font-weight:500">每一条都挂着文件号或日期</b>。</p>
     <div class="tl" id="timeline"></div>
   </section>
 
   <section id="gaps">
     <div class="sec-head"><span class="sec-no">06 / GAPS</span><h2>查不到的部分</h2></div>
-    <p class="sec-note">一个不写缺口的体系图，等于在暗示它全都对。以下十一条是这页数据的真实边界。</p>
+    <p class="sec-note">一个不写缺口的体系图，等于在暗示它全都对。以下 <span id="gapCount"></span> 条是这页数据的真实边界。</p>
     <div class="gap-list" id="gapList"></div>
   </section>
 
@@ -393,9 +393,10 @@
     [D.orgs.filter(function (o) { return !o.kind.match(/缺口|支撑/); }).length, '个机构 · 名录'],
     [gCount, '位可核到的人'],
     [srcCount, '条独立出处'],
-    ['4/16', '山东地市有具名教研员'],
+    ['5/16', '山东地市有具名教研员'],
     [D.gaps.length, '条明确缺口']
   ];
+  document.getElementById('gapCount').textContent = D.gaps.length;
   document.getElementById('stats').innerHTML = stats.map(function (s) {
     return '<div class="stat"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>';
   }).join('');
@@ -453,7 +454,7 @@
   }
 
   function orgCard(o, tc) {
-    var stale = /届满|未公布|待核实|只采到|未公开|不列|偶然|三例/.test(o.status || '');
+    var stale = /届满|未公布|待核实|只采到|只核到|未采到|未见原文|未公开|不列|偶然|三例/.test(o.status || '');
     var wide = (o.people && o.people.length > 8) || o.journals || o.events;
     var h = '<article class="org' + (wide ? ' wide' : '') + '" id="org-' + esc(o.id) + '" style="--tc:' + tc + '" data-sd="' + (o.id.indexOf('sd') === 0 || o.people.some(function (p) { return p.sd; }) ? 1 : 0) + '">';
     h += '<div class="org-top"><div><h4>' + esc(o.name) + '</h4><div class="kind">' + esc(o.kind) + '</div></div>';
@@ -524,7 +525,7 @@
         return '<span class="chip" style="--cc:' + tcOf[m.org.tier] + '"><b>' + esc(m.org.short) + '</b> <em>' + esc(m.p.map(function (p) { return p.r; }).join(' / ')) + '</em></span>';
       }).join('') + '</div></div>';
   }).join('') +
-  '<div class="callout"><p><b>读法。</b>把交叉数从多到少排下来，会发现三件事。第一，课标与教材的组长同时坐在两张国家名录上，这是「谁定调」最直白的一条线。第二，学会和出版社是同一批人——历史教学专委会历任理事长由人教社历史编辑室主任出任，联系电话和地址也挂在人教社同一间办公室。第三，山东在这张交叉表里几乎不存在：省内没有一个同时进入两张以上国家级历史名录的人，唯一的例外是齐健，而他靠的是师范院校那条线，不是课堂教学那条线。</p></div>';
+  '<div class="callout"><p><b>读法。</b>把交叉数从多到少排下来，会发现三件事。第一，课标与教材的组长同时坐在两张国家名录上，这是「谁定调」最直白的一条线。第二，学会和出版社是同一批人——历史教学专委会历任理事长由人教社历史编辑室主任出任，联系电话和地址也挂在人教社同一间办公室。第三，山东在<b>国家</b>这张交叉表里几乎不存在：省内没有一个同时进入两张以上国家级历史名录的人，唯一的例外齐健，靠的是师范院校那条线，不是课堂教学那条线。但把视野收到省一级就反过来了：姬晓灿（省教科院＋省学科基地）、于国（聊城市＋省级基地校）都同时占两张省内名录，而撑起这两张省内名录的「省级学科基地＋首席教师」，是一份完全不需要教育部头衔的名录。</p></div>';
 
   /* ---- 人物索引 ---- */
   var idxHTML = people.slice().sort(function (a, b) { return b.merged.length - a.merged.length || a.order - b.order; }).map(function (r) {
