@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>不在B站：中学历史视频的渠道地图 · 山东历史高考与课堂实录</title>
+<meta name="description" content="找山东历史高考和中学历史课堂视频的 22 个入口：国家中小学智慧教育平台、基础教育精品课、一师一优课、鲁教云与济南潍坊地市平台、抖音与微信视频号、山东专版教辅配套录播、学科网、湖南师大中学历史教学案例库、人教网与三本头部刊物。每条标免费与否、需要什么账号、是否已核验，另附各平台的拆词检索手册。">
+<meta property="og:title" content="不在B站：中学历史视频的渠道地图">
+<meta property="og:description" content="课堂实录在官方平台，分省讲题在抖音和视频号，B站两头都不占。22 个入口带免费/门槛/核验状态三列，加一份按平台拆词的检索手册。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/shipin/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://jillax.github.io/shipin/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --inset: #100c20;
+    --ink: #efe7ff;
+    --body: #cbbfe6;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --gold: #e5b45c;
+    --purple: #b47aff;
+    --sd: #4fd8e8;
+    --green: #5ee0a8;
+    --orange: #f0a860;
+    --pink: #ff6f88;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --serif: "Noto Serif SC", "Songti SC", serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; color: var(--body); background:
+      radial-gradient(ellipse at 8% -6%, rgba(229, 180, 92, .10) 0%, transparent 52%),
+      radial-gradient(ellipse at 96% 8%, rgba(79, 216, 232, .07) 0%, transparent 48%),
+      var(--paper);
+    font-family: var(--sans); font-size: 16px; line-height: 1.65;
+  }
+  a { color: var(--gold); }
+  a:hover, a:focus-visible { color: var(--ink); }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  .wrap { width: min(1180px, calc(100% - 30px)); margin: 0 auto; }
+  .stripe { position: fixed; top: 0; left: 0; right: 0; height: 4px; display: flex; z-index: 40; }
+  .stripe i { flex: 1; }
+
+  header { padding: 42px 0 0; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 12px 18px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .kicker a { color: inherit; text-decoration: none; }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: var(--serif); font-weight: 700; font-size: clamp(32px, 6vw, 60px);
+    line-height: 1.06; letter-spacing: -.03em; margin: 18px 0 0; color: var(--ink);
+  }
+  .sub {
+    font-family: var(--serif); font-size: clamp(16px, 2vw, 21px); color: var(--muted);
+    margin: 12px 0 0; line-height: 1.5; max-width: 62ch;
+  }
+  .lede { max-width: 74ch; margin: 20px 0 0; font-size: 16.5px; }
+  .lede b { color: var(--ink); font-weight: 500; }
+  .why { margin: 22px 0 0; display: grid; gap: 9px; max-width: 78ch; }
+  .why p { margin: 0; font-size: 15px; color: var(--body); border-left: 2px solid var(--line); padding-left: 14px; }
+  .why p b { color: var(--ink); font-weight: 500; }
+  .why p:first-child { border-left-color: var(--gold); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+    gap: 1px; margin: 30px 0 0; background: var(--line);
+    border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+  }
+  .stat { background: var(--inset); padding: 13px 14px; }
+  .stat b { display: block; font-family: var(--serif); font-size: 25px; color: var(--gold); font-weight: 700; line-height: 1.1; }
+  .stat span { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+
+  nav.jump {
+    position: sticky; top: 0; z-index: 30; margin: 30px 0 0;
+    background: rgba(13, 10, 26, .94); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  nav.jump .wrap { display: flex; gap: 4px; overflow-x: auto; padding: 9px 0; scrollbar-width: thin; }
+  nav.jump a {
+    flex: 0 0 auto; font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
+    color: var(--muted); text-decoration: none; padding: 5px 11px; border: 1px solid transparent; border-radius: 2px;
+  }
+  nav.jump a:hover, nav.jump a.on { color: var(--ink); border-color: var(--line); background: var(--inset); }
+
+  main { padding: 0 0 70px; }
+  section { margin-top: 58px; scroll-margin-top: 58px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; border-bottom: 2px solid var(--line); padding-bottom: 10px; }
+  .sec-no { font-family: var(--mono); font-size: 12px; color: var(--pink); letter-spacing: .1em; }
+  h2 { font-family: var(--serif); font-size: clamp(23px, 3.2vw, 34px); font-weight: 700; color: var(--ink); margin: 0; letter-spacing: -.015em; }
+  .sec-note { font-size: 14px; color: var(--muted); max-width: 72ch; margin: 12px 0 0; }
+  .sec-note b { color: var(--body); font-weight: 500; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 18px 0 0; }
+  .ctl {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .04em; padding: 7px 12px;
+    border: 1px solid var(--line); border-radius: 2px; color: var(--muted); background: var(--inset);
+  }
+  .ctl:hover { color: var(--ink); }
+  .ctl.on { color: var(--paper); background: var(--gold); border-color: var(--gold); font-weight: 500; }
+  .ctl.on.sd { background: var(--sd); border-color: var(--sd); }
+  input.search {
+    font: inherit; font-size: 14px; padding: 8px 12px; width: min(340px, 100%);
+    background: var(--inset); color: var(--ink); border: 1px solid var(--line); border-radius: 2px;
+  }
+  input.search:focus { outline: none; border-color: var(--gold); }
+  .empty { font-family: var(--mono); font-size: 13px; color: var(--muted); padding: 22px 0; }
+
+  /* ---- 问题 → 渠道 ---- */
+  .v { border: 1px solid var(--line); border-radius: 3px; background: var(--sheet); padding: 13px 15px; margin-top: 12px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 6px 18px; align-items: start; }
+  .v-q { font-family: var(--serif); font-size: 17.5px; font-weight: 700; color: var(--ink); line-height: 1.35; }
+  .v-ch { display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start; }
+  .v-ch a { font-family: var(--mono); font-size: 11.5px; text-decoration: none; border: 1px solid var(--line); border-radius: 2px; padding: 4px 8px; color: var(--gold); background: var(--inset); }
+  .v-ch a:hover { color: var(--paper); background: var(--gold); }
+  .v-note { grid-column: 1 / -1; font-size: 13.5px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 8px; margin-top: 2px; }
+
+  /* ---- 分组与渠道卡 ---- */
+  .grp { margin-top: 26px; border-left: 3px solid var(--tc, var(--line)); }
+  .grp-head { background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 13%, var(--sheet)), var(--sheet) 62%); border: 1px solid var(--line); border-left: 0; padding: 13px 16px; }
+  .grp-code { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--tc); }
+  .grp-head h3 { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin: 3px 0 0; }
+  .grp-head p { font-size: 14px; margin: 8px 0 0; max-width: 84ch; }
+  .grp-body { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 14px; padding: 14px 0 4px; }
+
+  .ch { min-width: 0; background: var(--sheet); border: 1px solid var(--line); border-radius: 3px; padding: 15px 16px 14px; display: flex; flex-direction: column; scroll-margin-top: 70px; }
+  .ch.hit { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .ch-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+  .ch h4 { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); margin: 0; line-height: 1.3; flex: 1 1 210px; min-width: 0; }
+  .ch h4 a { color: inherit; text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--tc) 45%, transparent); }
+  .ch h4 a:hover { color: var(--tc); }
+  .ch h4 .nologo { display: block; color: var(--muted); font-size: 11.5px; font-family: var(--mono); font-weight: 400; margin-top: 5px; letter-spacing: .02em; }
+  .badges { display: flex; gap: 5px; flex-wrap: wrap; flex: 0 1 auto; justify-content: flex-end; }
+  .badge {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em;
+    border: 1px solid var(--line); border-radius: 2px; padding: 3px 7px; color: var(--muted); white-space: nowrap;
+  }
+  .badge.free { color: var(--green); border-color: rgba(94, 224, 168, .38); }
+  .badge.partial { color: var(--orange); border-color: rgba(240, 168, 96, .38); }
+  .badge.paid { color: var(--pink); border-color: rgba(255, 111, 136, .38); }
+  .badge.login { color: var(--muted); }
+  .badge.sd { color: var(--sd); border-color: rgba(79, 216, 232, .4); }
+  .badge.verify { color: var(--pink); border-color: rgba(255, 111, 136, .4); }
+  .badge.ok { color: var(--purple); border-color: rgba(180, 122, 255, .35); }
+  .ch .has { font-size: 14.5px; margin: 11px 0 0; }
+  .ch .tip { font-size: 13.5px; color: var(--body); margin: 10px 0 0; background: var(--inset); border-left: 2px solid var(--tc); padding: 9px 12px; }
+  .ch .tip b { color: var(--ink); font-weight: 500; }
+  .ch .srcs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 12px; }
+  .src {
+    display: inline-block; vertical-align: top; font-family: var(--mono); font-size: 11px; color: var(--muted);
+    text-decoration: none; border: 1px solid var(--line); border-radius: 2px; padding: 3px 7px; max-width: 100%;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .src:hover { color: var(--ink); }
+  .src i { font-style: normal; color: var(--gold); margin-right: 5px; }
+  .src.ext i { color: var(--sd); }
+
+  /* ---- 拆词手册 ---- */
+  .sc { border: 1px solid var(--line); border-radius: 3px; background: var(--sheet); padding: 14px 16px; margin-top: 12px; }
+  .sc-top { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .sc-top h4 { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--ink); margin: 0; }
+  .sc-top .why { font-size: 13px; color: var(--muted); }
+  .sc-row { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 4px 12px; margin-top: 11px; align-items: start; }
+  .sc-row > .lab { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; padding-top: 5px; }
+  .keys { display: flex; flex-wrap: wrap; gap: 6px; }
+  .key { font-family: var(--mono); font-size: 12px; border: 1px solid var(--line); border-radius: 2px; padding: 3px 8px; background: var(--inset); }
+  .key.bad { color: var(--pink); border-color: rgba(255, 111, 136, .3); text-decoration: line-through; text-decoration-color: rgba(255, 111, 136, .55); }
+  .key.good { color: var(--green); border-color: rgba(94, 224, 168, .3); }
+  .key.copy { cursor: pointer; }
+  .key.copy:hover { color: var(--ink); border-color: var(--gold); }
+  .sc .tip { font-size: 13.5px; color: var(--body); margin: 12px 0 0; border-top: 1px dashed var(--line); padding-top: 10px; }
+  .sc .tip b { color: var(--ink); font-weight: 500; }
+
+  /* ---- 缺口 ---- */
+  .gap-list { margin-top: 14px; display: grid; gap: 10px; }
+  .gap-item { border: 1px solid rgba(255, 111, 136, .28); border-left: 3px solid var(--pink); border-radius: 2px; background: rgba(255, 111, 136, .045); padding: 12px 15px; }
+  .gap-item b { display: block; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--pink); text-transform: uppercase; margin-bottom: 5px; }
+  .gap-item p { margin: 0; font-size: 14.5px; }
+
+  .rel { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 12px; margin-top: 14px; }
+  .rel a { display: block; border: 1px solid var(--line); border-radius: 3px; background: var(--sheet); padding: 13px 15px; text-decoration: none; }
+  .rel a:hover { border-color: var(--gold); }
+  .rel b { display: block; font-family: var(--serif); font-size: 17px; color: var(--ink); font-weight: 700; }
+  .rel span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 5px; }
+
+  footer { margin-top: 60px; border-top: 1px solid var(--line); padding: 24px 0 0; font-size: 13.5px; color: var(--muted); }
+  footer h3 { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--body); text-transform: uppercase; margin: 0 0 10px; }
+  footer ul { padding-left: 18px; margin: 0 0 14px; }
+  footer li { margin: 4px 0; }
+
+  @media (max-width: 700px) {
+    .v { grid-template-columns: minmax(0, 1fr); }
+    .badges { justify-content: flex-start; }
+    .sc-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .sc-row > .lab { padding-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"><i style="background:var(--gold)"></i><i style="background:var(--sd)"></i><i style="background:var(--orange)"></i><i style="background:var(--purple)"></i><i style="background:#3d2f5c"></i></div>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">
+      <span>渠道地图 · 入口清单与检索手册 · 整理于 <span id="updated"></span></span>
+      <span><a href="../">← Jillax 首页</a> · <a href="../projects.html">全部作品</a> · <a href="../jiaoyan/">教研体系图</a></span>
+    </div>
+    <h1>不在B站<br>中学历史视频的渠道地图</h1>
+    <div class="sub">山东历史高考与课堂实录的入口，和一份按平台拆词的检索手册</div>
+    <div class="why" id="why"></div>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<nav class="jump">
+  <div class="wrap">
+    <a href="#map">① 该去哪找</a>
+    <a href="#channels">② 渠道清单</a>
+    <a href="#keys">③ 拆词手册</a>
+    <a href="#gaps">④ 待核实</a>
+    <a href="#related">⑤ 姊妹页</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="map">
+    <div class="sec-head"><span class="sec-no">01 / WHERE</span><h2>你想看什么 → 该去哪一家</h2></div>
+    <p class="sec-note">先按问题定位，再进渠道。这一页的用法不是从清单第一行读起，而是找到你那句话对应的那一行，点渠道名跳到卡片。<b>七个问题里只有两个的答案包含B站。</b></p>
+    <div id="verdicts"></div>
+  </section>
+
+  <section id="channels">
+    <div class="sec-head"><span class="sec-no">02 / CHANNELS</span><h2>渠道清单</h2></div>
+    <p class="sec-note">四组共 <b id="chTotal"></b> 个入口。每条右上三个徽章依次是：<b>花费</b>（免费 / 部分免费 / 付费为主）、<b>门槛</b>（不用登录 / 需注册实名 / 需师生账号或学校订购）、<b>可信度</b>（已确认入口与内容形态 / 只见到线索未亲自核验）。灰底的那段是用法与坑。</p>
+    <div class="controls">
+      <input class="search" id="q" type="search" placeholder="搜索渠道 / 关键词 / 平台名…" aria-label="搜索渠道">
+      <button class="ctl sd" data-f="sd">只要山东相关</button>
+      <button class="ctl" data-f="free">只完全免费</button>
+      <button class="ctl" data-f="open">只不用账号</button>
+      <button class="ctl" data-f="ok">只已核验</button>
+      <button class="ctl" data-f="clear">清除</button>
+      <span class="ctl" style="cursor:default;color:var(--muted)" id="count"></span>
+    </div>
+    <div id="groups"></div>
+  </section>
+
+  <section id="keys">
+    <div class="sec-head"><span class="sec-no">03 / KEYWORDS</span><h2>拆词手册：会搜不到的词，和该搜的词</h2></div>
+    <p class="sec-note">同一份内容，在不同平台要用不同的话去问。划红线的是<b>注定搜不到</b>的问法，绿底的是有效关键词——点一下可以直接复制。</p>
+    <div id="searches"></div>
+  </section>
+
+  <section id="gaps">
+    <div class="sec-head"><span class="sec-no">04 / UNVERIFIED</span><h2>我没能核实的部分</h2></div>
+    <p class="sec-note">一份渠道清单如果不写自己哪里没验过，就是在暗示全都可靠。以下 <span id="gapCount"></span> 条是这一页的真实边界，其中 <b>标 verify 的渠道不要当确定入口使用</b>。</p>
+    <div class="gap-list" id="gapList"></div>
+  </section>
+
+  <section id="related">
+    <div class="sec-head"><span class="sec-no">05 / RELATED</span><h2>这一页该和谁一起用</h2></div>
+    <p class="sec-note">渠道地图给出的是「在哪里看」，但要真正定位到某一节具体的课，需要先知道是谁上的、在哪张名录里。按人名搜，是打通两页的关键。</p>
+    <div class="rel" id="relList"></div>
+  </section>
+
+  <footer>
+    <h3>数据说明</h3>
+    <ul id="notes"></ul>
+    <p style="margin-top:6px">本页是公开资料的入口整理，与任何平台、机构无隶属或推广关系。名单以各平台当期公布的资源目录为准，如发现与实际不符，请以现场为准并告知我更正。<br>本页属于 <a href="../projects.html">Jillax 的作品</a> · <a href="../">jillax.github.io</a></p>
+  </footer>
+</main>
+
+<div id="flash" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--paper);font-family:var(--mono);font-size:12px;padding:8px 14px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50"></div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  var D = window.SHIPIN;
+  if (!D) { document.getElementById('groups').innerHTML = '<div class="empty">data.js 未加载</div>'; return; }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+  function raw(s) { return String(s == null ? '' : s); }
+
+  var FREE = { free: '免费', partial: '部分免费', paid: '付费为主' };
+  var LOGIN = { none: '不用登录', reg: '需注册实名', school: '需师生账号' };
+  var TONE = { gold: 'var(--gold)', sd: 'var(--sd)', orange: 'var(--orange)', purple: 'var(--purple)', green: 'var(--green)', pink: 'var(--pink)' };
+
+  var byId = {};
+  D.channels.forEach(function (c) { byId[c.id] = c; });
+
+  document.getElementById('updated').textContent = D.updated;
+
+  /* 诊断 */
+  document.getElementById('why').innerHTML = D.diagnosis.map(function (p) { return '<p>' + raw(p) + '</p>'; }).join('');
+
+  /* 统计条 */
+  var freeN = D.channels.filter(function (c) { return c.free === 'free'; }).length;
+  var openN = D.channels.filter(function (c) { return c.login === 'none'; }).length;
+  var okN = D.channels.filter(function (c) { return c.status === 'ok'; }).length;
+  var verifyN = D.channels.length - okN;
+  var stats = [
+    [D.channels.length, '个入口 · 4 组'],
+    [freeN, '个完全免费'],
+    [openN, '个不用账号'],
+    [D.channels.filter(function (c) { return c.sd; }).length, '个贴着山东'],
+    [verifyN, '个待核实'],
+    [D.gaps.length, '条边界声明']
+  ];
+  document.getElementById('stats').innerHTML = stats.map(function (s) {
+    return '<div class="stat"><b>' + s[0] + '</b><span>' + esc(s[1]) + '</span></div>';
+  }).join('');
+
+  /* 01 问题 → 渠道 */
+  document.getElementById('verdicts').innerHTML = D.verdicts.map(function (v) {
+    var chips = (v.where || []).map(function (id) {
+      var c = byId[id];
+      if (!c) return '';
+      return '<a href="#ch-' + esc(c.id) + '">' + esc(c.short || c.name) + '</a>';
+    }).join('');
+    return '<div class="v"><div class="v-q">' + esc(v.q) + '</div><div class="v-ch">' + chips + '</div>' +
+      '<div class="v-note">' + raw(v.note) + '</div></div>';
+  }).join('');
+
+  /* 02 渠道卡 */
+  document.getElementById('chTotal').textContent = D.channels.length;
+
+  var toneOf = {};
+  D.groups.forEach(function (g) { toneOf[g.id] = TONE[g.tone] || 'var(--gold)'; });
+
+  function chCard(c) {
+    var tc = toneOf[c.group];
+    var title = c.href
+      ? '<a href="' + esc(c.href) + '" target="_blank" rel="noopener noreferrer">' + esc(c.name) + ' ↗</a>'
+      : esc(c.name) + ' <span class="nologo">（无直达链接，见用法）</span>';
+    var h = '<article class="ch" id="ch-' + esc(c.id) + '" style="--tc:' + tc + '" data-id="' + esc(c.id) + '" ' +
+      'data-sd="' + (c.sd ? 1 : 0) + '" data-free="' + (c.free === 'free' ? 1 : 0) + '" ' +
+      'data-open="' + (c.login === 'none' ? 1 : 0) + '" data-ok="' + (c.status === 'ok' ? 1 : 0) + '" ' +
+      'data-search="' + esc((c.name + ' ' + c.short + ' ' + c.has + ' ' + c.tip + ' ' + c.src.label).toLowerCase()) + '">';
+    h += '<div class="ch-top"><h4>' + title + '</h4><div class="badges">' +
+      '<span class="badge ' + c.free + '">' + FREE[c.free] + '</span>' +
+      '<span class="badge login">' + LOGIN[c.login] + '</span>' +
+      '<span class="badge ' + (c.status === 'ok' ? 'ok' : 'verify') + '">' + (c.status === 'ok' ? '已确认' : '待核实') + '</span>' +
+      (c.sd ? '<span class="badge sd">山东</span>' : '') +
+      '</div></div>';
+    h += '<div class="has">' + raw(c.has) + '</div>';
+    h += '<div class="tip">' + raw(c.tip) + '</div>';
+    h += '<div class="srcs">' + (c.src.url
+      ? (/^\.\.\//.test(c.src.url)
+        ? '<a class="src" href="' + esc(c.src.url) + '"><i>本页</i>' + esc(c.src.label) + '</a>'
+        : '<a class="src ext" href="' + esc(c.src.url) + '" target="_blank" rel="noopener noreferrer"><i>据</i>' + esc(c.src.label) + '</a>')
+      : '<span class="src"><i>据</i>' + esc(c.src.label) + '</span>') + '</div>';
+    h += '</article>';
+    return h;
+  }
+
+  document.getElementById('groups').innerHTML = D.groups.map(function (g) {
+    var cs = D.channels.filter(function (c) { return c.group === g.id; });
+    return '<div class="grp" id="grp-' + esc(g.id) + '" style="--tc:' + (TONE[g.tone] || 'var(--gold)') + '">' +
+      '<div class="grp-head"><div class="grp-code">' + esc(g.code) + ' · ' + cs.length + ' 个入口</div>' +
+      '<h3>' + esc(g.name) + '</h3><p>' + raw(g.desc) + '</p></div>' +
+      '<div class="grp-body">' + cs.map(chCard).join('') + '</div></div>';
+  }).join('');
+
+  /* 筛选 */
+  var state = { q: '', sd: 0, free: 0, open: 0, ok: 0 };
+  function apply() {
+    var shown = 0;
+    var cards = document.querySelectorAll('.ch');
+    for (var i = 0; i < cards.length; i++) {
+      var el = cards[i], q = state.q;
+      var show = (!q || el.getAttribute('data-search').indexOf(q) >= 0) &&
+        (!state.sd || el.getAttribute('data-sd') === '1') &&
+        (!state.free || el.getAttribute('data-free') === '1') &&
+        (!state.open || el.getAttribute('data-open') === '1') &&
+        (!state.ok || el.getAttribute('data-ok') === '1');
+      el.hidden = !show;
+      el.classList.toggle('hit', !!q && show);
+      if (show) shown++;
+    }
+    var grps = document.querySelectorAll('.grp');
+    for (var j = 0; j < grps.length; j++) {
+      var any = grps[j].querySelector('.ch:not([hidden])');
+      grps[j].hidden = !any;
+    }
+    document.getElementById('count').textContent = shown + ' / ' + D.channels.length + ' 个入口';
+  }
+  document.getElementById('q').addEventListener('input', function () { state.q = this.value.trim().toLowerCase(); apply(); });
+  var btns = document.querySelectorAll('.ctl[data-f]');
+  for (var b = 0; b < btns.length; b++) {
+    btns[b].addEventListener('click', function () {
+      var f = this.getAttribute('data-f');
+      if (f === 'clear') { state.sd = state.free = state.open = state.ok = 0; }
+      else { state[f] = state[f] ? 0 : 1; }
+      var all = document.querySelectorAll('.ctl[data-f]');
+      for (var k = 0; k < all.length; k++) {
+        var kk = all[k].getAttribute('data-f');
+        if (kk !== 'clear') all[k].classList.toggle('on', !!state[kk]);
+      }
+      apply();
+    });
+  }
+  apply();
+
+  /* 03 拆词手册 */
+  document.getElementById('searches').innerHTML = D.searches.map(function (s) {
+    return '<div class="sc"><div class="sc-top"><h4>' + esc(s.platform) + '</h4><span class="why">' + esc(s.why) + '</span></div>' +
+      '<div class="sc-row"><span class="lab">搜不到</span><div class="keys">' +
+      s.bad.map(function (k) { return '<span class="key bad">' + esc(k) + '</span>'; }).join('') + '</div></div>' +
+      '<div class="sc-row"><span class="lab">该搜</span><div class="keys">' +
+      s.good.map(function (k) { return '<button class="key good copy" data-k="' + esc(k) + '">' + esc(k) + '</button>'; }).join('') + '</div></div>' +
+      '<div class="tip">' + raw(s.tip) + '</div></div>';
+  }).join('');
+
+  var flashEl = document.getElementById('flash'), flashT = null;
+  function flash(msg) {
+    flashEl.textContent = msg; flashEl.style.opacity = '1';
+    if (flashT) clearTimeout(flashT);
+    flashT = setTimeout(function () { flashEl.style.opacity = '0'; }, 1400);
+  }
+  document.getElementById('searches').addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('.key.copy') : null;
+    if (!t) return;
+    var k = t.getAttribute('data-k');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(k).then(function () { flash('已复制：' + k); }, function () { flash('复制失败，请手动选词'); });
+    } else { flash('需 https 环境才能复制'); }
+  });
+
+  /* 04 待核实 */
+  document.getElementById('gapCount').textContent = D.gaps.length;
+  document.getElementById('gapList').innerHTML = D.gaps.map(function (g) {
+    return '<div class="gap-item"><b>未核实 · ' + esc(g.t) + '</b><p>' + raw(g.d) + '</p></div>';
+  }).join('');
+
+  /* 05 姊妹页 */
+  document.getElementById('relList').innerHTML = D.related.map(function (r) {
+    return '<a href="' + esc(r.href) + '"><b>' + esc(r.title) + '</b><span>' + esc(r.desc) + '</span></a>';
+  }).join('');
+
+  /* 页脚 */
+  document.getElementById('notes').innerHTML = D.notes.map(function (n) { return '<li>' + raw(n) + '</li>'; }).join('');
+
+  /* 滚动高亮 */
+  var links = document.querySelectorAll('nav.jump a');
+  function spy() {
+    var best = null, bestTop = -1e9;
+    for (var i = 0; i < links.length; i++) {
+      var id = links[i].getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (!el) continue;
+      var top = el.getBoundingClientRect().top - 70;
+      if (top <= 0 && top > bestTop) { bestTop = top; best = links[i]; }
+    }
+    for (var j = 0; j < links.length; j++) links[j].classList.toggle('on', links[j] === best);
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  spy();
+})();
+</script>
+</body>
+</html>
