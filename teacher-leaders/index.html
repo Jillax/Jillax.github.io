@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>讲台与讲坛 · 世界领导人的教师前史</title>
+<meta name="description" content="39 位国家元首与政府首脑的任教履历逐条查学段：真正在中学讲过课的只有 14 人，14 人是小学或乡村单室学校，7 人是大学教授。附“谁尤其关心中学教育”的政策清单与七处待核缺口。">
+<meta property="og:title" content="讲台与讲坛 · 世界领导人的教师前史">
+<meta property="og:description" content="“当过老师”被系统性夸大了学段。39 人逐一核证：中学 14 人、小学 14 人、大学教授 7 人、只推政策未任教 4 人。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/teacher-leaders/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://jillax.github.io/teacher-leaders/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d0a1a;
+    --soft: #130f24;
+    --card: #16112b;
+    --inset: #100c20;
+    --line: rgba(155, 89, 255, .16);
+    --line-hi: rgba(155, 89, 255, .38);
+    --ink: #ece4ff;
+    --body: #c9bce6;
+    --muted: #8b7aad;
+    --faint: #4b3c6b;
+    --purple: #9b59ff;
+    --purple-bright: #b47aff;
+    --pink: #ff4da6;
+    --cyan: #00e5ff;
+    --amber: #ffaa40;
+    --green: #4ade80;
+    --mono: 'Share Tech Mono', ui-monospace, monospace;
+    --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --serif: 'Noto Serif SC', 'Songti SC', serif;
+    --display: 'Orbitron', 'Noto Sans SC', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; color: var(--ink); font-family: var(--sans);
+    font-size: 16px; line-height: 1.72;
+    background:
+      linear-gradient(90deg, var(--purple) 0 30%, var(--pink) 30% 58%, var(--cyan) 58% 100%) top / 100% 3px no-repeat,
+      radial-gradient(ellipse 900px 520px at 8% -6%, rgba(155,89,255,.16), transparent 62%),
+      radial-gradient(ellipse 780px 460px at 96% 8%, rgba(255,77,166,.09), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 50% 100%, rgba(0,229,255,.05), transparent 65%),
+      var(--bg);
+    background-attachment: scroll, fixed, fixed, fixed, scroll;
+  }
+  .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+  a { color: var(--purple-bright); text-decoration: none; }
+  a:hover { color: var(--pink); }
+  b, strong { font-weight: 700; color: var(--ink); }
+  em { font-style: normal; color: var(--body); }
+
+  /* ---------- header ---------- */
+  header { padding: 34px 0 0; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .18em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .kicker a { color: var(--muted); }
+  .kicker a:hover { color: var(--ink); }
+  h1 {
+    font-family: var(--serif); font-weight: 900;
+    font-size: clamp(46px, 8vw, 88px); line-height: .96;
+    letter-spacing: -.03em; margin: 18px 0 0;
+    background: linear-gradient(105deg, #fff 0%, var(--purple-bright) 46%, var(--pink) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .sub {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(17px, 2.2vw, 24px);
+    color: var(--muted); margin: 12px 0 0; letter-spacing: .01em;
+  }
+  .deck { max-width: 76ch; font-size: 16.5px; line-height: 1.85; margin: 20px 0 0; color: var(--body); }
+  .deck strong { color: var(--ink); }
+  .deck .hi { color: var(--cyan); font-weight: 500; }
+  .deck .hi2 { color: var(--amber); font-weight: 500; }
+
+  .method {
+    background: linear-gradient(180deg, rgba(155,89,255,.07), rgba(155,89,255,.02));
+    border: 1px solid var(--line); border-left: 3px solid var(--purple);
+    padding: 15px 18px; margin: 24px 0 0; font-size: 13.5px; line-height: 1.75; color: var(--muted);
+  }
+  .method b { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .22em; color: var(--purple-bright); text-transform: uppercase; margin-bottom: 7px; font-weight: 400; }
+  .method em { color: var(--ink); font-weight: 500; }
+
+  /* ---------- stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 30px 0 0; }
+  .stat {
+    background: var(--card); border: 1px solid var(--line);
+    padding: 16px 14px 14px; position: relative; overflow: hidden;
+  }
+  .stat::before {
+    content: ''; position: absolute; inset: 0 auto 0 0; width: 2px;
+    background: var(--c, var(--purple));
+  }
+  .stat .n {
+    font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1;
+    color: var(--c, var(--purple)); letter-spacing: -.02em;
+  }
+  .stat .t { font-size: 13px; color: var(--body); margin-top: 8px; font-weight: 500; }
+  .stat .d { font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-top: 4px; letter-spacing: .05em; }
+
+  /* ---------- sections ---------- */
+  .secno {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .26em;
+    color: var(--purple-bright); text-transform: uppercase; margin-top: 62px;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 700; font-size: clamp(23px, 3vw, 31px);
+    line-height: 1.42; margin: 8px 0 0; letter-spacing: -.01em;
+  }
+  .note { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 10px 0 0; max-width: 90ch; }
+  .note em { color: var(--body); }
+
+  /* ---------- filter ---------- */
+  .filters {
+    position: sticky; top: 0; z-index: 30; margin: 22px 0 0; padding: 12px 0 12px;
+    background: var(--bg);
+    box-shadow: 0 10px 24px -12px rgba(13,10,26,.96), 0 1px 0 rgba(155,89,255,.18);
+    border-bottom: 1px solid var(--line);
+  }
+  .frow { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+  .frow + .frow { margin-top: 8px; }
+  .flab { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; min-width: 42px; }
+  .filters button {
+    font-family: var(--sans); font-size: 13px; cursor: pointer;
+    background: var(--inset); color: var(--body);
+    border: 1px solid var(--line); padding: 5px 11px; line-height: 1.3;
+    transition: all .16s ease;
+  }
+  .filters button:hover { border-color: var(--line-hi); color: var(--ink); }
+  .filters button[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: #0b0616; font-weight: 700; }
+  .filters button[data-stage="secondary"][aria-pressed="true"] { background: var(--cyan); border-color: var(--cyan); color: #04181c; }
+  .filters button[data-stage="primary"][aria-pressed="true"] { background: var(--amber); border-color: var(--amber); color: #1c1103; }
+  .filters button[data-stage="professor"][aria-pressed="true"] { background: var(--purple-bright); border-color: var(--purple-bright); color: #12061f; }
+  .filters button[data-stage="none"][aria-pressed="true"] { background: var(--pink); border-color: var(--pink); color: #1b0512; }
+  .filters input {
+    background: var(--inset); border: 1px solid var(--line); color: var(--ink);
+    font-family: var(--mono); font-size: 12.5px; padding: 5px 10px; width: 200px; outline: none;
+  }
+  .filters input:focus { border-color: var(--purple); }
+  .filters input::placeholder { color: var(--faint); }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin: 22px 0 0; }
+  .p {
+    background: var(--card); border: 1px solid var(--line);
+    padding: 18px 18px 16px; position: relative;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .p:hover { border-color: var(--line-hi); }
+  .p::after {
+    content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 2px;
+    background: var(--c, var(--purple)); opacity: .75;
+  }
+  .p-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .p-name { font-family: var(--serif); font-weight: 700; font-size: 20px; line-height: 1.3; }
+  .p-en { font-family: var(--mono); font-size: 11px; color: #6a5989; margin-top: 3px; letter-spacing: .02em; }
+  .badge {
+    flex: 0 0 auto; font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+    padding: 3px 7px; border: 1px solid currentColor; color: var(--c, var(--purple));
+    white-space: nowrap; text-transform: uppercase;
+  }
+  .p-meta {
+    display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 11px;
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+  }
+  .p-meta span::before { content: '· '; color: var(--faint); }
+  .p-meta span:first-child::before { content: ''; }
+  .p-rows { margin: 11px 0 0; padding: 11px 0 0; border-top: 1px dashed var(--line); }
+  .p-row { display: grid; grid-template-columns: 52px 1fr; gap: 8px; font-size: 12.5px; line-height: 1.65; margin-bottom: 4px; }
+  .p-row .k { font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: .1em; padding-top: 2px; }
+  .p-row .v { color: var(--body); }
+  .p-why { font-size: 13.5px; line-height: 1.8; color: var(--body); margin: 13px 0 0; }
+  .p-q {
+    margin: 12px 0 0; padding: 9px 12px; border-left: 2px solid var(--c, var(--purple));
+    background: rgba(155,89,255,.05); font-family: var(--serif); font-size: 13px;
+    line-height: 1.7; color: var(--ink); font-style: italic;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 12px 0 0; }
+  .tag {
+    font-size: 11px; padding: 2px 7px; color: var(--body);
+    background: rgba(155,89,255,.08); border: 1px solid var(--line); line-height: 1.6;
+  }
+  .src { margin: 12px 0 0; font-family: var(--mono); font-size: 10.5px; color: var(--faint); line-height: 1.7; }
+  .src a { color: var(--muted); border-bottom: 1px dotted var(--faint); }
+  .src a:hover { color: var(--cyan); }
+  .src span { color: var(--faint); }
+
+  .empty { font-family: var(--mono); font-size: 13px; color: var(--muted); padding: 40px 0; }
+
+  /* ---------- findings ---------- */
+  .findings { display: grid; gap: 12px; margin: 22px 0 0; }
+  .f {
+    display: grid; grid-template-columns: 54px 1fr; gap: 16px;
+    background: linear-gradient(100deg, rgba(155,89,255,.055), transparent 55%);
+    border: 1px solid var(--line); padding: 18px 20px;
+  }
+  .f .num { font-family: var(--display); font-weight: 700; font-size: 26px; color: var(--purple); line-height: 1; padding-top: 2px; }
+  .f h3 { margin: 0; font-family: var(--serif); font-size: 17.5px; font-weight: 700; line-height: 1.5; }
+  .f p { margin: 7px 0 0; font-size: 14px; line-height: 1.85; color: var(--body); }
+
+  /* ---------- gaps ---------- */
+  .gaps { margin: 20px 0 0; padding: 0; list-style: none; }
+  .gaps li {
+    font-size: 13.5px; line-height: 1.8; color: var(--body);
+    padding: 10px 0 10px 20px; border-bottom: 1px dashed var(--line); position: relative;
+  }
+  .gaps li::before {
+    content: '?'; position: absolute; left: 0; top: 9px;
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+  }
+
+  footer {
+    margin: 64px 0 0; padding: 26px 0 46px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 11px; color: var(--faint); line-height: 1.9;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
+    .f { grid-template-columns: 1fr; gap: 6px; }
+    body { font-size: 15.5px; }
+    .filters { position: static; backdrop-filter: none; }
+    .flab { min-width: 100%; }
+  }
+</style>
+</head>
+<body data-page="teacher-leaders">
+<div class="wrap">
+
+  <header>
+    <div class="kicker">
+      <span><a href="../index.html">← Jillax</a> &nbsp;/&nbsp; <a href="../projects.html">作品</a> &nbsp;/&nbsp; 深度调研</span>
+      <span id="upd">2026 · 10 · 29</span>
+    </div>
+    <h1>讲台与讲坛</h1>
+    <p class="sub">世界领导人的教师前史，以及“中学”这个学段是怎么被讲丢的</p>
+    <p class="deck">
+      查世界主要领导人谁做过中学教师，遇到的第一个障碍不是资料太少，而是<strong>“当过老师”这四个字从不标学段</strong>。
+      中文报道里，毛泽东是“小学教员”，拉达克里希南是“教师节的主角”，奥巴马是“当过老师”——三句话都对，但三个人一个在小学高小、
+      一个在大学哲学系、一个在法学院。本页把 39 个人逐条查到<span class="hi">任教机构与学段</span>，
+      结论是：真正在中学讲台上讲过课的只有 <strong>14&nbsp;人</strong>；
+      另有 <span class="hi2">14&nbsp;人在小学或乡村单室学校</span>，<span class="hi2">7&nbsp;人是大学教授</span>，
+      剩下 4&nbsp;人一天讲台都没站过，却把中学教育推成了国家议题。
+    </p>
+    <div class="method">
+      <b>Method / 口径</b>
+      收录范围：国家元首或政府首脑，含历史人物，含争议人物（波尔布特、墨索里尼照收，因为“教师出身”这件事本身不该被选择性叙述）。
+      分档只看<em>实际任课的机构层级</em>，不看文凭、不看“教育世家”、不看荣誉教职。
+      <em>中学</em>＝公立高中／私立中学／lycée／预备学校／师范学校中等部；
+      <em>小学</em>＝初等学校／乡村单室学校／课余制民族学校；
+      <em>大学</em>＝讲师、教授、大学校长。每条的出处挂在卡片底部。
+    </div>
+
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="secno">// 01 — 名录</div>
+  <h2>三十九个人，四档讲台</h2>
+  <p class="note">
+    默认按学段分档：点上方按钮筛选，或输入国名、人名、学校名检索。
+    <em>“中学讲台”这一档才是严格意义上的“做过中学教师”。</em>
+  </p>
+
+  <div class="filters">
+    <div class="frow" id="stageCtl">
+      <span class="flab">学段</span>
+    </div>
+    <div class="frow">
+      <span class="flab">地区</span>
+      <span id="regionCtl" style="display:flex;gap:7px;flex-wrap:wrap"></span>
+      <input id="q" type="search" placeholder="检索：国名 / 人名 / 学校" autocomplete="off">
+      <span id="count" style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.08em"></span>
+    </div>
+  </div>
+
+  <div class="grid" id="list"></div>
+
+  <div class="secno">// 02 — 发现</div>
+  <h2>六条结论</h2>
+  <div class="findings" id="findings"></div>
+
+  <div class="secno">// 03 — 缺口</div>
+  <h2>还没查实的地方</h2>
+  <p class="note">这张清单比结论更重要。<em>凡是没查到一手或权威二手出处的，一律不进 39 人的统计。</em></p>
+  <ul class="gaps" id="gaps"></ul>
+
+  <footer>
+    <span>
+      数据整理 <a href="../index.html">Jillax</a> · 更新 <span id="upd2">2026-10-29</span><br>
+      出处逐条标注于卡片底部；口径见页首 Method。
+    </span>
+    <span><a href="../projects.html">← 全部作品</a></span>
+  </footer>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  var D = window.TL;
+  var q = function (s) { return document.querySelector(s); };
+  var el = function (t, c, h) { var n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); };
+
+  var C = {
+    secondary: 'var(--cyan)',
+    primary: 'var(--amber)',
+    professor: 'var(--purple-bright)',
+    none: 'var(--pink)'
+  };
+
+  var state = { stage: 'all', region: 'all', text: '' };
+
+  /* ---- stats ---- */
+  var STAT = [
+    { n: D.headline.secondary, t: '真正在中学讲过课', d: 'SECONDARY · 严格口径', c: C.secondary },
+    { n: D.headline.primary, t: '其实在小学或乡村学校', d: 'PRIMARY · 常被笼统写作“老师”', c: C.primary },
+    { n: D.headline.professor, t: '是大学教授，不是中小学教师', d: 'PROFESSOR · 混淆率最高', c: C.professor },
+    { n: D.headline.policyOnly, t: '未任教但推中学政策', d: 'POLICY ONLY · 制度改造者', c: C.none }
+  ];
+  q('#stats').innerHTML = STAT.map(function (s) {
+    return '<div class="stat" style="--c:' + s.c + '">' +
+      '<div class="n">' + s.n + '</div>' +
+      '<div class="t">' + s.t + '</div>' +
+      '<div class="d">' + s.d + '</div></div>';
+  }).join('');
+
+  /* ---- stage buttons ---- */
+  var stageOrder = ['all', 'secondary', 'primary', 'professor', 'none'];
+  var sc = q('#stageCtl');
+  stageOrder.forEach(function (k) {
+    var b = el('button', null, (k === 'all' ? '全部' : D.stageMeta[k].label) + ' <span style="opacity:.6">' + count(k) + '</span>');
+    b.dataset.stage = k;
+    b.setAttribute('aria-pressed', k === 'all' ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      state.stage = k;
+      Array.prototype.forEach.call(sc.querySelectorAll('button'), function (x) {
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      render();
+    });
+    sc.appendChild(b);
+  });
+
+  function count(k) {
+    if (k === 'all') return D.people.length;
+    return D.people.filter(function (p) { return p.stage === k; }).length;
+  }
+
+  /* ---- region buttons ---- */
+  var regions = [];
+  D.people.forEach(function (p) { if (regions.indexOf(p.region) < 0) regions.push(p.region); });
+  var rc = q('#regionCtl');
+  var rbAll = el('button', null, '全部');
+  rbAll.setAttribute('aria-pressed', 'true');
+  rbAll.addEventListener('click', function () { state.region = 'all'; syncRegion(rbAll); });
+  rc.appendChild(rbAll);
+  regions.forEach(function (r) {
+    var b = el('button', null, r);
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () { state.region = r; syncRegion(b); });
+    rc.appendChild(b);
+  });
+  function syncRegion(active) {
+    Array.prototype.forEach.call(rc.querySelectorAll('button'), function (x) {
+      x.setAttribute('aria-pressed', x === active ? 'true' : 'false');
+    });
+    render();
+  }
+
+  q('#q').addEventListener('input', function (e) {
+    state.text = e.target.value.trim().toLowerCase();
+    render();
+  });
+
+  /* ---- render list ---- */
+  function render() {
+    var list = D.people.filter(function (p) {
+      if (state.stage !== 'all' && p.stage !== state.stage) return false;
+      if (state.region !== 'all' && p.region !== state.region) return false;
+      if (state.text) {
+        var hay = (p.name + ' ' + p.en + ' ' + p.country + ' ' + p.school + ' ' + p.subject + ' ' + p.office).toLowerCase();
+        if (hay.indexOf(state.text) < 0) return false;
+      }
+      return true;
+    });
+
+    // 中学讲台优先
+    var order = { secondary: 0, primary: 1, professor: 2, none: 3 };
+    list.sort(function (a, b) { return order[a.stage] - order[b.stage]; });
+
+    q('#count').textContent = list.length + ' / ' + D.people.length + ' 条';
+
+    if (!list.length) {
+      q('#list').innerHTML = '<div class="empty">// 没有符合条件的条目</div>';
+      return;
+    }
+
+    q('#list').innerHTML = list.map(function (p) {
+      var c = C[p.stage];
+      var m = D.stageMeta[p.stage];
+      var rows = '';
+      if (p.stage !== 'none') {
+        if (p.school) rows += row('任教', p.school);
+        if (p.span && p.span !== '—') rows += row('年份', p.span);
+        if (p.subject && p.subject !== '—') rows += row('科目', p.subject);
+      }
+
+      var quote = p.quote ? '<div class="p-q">“' + esc(p.quote) + '”</div>' : '';
+      var tags = (p.policy || []).length
+        ? '<div class="tags">' + p.policy.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>'
+        : '';
+      var src = (p.src || []).length
+        ? '<div class="src">出处 ' + p.src.map(function (s) {
+            return '<a href="' + s.u + '" target="_blank" rel="noopener">' + esc(s.t) + '</a>';
+          }).join(' <span>/</span> ') + '</div>'
+        : '';
+
+      return '<article class="p" style="--c:' + c + '">' +
+        '<div class="p-top"><div><div class="p-name">' + esc(p.name) + '</div>' +
+        '<div class="p-en">' + esc(p.en) + '</div></div>' +
+        '<span class="badge">' + esc(m.short) + '</span></div>' +
+        '<div class="p-meta"><span>' + esc(p.country) + '</span><span>' + esc(p.office) + '</span></div>' +
+        (rows ? '<div class="p-rows">' + rows + '</div>' : '') +
+        '<p class="p-why">' + esc(p.why) + '</p>' +
+        quote + tags + src +
+        '</article>';
+    }).join('');
+  }
+
+  function row(k, v) {
+    return '<div class="p-row"><div class="k">' + k + '</div><div class="v">' + esc(v) + '</div></div>';
+  }
+
+  /* ---- findings ---- */
+  q('#findings').innerHTML = D.findings.map(function (f) {
+    return '<div class="f"><div class="num">' + f.k + '</div><div>' +
+      '<h3>' + esc(f.h) + '</h3><p>' + esc(f.p) + '</p></div></div>';
+  }).join('');
+
+  /* ---- gaps ---- */
+  q('#gaps').innerHTML = D.gaps.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('');
+
+  q('#upd2').textContent = D.updated;
+  render();
+})();
+</script>
+</body>
+</html>
