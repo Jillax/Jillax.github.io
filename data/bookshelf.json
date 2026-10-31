@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T16:58:08Z",
+  "updated": "2026-10-31T15:59:17Z",
   "books": [
     {
       "id": "2996046",
@@ -13330,6 +13330,19 @@
     }
   ],
   "music": [
+    {
+      "id": "35638875",
+      "title": "Some Junk Tapes From Outer Space",
+      "author": "Corn Wave / 2020-07-15 / 专辑 / 摇滚",
+      "cover": "https://img3.doubanio.com/view/subject/l/public/s34027029.jpg",
+      "url": "https://music.douban.com/subject/35638875/",
+      "rating": 5,
+      "tags": [],
+      "comment": "",
+      "date": "2026-10-31",
+      "status": "collect",
+      "category": "music"
+    },
     {
       "id": "30448268",
       "title": "Money Talks",
