@@ -44,3 +44,6 @@ scripts/data/gaokao/site/*
 
 # AI 工作区（本地记忆与临时文件，不入库）
 .workbuddy/
+
+# QDII 指数页抓取缓存（可由 scripts/build_qdii_data.py --refresh 重建）
+scripts/data/qdii/*

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>清单上的海外指数 · 35 条指数与 4,678 亿元</title>
+<meta name="description" content="境内公募能买到的 35 条海外指数：每条指数的编制规则、跟踪基金、场内场外合计规模。数据截至 2026-09-30，剔除 ETF 联接避免重复计算。">
+<meta property="og:title" content="清单上的海外指数 · 35 条指数与 4,678 亿元">
+<meta property="og:description" content="纳指 100 一条占 38%，恒生科技占 32%，剩下 33 条分三成。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/qdii-indices/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://jillax.github.io/qdii-indices/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --paper: #0d0a1a;
+    --sheet: #16112b;
+    --sheet-2: #1c1636;
+    --ink: #efe7ff;
+    --muted: #8a79ab;
+    --line: rgba(155, 89, 255, .22);
+    --line-soft: rgba(155, 89, 255, .1);
+    --purple: #b47aff;
+    --cyan: #00e5ff;
+    --amber: #ffaa40;
+    --green: #4ade80;
+    --pink: #ff6b8a;
+    --orange: #ff8a5c;
+    --g-core: #b47aff;
+    --g-sector: #00e5ff;
+    --g-global: #ffaa40;
+    --g-region: #4ade80;
+    --g-reit: #ff8a5c;
+    --g-hk: #ff6b8a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(ellipse at 12% 0%, rgba(155, 89, 255, .14) 0%, transparent 55%) 0 0 / 100% 900px no-repeat,
+      radial-gradient(ellipse at 88% 55%, rgba(0, 229, 255, .06) 0%, transparent 55%) 0 0 / 100% 1200px no-repeat,
+      var(--paper);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: var(--purple); text-decoration: none; }
+  a:hover { color: var(--ink); }
+  button, input { font: inherit; color: inherit; }
+  .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+
+  header { padding: 46px 0 8px; }
+  .kicker {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-weight: 700; font-size: clamp(38px, 6vw, 66px);
+    line-height: 1.04; letter-spacing: -.03em; margin: 16px 0 12px;
+  }
+  .deck { max-width: 60ch; font-size: 18px; color: var(--ink); margin: 0 0 14px; }
+  .deck em { font-style: normal; color: var(--amber); }
+  .meta-line {
+    display: flex; gap: 20px; flex-wrap: wrap; color: var(--muted);
+    font-family: "IBM Plex Mono", monospace; font-size: 12px;
+    border-top: 1px solid var(--line-soft); padding-top: 12px;
+  }
+
+  .figures {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1px; background: var(--line-soft);
+    border: 1px solid var(--line-soft); margin: 26px 0 10px;
+  }
+  .fig { background: var(--paper); padding: 18px 16px; }
+  .fig .v {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600;
+    font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; color: var(--ink);
+  }
+  .fig .v small { font-size: .5em; color: var(--muted); margin-left: 4px; letter-spacing: .05em; }
+  .fig .k { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .fig.accent .v { color: var(--purple); }
+
+  section.block { margin: 46px 0; }
+  .block-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+  h2 { font-family: "Noto Serif SC", serif; font-size: 26px; margin: 0; letter-spacing: -.01em; }
+  .block-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+  /* ---- controls ---- */
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 16px 0 6px; }
+  .chip {
+    border: 1px solid var(--line); background: transparent; color: var(--muted);
+    padding: 5px 12px; font-size: 12px; cursor: pointer; border-radius: 2px;
+    font-family: "IBM Plex Mono", monospace; letter-spacing: .04em; transition: .18s;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--line); }
+  .chip.on { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+  .chip .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+  .spacer { flex: 1 1 12px; }
+  .toggle {
+    border: 1px solid var(--line); background: transparent; color: var(--muted);
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 5px 10px; cursor: pointer;
+  }
+  .toggle:hover { color: var(--ink); }
+  .search {
+    background: transparent; border: 1px solid var(--line); color: var(--ink);
+    padding: 7px 12px; font-size: 13px; min-width: 220px; border-radius: 2px;
+  }
+  .search::placeholder { color: var(--muted); }
+  .search:focus { outline: none; border-color: var(--purple); }
+
+  /* ---- bar chart ---- */
+  .bars { margin: 14px 0 0; }
+  .bar-row {
+    display: grid; grid-template-columns: 210px 1fr 92px;
+    align-items: center; gap: 12px; padding: 5px 0;
+    border-bottom: 1px solid rgba(155, 89, 255, .05);
+  }
+  .bar-row:hover { background: rgba(155, 89, 255, .04); }
+  .bar-name { font-size: 13px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-name span { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 11px; margin-left: 6px; }
+  .bar-track { height: 12px; background: rgba(155, 89, 255, .06); position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; width: 0; min-width: 2px; transition: width .6s cubic-bezier(.2, .7, .2, 1); }
+  .bar-val { text-align: right; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink); white-space: nowrap; }
+  .bar-val small { color: var(--muted); font-size: 10px; }
+  .chart-note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+  /* ---- stack ---- */
+  .stack { display: flex; height: 46px; width: 100%; margin: 18px 0 14px; border: 1px solid var(--line-soft); }
+  .stack div { height: 100%; position: relative; transition: width .6s; }
+  .stack div span {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; color: #0d0a1a; font-weight: 600;
+    overflow: hidden; white-space: nowrap;
+  }
+  .legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px 22px; }
+  .legend-item { display: flex; align-items: baseline; gap: 8px; font-size: 13px; }
+  .legend-item i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .legend-item b { font-family: "IBM Plex Mono", monospace; font-weight: 500; margin-left: auto; }
+  .legend-item em { font-style: normal; color: var(--muted); font-size: 12px; }
+
+  /* ---- scatter ---- */
+  .scatter-wrap { margin-top: 10px; }
+  svg.scatter { width: 100%; height: auto; display: block; }
+  .axis { stroke: rgba(155, 89, 255, .18); stroke-width: 1; }
+  .grid { stroke: rgba(155, 89, 255, .07); stroke-width: 1; }
+  .tick { fill: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 10px; }
+  .pt { cursor: default; }
+  .pt:hover circle { r: 7; }
+
+  /* ---- cards ---- */
+  .group-head { margin: 34px 0 12px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .group-head h3 { font-family: "Noto Serif SC", serif; font-size: 20px; margin: 0; }
+  .group-head span { color: var(--muted); font-size: 12px; font-family: "IBM Plex Mono", monospace; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+  .card {
+    background: linear-gradient(180deg, rgba(28, 22, 54, .8), rgba(22, 17, 43, .8));
+    border: 1px solid var(--line-soft); padding: 16px 16px 12px;
+    display: flex; flex-direction: column; transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--line); }
+  .card.hide { display: none; }
+  .card-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .card h4 { margin: 0; font-size: 16px; line-height: 1.3; }
+  .card .en { font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--muted); letter-spacing: .03em; margin-top: 4px; word-break: break-word; }
+  .card .big { font-family: "IBM Plex Mono", monospace; font-size: 20px; white-space: nowrap; }
+  .card .big small { font-size: 10px; color: var(--muted); margin-left: 2px; }
+  .card .cnt { font-size: 11px; color: var(--muted); text-align: right; font-family: "IBM Plex Mono", monospace; }
+  .card .intro { font-size: 13px; color: #d9cff0; margin: 10px 0 8px; }
+  .card .note { font-size: 12px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 8px; margin: 0 0 10px; }
+  .card .dom { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--muted); border: 1px solid var(--line-soft); padding: 1px 6px; margin-bottom: 8px; }
+  table.funds { width: 100%; border-collapse: collapse; font-size: 11.5px; table-layout: fixed; }
+  table.funds th:nth-child(2),table.funds td:nth-child(2){width:88px}
+table.funds th:nth-child(3),table.funds td:nth-child(3){width:44px}
+table.funds th:nth-child(4),table.funds td:nth-child(4){width:48px}
+table.funds td{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+table.funds th { text-align: left; color: var(--muted); font-weight: 400; padding: 4px 4px 4px 0; border-bottom: 1px solid var(--line-soft); font-size: 10px; letter-spacing: .05em; }
+  table.funds td { padding: 4px 4px 4px 0; border-bottom: 1px solid rgba(155, 89, 255, .05); color: var(--ink); }
+  table.funds td.n { font-family: "IBM Plex Mono", monospace; text-align: right; white-space: nowrap; }
+  table.funds td.c { font-family: "IBM Plex Mono", monospace; color: var(--muted); white-space: nowrap; }
+  table.funds tr.extra { display: none; }
+  table.funds.open tr.extra { display: table-row; }
+  .more { margin-top: 8px; background: none; border: none; color: var(--purple); font-size: 11px; cursor: pointer; padding: 0; font-family: "IBM Plex Mono", monospace; }
+  .more:hover { color: var(--ink); }
+  .st { font-family: "IBM Plex Mono", monospace; font-size: 10px; padding: 1px 5px; border: 1px solid currentColor; white-space: nowrap; }
+  .st.场内 { color: var(--cyan); }
+  .st.限大额 { color: var(--amber); }
+  .st.暂停 { color: var(--pink); }
+  .st.开放 { color: var(--green); }
+
+  /* ---- method ---- */
+  .method { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin: 44px 0 20px; }
+  .method h2 { font-size: 18px; margin-bottom: 10px; }
+  .method ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; }
+  .method li { margin-bottom: 6px; }
+  .method strong { color: var(--ink); font-weight: 500; }
+  footer { padding: 10px 0 70px; color: var(--muted); font-size: 12px; }
+  footer .sig { font-family: "IBM Plex Mono", monospace; margin-top: 18px; color: rgba(155, 89, 255, .5); }
+
+  @media (max-width: 720px) {
+    header { padding-top: 30px; }
+    .bar-row { grid-template-columns: 120px 1fr 74px; gap: 8px; }
+    .bar-name { font-size: 11px; }
+    .bar-name span { display: none; }
+    .cards { grid-template-columns: 1fr; }
+    .stack div span { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">
+    <a href="../projects.html">← 作品</a>
+    <span>OFFSHORE INDEX LEDGER / 2026-Q3</span>
+  </div>
+  <h1>清单上的<br>海外指数</h1>
+  <p class="deck">
+    境内公募能买到的 <em>35</em> 条海外指数，合计 <em>4,678</em> 亿元。
+    纳指 100 一条占 38%，恒生科技占 32%；剩下 33 条分三成，
+    有 <em id="tinyCount">11</em> 条不到 10 亿元。
+  </p>
+  <div class="meta-line">
+    <span>规模口径：2026-09-30 份额类别净资产</span>
+    <span>含场内 ETF 与场外指数基金</span>
+    <span>剔除 ETF 联接，避免重复计算</span>
+  </div>
+</header>
+
+<div class="figures">
+  <div class="fig accent"><div class="v">4,678<small>亿元</small></div><div class="k">35 条指数合计</div></div>
+  <div class="fig"><div class="v">3,004<small>亿元</small></div><div class="k">不含中国香港</div></div>
+  <div class="fig"><div class="v" id="fundCount">101<small>只</small></div><div class="k">跟踪基金（合并份额）</div></div>
+  <div class="fig"><div class="v">38<small>%</small></div><div class="k">纳指 100 占比</div></div>
+</div>
+
+<section class="block">
+  <div class="block-head">
+    <h2>一条指数，多少钱</h2>
+    <p>按跟踪规模排序，颜色为分组</p>
+  </div>
+  <div class="controls" id="groupFilter"></div>
+  <div class="controls">
+    <button class="toggle" id="scaleToggle">刻度：线性</button>
+    <span class="chart-note" id="scaleHint">线性刻度下，10 亿元以下的条目几乎看不见——这正是集中度本身。</span>
+  </div>
+  <div class="bars" id="bars"></div>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>钱的分层</h2>
+    <p>六个分组在 4,678 亿元里的位置</p>
+  </div>
+  <div class="stack" id="stack"></div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>拥挤度与规模</h2>
+    <p>横轴：跟踪基金数（只）；纵轴：规模，亿元（对数）</p>
+  </div>
+  <div class="scatter-wrap">
+    <svg class="scatter" id="scatter" viewBox="0 0 720 360" role="img" aria-label="各指数跟踪基金数与规模散点图"></svg>
+  </div>
+  <p class="chart-note">左上角是「一只基金撑起一条指数」，右下角是「很多产品分一条指数」。<br>纳指 100 与恒生科技同时落在右上角：产品最多，规模也最大。</p>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>三十五条，逐条看</h2>
+    <p>编制规则、覆盖市场、以及谁在跟踪</p>
+  </div>
+  <div class="controls">
+    <input class="search" id="search" type="search" placeholder="搜指数或基金，如 日经、标普油气、513500" autocomplete="off">
+    <span class="spacer"></span>
+    <span class="chart-note" id="searchCount"></span>
+  </div>
+  <div id="cards"></div>
+</section>
+
+<section class="method">
+  <h2>口径与缺口</h2>
+  <ol>
+    <li><strong>规模</strong>取各基金 2026 年三季报披露的份额类别净资产，同一基金的 A/C/E/I 等类别相加；美元份额与人民币份额按同一类别合并披露，不重复计入。</li>
+    <li><strong>剔除 ETF 联接基金</strong>：联接基金的钱最终买的是对应 ETF，算进去会与 ETF 规模重复。页面上的场外规模因此只含直接持有股票的场外指数基金。</li>
+    <li><strong>印度与越南两条不是标准指数基金</strong>：工银印度是 FOF，穿透海外印度 ETF；天弘越南是主动选股，以 VN30 为基准。两者单列，并在卡片里注明。</li>
+    <li><strong>不含</strong>：商品与债券 QDII、以 A 股或港股通为标的的中国资产指数（恒生系列单列一节）、以及没有跟踪标的的主动 QDII。</li>
+    <li><strong>缺口</strong>：少数产品最新披露时点早于 2026-09-30；同一管理人旗下两只同名 ETF（如华夏两只恒生 ETF）在明细里合并为一行，规模相加。</li>
+    <li><strong>来源</strong>：天天基金（东方财富）基金档案接口，指数代码取各基金合同披露的跟踪标的。</li>
+  </ol>
+</section>
+
+<footer>
+  <p>数据截至 2026-09-30，规模会随净值与申赎变动，页面不构成投资建议。</p>
+  <p class="sig">// 由季报数据生成 · 2026-10</p>
+</footer>
+
+</div>
+<script src="data.js"></script>
+<script>
+(function () {
+  var D = window.QDII_DATA;
+  if (!D) return;
+  var items = D.items;
+  var groups = D.groups;
+
+  var COLOR = {
+    core: '#b47aff', sector: '#00e5ff', global: '#ffaa40',
+    region: '#4ade80', reit: '#ff8a5c', hk: '#ff6b8a'
+  };
+  var GNAME = {};
+  groups.forEach(function (g) { GNAME[g.id] = g.name; });
+
+  function fmt(v, d) {
+    if (v >= 1000) return v.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return v.toFixed(d === undefined ? 1 : d);
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+
+  var total = items.reduce(function (a, b) { return a + b.total; }, 0);
+  var fundsTotal = items.reduce(function (a, b) { return a + b.n; }, 0);
+  document.getElementById('fundCount').innerHTML = fundsTotal + '<small>只</small>';
+  document.getElementById('tinyCount').textContent = items.filter(function (i) { return i.total < 10; }).length;
+
+  // ---------- group filter ----------
+  var activeGroups = {};
+  groups.forEach(function (g) { activeGroups[g.id] = true; });
+  var filterEl = document.getElementById('groupFilter');
+  var allBtn = document.createElement('button');
+  allBtn.className = 'chip on';
+  allBtn.textContent = '全部 35 条';
+  filterEl.appendChild(allBtn);
+  groups.forEach(function (g) {
+    var b = document.createElement('button');
+    b.className = 'chip on';
+    b.dataset.g = g.id;
+    b.innerHTML = '<i class="dot" style="background:' + COLOR[g.id] + '"></i>' + g.name;
+    filterEl.appendChild(b);
+  });
+
+  var logScale = false;
+  var maxTotal = Math.max.apply(null, items.map(function (i) { return i.total; }));
+
+  function renderBars() {
+    var host = document.getElementById('bars');
+    var rows = items.filter(function (i) { return activeGroups[i.group]; });
+    if (!rows.length) { host.innerHTML = '<p class="chart-note">没有选中的分组。</p>'; return; }
+    var max = Math.max.apply(null, rows.map(function (i) { return i.total; }));
+    var lg = Math.log10(max + 1);
+    host.innerHTML = rows.map(function (i) {
+      var w = logScale ? Math.log10(i.total + 1) / lg * 100 : i.total / max * 100;
+      return '<div class="bar-row">' +
+        '<div class="bar-name" title="' + esc(i.cn) + ' · ' + esc(i.en) + '">' + esc(i.cn) +
+        '<span>' + esc(i.id) + '</span></div>' +
+        '<div class="bar-track"><div class="bar-fill" data-w="' + w.toFixed(2) + '" style="background:' +
+        COLOR[i.group] + ';opacity:.85"></div></div>' +
+        '<div class="bar-val">' + fmt(i.total) + ' <small>亿</small></div>' +
+        '</div>';
+    }).join('');
+    requestAnimationFrame(function () {
+      host.querySelectorAll('.bar-fill').forEach(function (el) {
+        el.style.width = el.dataset.w + '%';
+      });
+    });
+  }
+
+  filterEl.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    if (b === allBtn) {
+      var turnOn = !allBtn.classList.contains('on');
+      groups.forEach(function (g) { activeGroups[g.id] = turnOn; });
+      filterEl.querySelectorAll('[data-g]').forEach(function (x) { x.classList.toggle('on', turnOn); });
+      allBtn.classList.toggle('on', turnOn);
+      allBtn.textContent = turnOn ? '全部 35 条' : '全部取消';
+    } else if (b.dataset.g) {
+      activeGroups[b.dataset.g] = !activeGroups[b.dataset.g];
+      b.classList.toggle('on');
+      var anyOff = groups.some(function (g) { return !activeGroups[g.id]; });
+      allBtn.classList.toggle('on', !anyOff);
+      allBtn.textContent = anyOff ? '全部 35 条' : '全部 35 条';
+    }
+    renderBars();
+  });
+
+  document.getElementById('scaleToggle').addEventListener('click', function () {
+    logScale = !logScale;
+    this.textContent = '刻度：' + (logScale ? '对数' : '线性');
+    document.getElementById('scaleHint').textContent = logScale
+      ? '对数刻度把 1 亿到 1,800 亿压进同一行，可以看清小条目之间的差距，但会弱化头部体量。'
+      : '线性刻度下，10 亿元以下的条目几乎看不见——这正是集中度本身。';
+    renderBars();
+  });
+  renderBars();
+
+  // ---------- stack ----------
+  var byGroup = groups.map(function (g) {
+    var arr = items.filter(function (i) { return i.group === g.id; });
+    return {
+      id: g.id, name: g.name, desc: g.desc,
+      total: arr.reduce(function (a, b) { return a + b.total; }, 0),
+      n: arr.length
+    };
+  });
+  var stackEl = document.getElementById('stack');
+  stackEl.innerHTML = byGroup.map(function (g) {
+    var pct = g.total / total * 100;
+    return '<div style="width:' + pct.toFixed(2) + '%;background:' + COLOR[g.id] + '">' +
+      (pct > 7 ? '<span>' + pct.toFixed(0) + '%</span>' : '') + '</div>';
+  }).join('');
+  document.getElementById('legend').innerHTML = byGroup.map(function (g) {
+    return '<div class="legend-item"><i style="background:' + COLOR[g.id] + '"></i>' +
+      '<span>' + g.name + ' <em>' + g.n + ' 条</em></span><b>' + fmt(g.total) + ' 亿</b></div>';
+  }).join('');
+
+  // ---------- scatter ----------
+  var svg = document.getElementById('scatter');
+  var W = 720, H = 360, L = 54, R = 16, T = 24, B = 34;
+  var maxN = Math.max.apply(null, items.map(function (i) { return i.n; }));
+  var yMax = 4000;
+  function X(n) { return L + (n / (maxN + 1)) * (W - L - R); }
+  function Y(v) { return T + (1 - Math.log10(v + 1) / Math.log10(yMax)) * (H - T - B); }
+  var out = '';
+  [1, 10, 100, 1000].forEach(function (v) {
+    out += '<line class="grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/>';
+    out += '<text class="tick" x="' + (L - 8) + '" y="' + (Y(v) + 3) + '" text-anchor="end">' + v + '</text>';
+  });
+  for (var n = 0; n <= maxN; n += 5) {
+    out += '<text class="tick" x="' + X(n) + '" y="' + (H - 14) + '" text-anchor="middle">' + n + '</text>';
+  }
+  out += '<line class="axis" x1="' + L + '" x2="' + (W - R) + '" y1="' + (H - B) + '" y2="' + (H - B) + '"/>';
+  items.forEach(function (i) {
+    var r = 3 + Math.sqrt(i.total) / 14;
+    out += '<g class="pt"><title>' + esc(i.cn) + '：' + i.total + ' 亿元 / ' + i.n + ' 只</title>' +
+      '<circle cx="' + X(i.n).toFixed(1) + '" cy="' + Y(i.total).toFixed(1) + '" r="' + r.toFixed(1) +
+      '" fill="' + COLOR[i.group] + '" fill-opacity=".55" stroke="' + COLOR[i.group] + '" stroke-width="1"/>' +
+      (i.total > 150 ? (function () {
+        var px = X(i.n), anchor = px > W - 170 ? 'end' : 'start';
+        var tx = anchor === 'end' ? px - 9 : px + 9;
+        var dy = i.id === 'NDX100' ? 20 : (i.id === 'HSTECH' ? -10 : 4);
+        var ty = Math.max(14, Math.min(H - B - 4, Y(i.total) + dy));
+        return '<text class="tick" x="' + tx.toFixed(1) + '" y="' + ty.toFixed(1) + '" text-anchor="' + anchor + '" fill="#efe7ff">' + esc(i.cn) + '</text>';
+      })() : '') +
+      '</g>';
+  });
+  svg.innerHTML = out;
+
+  // ---------- cards ----------
+  var cardHost = document.getElementById('cards');
+  var html = groups.map(function (g) {
+    var arr = items.filter(function (i) { return i.group === g.id; });
+    if (!arr.length) return '';
+    var sum = arr.reduce(function (a, b) { return a + b.total; }, 0);
+    var body = arr.map(function (i) { return cardHTML(i, g); }).join('');
+    return '<div class="group-head"><h3>' + esc(g.name) + '</h3>' +
+      '<span>' + arr.length + ' 条 · ' + fmt(sum) + ' 亿元 · ' + esc(g.desc) + '</span></div>' +
+      '<div class="cards">' + body + '</div>';
+  }).join('');
+  cardHost.innerHTML = html;
+
+  function cardHTML(i, g) {
+    var rows = i.funds.map(function (f, idx) {
+      return '<tr class="' + (idx >= 4 ? 'extra' : '') + '">' +
+        '<td>' + esc(f.n) + '</td>' +
+        '<td class="c">' + esc(f.c) + '</td>' +
+        '<td class="n">' + f.s.toFixed(1) + '</td>' +
+        '<td><span class="st ' + esc(f.st) + '">' + esc(f.st === '场内' ? '场内' : f.st) + '</span></td>' +
+        '</tr>';
+    }).join('');
+    var more = i.funds.length > 4
+      ? '<button class="more" data-more>展开全部 ' + i.funds.length + ' 只 ↓</button>'
+      : '';
+    return '<article class="card" data-g="' + g.id + '" data-search="' +
+      esc(i.cn + ' ' + i.en + ' ' + i.id + ' ' + i.funds.map(function (f) { return f.n + f.c; }).join(' ')) + '">' +
+      '<div class="card-top"><div><h4>' + esc(i.cn) + '</h4>' +
+      '<div class="en">' + esc(i.en) + ' · ' + esc(i.id) + '</div></div>' +
+      '<div><div class="big">' + fmt(i.total) + '<small>亿</small></div>' +
+      '<div class="cnt">' + i.n + ' 只</div></div></div>' +
+      '<div class="intro">' + esc(i.intro) + '</div>' +
+      '<div class="note">' + esc(i.note) + '</div>' +
+      '<table class="funds"><thead><tr><th>基金</th><th>代码</th><th class="n">亿</th><th>申购</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>' + more +
+      '</article>';
+  }
+
+  cardHost.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-more]');
+    if (!b) return;
+    var table = b.parentElement.querySelector('table.funds');
+    table.classList.toggle('open');
+    var open = table.classList.contains('open');
+    b.textContent = open
+      ? '收起 ↑'
+      : '展开全部 ' + table.querySelectorAll('tbody tr').length + ' 只 ↓';
+  });
+
+  // ---------- search ----------
+  var search = document.getElementById('search');
+  var countEl = document.getElementById('searchCount');
+  search.addEventListener('input', function () {
+    var q = this.value.trim().toLowerCase();
+    var shown = 0;
+    cardHost.querySelectorAll('.card').forEach(function (c) {
+      var hit = !q || c.dataset.search.toLowerCase().indexOf(q) !== -1;
+      c.classList.toggle('hide', !hit);
+      if (hit) shown++;
+    });
+    cardHost.querySelectorAll('.group-head').forEach(function (h) {
+      var next = h.nextElementSibling;
+      var any = next && next.querySelector('.card:not(.hide)');
+      h.style.display = any ? '' : 'none';
+      if (next) next.style.display = any ? '' : 'none';
+    });
+    countEl.textContent = q ? '命中 ' + shown + ' 条' : '';
+  });
+})();
+</script>
+</body>
+</html>
