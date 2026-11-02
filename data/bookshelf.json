@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01T17:03:06Z",
+  "updated": "2026-11-02T20:40:57Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "26754624",
+      "title": "真爱不死 第一季 / Santa Clarita Diet Season 1",
+      "author": "2017-02-03(美国) / 德鲁·巴里摩尔 / 蒂莫西·奥利芬特 / 丽芙·休森 / 斯凯勒·吉桑多 / 理查德·T·琼斯 / 玛丽·伊丽莎白·埃利斯 / 利卡多·查维拉 / 托马斯·列农 / 托马斯·克劳福德 / 娜塔丽·莫瑞丝 / 美国 / 鲁本·弗雷斯彻 / 肯·卡皮斯 / 塔拉·戴维斯 / 琳·谢尔顿 / 真爱不死 / 27分钟 / 真爱不死 / 剧情 / 喜剧 / 恐怖 / Victor Fresco / 英语",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2414356363.jpg",
+      "url": "https://movie.douban.com/subject/26754624/",
+      "rating": 5,
+      "tags": [],
+      "comment": "casting真立大功吧，除了最后一集的最后俩人互撕有点不适之外，观感都挺好的。奈飞的编剧制作真是很成熟了，好看",
+      "date": "2026-11-02",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "1292764",
       "title": "汉娜姐妹 / Hannah and Her Sisters",
@@ -11629,7 +11642,7 @@
       "id": "1301861",
       "title": "惊声尖笑3 / Scary Movie 3",
       "author": "2003-10-24(加拿大) / 安娜·法瑞丝 / 查理·辛 / 雷吉娜·赫尔 / 帕米拉·安德森 / 詹尼·麦卡锡 / 玛尼·英格 / 西蒙·雷克斯 / 乔安娜·巴拉德 / 杰里米·皮文 / 蒂莫西·斯塔克 / 美国 / 加拿大 / www.terra.es/cine/scarymovie3 / 大卫·扎克 / 84分钟 / 惊声尖笑3 / 喜剧 / 克雷格·麦辛 Craig Mazin / 帕特·普罗夫特 Pat Proft / 肖恩·韦恩斯 Shawn Wayans / 马龙·韦恩斯 Marlon Wayans / Buddy Johnson / Phil Beauman / 贾森·弗莱德伯格 Jason Friedberg / 亚伦·赛尔策 Aaron Seltzer / 英语",
-      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1231145600.jpg",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1299754360.jpg",
       "url": "https://movie.douban.com/subject/1301861/",
       "rating": 4,
       "tags": [],
