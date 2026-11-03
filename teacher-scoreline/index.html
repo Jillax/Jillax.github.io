@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>讲台的分数线 · 哪些时代的老师是同龄人里的绩优者</title>
+<meta name="description" content="用山东 2022—2026 年 1,800 余条公费师范投档记录与十万条常规批投档线，加上 1977 年以来的政策与文献，重建「师范生源在同龄人中的位置」：1986—1995 中师线与 2018—2023 公费师范是两次高点，2003—2007 是谷底，2024 年后带编的继续涨、不带编的开始退。">
+<meta property="og:title" content="讲台的分数线 · 哪些时代的老师是同龄人里的绩优者">
+<meta property="og:description" content="两次高点（1986—1995 中师、2018—2023 公费师范），一个谷底（2003—2007），以及 2024 年后的高位分化：带编的涨，不带编的退。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jillax.github.io/teacher-scoreline/">
+<meta property="og:image" content="https://jillax.github.io/assets/og-image.jpg">
+<meta property="og:locale" content="zh_CN">
+<link rel="canonical" href="https://jillax.github.io/teacher-scoreline/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d0a1a;
+    --soft: #130f24;
+    --card: #16112b;
+    --inset: #100c20;
+    --line: rgba(155, 89, 255, .16);
+    --line-hi: rgba(155, 89, 255, .38);
+    --ink: #ece4ff;
+    --body: #c7bae0;
+    --muted: #8b7aad;
+    --faint: #4b3c6b;
+    --purple: #9b59ff;
+    --purple-bright: #b47aff;
+    --pink: #ff4da6;
+    --cyan: #00e5ff;
+    --amber: #ffaa40;
+    --green: #4ade80;
+    --mono: 'Share Tech Mono', ui-monospace, monospace;
+    --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --serif: 'Noto Serif SC', 'Songti SC', serif;
+    --display: 'Orbitron', 'Noto Sans SC', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; color: var(--ink); font-family: var(--sans);
+    font-size: 16px; line-height: 1.78;
+    background:
+      linear-gradient(90deg, var(--purple) 0 30%, var(--pink) 30% 58%, var(--cyan) 58% 100%) top / 100% 3px no-repeat,
+      radial-gradient(ellipse 900px 520px at 8% -6%, rgba(155,89,255,.16), transparent 62%),
+      radial-gradient(ellipse 780px 460px at 96% 6%, rgba(255,77,166,.09), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 50% 100%, rgba(0,229,255,.05), transparent 65%),
+      var(--bg);
+    background-attachment: scroll, fixed, fixed, fixed, scroll;
+  }
+  .wrap { width: min(1140px, calc(100% - 36px)); margin: 0 auto; }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- 头部 ---------- */
+  header.hero { padding: 76px 0 26px; }
+  .kicker {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .22em;
+    color: var(--pink); text-transform: uppercase; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .kicker span.dot { width: 7px; height: 7px; background: var(--pink); border-radius: 50%; box-shadow: 0 0 12px var(--pink); }
+  h1 {
+    font-family: var(--serif); font-weight: 900;
+    font-size: clamp(34px, 5.4vw, 62px); line-height: 1.14;
+    margin: 0 0 18px; letter-spacing: -.01em;
+  }
+  h1 em { font-style: normal; color: var(--purple-bright); }
+  .dek {
+    font-family: var(--serif); font-size: clamp(16px, 1.8vw, 19px);
+    color: var(--body); max-width: 74ch; margin: 0 0 30px;
+  }
+  .verdict {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0 0 30px;
+  }
+  .verdict div {
+    background: linear-gradient(160deg, rgba(155,89,255,.10), rgba(255,255,255,.015));
+    border: 1px solid var(--line); border-radius: 4px; padding: 16px 18px;
+  }
+  .verdict h4 {
+    margin: 0 0 6px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .18em; color: var(--muted); font-weight: 400;
+  }
+  .verdict p { margin: 0; font-size: 14.5px; color: var(--body); line-height: 1.62; }
+  .verdict b { color: var(--ink); font-weight: 700; }
+  .verdict .v-high h4 { color: var(--pink); }
+  .verdict .v-low h4 { color: var(--cyan); }
+  .verdict .v-now h4 { color: var(--amber); }
+
+  /* ---------- 通用区块 ---------- */
+  section { padding: 54px 0 10px; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .sec-no { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .2em; }
+  h2 {
+    font-family: var(--serif); font-size: clamp(23px, 2.9vw, 33px); font-weight: 700;
+    margin: 0; letter-spacing: -.005em;
+  }
+  .sec-note { color: var(--muted); font-size: 14.5px; max-width: 76ch; margin: 10px 0 26px; }
+
+  .panel {
+    background: linear-gradient(180deg, rgba(22,17,43,.92), rgba(16,12,32,.92));
+    border: 1px solid var(--line); border-radius: 6px; padding: 22px 22px 16px;
+    position: relative; overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; inset: 0 0 auto; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-hi), transparent);
+  }
+  .panel h3 {
+    margin: 0 0 4px; font-size: 15px; font-weight: 700; letter-spacing: .01em;
+  }
+  .panel .ph { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+  .chart { width: 100%; display: block; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--body); margin: 6px 0 14px; }
+  .legend i { display: inline-block; width: 22px; height: 8px; border-radius: 2px; margin-right: 7px; vertical-align: 1px; }
+  .legend i.dot { width: 8px; height: 8px; border-radius: 50%; vertical-align: 3px; }
+
+  /* ---------- 主图 ---------- */
+  .chart-shell { position: relative; }
+  #tip {
+    position: absolute; pointer-events: none; opacity: 0; transition: opacity .12s;
+    background: #0b0817; border: 1px solid var(--line-hi); border-radius: 5px;
+    padding: 10px 13px; font-size: 13px; line-height: 1.6; max-width: 300px;
+    box-shadow: 0 12px 34px rgba(0,0,0,.6); z-index: 9; color: var(--body);
+  }
+  #tip b { color: var(--ink); display: block; margin-bottom: 4px; font-size: 13.5px; }
+  #tip .num { font-family: var(--mono); color: var(--amber); }
+
+  /* ---------- 时代卡片 ---------- */
+  .eras { display: grid; gap: 14px; }
+  .era {
+    border: 1px solid var(--line); border-radius: 6px; background: var(--card);
+    padding: 20px 22px; position: relative; overflow: hidden;
+    border-left: 3px solid var(--faint);
+  }
+  .era::after {
+    content: ''; position: absolute; right: -40px; top: -40px; width: 180px; height: 180px;
+    border-radius: 50%; opacity: .10; filter: blur(28px); background: var(--purple);
+  }
+  .era.peak { border-left-color: var(--pink); }
+  .era.high { border-left-color: var(--amber); }
+  .era.trough { border-left-color: var(--cyan); }
+  .era.fall, .era.repair { border-left-color: var(--purple); }
+  .era.split { border-left-color: var(--green); }
+  .era-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .era-years { font-family: var(--mono); font-size: 13px; color: var(--amber); letter-spacing: .06em; }
+  .era h3 { margin: 0; font-family: var(--serif); font-size: 20px; font-weight: 700; }
+  .badge {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em;
+    padding: 2px 8px; border-radius: 2px; border: 1px solid currentColor; opacity: .9;
+  }
+  .badge.peak, .badge.high { color: var(--pink); }
+  .badge.trough { color: var(--cyan); }
+  .badge.fall, .badge.repair { color: var(--purple-bright); }
+  .badge.split { color: var(--green); }
+  .era-lead { font-family: var(--serif); color: var(--body); margin: 2px 0 12px; font-size: 15.5px; }
+  .era ul { margin: 0 0 12px; padding-left: 18px; color: var(--body); font-size: 14.5px; }
+  .era li { margin-bottom: 7px; }
+  .era li::marker { color: var(--purple); }
+  .era-foot { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+  .era-foot a { font-size: 12px; color: var(--muted); border-bottom: 1px dotted var(--faint); }
+  .era-foot a:hover { color: var(--cyan); text-decoration: none; }
+  .conf { font-family: var(--mono); letter-spacing: .1em; padding: 1px 7px; border-radius: 2px; background: rgba(155,89,255,.14); color: var(--purple-bright); }
+
+  /* ---------- 数字格 ---------- */
+  .figs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0 26px; }
+  .fig { background: var(--inset); border: 1px solid var(--line); border-radius: 5px; padding: 15px 16px; }
+  .fig .num { font-family: var(--mono); font-size: 27px; line-height: 1.08; color: var(--ink); }
+  .fig .num small { font-size: 13px; color: var(--muted); margin-left: 3px; }
+  .fig .cap { font-size: 12px; color: var(--muted); margin-top: 7px; line-height: 1.5; }
+  .fig.hot { border-color: rgba(255,77,166,.36); }
+  .fig.hot .num { color: var(--pink); }
+  .fig.cold { border-color: rgba(0,229,255,.30); }
+  .fig.cold .num { color: var(--cyan); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ---------- 机制 ---------- */
+  .mech { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 6px; }
+  .mech article {
+    background: var(--card); border: 1px solid var(--line); border-radius: 5px; padding: 18px 20px;
+  }
+  .mech h4 { margin: 0 0 8px; font-size: 15px; color: var(--ink); }
+  .mech h4 span { color: var(--purple-bright); font-family: var(--mono); margin-right: 8px; font-size: 12px; }
+  .mech p { margin: 0; font-size: 14px; color: var(--body); }
+
+  /* ---------- 口径 ---------- */
+  .method { font-size: 14px; color: var(--body); }
+  .method .panel { margin-bottom: 14px; }
+  .method ol { padding-left: 20px; }
+  .method li { margin-bottom: 9px; }
+  .method code {
+    font-family: var(--mono); background: rgba(155,89,255,.12);
+    padding: 1px 6px; border-radius: 2px; color: var(--purple-bright); font-size: 13px;
+  }
+  .srcs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 22px; font-size: 13px; }
+  .srcs a { color: var(--muted); }
+  .srcs a:hover { color: var(--cyan); }
+
+  footer {
+    margin-top: 64px; padding: 30px 0 56px; border-top: 1px solid var(--line);
+    color: var(--faint); font-size: 12.5px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .verdict, .grid2, .grid3, .mech, .srcs { grid-template-columns: 1fr; }
+    .figs { grid-template-columns: repeat(2, 1fr); }
+    header.hero { padding-top: 48px; }
+    /* 窄屏上图表横滚，别把刻度字压成看不清 */
+    .chart-shell { overflow-x: auto; }
+    #main { min-width: 720px; }
+    .panel { overflow-x: auto; }
+    .panel .chart { min-width: 430px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker"><span class="dot"></span>教师前史 · 分数线考古 · 1977—2026</div>
+  <h1>讲台的分数线：<br>哪些年头的老师，<em>是同龄人里的绩优者</em></h1>
+  <p class="dek">
+    把「师范生源在同龄人中的位置」当成一把尺子，1977 年以来量下来，是一条双峰曲线：
+    <span style="white-space:nowrap">1986—1995</span> 的初中起点中师、<span style="white-space:nowrap">2018—2023</span> 的公费师范，两次站到同龄人前列；
+    <span style="white-space:nowrap">2003—2007</span> 掉到谷底，师范院校在平行志愿里被当成兜底。
+    2024 年之后曲线不再整体移动，而是从中间裂开：带编的继续往上走，不带编的开始退。
+  </p>
+  <div class="verdict">
+    <div class="v-high">
+      <h4>两个高点</h4>
+      <p><b>1986—1995</b>：中师线比县重点高中高 30—50 分，全县前几名才敢报。<br>
+      <b>2018—2023</b>：公费师范提前批位次整体前移，教资报名冲到 1144 万。</p>
+    </div>
+    <div class="v-low">
+      <h4>一个谷底</h4>
+      <p><b>2003—2007</b>：取消包分配、收费并轨、扩招三件事叠加，师范被当「保底志愿」，
+      2004、2005 年入职的新教师被人大代表直指「素质直线下滑」。</p>
+    </div>
+    <div class="v-now">
+      <h4>眼下的分裂</h4>
+      <p><b>2022—2026 山东实测</b>：省属公费师范生位次中位从 4.2 万前移到 2.3 万；
+      同期部属师大在 7 千—1.1 万位横盘；师范院校常规批反而从 22.8% 退到 25.8%。</p>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== 1. 主图 ===================== -->
+<section id="chart">
+  <div class="sec-head"><span class="sec-no">01</span><h2>五十年，一条双峰曲线</h2></div>
+  <p class="sec-note">
+    纵轴是「该年师范生源大致排在同龄人的前百分之几」，<strong>越靠上越绩优</strong>（刻度按平方根压缩，才装得下 1% 到 40% 的跨度）。
+    彩色带子是每个时代的位置区间——长期段依据政策文件与当时报道重建，给的是区间不是点值；
+    右侧 2022—2026 的圆点是用山东 1,834 条公费师范投档记录实算出来的，可以直接核对。
+  </p>
+
+  <div class="panel">
+    <div class="legend">
+      <span><i style="background:var(--amber)"></i>初中起点中师（1977—1999）</span>
+      <span><i style="background:var(--cyan)"></i>师范院校常规批</span>
+      <span><i style="background:var(--pink)"></i>公费师范（提前批，有编有岗）</span>
+      <span><i class="dot" style="background:var(--pink)"></i>山东实测：省属公费</span>
+      <span><i class="dot" style="background:var(--green)"></i>山东实测：部属公费</span>
+    </div>
+    <div class="chart-shell">
+      <svg id="main" class="chart" viewBox="0 0 1100 540" role="img" aria-label="1977 至 2026 年师范生源相对位次分段图"></svg>
+      <div id="tip"></div>
+    </div>
+  </div>
+
+  <div class="figs" id="figs"></div>
+</section>
+
+<!-- ===================== 2. 时代档案 ===================== -->
+<section id="eras">
+  <div class="sec-head"><span class="sec-no">02</span><h2>七个时代，逐条对账</h2></div>
+  <p class="sec-note">
+    每一段先给当年的分数线证据（原话、具体数字、文件号），再给机制。右上角的标签是这条判断的证据等级：
+    <span class="conf">实测</span> 有逐条投档数据，<span class="conf">政策</span> 有文件，
+    <span class="conf">文献</span> 只有当时报道与回忆，没有原始录取表。
+  </p>
+  <div class="eras" id="eraList"></div>
+</section>
+
+<!-- ===================== 3. 山东实证 ===================== -->
+<section id="shandong">
+  <div class="sec-head"><span class="sec-no">03</span><h2>把 2022—2026 拆开看：涨的和退的不是同一批人</h2></div>
+  <p class="sec-note">
+    山东是本站唯一拿到逐条投档位次的省份（「十万条投档线」项目）。这里只做一件事：
+    把「师范」拆成三块——省属公费、部属公费、师范院校常规批，看它们五年里各自往哪走。
+    年度比较一律用配对法，只比同校同专业名（含定向就业市）两年都出现的记录。
+  </p>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>省属公费师范：单边升温</h3>
+      <p class="ph">7 所省属院校 · 位次变化中位数 · 负值＝位次前移＝更热 · 与右图共用 ±6,000 位刻度</p>
+      <svg id="barProv" class="chart" viewBox="0 0 520 300"></svg>
+    </div>
+    <div class="panel">
+      <h3>部属公费师范：高位横盘</h3>
+      <p class="ph">4 所部属师大 · 同口径同刻度 · 正负交替，没有趋势</p>
+      <svg id="barBu" class="chart" viewBox="0 0 520 300"></svg>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="panel">
+      <h3>师范院校整体：先热后冷</h3>
+      <p class="ph">常规批各校全部专业的位次百分位中位 · 数值越小越靠前</p>
+      <svg id="lineNormal" class="chart" viewBox="0 0 520 300"></svg>
+    </div>
+    <div class="panel">
+      <h3>同一所学校里，「师范类」开始减分</h3>
+      <p class="ph">山东师范大学 · 带「师范类」标签的专业 vs 同名非师范专业</p>
+      <svg id="lineSdn" class="chart" viewBox="0 0 520 300"></svg>
+      <div id="sdnPairs" style="margin-top:8px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. 机制 ===================== -->
+<section id="why">
+  <div class="sec-head"><span class="sec-no">04</span><h2>为什么高、为什么低</h2></div>
+  <p class="sec-note">
+    五个变量，加一次概念漂移。比「教师地位提高了」这种说法更能解释曲线的形状：编制、学费、录取批次、人口、就业替代品。
+  </p>
+  <div class="mech">
+    <article>
+      <h4><span>01</span>编制是唯一长期有效的变量</h4>
+      <p>凡是「毕业即入编」的年份，师范分数线就高：1980—1990 年代的中师（包分配、转户口、干部身份）、2007 年起的部属师大免费师范生、2018 年起的公费师范生（保证入编入岗）。反过来，2002 年停止包分配，是曲线掉头向下的直接开关。</p>
+    </article>
+    <article>
+      <h4><span>02</span>学费一收，好生源就走</h4>
+      <p>1997 年高校收费并轨，师范的免费优惠逐步淡出。同样的学费，考生自然去选回报更高的专业。2007 年恢复免费、2018 年升级为「两免一补」，本质是用真金白银把生源买回来。</p>
+    </article>
+    <article>
+      <h4><span>03</span>录取批次决定它是不是「保底」</h4>
+      <p>提前批＝先挑人，平行志愿常规批＝排在后面兜底。中师当年是提前掐尖，公费师范至今在提前批；而 2000 年代师范院校退进常规批，在平行志愿下被考生当作「冲不上好学校时的保底」，位次立刻塌下去。</p>
+    </article>
+    <article>
+      <h4><span>04</span>人口决定溢价能撑多久</h4>
+      <p>2016 年出生 1786 万，2025 年 792 万。小学在校生 2023 年达峰，2024 年招生比上年少 261 万，专任教师总数首次下降。岗位在收缩，而「入编」的稀缺性在上升——这正是省属公费继续涨、普通师范专业开始退的原因。</p>
+    </article>
+    <article>
+      <h4><span>05</span>就业市场是外部推力</h4>
+      <p>教资报名 2012 年 17.2 万、2022 年 1144 万，其中 800 万是非师范生。经济下行期，教师岗位的稳定性被重新定价；2022 年重庆渝中区教师招聘 98 个岗位 1.57 万人报名，最热岗 827:1。</p>
+    </article>
+    <article>
+      <h4><span>06</span>「师范」这两个字的含义变了</h4>
+      <p>1999 年后三级师范转二级、师范院校大量升格为综合性大学，师范专业在师范院校里从主体变成一部分。于是「师范院校」和「师范专业」不再等价——本页把这两件事分开统计，就是因为它们在 2024 年之后走势相反。</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== 5. 口径 ===================== -->
+<section id="method">
+  <div class="sec-head"><span class="sec-no">05</span><h2>口径、误差与出处</h2></div>
+  <div class="method">
+    <div class="panel">
+      <h3>这把尺子怎么定的</h3>
+      <ol>
+        <li><strong>统一量纲：位次百分位。</strong>对每个专业取当年投档最低位次，除以当年山东夏季高考一分一段表覆盖的考生总数（<span id="totText"></span>），得到「排在前百分之几」。位数小＝生源好。跨年比较只看这个相对量，不看分数——分数随试题难度浮动，位次不会。</li>
+        <li><strong>年度比较用配对法。</strong>只比同校、同专业名（含「定向某市就业」）两年都出现的记录，取变化的中位数。这样某一年多投放几个冷门定向市，也不会把中位数拉低成假降温。</li>
+        <li><strong>三块分开算。</strong>省属公费（提前批）、部属公费（提前批）、师范院校常规批（非公费）口径不同、分段不同，混在一起算平均值会得出互相矛盾的结论。</li>
+        <li><strong>长期段是区间，不是点值。</strong>1977—2021 年没有可得的逐条投档表，图上那段带子是用政策节点、当时报道（含录取线高出重点高中多少分这类具体说法）重建的位置区间，误差可能有 ±5 个百分点。它回答「大概在哪个档」，不回答「精确是多少位」。</li>
+        <li><strong>只看山东。</strong>2022—2026 的实测全部来自山东夏季高考普通类。山东是高考大省、师范院校密度高，趋势有代表性，但公费师范的定向市结构各省差异很大，不能直接搬到全国。</li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h3>已知的坑</h3>
+      <ol>
+        <li><strong>样本量波动。</strong>省属各校每年投放的定向市、专业不同，配对样本 2022→2023 有 162 对，2025→2026 只有 101 对。方向一致（2023 年往后的三个年度里，75%—88% 的专业位次前移），但具体数值会随样本变。</li>
+        <li><strong>部属师大样本小。</strong>每年只有 32—48 对，中位数对个别专业的异常变动敏感，所以本页只强调「没有趋势」，不给年度涨跌结论。</li>
+        <li><strong>中师与本科不可直接比。</strong>中师是初中起点，分母是初中毕业生；本科师范的分母是高考考生。图上共用「同龄人前百分之几」，但两代人的「同龄人」不是同一群人，跨 1999 年那条线只作方向性比较。</li>
+        <li><strong>「师范类」标签因校而异。</strong>多数省属院校给师范专业加「（师范类）」后缀，部分院校不加。同校对照只取能明确识别的 5 对（山东师大 2026），不外推到全部专业。</li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h3>数据与出处</h3>
+      <div class="srcs" id="srcList"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>数据重建：山东省教育招生考试院 2022—2026 投档表 · 各校本科招生网 · 教育部统计公报与政策文件</div>
+  <div><a href="../projects.html">← 全部项目</a> · <a href="../gaokao/">十万条投档线</a> · <a href="../teacher-leaders/">讲台与讲坛</a></div>
+</footer>
+
+</div>
+
+<script src="./data.js"></script>
+<script>
+(function () {
+  var D = window.TSCORE;
+  var NS = 'http://www.w3.org/2000/svg';
+  var COL = { zhongshi: '#ffaa40', benke: '#00e5ff', gongfei: '#ff4da6', prov: '#ff4da6', bu: '#4ade80' };
+
+  function el(tag, attrs, parent) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) if (attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function txt(parent, x, y, s, attrs) {
+    var t = el('text', Object.assign({ x: x, y: y, fill: '#8b7aad', 'font-size': 11, 'font-family': "'Share Tech Mono', monospace" }, attrs || {}), parent);
+    t.textContent = s;
+    return t;
+  }
+  function pct(rank, year) { return rank / D.tot[String(year)] * 100; }
+  function fmtPct(v) { return v < 1 ? v.toFixed(2) : v.toFixed(1); }
+
+  /* ---------- tooltip ---------- */
+  var tip = document.getElementById('tip'), shell = tip.parentNode;
+  function bindTip(node, html) {
+    node.style.cursor = 'crosshair';
+    node.addEventListener('mouseenter', function (e) {
+      tip.innerHTML = html; tip.style.opacity = 1;
+    });
+    node.addEventListener('mousemove', function (e) {
+      var r = shell.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      tip.style.left = Math.min(x + 16, r.width - tip.offsetWidth - 8) + 'px';
+      tip.style.top = Math.max(8, y - tip.offsetHeight - 12) + 'px';
+    });
+    node.addEventListener('mouseleave', function () { tip.style.opacity = 0; });
+  }
+
+  /* ================= 主图 ================= */
+  (function mainChart() {
+    var svg = document.getElementById('main');
+    var W = 1100, H = 540, M = { l: 62, r: 28, t: 26, b: 54 };
+    var Y0 = 1976, Y1 = 2031;
+    var x = function (y) { return M.l + (y - Y0) / (Y1 - Y0) * (W - M.l - M.r); };
+    var VMAX = 42;
+    // 百分位越小越绩优 → 画在上方
+    var y = function (v) { return M.t + Math.sqrt(Math.min(Math.max(v, 0), VMAX) / VMAX) * (H - M.t - M.b); };
+
+    // 网格
+    [1, 2, 5, 10, 20, 40].forEach(function (v) {
+      el('line', { x1: M.l, x2: W - M.r, y1: y(v), y2: y(v), stroke: 'rgba(155,89,255,.12)', 'stroke-dasharray': v === 10 ? '0' : '2 5' }, svg);
+      txt(svg, M.l - 12, y(v) + 4, '前 ' + v + '%', { 'text-anchor': 'end', fill: v === 10 ? '#b47aff' : '#4b3c6b' });
+    });
+
+    // 年份刻度
+    for (var yr = 1980; yr <= 2025; yr += 5) {
+      el('line', { x1: x(yr), x2: x(yr), y1: H - M.b, y2: H - M.b + 5, stroke: 'rgba(155,89,255,.25)' }, svg);
+      txt(svg, x(yr), H - M.b + 22, yr, { 'text-anchor': 'middle', fill: '#4b3c6b' });
+    }
+    // 事件刻度（顶边三角）
+    D.events.forEach(function (ev) {
+      var cx = x(ev.y);
+      var g = el('g', {}, svg);
+      el('path', { d: 'M' + cx + ' ' + (M.t - 12) + ' l4.5 7 h-9 z', fill: 'rgba(0,229,255,.45)' }, g);
+      el('line', { x1: cx, x2: cx, y1: M.t - 2, y2: y(40), stroke: 'rgba(0,229,255,.07)', 'stroke-dasharray': '1 6' }, g);
+      var r = el('rect', { x: cx - 7, y: M.t - 16, width: 14, height: 14, fill: 'transparent' }, g);
+      bindTip(r, '<b>' + ev.y + ' · ' + ev.t + '</b>' + ev.d);
+    });
+
+    // 时代带
+    var TRACKS = [
+      { key: 'gongfei', label: '公费师范' },
+      { key: 'benke', label: '师范院校常规批' },
+      { key: 'zhongshi', label: '初中起点中师' }
+    ];
+    D.eras.forEach(function (er) {
+      TRACKS.forEach(function (tr) {
+        var band = er.tracks[tr.key];
+        if (!band) return;
+        var lo = band[0], hi = band[1];
+        var xa = x(er.from), xb = x(er.to + 1);
+        var g = el('g', {}, svg);
+        var rect = el('rect', {
+          x: xa, y: y(lo), width: Math.max(2, xb - xa - 3), height: Math.max(3, y(hi) - y(lo)),
+          fill: COL[tr.key], 'fill-opacity': er.tone === 'trough' && tr.key === 'benke' ? .16 : .26,
+          stroke: COL[tr.key], 'stroke-opacity': .55, 'stroke-width': 1.2, rx: 2
+        }, g);
+        bindTip(rect, '<b>' + er.from + '—' + er.to + ' · ' + er.title + '</b>' +
+          tr.label + '：同龄人前 ' + lo + '—' + hi + '%<br>' + er.lead);
+        // 中线
+        el('line', {
+          x1: xa + 2, x2: xb - 4, y1: y((lo + hi) / 2), y2: y((lo + hi) / 2),
+          stroke: COL[tr.key], 'stroke-width': 1.4, 'stroke-opacity': .85
+        }, g);
+      });
+      // 时代标签
+      var mid = (x(er.from) + x(er.to + 1)) / 2;
+      var lab = el('g', {}, svg);
+      var t = txt(lab, mid, H - M.b + 42, er.from + '—' + er.to, {
+        'text-anchor': 'middle', fill: er.tone === 'peak' ? '#ff4da6' : (er.tone === 'trough' ? '#00e5ff' : '#4b3c6b'), 'font-size': 10.5
+      });
+    });
+
+    // 实测点：省属 / 部属
+    var years = D.sd.years;
+    function drawMeasured(series, color, label, dy) {
+      var pts = years.map(function (y) { return { y: y, v: pct(series.median[String(y)], y) }; })
+        .filter(function (p) { return p.v; });
+      el('polyline', {
+        points: pts.map(function (p) { return x(p.y) + ',' + y(p.v); }).join(' '),
+        fill: 'none', stroke: color, 'stroke-width': 1.6, 'stroke-opacity': .8
+      }, svg);
+      pts.forEach(function (p) {
+        var c = el('circle', { cx: x(p.y), cy: y(p.v), r: 4.4, fill: '#0d0a1a', stroke: color, 'stroke-width': 2 }, svg);
+        var n = 0;
+        for (var s in series.schools) {
+          n += (series.schools[s].n[String(p.y)] || 0);
+        }
+        bindTip(c, '<b>山东 ' + p.y + ' · ' + label + '</b>' +
+          '投档最低位次中位 <span class="num">' + series.median[String(p.y)].toLocaleString() + '</span><br>' +
+          '折合同龄人 <span class="num">前 ' + fmtPct(p.v) + '%</span><br>' +
+          '样本 ' + n + ' 条专业投档记录');
+      });
+      // 末端标签
+      var last = pts[pts.length - 1];
+      txt(svg, x(last.y) + 13, y(last.v) + dy, label, { fill: color, 'font-size': 11 });
+    }
+    drawMeasured(D.sd.prov, COL.prov, '省属公费', 4);
+    drawMeasured(D.sd.bu, COL.bu, '部属公费', -8);
+
+    // 纵轴标题
+    txt(svg, M.l - 50, M.t - 13, '越靠上', { fill: '#7c69a6', 'font-size': 10 });
+    txt(svg, M.l - 50, M.t, '= 越绩优', { fill: '#7c69a6', 'font-size': 10 });
+  })();
+
+  /* ================= 数字格 ================= */
+  (function figs() {
+    var host = document.getElementById('figs');
+    var prov = D.sd.prov.median, bu = D.sd.bu.median;
+    var p22 = prov['2022'], p26 = prov['2026'];
+    var d = p26 - p22;
+    var items = [
+      { num: Math.abs(d / 10000).toFixed(1), small: '万位', cap: '山东 7 所省属院校公费师范生位次中位，2022→2026 前移了 ' + Math.abs(d).toLocaleString() + ' 位', cls: 'hot' },
+      { num: ((p26 / D.tot['2026']) * 100).toFixed(1), small: '%', cap: '2026 年省属公费师范生落在同龄人前 ' + ((p26 / D.tot['2026']) * 100).toFixed(1) + '%：全省 ' + (D.tot['2026'] / 10000).toFixed(1) + ' 万夏季高考考生里的第 2.3 万名', cls: 'hot' },
+      { num: ((bu['2026'] / D.tot['2026']) * 100).toFixed(2), small: '%', cap: '同一年部属师大公费师范生：前 ' + ((bu['2026'] / D.tot['2026']) * 100).toFixed(2) + '%，五年里始终在这个位置震荡', cls: 'cold' },
+      { num: D.sd.normal['师范']['2026'].toFixed(1), small: '%', cap: '师范院校常规批（非公费）位次百分位：2023 年 22.8% → 2026 年 25.8%，退到五年最冷', cls: 'cold' }
+    ];
+    host.innerHTML = items.map(function (it) {
+      return '<div class="fig ' + it.cls + '"><div class="num">' + it.num + '<small>' + it.small + '</small></div><div class="cap">' + it.cap + '</div></div>';
+    }).join('');
+  })();
+
+  /* ================= 时代卡片 ================= */
+  (function eraCards() {
+    var TONE = { peak: '高点', high: '偏高', trough: '谷底', fall: '下行', repair: '修复', split: '分化' };
+    document.getElementById('eraList').innerHTML = D.eras.map(function (er) {
+      var li = er.evidence.map(function (e) { return '<li>' + e + '</li>'; }).join('');
+      var src = er.src.map(function (s) { return '<a href="' + s.u + '" target="_blank" rel="noopener">' + s.t + '</a>'; }).join('');
+      return '<article class="era ' + er.tone + '">' +
+        '<div class="era-top"><span class="era-years">' + er.from + ' — ' + er.to + '</span>' +
+        '<h3>' + er.title + '</h3>' +
+        '<span class="badge ' + er.tone + '">' + (TONE[er.tone] || '') + '</span></div>' +
+        '<p class="era-lead">' + er.lead + '</p>' +
+        '<ul>' + li + '</ul>' +
+        '<div class="era-foot"><span class="conf">' + er.conf + '</span>' + src + '</div>' +
+        '</article>';
+    }).join('');
+  })();
+
+  /* ================= 配对条形 ================= */
+  // 两张条形图共用同一刻度（±6000 位），否则 5548 和 1462 会被画成一样长。
+  var BAR_MAX = 6000;
+  function barPairs(svgId, rows, color) {
+    var svg = document.getElementById(svgId);
+    var W = 520, H = 300, M = { l: 76, r: 22, t: 30, b: 42 };
+    var zeroX = (W - M.l - M.r) / 2 + M.l;
+    var half = (W - M.l - M.r) / 2;
+    var scale = half / BAR_MAX;
+    // 刻度网格
+    [2000, 4000].forEach(function (v) {
+      [-1, 1].forEach(function (sgn) {
+        var gx = zeroX + sgn * v * scale;
+        el('line', { x1: gx, x2: gx, y1: M.t, y2: H - M.b, stroke: 'rgba(155,89,255,.10)', 'stroke-dasharray': '2 5' }, svg);
+        txt(svg, gx, H - M.b + 32, (sgn < 0 ? '−' : '+') + v, { 'text-anchor': 'middle', fill: '#4b3c6b', 'font-size': 9 });
+      });
+    });
+    el('line', { x1: zeroX, x2: zeroX, y1: M.t, y2: H - M.b, stroke: 'rgba(155,89,255,.40)' }, svg);
+    txt(svg, zeroX, H - M.b + 32, '0', { 'text-anchor': 'middle', fill: '#6b5a8f', 'font-size': 9 });
+    txt(svg, zeroX - 8, M.t - 12, '← 变热（前移）', { 'text-anchor': 'end', fill: '#ff4da6', 'font-size': 10 });
+    txt(svg, zeroX + 8, M.t - 12, '变冷（后移）→', { 'text-anchor': 'start', fill: '#00e5ff', 'font-size': 10 });
+
+    var rowH = (H - M.t - M.b) / rows.length;
+    rows.forEach(function (r, i) {
+      var cy = M.t + rowH * i + rowH / 2;
+      var w = Math.min(half - 2, Math.abs(r.delta) * scale);
+      var isHot = r.delta < 0;
+      var bx = isHot ? zeroX - w : zeroX;
+      var g = el('g', {}, svg);
+      var rect = el('rect', {
+        x: bx, y: cy - 16, width: Math.max(1, w), height: 32,
+        fill: isHot ? 'rgba(255,77,166,.50)' : 'rgba(0,229,255,.42)',
+        stroke: isHot ? '#ff4da6' : '#00e5ff', 'stroke-opacity': .75, rx: 2
+      }, g);
+      txt(svg, M.l - 10, cy - 2, r.from + '→' + String(r.to).slice(2), { 'text-anchor': 'end', fill: '#9b8ab8', 'font-size': 11 });
+      txt(svg, M.l - 10, cy + 12, 'n=' + r.n, { 'text-anchor': 'end', fill: '#4b3c6b', 'font-size': 9 });
+      // 条够长就写在条内；太短就移到条外，免得压住零轴
+      var val = (isHot ? '−' : '+') + Math.abs(r.delta).toLocaleString();
+      var inside = w >= 48;
+      var vx = inside
+        ? (isHot ? zeroX - w + 7 : zeroX + w - 7)
+        : (isHot ? zeroX - w - 7 : zeroX + w + 7);
+      txt(svg, vx, cy + 4, val, {
+        'text-anchor': inside ? (isHot ? 'start' : 'end') : (isHot ? 'end' : 'start'),
+        fill: isHot ? '#ffc2de' : '#a9f0ff', 'font-size': 11.5
+      });
+      bindTip(rect, '<b>' + r.from + ' → ' + r.to + '</b>配对 ' + r.n + ' 条同校同专业<br>' +
+        '位次中位变化 <span class="num">' + (r.delta > 0 ? '+' : '') + r.delta.toLocaleString() + '</span><br>' +
+        '其中 ' + r.shareBetter + '% 的专业位次前移（变热）');
+    });
+  }
+  barPairs('barProv', D.sd.prov.pairs, '#ff4da6');
+  barPairs('barBu', D.sd.bu.pairs, '#4ade80');
+
+  /* ================= 折线 ================= */
+  function lineChart(svgId, series, opts) {
+    var svg = document.getElementById(svgId);
+    var W = 520, H = 300, M = { l: 48, r: 58, t: 24, b: 40 };
+    var years = D.sd.years;
+    var all = [];
+    series.forEach(function (s) { years.forEach(function (y) { var v = s.data[String(y)]; if (v) all.push(v); }); });
+    var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+    var pad = (hi - lo) * 0.22 || 1; lo -= pad; hi += pad;
+    var x = function (y) { return M.l + (y - years[0]) / (years[years.length - 1] - years[0]) * (W - M.l - M.r); };
+    var y = function (v) { return M.t + (1 - (v - lo) / (hi - lo)) * (H - M.t - M.b); };
+
+    // 网格
+    for (var i = 0; i <= 3; i++) {
+      var v = lo + (hi - lo) * i / 3;
+      el('line', { x1: M.l, x2: W - M.r, y1: y(v), y2: y(v), stroke: 'rgba(155,89,255,.10)', 'stroke-dasharray': '2 5' }, svg);
+      txt(svg, M.l - 8, y(v) + 4, v.toFixed(1), { 'text-anchor': 'end', fill: '#4b3c6b', 'font-size': 9.5 });
+    }
+    years.forEach(function (yv) {
+      txt(svg, x(yv), H - M.b + 20, yv, { 'text-anchor': 'middle', fill: '#4b3c6b', 'font-size': 10 });
+    });
+
+    series.forEach(function (s) {
+      var pts = years.map(function (yv) { return { y: yv, v: s.data[String(yv)] }; }).filter(function (p) { return p.v; });
+      el('polyline', {
+        points: pts.map(function (p) { return x(p.y) + ',' + y(p.v); }).join(' '),
+        fill: 'none', stroke: s.color, 'stroke-width': 2
+      }, svg);
+      pts.forEach(function (p) {
+        var c = el('circle', { cx: x(p.y), cy: y(p.v), r: 4, fill: '#100c20', stroke: s.color, 'stroke-width': 2 }, svg);
+        bindTip(c, '<b>' + s.label + ' · ' + p.y + '</b>' + (s.unit || '') + '<span class="num">' + (s.fmt ? s.fmt(p.v) : p.v) + '</span>');
+      });
+      var last = pts[pts.length - 1];
+      txt(svg, x(last.y) + 8, y(last.v) + 4, s.short || s.label, { fill: s.color, 'font-size': 10 });
+    });
+  }
+
+  lineChart('lineNormal', [
+    { label: '师范院校', short: '师范', color: '#ff4da6', data: D.sd.normal['师范'], unit: '位次百分位中位 ', fmt: function (v) { return v.toFixed(1) + '%'; } },
+    { label: '综合大学', short: '综合', color: '#9b59ff', data: D.sd.normal['综合'], unit: '位次百分位中位 ', fmt: function (v) { return v.toFixed(1) + '%'; } },
+    { label: '理工院校', short: '理工', color: '#00e5ff', data: D.sd.normal['理工'], unit: '位次百分位中位 ', fmt: function (v) { return v.toFixed(1) + '%'; } }
+  ], { ylab: '前 %' });
+
+  lineChart('lineSdn', [
+    { label: '非师范专业', short: '非师范', color: '#9b59ff', data: D.sd.sdn.np, unit: '位次百分位 ', fmt: function (v) { return v.toFixed(2) + '%'; } },
+    { label: '「师范类」专业', short: '师范类', color: '#ff4da6', data: D.sd.sdn.sp, unit: '位次百分位 ', fmt: function (v) { return v.toFixed(2) + '%'; } }
+  ], { ylab: '前 %' });
+
+  (function sdnPairs() {
+    var p = D.sd.sdn.pairs['2026'];
+    if (!p) return;
+    var rows = Object.keys(p).map(function (k) { return { k: k, sp: p[k][0], np: p[k][1], d: p[k][2] }; })
+      .sort(function (a, b) { return b.d - a.d; });
+    var html = '<div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--faint);margin:10px 0 6px">2026 年校内同专业对照（位次，正数＝师范类更冷）</div>';
+    rows.forEach(function (r) {
+      html += '<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;border-bottom:1px dashed rgba(155,89,255,.10)">' +
+        '<span style="color:var(--body)">' + r.k + '</span>' +
+        '<span style="font-family:var(--mono);color:var(--muted)">' + r.np.toLocaleString() + ' → <span style="color:var(--pink)">' + r.sp.toLocaleString() + '</span></span>' +
+        '<span style="font-family:var(--mono);color:var(--pink)">+' + r.d.toLocaleString() + '</span></div>';
+    });
+    html += '<p style="font-size:12px;color:var(--muted);margin:8px 0 0">5 对里 5 对都是「师范类」更冷。2022 年恰恰相反：师范类 6.87% 还略优于非师范 7.57%。</p>';
+    document.getElementById('sdnPairs').innerHTML = html;
+  })();
+
+  /* ================= 出处与口径文本 ================= */
+  (function meta() {
+    var t = Object.keys(D.tot).map(function (y) { return y + ' 年 ' + (D.tot[y] / 10000).toFixed(1) + ' 万'; }).join('、');
+    document.getElementById('totText').textContent = t;
+    var seen = {}, items = [];
+    D.eras.forEach(function (er) { er.src.forEach(function (s) { if (!seen[s.u]) { seen[s.u] = 1; items.push(s); } }); });
+    items.push({ t: '山东省教育招生考试院 · 普通类常规批投档情况表（2022—2026）', u: 'https://www.sdzk.cn/' });
+    items.push({ t: '十万条投档线 · 山东高考志愿五年参考', u: '../gaokao/' });
+    document.getElementById('srcList').innerHTML = items.map(function (s) {
+      return '<a href="' + s.u + '" target="_blank" rel="noopener">' + s.t + '</a>';
+    }).join('');
+  })();
+})();
+</script>
+</body>
+</html>
