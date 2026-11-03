@@ -247,8 +247,8 @@
     </div>
     <div class="v-now">
       <h4>眼下的分裂</h4>
-      <p><b>2022—2026 山东实测</b>：省属公费师范生位次中位从 4.2 万前移到 2.3 万；
-      同期部属师大在 7 千—1.1 万位横盘；师范院校常规批反而从 22.8% 退到 25.8%。</p>
+      <p><b>2022—2026 山东实测</b>：省属公费师范生位次中位从 5.0 万前移到 2.1 万；
+      同期部属师大在 0.7 万—1.1 万位之间来回，没有方向；师范院校常规批反而从 22.8% 退到 25.8%。</p>
     </div>
   </div>
 </header>
@@ -259,7 +259,7 @@
   <p class="sec-note">
     纵轴是「该年师范生源大致排在同龄人的前百分之几」，<strong>越靠上越绩优</strong>（刻度按平方根压缩，才装得下 1% 到 40% 的跨度）。
     彩色带子是每个时代的位置区间——长期段依据政策文件与当时报道重建，给的是区间不是点值；
-    右侧 2022—2026 的圆点是用山东 1,834 条公费师范投档记录实算出来的，可以直接核对。
+    右侧 2022—2026 的圆点是用山东 1,853 条公费师范投档记录实算出来的，可以直接核对。
   </p>
 
   <div class="panel">
@@ -297,6 +297,8 @@
     山东是本站唯一拿到逐条投档位次的省份（「十万条投档线」项目）。这里只做一件事：
     把「师范」拆成三块——省属公费、部属公费、师范院校常规批，看它们五年里各自往哪走。
     年度比较一律用配对法，只比同校同专业名（含定向就业市）两年都出现的记录。
+    部属师大全国共 6 所：这里用的是其中 5 所（北师大这次补上了 2023—2025 三年），
+    陕西师大官网只公开艺体类分数，山东普通类（公费师范）拿不到，见第五节。
   </p>
 
   <div class="grid2">
@@ -307,7 +309,7 @@
     </div>
     <div class="panel">
       <h3>部属公费师范：高位横盘</h3>
-      <p class="ph">4 所部属师大 · 同口径同刻度 · 正负交替，没有趋势</p>
+      <p class="ph">5 所部属师大（2022、2026 年各只有 3 所有数据）· 同口径同刻度 · 正负交替，没有趋势</p>
       <svg id="barBu" class="chart" viewBox="0 0 520 300"></svg>
     </div>
   </div>
@@ -368,6 +370,7 @@
     <div class="panel">
       <h3>这把尺子怎么定的</h3>
       <ol>
+        <li><strong>先校后总：一校一票。</strong>每所学校先算自己的中位位次，再对这些学校的中位数取中位。直接池化所有记录会让投放专业多的学校（西南大学一年十几个专业）主导结果，掩盖「省属在涨、部属在横」这个差别。</li>
         <li><strong>统一量纲：位次百分位。</strong>对每个专业取当年投档最低位次，除以当年山东夏季高考一分一段表覆盖的考生总数（<span id="totText"></span>），得到「排在前百分之几」。位数小＝生源好。跨年比较只看这个相对量，不看分数——分数随试题难度浮动，位次不会。</li>
         <li><strong>年度比较用配对法。</strong>只比同校、同专业名（含「定向某市就业」）两年都出现的记录，取变化的中位数。这样某一年多投放几个冷门定向市，也不会把中位数拉低成假降温。</li>
         <li><strong>三块分开算。</strong>省属公费（提前批）、部属公费（提前批）、师范院校常规批（非公费）口径不同、分段不同，混在一起算平均值会得出互相矛盾的结论。</li>
@@ -379,10 +382,16 @@
       <h3>已知的坑</h3>
       <ol>
         <li><strong>样本量波动。</strong>省属各校每年投放的定向市、专业不同，配对样本 2022→2023 有 162 对，2025→2026 只有 101 对。方向一致（2023 年往后的三个年度里，75%—88% 的专业位次前移），但具体数值会随样本变。</li>
-        <li><strong>部属师大样本小。</strong>每年只有 32—48 对，中位数对个别专业的异常变动敏感，所以本页只强调「没有趋势」，不给年度涨跌结论。</li>
+        <li><strong>部属师大样本小、年份不齐。</strong>北师大只有 2023—2025（2022 年官网 PDF 未给公费师范分数，2026 年录取分数尚未发布），西南大学只有 2023—2025，陕西师大一所都没有，因此 2022、2026 各年只有 3 所学校进图。配对样本每年 32—50 对，中位数对个别专业敏感，所以本页只强调「没有趋势」，不给年度涨跌结论。</li>
+        <li><strong>换固定面板复算，结论不变。</strong>只用连续五年齐全的 3 所学校重算（省属：山东师大、聊城大学、青岛大学；部属：华东师大、东北师大、华中师大），省属仍是 <span id="panelProv"></span>，部属仍是 <span id="panelBu"></span>——排除了「今年谁报了数据」的组成效应。</li>
         <li><strong>中师与本科不可直接比。</strong>中师是初中起点，分母是初中毕业生；本科师范的分母是高考考生。图上共用「同龄人前百分之几」，但两代人的「同龄人」不是同一群人，跨 1999 年那条线只作方向性比较。</li>
         <li><strong>「师范类」标签因校而异。</strong>多数省属院校给师范专业加「（师范类）」后缀，部分院校不加。同校对照只取能明确识别的 5 对（山东师大 2026），不外推到全部专业。</li>
       </ol>
+    </div>
+    <div class="panel">
+      <h3>六所部属师大，五所有数据</h3>
+      <p class="ph">「部属师大」指教育部直属的六所师范大学。下表是各校在山东提前批公费师范录取分数的可得年份——不是每所都年年公开。</p>
+      <div id="buCover"></div>
     </div>
     <div class="panel">
       <h3>数据与出处</h3>
@@ -515,10 +524,11 @@
         for (var s in series.schools) {
           n += (series.schools[s].n[String(p.y)] || 0);
         }
+        var ns = (series.nSchools && series.nSchools[String(p.y)]) || 0;
         bindTip(c, '<b>山东 ' + p.y + ' · ' + label + '</b>' +
-          '投档最低位次中位 <span class="num">' + series.median[String(p.y)].toLocaleString() + '</span><br>' +
+          '各校中位位次的中位 <span class="num">' + series.median[String(p.y)].toLocaleString() + '</span><br>' +
           '折合同龄人 <span class="num">前 ' + fmtPct(p.v) + '%</span><br>' +
-          '样本 ' + n + ' 条专业投档记录');
+          ns + ' 所学校、' + n + ' 条专业投档记录');
       });
       // 末端标签
       var last = pts[pts.length - 1];
@@ -539,9 +549,9 @@
     var p22 = prov['2022'], p26 = prov['2026'];
     var d = p26 - p22;
     var items = [
-      { num: Math.abs(d / 10000).toFixed(1), small: '万位', cap: '山东 7 所省属院校公费师范生位次中位，2022→2026 前移了 ' + Math.abs(d).toLocaleString() + ' 位', cls: 'hot' },
-      { num: ((p26 / D.tot['2026']) * 100).toFixed(1), small: '%', cap: '2026 年省属公费师范生落在同龄人前 ' + ((p26 / D.tot['2026']) * 100).toFixed(1) + '%：全省 ' + (D.tot['2026'] / 10000).toFixed(1) + ' 万夏季高考考生里的第 2.3 万名', cls: 'hot' },
-      { num: ((bu['2026'] / D.tot['2026']) * 100).toFixed(2), small: '%', cap: '同一年部属师大公费师范生：前 ' + ((bu['2026'] / D.tot['2026']) * 100).toFixed(2) + '%，五年里始终在这个位置震荡', cls: 'cold' },
+      { num: Math.abs(d / 10000).toFixed(1), small: '万位', cap: '山东 7 所省属院校公费师范生位次中位（各校取中位再取中位），2022→2026 前移了 ' + Math.abs(d).toLocaleString() + ' 位', cls: 'hot' },
+      { num: ((p26 / D.tot['2026']) * 100).toFixed(1), small: '%', cap: '2026 年省属公费师范生落在同龄人前 ' + ((p26 / D.tot['2026']) * 100).toFixed(1) + '%：全省 ' + (D.tot['2026'] / 10000).toFixed(1) + ' 万夏季高考考生里的第 ' + (p26 / 10000).toFixed(1) + ' 万名', cls: 'hot' },
+      { num: ((bu['2026'] / D.tot['2026']) * 100).toFixed(2), small: '%', cap: '同一年部属师大公费师范生：前 ' + ((bu['2026'] / D.tot['2026']) * 100).toFixed(2) + '%，五年里在 1.1%—1.7% 之间来回，没有方向', cls: 'cold' },
       { num: D.sd.normal['师范']['2026'].toFixed(1), small: '%', cap: '师范院校常规批（非公费）位次百分位：2023 年 22.8% → 2026 年 25.8%，退到五年最冷', cls: 'cold' }
     ];
     host.innerHTML = items.map(function (it) {
@@ -685,6 +695,34 @@
   })();
 
   /* ================= 出处与口径文本 ================= */
+  (function coverage() {
+    var host = document.getElementById('buCover');
+    if (!host) return;
+    var rows = [];
+    var order = ['北京师范大学', '华东师范大学', '东北师范大学', '华中师范大学', '西南大学'];
+    order.forEach(function (k) {
+      var sc = D.sd.bu.schools[k];
+      if (!sc) return;
+      var ys = sc.years.slice();
+      var span = (ys.length > 1 && ys[ys.length - 1] - ys[0] === ys.length - 1)
+        ? ys[0] + '—' + ys[ys.length - 1]
+        : ys.join('、');
+      rows.push({ name: k, years: span, ok: ys.length, src: sc.src, url: sc.srcUrl });
+    });
+    (D.sd.bu.missing || []).forEach(function (k) {
+      rows.push({ name: k, years: '无', ok: 0, src: '官网查询系统只收录艺体类与少数民族预科，未见山东普通类分数', url: 'https://zsb.snnu.edu.cn/' });
+    });
+    host.innerHTML = rows.map(function (r) {
+      var col = r.ok >= 4 ? '#4ade80' : (r.ok > 0 ? '#ffaa40' : '#00e5ff');
+      return '<div style="display:grid;grid-template-columns:126px 104px 1fr;gap:14px;align-items:baseline;' +
+        'padding:7px 0;border-bottom:1px dashed rgba(155,89,255,.12);font-size:13px">' +
+        '<span style="color:var(--ink)">' + r.name + '</span>' +
+        '<span style="font-family:var(--mono);color:' + col + ';font-size:12px">' + r.years + '</span>' +
+        '<a href="' + r.url + '" target="_blank" rel="noopener" style="color:var(--muted);font-size:12px">' + r.src + '</a></div>';
+    }).join('') +
+      '<p style="font-size:12px;color:var(--muted);margin:10px 0 0">六所中 5 所有逐专业分数，合计 226 条；北师大 19 条为本次从官网山东 PDF 逐年录入，位次按山东一分一段表由最低分换算（误差不超过一个分数段）。</p>';
+  })();
+
   (function meta() {
     var t = Object.keys(D.tot).map(function (y) { return y + ' 年 ' + (D.tot[y] / 10000).toFixed(1) + ' 万'; }).join('、');
     document.getElementById('totText').textContent = t;
@@ -692,6 +730,11 @@
     D.eras.forEach(function (er) { er.src.forEach(function (s) { if (!seen[s.u]) { seen[s.u] = 1; items.push(s); } }); });
     items.push({ t: '山东省教育招生考试院 · 普通类常规批投档情况表（2022—2026）', u: 'https://www.sdzk.cn/' });
     items.push({ t: '十万条投档线 · 山东高考志愿五年参考', u: '../gaokao/' });
+    var pp = D.sd.prov.panel, bp = D.sd.bu.panel;
+    var fmt = function (a, b) { return a.toLocaleString() + ' → ' + b.toLocaleString(); };
+    var ep = document.getElementById('panelProv'), eb = document.getElementById('panelBu');
+    if (ep) ep.textContent = fmt(pp.median['2022'], pp.median['2026']) + '（' + pp.schools.length + ' 校）';
+    if (eb) eb.textContent = fmt(bp.median['2022'], bp.median['2026']) + '（' + bp.schools.length + ' 校）';
     document.getElementById('srcList').innerHTML = items.map(function (s) {
       return '<a href="' + s.u + '" target="_blank" rel="noopener">' + s.t + '</a>';
     }).join('');

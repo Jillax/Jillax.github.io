@@ -50,6 +50,9 @@ TOT = {y: max(c for s, c in arr) for y, arr in META["bands"].items()}
 SITE = load_json(os.path.join(GAO, "site.js"), None)
 PROV = ["山东师范大学", "曲阜师范大学", "聊城大学", "临沂大学", "青岛大学", "鲁东大学", "济南大学"]
 BU = ["北京师范大学", "华东师范大学", "东北师范大学", "华中师范大学", "西南大学"]
+# 部属师大共 6 所。陕西师范大学官网的「历年分数」查询系统只有艺体类与预科，
+# 不公开山东普通类（公费师范）分省分专业分数，故本页缺这一所。
+BU_MISSING = ["陕西师范大学"]
 
 
 def site_rows(schools):
@@ -107,6 +110,30 @@ for k in BU:
             "n": {str(y): sum(1 for r in SITE[k]["rows"] if r[0] == y and r[6]) for y in YEARS},
             "src": SITE[k]["src"], "srcUrl": SITE[k]["srcUrl"],
         }
+
+def agg_by_school(schools_dict, names):
+    """每所学校先取自己的中位位次，再对这些中位数取中位（一校一票）。
+    直接池化所有记录会让投放专业多的学校（如西南大学）主导结果。"""
+    agg, n = {}, {}
+    for y in YEARS:
+        vals = [schools_dict[k]["median"][str(y)] for k in names
+                if k in schools_dict and schools_dict[k]["median"].get(str(y))]
+        agg[str(y)] = round(st.median(vals)) if vals else None
+        n[str(y)] = len(vals)
+    return agg, n
+
+
+def balanced_panel(schools_dict, names):
+    """连续五年都有数据的学校子集——用固定面板复算一遍，排除「今年谁报了数据」的组成效应。"""
+    keep = [k for k in names if k in schools_dict
+            and all(schools_dict[k]["median"].get(str(y)) for y in YEARS)]
+    agg, _ = agg_by_school({k: schools_dict[k] for k in keep}, keep)
+    return {"schools": keep, "median": agg}
+
+
+prov_agg, prov_n = agg_by_school(prov_school, PROV)
+bu_agg, bu_n = agg_by_school(bu_school, BU)
+
 
 # ---------------- 2. 常规批：师范院校 ----------------
 rows_pct = []          # (year, code, type, tier, 院校位次百分位中位)
@@ -296,10 +323,14 @@ DATA = {
     "events": EVENTS,
     "sd": {
         "years": YEARS,
-        "prov": {"median": med_by_year(prov_rows), "pairs": pairs(prov_rows),
-                 "n": len(prov_rows), "schools": prov_school},
-        "bu": {"median": med_by_year(bu_rows), "pairs": pairs(bu_rows),
-               "n": len(bu_rows), "schools": bu_school},
+        "prov": {"median": prov_agg, "pooled": med_by_year(prov_rows),
+                 "nSchools": prov_n, "pairs": pairs(prov_rows),
+                 "n": len(prov_rows), "schools": prov_school,
+                 "panel": balanced_panel(prov_school, PROV)},
+        "bu": {"median": bu_agg, "pooled": med_by_year(bu_rows),
+               "nSchools": bu_n, "pairs": pairs(bu_rows),
+               "n": len(bu_rows), "schools": bu_school, "missing": BU_MISSING,
+               "panel": balanced_panel(bu_school, BU)},
         "normal": {"师范": school_pct["师范"], "综合": school_pct["综合"],
                    "理工": school_pct["理工"],
                    "师范-211": school_pct["师范-211"], "师范-普通": school_pct["师范-普通"]},
@@ -319,8 +350,8 @@ with open(OUT, "w", encoding="utf-8") as f:
     f.write(";\n")
 
 print("写入", OUT)
-print("省属公费位次中位", DATA["sd"]["prov"]["median"])
-print("部属公费位次中位", DATA["sd"]["bu"]["median"])
+print("省属公费 各校中位的中位", DATA["sd"]["prov"]["median"], "校数", DATA["sd"]["prov"]["nSchools"])
+print("部属公费 各校中位的中位", DATA["sd"]["bu"]["median"], "校数", DATA["sd"]["bu"]["nSchools"])
 print("省属配对", DATA["sd"]["prov"]["pairs"])
 print("部属配对", DATA["sd"]["bu"]["pairs"])
 print("师范院校百分位", school_pct["师范"])
