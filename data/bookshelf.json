@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T18:36:52Z",
+  "updated": "2026-11-06T17:51:41Z",
   "books": [
     {
       "id": "2996046",
@@ -2032,6 +2032,19 @@
   ],
   "movies": [
     {
+      "id": "1296436",
+      "title": "有话好好说",
+      "author": "1997-05-16(中国大陆) / 1997-09-02(威尼斯电影节) / 姜文 / 李保田 / 瞿颖 / 刘信义 / 葛优 / 李雪健 / 尤勇智 / 张艺谋 / 赵本山 / 焦刚 / 中国大陆 / 张艺谋 / 90分钟 / 剧情 / 喜剧 / 述平 Shuping / 汉语普通话",
+      "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2930888355.jpg",
+      "url": "https://movie.douban.com/subject/1296436/",
+      "rating": 5,
+      "tags": [],
+      "comment": "拍得太牛逼了点",
+      "date": "2026-11-06",
+      "status": "collect",
+      "category": "movie"
+    },
+    {
       "id": "26754624",
       "title": "真爱不死 第一季 / Santa Clarita Diet Season 1",
       "author": "2017-02-03(美国) / 德鲁·巴里摩尔 / 蒂莫西·奥利芬特 / 丽芙·休森 / 斯凯勒·吉桑多 / 理查德·T·琼斯 / 玛丽·伊丽莎白·埃利斯 / 利卡多·查维拉 / 托马斯·列农 / 托马斯·克劳福德 / 娜塔丽·莫瑞丝 / 美国 / 鲁本·弗雷斯彻 / 肯·卡皮斯 / 塔拉·戴维斯 / 琳·谢尔顿 / 真爱不死 / 27分钟 / 真爱不死 / 剧情 / 喜剧 / 恐怖 / Victor Fresco / 英语",
@@ -2788,7 +2801,7 @@
     {
       "id": "25976733",
       "title": "风骚律师 第二季 / Better Call Saul Season 2",
-      "author": "2016-02-15(美国) / 鲍勃·奥登科克 / 乔纳森·班克斯 / 蕾亚·塞洪 / 帕特里克·法比安 / 迈克尔·曼多 / 迈克尔·麦基恩 / 小艾德·博格里 / 凯尔·博恩海默 / 艾利克斯·迪塞尔 / 吉姆·比弗 / 美国 / 托马斯·施纳泽 / 泰瑞·麦克多诺 / 斯科特·怀南特 / 亚当·伯恩斯坦 / 约翰·施班 / 迈克尔·斯洛维斯 / 科林·巴克西 / 拉尔沙·康达基 / 皮特·古尔德 / 文斯·吉利根 / 风骚律师 / 48分钟 / 风骚律师 / 剧情 / 犯罪 / 文斯·吉里根 Vince Gilligan / 皮特·古尔德 Peter Gould / 托马斯·施纳泽 Thomas Schnauz / Gennifer Hutchison / Jonathan Glatzer / 戈登·史密斯 Gordon Smith / Ann Cherkis / Heather Marion / 英语 / 西班牙语",
+      "author": "2016-02-15(美国) / 鲍勃·奥登科克 / 乔纳森·班克斯 / 蕾亚·塞洪 / 迈克尔·麦基恩 / 帕特里克·法比安 / 迈克尔·曼多 / 小艾德·博格里 / 凯尔·博恩海默 / 艾利克斯·迪塞尔 / 吉姆·比弗 / 美国 / 托马斯·施纳泽 / 泰瑞·麦克多诺 / 斯科特·怀南特 / 亚当·伯恩斯坦 / 约翰·施班 / 迈克尔·斯洛维斯 / 科林·巴克西 / 拉尔沙·康达基 / 皮特·古尔德 / 文斯·吉利根 / 风骚律师 / 48分钟 / 风骚律师 / 剧情 / 犯罪 / 文斯·吉里根 Vince Gilligan / 皮特·古尔德 Peter Gould / 托马斯·施纳泽 Thomas Schnauz / Gennifer Hutchison / Jonathan Glatzer / 戈登·史密斯 Gordon Smith / Ann Cherkis / Heather Marion / 英语",
       "cover": "https://img9.doubanio.com/view/photo/l_ratio_poster/public/p2560535645.jpg",
       "url": "https://movie.douban.com/subject/25976733/",
       "rating": 5,
