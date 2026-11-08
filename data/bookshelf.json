@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07T16:46:35Z",
+  "updated": "2026-11-08T16:57:36Z",
   "books": [
     {
       "id": "2996046",
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "1433579",
+      "title": "巴山夜雨",
+      "author": "1980-03-21(中国大陆) / 李志舆 / 张瑜 / 林彬 / 茅为蕙 / 欧阳儒秋 / 强明 / 仲星火 / 卢青 / 张闽 / 石灵 / 中国大陆 / 吴永刚 / 吴贻弓 / 86分钟 / 剧情 / 叶楠 Nan Ye / 汉语普通话",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2629016188.jpg",
+      "url": "https://movie.douban.com/subject/1433579/",
+      "rating": 4,
+      "tags": [],
+      "comment": "的确是成人童话，很美好又动人。可什么东西，能只简单的分成黑的红的吗。听老电影的台词设计和念白真是一种享受，好的表达是感受不到母语羞耻的",
+      "date": "2026-11-08",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "1296436",
       "title": "有话好好说",
