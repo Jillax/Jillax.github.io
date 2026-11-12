@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-11T18:29:47Z",
+  "updated": "2026-11-12T18:45:10Z",
   "books": [
     {
       "id": "2996046",
       "title": "哦，香雪",
-      "author": "铁凝 / 中国盲文出版社 / 2008-1-1 / 28.00元",
+      "author": "铁凝 / 中国盲文出版社 / 2008-1 / 28.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s5874139.jpg",
       "url": "https://book.douban.com/subject/2996046/",
       "rating": 3,
@@ -30,7 +30,7 @@
     {
       "id": "33438841",
       "title": "有限与无限的游戏",
-      "author": "[美] 詹姆斯·卡斯 / 马小悟、余倩 / 电子工业出版社 / 2019-5-1 / 68.00元",
+      "author": "[美] 詹姆斯·卡斯 / 马小悟、余倩 / 电子工业出版社 / 2019-5 / 68.00元",
       "cover": "https://img9.doubanio.com/view/subject/l/public/s34828016.jpg",
       "url": "https://book.douban.com/subject/33438841/",
       "rating": 3,
@@ -160,7 +160,7 @@
     {
       "id": "10763427",
       "title": "查理九世15·海龟岛的狩猎者",
-      "author": "雷欧幻像 / 浙江少年儿童出版社 / 2012-7-1 / 15.00元",
+      "author": "雷欧幻像 / 浙江少年儿童出版社 / 2012-7 / 15.00元",
       "cover": "https://img2.doubanio.com/view/subject/l/public/s11088261.jpg",
       "url": "https://book.douban.com/subject/10763427/",
       "rating": 3,
@@ -511,7 +511,7 @@
     {
       "id": "36615454",
       "title": "资本主义现实主义",
-      "author": "[英]马克·费舍 / 王立秋 / 南京大学出版社 / 2024-3-3 / 68.00",
+      "author": "[英]马克·费舍 / 王立秋 / 南京大学出版社 / 2024-3 / 68.00",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s34765748.jpg",
       "url": "https://book.douban.com/subject/36615454/",
       "rating": 4,
@@ -563,7 +563,7 @@
     {
       "id": "26357614",
       "title": "海风中失落的血色馈赠",
-      "author": "[加拿大] 阿利斯泰尔·麦克劳德 / 陈以侃 / 上海文艺出版社 / 2015-6-1 / CNY 20.00",
+      "author": "[加拿大] 阿利斯泰尔·麦克劳德 / 陈以侃 / 上海文艺出版社 / 2015-6 / CNY 20.00",
       "cover": "https://img2.doubanio.com/view/subject/l/public/s28061231.jpg",
       "url": "https://book.douban.com/subject/26357614/",
       "rating": 4,
@@ -836,7 +836,7 @@
     {
       "id": "35966120",
       "title": "始于极限",
-      "author": "[日] 上野千鹤子、[日] 铃木凉美 / 曹逸冰 / 新星出版社 / 2022-9-20 / 59.00元",
+      "author": "[日] 上野千鹤子、[日] 铃木凉美 / 曹逸冰 / 新星出版社 / 2022-9 / 59.00元",
       "cover": "https://img9.doubanio.com/view/subject/l/public/s34300626.jpg",
       "url": "https://book.douban.com/subject/35966120/",
       "rating": 4,
@@ -914,7 +914,7 @@
     {
       "id": "26577688",
       "title": "斜阳",
-      "author": "[日] 太宰治 / 竺家荣 / 上海译文出版社 / 2016-1-1 / 32.00",
+      "author": "[日] 太宰治 / 竺家荣 / 上海译文出版社 / 2016-1 / 32.00",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s28462810.jpg",
       "url": "https://book.douban.com/subject/26577688/",
       "rating": 4,
@@ -1005,7 +1005,7 @@
     {
       "id": "3765331",
       "title": "恋人絮语",
-      "author": "[法]罗兰·巴特 / 汪耀进、武佩荣 / 上海人民出版社 / 2009-06-01 / 24.00元",
+      "author": "[法]罗兰·巴特 / 汪耀进、武佩荣 / 上海人民出版社 / 2009-06 / 24.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s29998778.jpg",
       "url": "https://book.douban.com/subject/3765331/",
       "rating": 5,
@@ -1161,7 +1161,7 @@
     {
       "id": "26576861",
       "title": "最好的告别",
-      "author": "[美] 阿图·葛文德（Atul Gawande） / 王一方 主编、彭小华 / 浙江人民出版社 / 2015-7-31 / 54.90元",
+      "author": "[美] 阿图·葛文德（Atul Gawande） / 王一方 主编、彭小华 / 浙江人民出版社 / 2015-7 / 54.90元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s28260907.jpg",
       "url": "https://book.douban.com/subject/26576861/",
       "rating": 5,
@@ -1213,7 +1213,7 @@
     {
       "id": "20424526",
       "title": "邓小平时代",
-      "author": "[美] 傅高义 / 冯克利 / 生活·读书·新知三联书店 / 2013-1-18 / 88.00元",
+      "author": "[美] 傅高义 / 冯克利 / 生活·读书·新知三联书店 / 2013-1 / 88.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s24516687.jpg",
       "url": "https://book.douban.com/subject/20424526/",
       "rating": 4,
@@ -1252,7 +1252,7 @@
     {
       "id": "25736453",
       "title": "狼国女王",
-      "author": "沈石溪 / 人民邮电出版社 / 2013-9-1 / CNY 23.80",
+      "author": "沈石溪 / 人民邮电出版社 / 2013-9 / CNY 23.80",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s28394050.jpg",
       "url": "https://book.douban.com/subject/25736453/",
       "rating": 4,
@@ -1356,7 +1356,7 @@
     {
       "id": "24736899",
       "title": "雪国",
-      "author": "[日本] 川端康成 / 叶渭渠、唐月梅 / 南海出版公司 / 2013-9-15 / CNY 32.00",
+      "author": "[日本] 川端康成 / 叶渭渠、唐月梅 / 南海出版公司 / 2013-9 / CNY 32.00",
       "cover": "https://img2.doubanio.com/view/subject/l/public/s27018761.jpg",
       "url": "https://book.douban.com/subject/24736899/",
       "rating": 4,
@@ -1473,7 +1473,7 @@
     {
       "id": "35862003",
       "title": "缠足",
-      "author": "【美】高彦颐 / 苗延威 / 江苏人民出版社 / 2022-5-1 / 88.00元",
+      "author": "【美】高彦颐 / 苗延威 / 江苏人民出版社 / 2022-5 / 88.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s34194263.jpg",
       "url": "https://book.douban.com/subject/35862003/",
       "rating": 5,
@@ -1603,7 +1603,7 @@
     {
       "id": "25747921",
       "title": "从你的全世界路过",
-      "author": "张嘉佳 / 湖南文艺出版社 / 2013-11-1 / 36.00元",
+      "author": "张嘉佳 / 湖南文艺出版社 / 2013-11 / 36.00元",
       "cover": "https://img9.doubanio.com/view/subject/l/public/s27102925.jpg",
       "url": "https://book.douban.com/subject/25747921/",
       "rating": 2,
@@ -1616,7 +1616,7 @@
     {
       "id": "30485020",
       "title": "芙蓉镇",
-      "author": "古华 / 人民文学出版社 / 2019-1-1 / 29.00元",
+      "author": "古华 / 人民文学出版社 / 2019-1 / 29.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s34363647.jpg",
       "url": "https://book.douban.com/subject/30485020/",
       "rating": 4,
@@ -1681,7 +1681,7 @@
     {
       "id": "30247615",
       "title": "了不起的盖茨比",
-      "author": "[美] 弗·司各特·菲茨杰拉德 / 赵运芳 / 百花洲文艺出版社 / 2018-1-1 / 28.00元",
+      "author": "[美] 弗·司各特·菲茨杰拉德 / 赵运芳 / 百花洲文艺出版社 / 2018-1 / 28.00元",
       "cover": "https://img2.doubanio.com/view/subject/l/public/s29794451.jpg",
       "url": "https://book.douban.com/subject/30247615/",
       "rating": 4,
@@ -1720,7 +1720,7 @@
     {
       "id": "11524204",
       "title": "围城",
-      "author": "钱锺书 / 人民文学出版社 / 1991-2-1 / 39.00元",
+      "author": "钱锺书 / 人民文学出版社 / 1991-2 / 39.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s11276847.jpg",
       "url": "https://book.douban.com/subject/11524204/",
       "rating": 5,
@@ -1811,7 +1811,7 @@
     {
       "id": "10608319",
       "title": "存在主义是一种人道主义",
-      "author": "[法] 让-保罗·萨特 / 周煦良、汤永宽 / 上海译文出版社 / 2012-6-1 / 23.00元",
+      "author": "[法] 让-保罗·萨特 / 周煦良、汤永宽 / 上海译文出版社 / 2012-6 / 23.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s34186558.jpg",
       "url": "https://book.douban.com/subject/10608319/",
       "rating": 5,
@@ -1876,7 +1876,7 @@
     {
       "id": "34951670",
       "title": "死亡与少女",
-      "author": "[奥] 埃尔弗里德·耶利内克 / 魏育青、王滨滨 / 人民文学出版社 / 2020-7-1",
+      "author": "[奥] 埃尔弗里德·耶利内克 / 魏育青、王滨滨 / 人民文学出版社 / 2020-7",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s33683738.jpg",
       "url": "https://book.douban.com/subject/34951670/",
       "rating": 4,
@@ -1928,7 +1928,7 @@
     {
       "id": "6313454",
       "title": "牛虻",
-      "author": "[爱尔兰] 艾捷尔·伏尼契 / 蔡慧 / 上海译文出版社 / 2011-5-1 / 20.00元",
+      "author": "[爱尔兰] 艾捷尔·伏尼契 / 蔡慧 / 上海译文出版社 / 2011-5 / 20.00元",
       "cover": "https://img9.doubanio.com/view/subject/l/public/s6520074.jpg",
       "url": "https://book.douban.com/subject/6313454/",
       "rating": 5,
@@ -1954,7 +1954,7 @@
     {
       "id": "1813841",
       "title": "枪炮、病菌与钢铁",
-      "author": "[美] 贾雷德·戴蒙德 / 谢延光 / 上海译文出版社 / 2006-4-1 / 45.00元",
+      "author": "[美] 贾雷德·戴蒙德 / 谢延光 / 上海译文出版社 / 2006-4 / 45.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s1738643.jpg",
       "url": "https://book.douban.com/subject/1813841/",
       "rating": 4,
@@ -2031,6 +2031,19 @@
     }
   ],
   "movies": [
+    {
+      "id": "26904137",
+      "title": "出·路",
+      "author": "2017-12-30(UCCA艺术放映) / 中国大陆 / 德国 / awayout01.wixsite.com/awayout / 郑琼 / 95分钟 / 纪录片 / 郑琼 Qiong Zheng / 汉语普通话",
+      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2393852889.jpg",
+      "url": "https://movie.douban.com/subject/26904137/",
+      "rating": 5,
+      "tags": [],
+      "comment": "让豆瓣的小资特权们看评这片，真是为难了",
+      "date": "2026-11-12",
+      "status": "collect",
+      "category": "movie"
+    },
     {
       "id": "1433579",
       "title": "巴山夜雨",
@@ -16037,7 +16050,7 @@
     {
       "id": "1401392",
       "title": "将爱",
-      "author": "王菲 / 2003 / 专辑 / CD / 流行",
+      "author": "王菲 / 2003 / 专辑 / Audio CD / 流行",
       "cover": "https://img2.doubanio.com/view/subject/l/public/s2726841.jpg",
       "url": "https://music.douban.com/subject/1401392/",
       "rating": 5,
