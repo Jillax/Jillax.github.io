@@ -10,7 +10,7 @@ Jillax 的个人站，托管于 GitHub Pages。作品是公开数据可视化；
 
 所有 HTML 页面在 `<head>` 引入 `js/access-gate.js`：输入访问密钥才放行，本机 30 天内免密。密钥明文不入库，仓库里只有 SHA-256。
 
-- 换密钥：`python scripts/set_access_key.py`（可加 `--key` 指定自定义密钥）
+- 换密钥：`python scripts/set_access_key.py`（可加 `--key` 指定自定义密钥）；授权凭证与密钥哈希绑定，换密钥会立即吊销所有设备旧的 30 天免密
 - 撤销某台设备的免密授权：访问 `/?logout`
 - 新增页面后注入门禁与去索引 meta：`python scripts/install_access_gate.py`（幂等）
 - 全站 HTML 带 `noindex,nofollow,noarchive,nosnippet`；`robots.txt` 必须保持 `Allow: /`，爬虫要抓到页面才读得到 `noindex`

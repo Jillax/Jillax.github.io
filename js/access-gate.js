@@ -11,9 +11,16 @@
 (function () {
   'use strict';
 
-  var KEY_HASH = '032d8ef77b3f690b9ed45ea330cfcb69978f263cf21cece030e14235bc088126';
-  var STORAGE_KEY = 'jx.access.until';
+  var KEY_HASH = 'ab77206ff8d18aecb7c4c69a5524d712f8251fe06201d338cccaa5938acd651f';
+  // 授权凭证绑定当前密钥：换密钥后，旧密钥留下的 30 天免密会立即失效。
+  var STORAGE_KEY = 'jx.access.' + KEY_HASH.slice(0, 16);
   var TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+  // 清理旧版本的固定键（那时换密钥并不会吊销旧授权）
+  try {
+    localStorage.removeItem('jx.access.until');
+    sessionStorage.removeItem('jx.access.until');
+  } catch (e) {}
 
   /* ---------- SHA-256 (纯 JS，无外部依赖，file:// 下也能用) ---------- */
   var K = [
