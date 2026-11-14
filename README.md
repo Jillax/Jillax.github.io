@@ -2,7 +2,20 @@
 
 个人主页 · 作品 · 阅读与译制 · 随笔
 
-历史学师范生的个人站，托管于 GitHub Pages。作品是公开数据可视化；阅读与译制收书影音和字幕；随笔与联系在同一条通道。全站暗底未来风：主站壳是 VA-11 气质，作品页共用同一片紫黑底、按题材保留自己的强调色。100% 由 AI Agent 构筑。
+Jillax 的个人站，托管于 GitHub Pages。作品是公开数据可视化；阅读与译制收书影音和字幕；随笔与联系在同一条通道。全站暗底未来风：主站壳是 VA-11 气质，作品页共用同一片紫黑底、按题材保留自己的强调色。100% 由 AI Agent 构筑。
+
+---
+
+## 访问控制
+
+所有 HTML 页面在 `<head>` 引入 `js/access-gate.js`：输入访问密钥才放行，本机 30 天内免密。密钥明文不入库，仓库里只有 SHA-256。
+
+- 换密钥：`python scripts/set_access_key.py`（可加 `--key` 指定自定义密钥）
+- 撤销某台设备的免密授权：访问 `/?logout`
+- 新增页面后注入门禁与去索引 meta：`python scripts/install_access_gate.py`（幂等）
+- 全站 HTML 带 `noindex,nofollow,noarchive,nosnippet`；`robots.txt` 必须保持 `Allow: /`，爬虫要抓到页面才读得到 `noindex`
+
+注意：GitHub Pages 是纯静态托管，这只是前端门帘，不是服务端鉴权，所有静态资源仍可按 URL 直接取到。
 
 ---
 

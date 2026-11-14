@@ -1,7 +1,7 @@
 {
   "name": "Jillax · 个人主页",
   "short_name": "Jillax",
-  "description": "历史学师范生的数字空间：书影音清单、随笔博客、译制作品与 AI 实验。",
+  "description": "Jillax 的私人数字空间：书影音清单、随笔博客、译制作品与 AI 实验。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

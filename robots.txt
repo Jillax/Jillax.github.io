@@ -1,4 +1,18 @@
+# 全站退出搜索索引。
+# 每个 HTML 页面的 <head> 里都有：
+#   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+# 因此 HTML 必须保持 Allow —— 爬虫要能重新抓取页面才读得到 noindex。
+# 若改成 Disallow: / ，爬虫看不到 noindex，旧的收录结果反而会一直挂着。
+
 User-agent: *
 Allow: /
 
+# 原始数据 / 文档 / 脚本不是页面，没有 meta 可加，只能在这里挡住抓取。
+Disallow: /data/
+Disallow: /thesis/
+Disallow: /scripts/
+Disallow: /tmp/
+
+# 暂时保留 sitemap，让爬虫快速遍历全部页面并读到 noindex。
+# 等 Google / 百度 / Bing 都完成去索引后，可以删掉下面这一行。
 Sitemap: https://jillax.github.io/sitemap.xml

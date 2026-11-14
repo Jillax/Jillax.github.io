@@ -5,12 +5,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     var timelineData = [
         {
-            title: '西南大学 · 历史学',
-            subtitle: '国家公费师范生',
+            title: '公开数据与写作',
+            subtitle: '持续进行中',
             type: 'education',
-            date: '2024年9月 — 至今',
-            desc: '攻读历史学师范专业，主修中国史、世界史、史学理论与教育课程。关注数字人文与AI工具在教育中的应用。',
-            tags: ['历史学', '教育学', '师范技能']
+            date: '持续',
+            desc: '用公开数据做可视化，写随笔，折腾 AI 工具。',
+            tags: ['数据可视化', 'AI 工具', '写作']
         }
     ];
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var currentFilter = 'all';
 
     var typeLabels = {
-        education: '教育经历',
+        education: '关注方向',
         work: '工作经历',
         project: '项目经历'
     };
