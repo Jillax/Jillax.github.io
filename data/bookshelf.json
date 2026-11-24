@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-23T22:29:40Z",
+  "updated": "2026-11-24T21:01:56Z",
   "books": [
     {
       "id": "2996046",
@@ -1057,8 +1057,8 @@
     {
       "id": "3131626",
       "title": "荒原狼",
-      "author": "[德]赫尔曼·黑塞 / 赵登荣、倪诚恩 / 上海译文出版社 / 2008-7 / 13.00",
-      "cover": "https://img3.doubanio.com/view/subject/l/public/s3286369.jpg",
+      "author": "[德]赫尔曼·黑塞 / 赵登荣，倪诚恩 / 上海译文出版社 / 2008年6月 / 13.00",
+      "cover": "https://img9.doubanio.com/view/subject/l/public/s3162025.jpg",
       "url": "https://book.douban.com/subject/3131626/",
       "rating": 5,
       "tags": [],
@@ -1824,7 +1824,7 @@
     {
       "id": "26832583",
       "title": "世界哲学史",
-      "author": "[德]汉斯·约阿西姆·施杜里希 / 吕叔君 / 广西师范大学出版社 / 2017-1 / 95.00元",
+      "author": "(德)汉斯·约阿西姆·施杜里希 / 吕叔君 / 广西师范大学出版社 / 2017-1 / 95.00元",
       "cover": "https://img3.doubanio.com/view/subject/l/public/s29329752.jpg",
       "url": "https://book.douban.com/subject/26832583/",
       "rating": 4,
@@ -2052,7 +2052,7 @@
       "url": "https://movie.douban.com/subject/26904137/",
       "rating": 5,
       "tags": [],
-      "comment": "让豆瓣的小资特权们看评这片，真是为难了",
+      "comment": "让小资特权们看评这片，真是为难了",
       "date": "2026-11-12",
       "status": "collect",
       "category": "movie"
@@ -8470,7 +8470,7 @@
       "id": "1293234",
       "title": "第七封印 / Det sjunde inseglet",
       "author": "1957-02-16(瑞典) / 古纳尔·布约恩施特兰德 / 本特·埃切罗特 / 尼尔斯·波普 / 马克斯·冯·叙多夫 / 毕比·安德松 / 英加·吉尔 / 毛德·汉松 / 因加·朗格里 / 古内尔·林德布洛姆 / 贝蒂尔·安德贝里 / 瑞典 / 英格玛·伯格曼 / 96分钟 / 第七封印 / 剧情 / 奇幻 / 英格玛·伯格曼 Ingmar Bergman / 瑞典语 / 拉丁语",
-      "cover": "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1530862943.jpg",
+      "cover": "https://img2.doubanio.com/view/photo/l_ratio_poster/public/p2917053741.jpg",
       "url": "https://movie.douban.com/subject/1293234/",
       "rating": 5,
       "tags": [],
@@ -16725,6 +16725,19 @@
     }
   ],
   "games": [
+    {
+      "id": "38616807",
+      "title": "深空当铺：可能是偷的 Probably Stolen",
+      "author": "",
+      "cover": "https://img3.doubanio.com/lpic/s35691038.jpg",
+      "url": "https://www.douban.com/game/38616807/",
+      "rating": 4,
+      "tags": [],
+      "comment": "游戏性＞叙事性的作品，与酒保行动是个对比吧？",
+      "date": "2026-11-24",
+      "status": "collect",
+      "category": "game"
+    },
     {
       "id": "25704197",
       "title": "请出示证件 Papers, Please",
